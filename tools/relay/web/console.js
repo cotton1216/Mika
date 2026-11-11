@@ -14,6 +14,17 @@ const tx = navigator.language.toLowerCase().startsWith("zh")
       updated: "更新于 {t}", answerEmpty: "（没有回答）", screen: "[屏幕]",
       unsupported: "手机上的 Mika 还没有只读控制台接口。升级到包含该接口的版本后再打开这一页。",
       unsupportedShort: "手机端需要升级",
+      composeTitle: "让 Mika 做什么", send: "发送", sending: "发送中…", sent: "已提交",
+      composeHint: "任务会排在手机上执行；结果和插话都在下面的卡片里。",
+      goalPlaceholder: "让 Mika 做什么…", answerPlaceholder: "写回答…", steerPlaceholder: "插一句话…",
+      answer: "回答", steer: "插话", stop: "停止",
+      stopConfirm: "停止这个任务？已完成的步骤不会回滚。",
+      answerUnavailable: "这个任务现在只能停止，回答要在手机上处理。",
+      actionFailed: "操作没成功，请再试一次。",
+      bodyTooLarge: "内容太长了，缩短一点再发。",
+      deviceBusy: "手机同时处理的任务太多了，稍后再试。",
+      offlineAction: "手机没连上，稍后再试。",
+      stopped: "已停止",
     }
   : {
       running: "Running", conversations: "Conversations", logout: "Disconnect", back: "‹ Back",
@@ -28,6 +39,17 @@ const tx = navigator.language.toLowerCase().startsWith("zh")
       updated: "Updated {t}", answerEmpty: "(no answer)", screen: "[screen]",
       unsupported: "This Mika build does not expose the read-only console endpoints yet. Update the phone app to a build that includes them, then reload this page.",
       unsupportedShort: "Phone update required",
+      composeTitle: "What should Mika do", send: "Send", sending: "Sending…", sent: "Task sent",
+      composeHint: "Tasks run on the phone; answers and steers show up on the cards below.",
+      goalPlaceholder: "What should Mika do…", answerPlaceholder: "Type an answer…", steerPlaceholder: "Steer this task…",
+      answer: "Answer", steer: "Steer", stop: "Stop",
+      stopConfirm: "Stop this task? Steps already finished are not rolled back.",
+      answerUnavailable: "This task can only be stopped here; answer it on the phone.",
+      actionFailed: "That did not go through. Try again.",
+      bodyTooLarge: "That is too long. Shorten it and try again.",
+      deviceBusy: "The phone is handling too many requests. Try again in a moment.",
+      offlineAction: "The phone is not reachable right now.",
+      stopped: "Stopped",
     };
 
 const statusText = navigator.language.toLowerCase().startsWith("zh")
@@ -50,6 +72,10 @@ const detailTitle = $("detail-title");
 const turnsBox = $("turns");
 const loadMore = $("load-more");
 const online = $("online");
+const composeForm = $("compose");
+const goalInput = $("goal");
+const sendButton = $("send");
+const noticeBox = $("notice");
 
 const state = { connected: false, conversations: [], running: [], selected: null, page: null, limit: 10, pagedBack: false, capabilities: null, unsupported: false };
 let pollTimer = null;
@@ -100,13 +126,26 @@ function applyText() {
   $("logout").textContent = tx.logout;
   $("back").textContent = tx.back;
   loadMore.textContent = tx.loadOlder;
+  $("compose-label").textContent = tx.composeTitle;
+  $("compose-hint").textContent = tx.composeHint;
+  goalInput.placeholder = tx.goalPlaceholder;
+  sendButton.textContent = tx.send;
 }
 
-async function api(path, isCurrent = () => true) {
+// Writes go through the gateway proxy: it checks the session, the Origin and the
+// X-Mika-Console header, then attaches the phone token itself. Keep both headers
+// in one place so no call site can forget them.
+async function api(path, options = {}) {
+  const { method = "GET", body, isCurrent = () => true } = options;
+  const headers = { Accept: "application/json" };
+  if (method !== "GET") headers["X-Mika-Console"] = "1";
+  if (body !== undefined) headers["Content-Type"] = "application/json";
   const response = await fetch("/web" + path, {
+    method,
     credentials: "same-origin",
-    headers: { Accept: "application/json" },
+    headers,
     cache: "no-store",
+    body: body === undefined ? undefined : JSON.stringify(body),
   });
   if (!isCurrent()) return null;
   if (response.status === 401) {
@@ -117,15 +156,53 @@ async function api(path, isCurrent = () => true) {
   if (!response.ok) {
     const error = new Error("http_" + response.status);
     error.status = response.status;
+    error.code = await errorCode(response);
     throw error;
   }
+  if (response.status === 204) return null;
   return response.json();
+}
+
+// The gateway answers with {"error":"code"}, the phone with {"error":{"code":"..."}}.
+async function errorCode(response) {
+  try {
+    const payload = await response.json();
+    const value = payload && payload.error;
+    if (typeof value === "string") return value;
+    if (value && typeof value.code === "string") return value.code;
+    return "";
+  } catch (_) {
+    return "";
+  }
+}
+
+function actionError(error) {
+  if (error.code === "rate_limited") return tx.rateLimited;
+  if (error.status === 429 || error.status === 503) return tx.deviceBusy;
+  if (error.status === 413) return tx.bodyTooLarge;
+  if (error.message === "not_connected") return tx.tokenRejected;
+  if (error.code === "device_busy") return tx.deviceBusy;
+  if (error.code === "body_too_large") return tx.bodyTooLarge;
+  if (error instanceof TypeError) return tx.offlineAction;
+  return tx.actionFailed;
+}
+
+let noticeTimer = null;
+function flash(text, bad) {
+  noticeBox.hidden = false;
+  noticeBox.textContent = text;
+  noticeBox.classList.toggle("bad", Boolean(bad));
+  if (noticeTimer) clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(() => { noticeBox.hidden = true; }, bad ? 6000 : 2500);
 }
 
 function showLogin(message) {
   state.connected = false;
   state.capabilities = null;
   state.unsupported = false;
+  if (noticeTimer) clearTimeout(noticeTimer);
+  noticeBox.hidden = true;
+  composeForm.hidden = false;
   clearDetail();
   stopPolling();
   app.hidden = true;
@@ -135,14 +212,23 @@ function showLogin(message) {
   tokenInput.focus();
 }
 
+function readSession() {
+  return fetch("/web/session", { credentials: "same-origin", cache: "no-store" }).then(r => r.json());
+}
+
 async function boot() {
   applyText();
   let session;
   try {
-    session = await fetch("/web/session", { credentials: "same-origin", cache: "no-store" }).then(r => r.json());
+    session = await readSession();
   } catch (_) {
-    showLogin(tx.loginFailed);
-    return;
+    // A cold start can lose the very first request; retry once before blaming the token.
+    try {
+      session = await readSession();
+    } catch (_) {
+      showLogin(tx.loginFailed);
+      return;
+    }
   }
   if (!session.connected) {
     showLogin();
@@ -200,6 +286,7 @@ function unsupported() {
   stopPolling();
   online.classList.add("off");
   $("top-sub").textContent = tx.unsupportedShort;
+  composeForm.hidden = true;
   runningCount.textContent = "";
   runningBox.replaceChildren(el("div", "empty", tx.unsupported));
   conversationsBox.replaceChildren();
@@ -210,7 +297,19 @@ function onlineNow() {
   $("top-sub").textContent = "";
 }
 
+async function taskAction(task, kind, text) {
+  const id = encodeURIComponent(task.task_id);
+  const body = kind === "cancel" ? {} : { text };
+  await api("/api/v1/tasks/" + id + "/" + kind, { method: "POST", body });
+  flash(kind === "cancel" ? tx.stopped : tx.sent);
+  await refreshAll();
+}
+
 function renderRunning() {
+  // Polling rebuilds these cards. Keep whatever the user already typed and put the caret back
+  // in the same field so a refresh never eats a half-written answer.
+  const active = document.activeElement;
+  const focusedTask = active && active.classList.contains("run-input") ? active.dataset.task : null;
   runningBox.replaceChildren();
   runningCount.textContent = state.running.length ? String(state.running.length) : "";
   if (!state.running.length) {
@@ -229,14 +328,110 @@ function renderRunning() {
     else if (task.progress) card.appendChild(el("p", "run-progress", clean(task.progress)));
     if (task.options && task.options.length) {
       const options = el("div", "options");
-      for (const option of task.options) options.appendChild(el("span", "option", clean(option)));
+      for (const option of task.options) {
+        if (!task.answerable) {
+          options.appendChild(el("span", "option", clean(option)));
+          continue;
+        }
+        const chip = el("button", "option", clean(option));
+        chip.type = "button";
+        chip.addEventListener("click", event => {
+          event.stopPropagation();
+          chip.disabled = true;
+          taskAction(task, "answer", option).catch(error => {
+            flash(actionError(error), true);
+            chip.disabled = false;
+          });
+        });
+        options.appendChild(chip);
+      }
       card.appendChild(options);
     }
+    if (task.task_id) card.appendChild(renderActions(task));
     card.addEventListener("click", () => {
       if (task.conversation) openConversation(task.conversation);
     });
     runningBox.appendChild(card);
   }
+  if (focusedTask) {
+    const field = Array.from(runningBox.querySelectorAll(".run-input")).find(input => input.dataset.task === focusedTask);
+    if (field && !field.disabled) {
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+  }
+}
+
+// Drafts and in-flight writes survive the 3s rebuild above; they are keyed by task id.
+const drafts = new Map();
+const pending = new Map();
+
+// A task can be answered only while the phone waits for input, and steered only while it
+// is actually working. Everything else keeps just the stop control.
+function renderActions(task) {
+  const actions = el("div", "run-actions");
+  const canAnswer = Boolean(task.answerable);
+  const canSteer = task.status === "running" || task.status === "starting";
+  if (canAnswer || canSteer) {
+    const input = el("input", "run-input");
+    input.type = "text";
+    input.maxLength = 4000;
+    input.dataset.task = task.task_id;
+    input.placeholder = canAnswer ? tx.answerPlaceholder : tx.steerPlaceholder;
+    input.setAttribute("aria-label", canAnswer ? tx.answer : tx.steer);
+    input.value = drafts.get(task.task_id) || "";
+    input.disabled = pending.has(task.task_id);
+    input.addEventListener("input", () => drafts.set(task.task_id, input.value));
+    input.addEventListener("click", event => event.stopPropagation());
+    const submit = el("button", "ghost", canAnswer ? tx.answer : tx.steer);
+    submit.type = "button";
+    submit.disabled = pending.has(task.task_id);
+    const send = async () => {
+      const text = input.value.trim();
+      if (!text || pending.has(task.task_id)) return;
+      pending.set(task.task_id, true);
+      drafts.delete(task.task_id);
+      input.disabled = true;
+      submit.disabled = true;
+      try {
+        await taskAction(task, canAnswer ? "answer" : "steer", text);
+      } catch (error) {
+        flash(actionError(error), true);
+        input.disabled = false;
+        submit.disabled = false;
+      } finally {
+        pending.delete(task.task_id);
+      }
+    };
+    submit.addEventListener("click", event => {
+      event.stopPropagation();
+      send();
+    });
+    input.addEventListener("keydown", event => {
+      if (event.key !== "Enter" || event.isComposing) return;
+      event.preventDefault();
+      event.stopPropagation();
+      send();
+    });
+    actions.append(input, submit);
+  } else if (task.needs_you) {
+    actions.appendChild(el("p", "run-hint", tx.answerUnavailable));
+  }
+  const stop = el("button", "ghost danger", tx.stop);
+  stop.type = "button";
+  stop.addEventListener("click", async event => {
+    event.stopPropagation();
+    if (!window.confirm(tx.stopConfirm)) return;
+    stop.disabled = true;
+    try {
+      await taskAction(task, "cancel", "");
+    } catch (error) {
+      flash(actionError(error), true);
+      stop.disabled = false;
+    }
+  });
+  actions.appendChild(stop);
+  return actions;
 }
 
 function renderConversations() {
@@ -292,7 +487,7 @@ async function loadSelected(options = {}) {
   const version = ++detailVersion;
   const isCurrent = () => version === detailVersion;
   const wasAtBottom = nearBottom();
-  const data = await api("/api/v1/conversations/" + encodeURIComponent(id) + "?limit=" + state.limit, isCurrent)
+  const data = await api("/api/v1/conversations/" + encodeURIComponent(id) + "?limit=" + state.limit, { isCurrent })
     .catch(error => { if (isCurrent()) throw error; });
   if (!isCurrent()) return;
   onlineNow();
@@ -338,7 +533,7 @@ async function loadOlder() {
   const isCurrent = () => version === detailVersion;
   paging = version;
   try {
-    const data = await api("/api/v1/conversations/" + encodeURIComponent(id) + "?from=" + from + "&limit=" + count, isCurrent);
+    const data = await api("/api/v1/conversations/" + encodeURIComponent(id) + "?from=" + from + "&limit=" + count, { isCurrent });
     if (!isCurrent()) return;
     const height = document.body.scrollHeight;
     const top = window.scrollY;
@@ -369,13 +564,40 @@ function startPolling() {
   pollTimer = setInterval(() => {
     if (document.hidden || !state.connected) return;
     refreshAll();
-  }, 4000);
+  }, 3000);
 }
 
 function stopPolling() {
   if (pollTimer) clearInterval(pollTimer);
   pollTimer = null;
 }
+
+goalInput.addEventListener("keydown", event => {
+  if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
+  event.preventDefault();
+  composeForm.requestSubmit();
+});
+
+composeForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!state.connected || sendButton.disabled) return;
+  const goal = goalInput.value.trim();
+  if (!goal) return;
+  const label = tx.send;
+  sendButton.disabled = true;
+  sendButton.textContent = tx.sending;
+  try {
+    await api("/api/v1/tasks", { method: "POST", body: { goal } });
+    goalInput.value = "";
+    flash(tx.sent);
+    await refreshAll();
+  } catch (error) {
+    flash(actionError(error), true);
+  } finally {
+    sendButton.textContent = label;
+    sendButton.disabled = false;
+  }
+});
 
 loginForm.addEventListener("submit", async event => {
   event.preventDefault();

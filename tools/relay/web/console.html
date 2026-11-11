@@ -4,10 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1e232b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mika">
 <title>Mika Anywhere</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/console.css">
 </head>
 <body>
+<!--
+  Every write on this page is a POST through /web/api/v1/*. console.js adds the
+  X-Mika-Console: 1 header that the gateway requires, so the browser never holds
+  the phone token. Screen readers get the outcome through #notice (aria-live).
+-->
 <div id="login" class="login" hidden>
   <form id="login-form" class="login-card">
     <div class="brand"><span class="mark">M</span><h1>Mika</h1></div>
@@ -26,6 +37,15 @@
   </header>
   <main class="layout">
     <section class="list" id="list-pane">
+      <form class="compose" id="compose" autocomplete="off">
+        <label class="label" for="goal" id="compose-label">让 Mika 做什么</label>
+        <div class="compose-row">
+          <textarea id="goal" name="goal" rows="2" maxlength="4000" enterkeyhint="send"
+            aria-describedby="compose-hint" placeholder="让 Mika 做什么…"></textarea>
+          <button type="submit" id="send" class="primary">发送</button>
+        </div>
+        <p class="note" id="compose-hint">任务会排在手机上执行；结果和插话都在下面的卡片里。</p>
+      </form>
       <h2 class="section-title"><span id="running-title">正在运行</span><span id="running-count" class="count"></span></h2>
       <div id="running" class="running"></div>
       <h2 class="section-title"><span id="conversations-title">对话</span></h2>
@@ -40,6 +60,7 @@
       <button id="load-more" class="ghost wide" type="button" hidden>加载更早</button>
     </section>
   </main>
+  <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
 </div>
 <script src="/console.js"></script>
 </body>

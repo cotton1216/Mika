@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"io"
 	"net/http"
 	"strings"
 	"sync"
@@ -93,6 +95,12 @@ func (g *gateway) consoleStore() *consoleStore {
 	return g.console
 }
 
+const (
+	consoleWriteLimit = 8192
+	consoleWriteRate  = 30
+	consoleHeader     = "X-Mika-Console"
+)
+
 func consolePath(path string) bool {
 	switch path {
 	case "/api/v1", "/api/v1/tasks", "/api/v1/running", "/api/v1/conversations":
@@ -102,6 +110,27 @@ func consolePath(path string) bool {
 		if rest, ok := strings.CutPrefix(path, prefix); ok {
 			return rest != "" && !strings.Contains(rest, "/")
 		}
+	}
+	return false
+}
+
+// consoleWritePath is the fixed list of mutations the browser console may trigger. Reads stay on
+// consolePath; anything else is rejected before the request reaches the phone.
+func consoleWritePath(path string) bool {
+	if path == "/api/v1/tasks" {
+		return true
+	}
+	rest, ok := strings.CutPrefix(path, "/api/v1/tasks/")
+	if !ok {
+		return false
+	}
+	parts := strings.Split(rest, "/")
+	if len(parts) != 2 || parts[0] == "" {
+		return false
+	}
+	switch parts[1] {
+	case "answer", "steer", "cancel":
+		return true
 	}
 	return false
 }
@@ -222,12 +251,13 @@ func (g *gateway) consoleLogout(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 200, map[string]bool{"connected": false})
 }
 
-// consoleProxy forwards a read-only request to the phone. The phone rejects browser requests
+// consoleProxy forwards a console request to the phone. The phone rejects browser requests
 // (Origin), so the gateway authenticates the browser session here and removes Origin before
-// forwarding with the stored token. Only GET and a fixed path list are allowed.
+// forwarding with the stored token. Reads are a fixed path list; writes are a smaller fixed list
+// that additionally needs the page's own header, a same-origin Origin and a per-client write budget.
 func (g *gateway) consoleProxy(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		w.Header().Set("Allow", "GET")
+	if r.Method != "GET" && r.Method != "POST" {
+		w.Header().Set("Allow", "GET, POST")
 		failure(w, 405, "method_not_allowed")
 		return
 	}
@@ -242,15 +272,52 @@ func (g *gateway) consoleProxy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	path := strings.TrimPrefix(r.URL.Path, "/web")
-	if !consolePath(path) {
+	write := r.Method == "POST"
+	if write && !consoleWritePath(path) {
+		if consolePath(path) {
+			w.Header().Set("Allow", "GET")
+			failure(w, 405, "method_not_allowed")
+		} else {
+			failure(w, 404, "not_found")
+		}
+		return
+	}
+	if !write && !consolePath(path) {
 		failure(w, 404, "not_found")
 		return
+	}
+	var body []byte
+	if write {
+		// A browser cannot fake Origin or the custom header cross-site: both fail here.
+		if r.Header.Get("Origin") != g.base {
+			failure(w, 403, "invalid_origin")
+			return
+		}
+		if r.Header.Get(consoleHeader) != "1" {
+			failure(w, 403, "invalid_console_header")
+			return
+		}
+		if g.limited(r, "console-write", consoleWriteRate) {
+			w.Header().Set("Retry-After", "60")
+			failure(w, 429, "rate_limited")
+			return
+		}
+		body, err = io.ReadAll(http.MaxBytesReader(w, r.Body, consoleWriteLimit))
+		if err != nil {
+			failure(w, 413, "body_too_large")
+			return
+		}
 	}
 	next := r.Clone(r.Context())
 	next.URL.Path = path
 	next.Header.Del("Cookie")
 	next.Header.Del("Origin")
+	next.Header.Del(consoleHeader)
 	next.Header.Set("Authorization", "Bearer "+token)
 	next.Header.Set("Accept", "application/json")
+	if write {
+		next.Body = io.NopCloser(bytes.NewReader(body))
+		next.ContentLength = int64(len(body))
+	}
 	g.proxy(w, next)
 }

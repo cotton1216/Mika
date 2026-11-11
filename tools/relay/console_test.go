@@ -41,6 +41,24 @@ func consoleLogin(t *testing.T, f *fixture, c *websocket.Conn) *http.Cookie {
 	return cookies[0]
 }
 
+func TestConsolePWAAssets(t *testing.T) {
+	f := newFixture(t)
+	for path, kind := range map[string]string{
+		"/manifest.webmanifest": "application/manifest+json",
+		"/icon-192.png": "image/png",
+		"/icon-512.png": "image/png",
+		"/apple-touch-icon.png": "image/png",
+	} {
+		status, headers, body := f.request(t, "GET", path, "", "", "")
+		if status != 200 || headers.Get("Content-Type") != kind || len(body) == 0 {
+			t.Fatalf("asset %s: status=%d type=%s bytes=%d", path, status, headers.Get("Content-Type"), len(body))
+		}
+		if !strings.Contains(headers.Get("Content-Security-Policy"), "manifest-src 'self'") {
+			t.Fatalf("manifest blocked by CSP: %s", path)
+		}
+	}
+}
+
 func TestConsolePageAndSessionLifecycle(t *testing.T) {
 	f := newFixture(t)
 	status, headers, page := f.request(t, "GET", "/app", "", "", "")
@@ -185,6 +203,110 @@ func TestConsoleInvalidTokenDoesNotOccupyASessionSlot(t *testing.T) {
 	}
 	if _, ok := store.token(owner.Value); !ok {
 		t.Fatal("authenticated owner's session was lost")
+	}
+}
+
+func TestConsoleWritesAreWhitelistedAndBudgeted(t *testing.T) {
+	f := newFixture(t)
+	f.pair(t)
+	c := f.connect(t)
+	cookie := consoleLogin(t, f, c)
+
+	post := func(path, body, origin string, header bool) int {
+		t.Helper()
+		req, err := http.NewRequest("POST", f.server.URL+path, strings.NewReader(body))
+		if err != nil {
+			t.Fatal(err)
+		}
+		req.AddCookie(cookie)
+		req.Header.Set("Content-Type", "application/json")
+		if origin != "" {
+			req.Header.Set("Origin", origin)
+		}
+		if header {
+			req.Header.Set(consoleHeader, "1")
+		}
+		response, err := f.client.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer response.Body.Close()
+		_, _ = io.ReadAll(response.Body)
+		return response.StatusCode
+	}
+
+	if status := post("/web/api/v1/tasks", `{"goal":"hi"}`, "", true); status != 403 {
+		t.Fatalf("write without Origin: %d", status)
+	}
+	if status := post("/web/api/v1/tasks", `{"goal":"hi"}`, "https://attacker.example", true); status != 403 {
+		t.Fatalf("write with foreign Origin: %d", status)
+	}
+	if status := post("/web/api/v1/tasks", `{"goal":"hi"}`, f.server.URL, false); status != 403 {
+		t.Fatalf("write without console header: %d", status)
+	}
+	if status := post("/web/api/v1/tasks/1/export", `{}`, f.server.URL, true); status != 404 {
+		t.Fatalf("unlisted write path: %d", status)
+	}
+	if status := post("/web/api/v1/conversations", `{}`, f.server.URL, true); status != 405 {
+		t.Fatalf("read-only path accepting a write: %d", status)
+	}
+
+	req, err := http.NewRequest("DELETE", f.server.URL+"/web/api/v1/tasks/1", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.AddCookie(cookie)
+	sent, err := f.client.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sent.Body.Close()
+	if sent.StatusCode != 405 || sent.Header.Get("Allow") != "GET, POST" {
+		t.Fatalf("DELETE: %d allow=%q", sent.StatusCode, sent.Header.Get("Allow"))
+	}
+
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		request := readFrame(t, c)
+		if request.Method != "POST" || request.Path != "/api/v1/tasks" {
+			t.Errorf("unexpected write frame: %s %s", request.Method, request.Path)
+		}
+		if request.Headers["authorization"] != "Bearer "+f.token {
+			t.Errorf("authorization = %q", request.Headers["authorization"])
+		}
+		if request.Headers["origin"] != "" {
+			t.Errorf("browser Origin must not reach the phone: %v", request.Headers)
+		}
+		if request.Headers["x-mika-console"] != "" {
+			t.Errorf("console header must not reach the phone: %v", request.Headers)
+		}
+		if string(request.Body) != `{"goal":"hi"}` {
+			t.Errorf("body = %q", request.Body)
+		}
+		sendFrame(t, c, frame{
+			Type: "response", ID: request.ID, Status: 201,
+			Headers: map[string]string{"content-type": "application/json"},
+			Body:    []byte(`{"id":"t1"}`),
+		})
+	}()
+	if status := post("/web/api/v1/tasks", `{"goal":"hi"}`, f.server.URL, true); status != 201 {
+		t.Fatalf("forwarded write: %d", status)
+	}
+	<-done
+
+	oversize := strings.Repeat("x", consoleWriteLimit+1)
+	if status := post("/web/api/v1/tasks", oversize, f.server.URL, true); status != 413 {
+		t.Fatalf("oversize write: %d", status)
+	}
+	// One forwarded write plus the oversize one already spent two slots.
+	for i := 0; i < consoleWriteRate-2; i++ {
+		if status := post("/web/api/v1/tasks", oversize, f.server.URL, true); status != 413 {
+			t.Fatalf("write %d: %d", i, status)
+		}
+	}
+	if status := post("/web/api/v1/tasks", `{}`, f.server.URL, true); status != 429 {
+		t.Fatalf("write past the per-minute budget: %d", status)
 	}
 }
 

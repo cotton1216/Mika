@@ -15,7 +15,7 @@
 
 - [x] 3.1 `/healthz` 200 `{"status":"ok"}`；`/`、`/app`、`/admin` 200 HTML；`/style.css`、`/app.js`、`/console.css`、`/console.js` 200；`/api/v1` 503 `device_offline`（未配对，符合预期）；`/pair`、`/language` GET 405（POST 路由）；容器 `Restarts=0`，仅监听 `127.0.0.1:18787`
 - [x] 3.2 other sites 抽查：www/docs/ash5/rymp-api 200、asbt 404、notice 502（与 reload 前一致，属既有状态）
-- [ ] 3.3 遗留用户操作见下方「遗留」
+- [x] 3.3 遗留用户操作见下方「遗留」：owner key 已取、手机会话已配对、远程访问已开；经公网中继下发只读任务 `833b0837-4b3a-4323-b79a-5ab467d632f6` 并回收到结果（`status=done`，含电池/充电/亮屏/解锁四项读数），「提交 → 执行 → 结果回收」闭环验证通过
 
 ## 发现与偏离
 

@@ -136,6 +136,12 @@ func (g *gateway) asset(w http.ResponseWriter, r *http.Request) {
 	case "/console.js":
 		name = "web/console.js"
 		kind = "text/javascript; charset=utf-8"
+	case "/manifest.webmanifest":
+		name = "web/manifest.webmanifest"
+		kind = "application/manifest+json"
+	case "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png":
+		name = "web" + r.URL.Path
+		kind = "image/png"
 	}
 	b, err := webFiles.ReadFile(name)
 	if err != nil {

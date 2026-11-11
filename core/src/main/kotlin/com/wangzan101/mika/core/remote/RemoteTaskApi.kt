@@ -24,6 +24,8 @@ class RemoteTaskApi(
     private val serverVersion: String,
     private val device: DeviceAccess? = null,
     private val history: RemoteHistory? = null,
+    /** relay 归属的只读投影;提供时追加 running / conversations 能力,不影响本机历史权限。 */
+    private val relay: RelayHistoryView? = null,
 ) {
     fun handle(req: HttpRequest): HttpResponse = try {
         req.header("accept")?.lowercase()?.let {
@@ -64,6 +66,33 @@ class RemoteTaskApi(
             return ok(buildJsonObject { put("offset", offset); put("data", Base64.getEncoder().encodeToString(bytes)) })
         }
         if (req.path.startsWith("$ROOT/history/")) return history(req, query)
+        if (req.path == RUNNING) {
+            method(req, "GET")
+            if (query.isNotEmpty()) invalid("This endpoint accepts no query parameters")
+            val view = relay ?: throw ApiError(404, "not_found", "Running tasks are unavailable")
+            return ok(view.running())
+        }
+        if (req.path == CONVERSATIONS) {
+            method(req, "GET")
+            if (query.keys.any { it !in setOf("offset", "limit") }) invalid("Only offset and limit are supported")
+            val view = relay ?: throw ApiError(404, "not_found", "Conversations are unavailable")
+            val offset = query["offset"]?.let { it.toIntOrNull() ?: invalid("offset must be an integer") } ?: 0
+            val limit = query["limit"]?.let { it.toIntOrNull() ?: invalid("limit must be an integer") }
+                ?: CONVERSATION_LIMIT
+            if (offset < 0 || limit !in 1..CONVERSATION_MAX) invalid("Invalid page bounds")
+            return ok(view.conversations(offset, limit))
+        }
+        CONVERSATION.matchEntire(req.path)?.let { match ->
+            method(req, "GET")
+            if (query.keys.any { it !in setOf("from", "limit") }) invalid("Only from and limit are supported")
+            val view = relay ?: throw ApiError(404, "not_found", "Conversations are unavailable")
+            val from = query["from"]?.let { it.toIntOrNull() ?: invalid("from must be an integer") }
+            val limit = query["limit"]?.let { it.toIntOrNull() ?: invalid("limit must be an integer") }
+                ?: TURN_LIMIT
+            if (from != null && from < 0 || limit !in 1..TURN_MAX) invalid("Invalid page bounds")
+            return ok(view.turns(match.groupValues[1], from, limit)
+                ?: throw ApiError(404, "not_found", "No such conversation"))
+        }
         if (req.path != "$ROOT/tasks" && !EXPORT_PATH.matches(req.path) && query.isNotEmpty()) invalid("This endpoint accepts no query parameters")
         if (req.path == ROOT) {
             method(req, "GET")
@@ -75,6 +104,7 @@ class RemoteTaskApi(
                     if (service.fileAccess != null) add("task_files")
                     if (service.exportEnabled) add("run_export")
                     if (history != null) add("history")
+                    if (relay != null) { add("running"); add("conversations") }
                 }
                 if (history != null) put("history_enabled", history.enabled)
                 putJsonObject("limits") {
@@ -276,6 +306,13 @@ class RemoteTaskApi(
         private val UPLOAD = Regex("$ROOT/uploads(?:/([A-Za-z0-9_-]+)(/discard)?)?")
         private val RESULT = Regex("$ROOT/tasks/($ID)/files/($ID)")
         private val HISTORY_ID = Regex("[A-Za-z0-9_-]{1,80}")
+        private const val RUNNING = "$ROOT/running"
+        private const val CONVERSATIONS = "$ROOT/conversations"
+        private val CONVERSATION = Regex("$ROOT/conversations/([A-Za-z0-9_-]{1,80})")
+        private const val CONVERSATION_LIMIT = 30
+        private const val CONVERSATION_MAX = 100
+        private const val TURN_LIMIT = 10
+        private const val TURN_MAX = 50
         private val SPAN_ID = Regex("[a-f0-9]{16}")
         fun error(status: Int, code: String, message: String, headers: Map<String, String> = emptyMap()) =
             HttpResponse.json(status, buildJsonObject { putJsonObject("error") {

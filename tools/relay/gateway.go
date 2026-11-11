@@ -150,7 +150,7 @@ func (g *gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strings.HasPrefix(g.base, "https://") {
 		w.Header().Set("Strict-Transport-Security", "max-age=31536000")
 	}
-	w.Header().Set("Content-Security-Policy", "default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'")
+	w.Header().Set("Content-Security-Policy", "default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'")
 	if !strings.EqualFold(r.Host, strings.TrimPrefix(strings.TrimPrefix(g.base, "https://"), "http://")) {
 		failure(w, 400, "invalid_host")
 		return
@@ -174,7 +174,7 @@ func (g *gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		g.deviceEndpoint(w, r)
 	case "/app":
 		g.consolePage(w, r)
-	case "/console.css", "/console.js":
+	case "/console.css", "/console.js", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png":
 		g.asset(w, r)
 	case "/web/session":
 		g.consoleSession(w, r)

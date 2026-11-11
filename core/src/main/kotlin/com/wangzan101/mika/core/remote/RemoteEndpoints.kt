@@ -31,7 +31,11 @@ class RemoteEndpoints(
         if (req.path == McpRpc.PATH) return rpc.handle(req)
         if (req.path == RemoteTaskApi.ROOT || req.path.startsWith("${RemoteTaskApi.ROOT}/")) {
             seen(req.remote, req.header("x-mika-client")?.take(64))
-            val api = RemoteTaskApi(service, serverVersion, device.takeIf { deviceAccess }, history.takeIf { historyAccess })
+            val api = RemoteTaskApi(
+                service, serverVersion, device.takeIf { deviceAccess }, history.takeIf { historyAccess },
+                // relay 通道固定 historyAccess = false;同一个归属的只读投影只在这条通道提供。
+                relay = if (historyAccess) null else RelayHistoryView(scopedTasks),
+            )
             return api.handle(req)
         }
         return RemoteTaskApi.error(404, "not_found", "No such endpoint")
