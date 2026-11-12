@@ -32,7 +32,7 @@ data class RuyiKey(val id: Long, val value: String, val name: String)
  * 经 scheme 回调回到 Mika,再用 `code` 和校验串换账号 JWT,列出账号下的推理 Key,取第一把 active 的。之后这把 Key
  * 和手动填 Key 的服务商一样用(列模型、调用都走 [API_BASE])。
  *
- * 回调地址是 [CALLBACK_URI](`mika://auth/callback`,须在 IAM 里登记),授权码经 URL 片段(`#code=…&state=…`)回传。
+ * 回调地址是 [CALLBACK_URI](`ruyiai://auth2/callback`,须在 IAM 里登记),授权码经 URL 片段(`#code=…&state=…`)回传。
  * Key 不进日志;异常文字里只有类别和错误代码。
  */
 class RuyiAuth(
@@ -172,7 +172,7 @@ class RuyiAuth(
         /** 换到的 Key 调用的接口根(OpenAI 兼容)。 */
         const val API_BASE = "https://ai.thchengtay.com/aiserver/v1"
         /** 浏览器授权后跳回 Mika 的 scheme 回调地址:须和 IAM 里 aiserver client 登记的回调一致。 */
-        const val CALLBACK_URI = "mika://auth/callback"
+        const val CALLBACK_URI = "ruyiai://auth2/callback"
         const val AUTHORIZE_PATH = "/desktop/authorize"
         const val EXCHANGE_PATH = "/api/v1/auth/desktop/exchange"
         const val KEYS_PAGE = "https://ai.thchengtay.com/aiserver/keys"

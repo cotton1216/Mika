@@ -7,7 +7,7 @@ import kotlinx.coroutines.withTimeout
 import java.net.URLDecoder
 
 /**
- * 如意账号登录的 scheme 回调等待器:登录时 [awaitCode] 挂起等浏览器跳回 `mika://auth/callback`;
+ * 如意账号登录的 scheme 回调等待器:登录时 [awaitCode] 挂起等浏览器跳回 `ruyiai://auth2/callback`;
  * [onScheme] 由 MainActivity 收到该 scheme 的 Intent 时调用,state 对得上就完成这次等待。
  * 授权码经 URL 片段(`#code=…&state=…`)回传,所以 query 和 fragment 两种都读。
  */
@@ -39,7 +39,7 @@ object RuyiSignIn {
 
     /** MainActivity 收到 scheme 回调时调用;匹配则完成等待并返回 true,否则 false(不是这次的、或没人等)。 */
     fun onScheme(uri: Uri?): Boolean {
-        if (uri?.scheme != "mika" || uri.host != "auth" || uri.path != "/callback") return false
+        if (uri?.scheme != "ruyiai" || uri.host != "auth2" || uri.path != "/callback") return false
         val raw = uri.query.orEmpty().ifBlank { uri.fragment.orEmpty() }
         val params = parseQuery(raw)
         synchronized(this) {

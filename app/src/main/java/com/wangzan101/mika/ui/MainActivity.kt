@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        // 如意登录:浏览器授权后跳 mika://auth/callback 唤起;冷启动时在这里收
+        // 如意登录:浏览器授权后跳 ruyiai://auth2/callback 唤起;冷启动时在这里收
         RuyiSignIn.onScheme(intent.data)
         if (savedInstanceState == null) {
             (application as MikaApp).chat.cancelPendingSharedDraft()
@@ -150,7 +150,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        // 如意登录:浏览器授权后跳 mika://auth/callback 唤起,交给登录流程接着做
+        // 如意登录:浏览器授权后跳 ruyiai://auth2/callback 唤起,交给登录流程接着做
         if (RuyiSignIn.onScheme(intent.data)) return
         val app = application as MikaApp
         shareJob?.cancel()
