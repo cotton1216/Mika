@@ -198,4 +198,17 @@
     <string name="models_daily_token_budget">Orçamento diário de tokens</string>
     <string name="models_daily_token_budget_sub">Conta os tokens de entrada e saída informados para todos os modelos e usos deste provedor no dia local. Ao atingir o limite, a próxima solicitação é bloqueada; solicitações em andamento podem excedê-lo. O uso não informado conta como 0 e é redefinido quando a data local muda.</string>
     <string name="models_daily_token_budget_save_failed">Não foi possível salvar o orçamento. A configuração anterior continua ativa.</string>
+    <string name="ruyi_login_subtitle">Entre com sua conta Ruyi: os modelos disponíveis são obtidos e configurados automaticamente.</string>
+    <string name="ruyi_login_cta">Entrar com Ruyi</string>
+    <string name="ruyi_login_waiting">Aguardando autorização…</string>
+    <string name="ruyi_login_skip">Agora não</string>
+    <string name="signin_row_ruyi">Entre com sua conta Ruyi para sincronizar os modelos dela</string>
+    <string name="signin_ruyi_title">Entrar com Ruyi</string>
+    <string name="signin_ruyi_body">Abre a página de autorização do Ruyi. Ao entrar, o Ruyi fornece uma chave de inferência sua; o uso é cobrado da sua conta Ruyi e os modelos ficam prontos na hora.</string>
+    <string name="signin_ruyi_note">Os dados de login são armazenados criptografados apenas neste telefone e nunca são gravados em registros. A chave é emitida pela sua conta Ruyi; se não quiser mais, exclua-a na página de Keys do Ruyi.</string>
+    <string name="signin_ruyi_waiting">Conclua o login no navegador e volte ao Mika.</string>
+    <string name="signin_ruyi_manage">Abrir a página de Keys do Ruyi</string>
+    <string name="signin_ruyi_signed_in_note">O uso é cobrado da sua conta Ruyi. A chave fica armazenada criptografada neste telefone; para parar de usá-la, exclua-a na página de Keys do Ruyi.</string>
+    <string name="signin_ruyi_signed_out_note">A chave foi excluída deste telefone. Ela ainda existe no Ruyi; exclua-a na página de Keys. As escolhas de modelo são mantidas.</string>
+    <string name="signin_ruyi_name">%1$s (conectado)</string>
 </resources>

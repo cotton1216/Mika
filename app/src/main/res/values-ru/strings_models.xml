@@ -204,4 +204,17 @@
     <string name="models_daily_token_budget">Дневной бюджет токенов провайдера</string>
     <string name="models_daily_token_budget_sub">Учитываются сообщённые входные и выходные токены всех моделей и назначений провайдера за локальный календарный день. При достижении лимита следующий запрос блокируется; выполняемые запросы могут превысить его. Несообщённое использование считается равным 0. Учёт начинается заново при смене локальной даты.</string>
     <string name="models_daily_token_budget_save_failed">Не удалось сохранить бюджет. Прежняя настройка остаётся в силе.</string>
+    <string name="ruyi_login_subtitle">Войдите с аккаунтом Ruyi — доступные модели будут получены и настроены автоматически.</string>
+    <string name="ruyi_login_cta">Войти с Ruyi</string>
+    <string name="ruyi_login_waiting">Ожидание авторизации…</string>
+    <string name="ruyi_login_skip">Не сейчас</string>
+    <string name="signin_row_ruyi">Войдите с аккаунтом Ruyi, чтобы синхронизировать его модели</string>
+    <string name="signin_ruyi_title">Вход с Ruyi</string>
+    <string name="signin_ruyi_body">Откроется страница авторизации Ruyi. После входа Ruyi выдаст ваш собственный ключ вывода; расходы идут с вашего аккаунта Ruyi, и его модели сразу готовы.</string>
+    <string name="signin_ruyi_note">Данные входа хранятся только в зашифрованном виде на этом телефоне и никогда не попадают в журналы. Ключ выдаёт ваш аккаунт Ruyi; если он больше не нужен, удалите его на странице Keys в Ruyi.</string>
+    <string name="signin_ruyi_waiting">Завершите вход в браузере, затем вернитесь в Mika.</string>
+    <string name="signin_ruyi_manage">Открыть страницу Keys в Ruyi</string>
+    <string name="signin_ruyi_signed_in_note">Расходы идут с вашего аккаунта Ruyi. Ключ хранится на этом телефоне в зашифрованном виде; чтобы прекратить использование, удалите его на странице Keys в Ruyi.</string>
+    <string name="signin_ruyi_signed_out_note">Ключ удалён с этого телефона. Он всё ещё существует в Ruyi; удалите его на странице Keys. Выбранные модели сохраняются.</string>
+    <string name="signin_ruyi_name">%1$s (вход выполнен)</string>
 </resources>

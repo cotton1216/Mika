@@ -190,4 +190,17 @@
     <string name="models_daily_token_budget">Anggaran token harian penyedia</string>
     <string name="models_daily_token_budget_sub">Menghitung token input dan output yang dilaporkan untuk semua model dan penggunaan penyedia ini dalam hari kalender lokal. Saat batas tercapai, permintaan berikutnya diblokir; permintaan yang sedang berjalan dapat melampauinya. Penggunaan yang tidak dilaporkan dihitung 0 dan direset saat tanggal lokal berubah.</string>
     <string name="models_daily_token_budget_save_failed">Anggaran tidak dapat disimpan. Pengaturan sebelumnya tetap berlaku.</string>
+    <string name="ruyi_login_subtitle">Masuk dengan akun Ruyi; model yang tersedia diambil dan diatur otomatis.</string>
+    <string name="ruyi_login_cta">Masuk dengan Ruyi</string>
+    <string name="ruyi_login_waiting">Menunggu otorisasi…</string>
+    <string name="ruyi_login_skip">Nanti saja</string>
+    <string name="signin_row_ruyi">Masuk dengan akun Ruyi Anda untuk menyinkronkan modelnya</string>
+    <string name="signin_ruyi_title">Masuk dengan Ruyi</string>
+    <string name="signin_ruyi_body">Membuka halaman otorisasi Ruyi. Setelah masuk, Ruyi memberi Anda kunci inferensi pribadi; pemakaian dihitung dari akun Ruyi Anda, dan modelnya langsung siap.</string>
+    <string name="signin_ruyi_note">Detail login hanya disimpan terenkripsi di ponsel ini dan tidak pernah ditulis ke log. Kunci dikeluarkan oleh akun Ruyi Anda; jika tidak lagi diperlukan, hapus di halaman Keys Ruyi.</string>
+    <string name="signin_ruyi_waiting">Selesaikan login di peramban, lalu kembali ke Mika.</string>
+    <string name="signin_ruyi_manage">Buka halaman Keys Ruyi</string>
+    <string name="signin_ruyi_signed_in_note">Pemakaian dihitung dari akun Ruyi Anda. Kunci disimpan terenkripsi di ponsel ini; untuk berhenti memakainya, hapus di halaman Keys Ruyi.</string>
+    <string name="signin_ruyi_signed_out_note">Kunci telah dihapus dari ponsel ini. Kunci masih ada di Ruyi; hapus di halaman Keys. Pilihan model tetap disimpan.</string>
+    <string name="signin_ruyi_name">%1$s (sudah masuk)</string>
 </resources>

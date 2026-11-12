@@ -200,4 +200,17 @@
     <string name="models_daily_token_budget">Presupuesto diario de tokens</string>
     <string name="models_daily_token_budget_sub">Cuenta los tokens de entrada y salida informados para todos los modelos y usos de este proveedor durante el día local. Al llegar al límite se bloquea la siguiente solicitud; las solicitudes en curso pueden superarlo. El uso no informado cuenta como 0 y se restablece al cambiar la fecha local.</string>
     <string name="models_daily_token_budget_save_failed">No se pudo guardar el presupuesto. La configuración anterior sigue activa.</string>
+    <string name="ruyi_login_subtitle">Inicia sesión con tu cuenta de Ruyi: los modelos disponibles se obtienen y configuran automáticamente.</string>
+    <string name="ruyi_login_cta">Iniciar sesión con Ruyi</string>
+    <string name="ruyi_login_waiting">Esperando autorización…</string>
+    <string name="ruyi_login_skip">Ahora no</string>
+    <string name="signin_row_ruyi">Inicia sesión con tu cuenta de Ruyi para sincronizar sus modelos</string>
+    <string name="signin_ruyi_title">Iniciar sesión con Ruyi</string>
+    <string name="signin_ruyi_body">Abre la página de autorización de Ruyi. Al iniciar sesión, Ruyi te da una clave de inferencia propia; el uso se factura en tu cuenta de Ruyi y sus modelos están listos de inmediato.</string>
+    <string name="signin_ruyi_note">Los datos de inicio de sesión solo se guardan cifrados en este teléfono y nunca se escriben en registros. La clave la emite tu cuenta de Ruyi; si ya no la quieres, elimínala en la página de Keys de Ruyi.</string>
+    <string name="signin_ruyi_waiting">Termina de iniciar sesión en el navegador y vuelve a Mika.</string>
+    <string name="signin_ruyi_manage">Abrir la página de Keys de Ruyi</string>
+    <string name="signin_ruyi_signed_in_note">El uso se factura en tu cuenta de Ruyi. La clave se guarda cifrada en este teléfono; para dejar de usarla, elimínala en la página de Keys de Ruyi.</string>
+    <string name="signin_ruyi_signed_out_note">La clave se eliminó de este teléfono. Sigue existiendo en Ruyi; elimínala en la página de Keys. Las opciones de modelo se conservan.</string>
+    <string name="signin_ruyi_name">%1$s (conectado)</string>
 </resources>

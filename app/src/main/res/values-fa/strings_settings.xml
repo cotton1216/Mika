@@ -188,4 +188,11 @@
     <string name="settings_token_budget_custom">سقف توکن دلخواه</string>
     <string name="settings_token_budget_invalid">یک عدد صحیح از %1$s تا %2$s وارد کنید.</string>
     <string name="settings_token_budget_unlimited">بدون محدودیت</string>
+    <string name="mcp_servers_import">درون‌ریزی از JSON</string>
+    <string name="mcp_servers_import_sub">پیکربندی mcpServers را بچسبانید</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">درون‌ریزی</string>
+    <string name="mcp_servers_import_ok">%1$s اضافه شد</string>
+    <string name="mcp_servers_import_updated">%1$s به‌روزرسانی شد</string>
+    <string name="mcp_servers_import_fail">%1$s ناموفق بود: %2$s</string>
 </resources>

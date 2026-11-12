@@ -452,7 +452,13 @@ private fun MikaRoot(
         }
     }
     LaunchedEffect(Unit) {
-        if (onboarding == null) Onboarding.start(onboardingInputs())?.let(::goOnboarding)
+        if (onboarding != null) return@LaunchedEffect
+        // 还没登录如意:先停在登录页,登录成功或点「暂不登录」后再走正常上手流程
+        if (store.ruyiAccount()?.let { store.hasKey(it.id) } != true) {
+            nav.show(Route.RuyiLogin)
+        } else {
+            Onboarding.start(onboardingInputs())?.let(::goOnboarding)
+        }
     }
     val phoneSetupNeeded by phoneSetup.needed.collectAsState()
     // 页面有自己的返回处理时(设置页里的子页、侧栏)由它们先接;这里只管退回上一页
@@ -465,6 +471,11 @@ private fun MikaRoot(
             phoneSetup.markGuideSeen()
             if (onboarding == OnboardingStep.Phone) goOnboarding(null) else nav.back()
         }
+        Route.RuyiLogin -> RuyiLoginScreen(
+            store,
+            onSignedIn = { nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding) },
+            onSkip = { nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding) },
+        )
         Route.Welcome -> WelcomeScreen { goOnboarding(OnboardingStep.Model) }
         Route.ModelSetup -> {
             val inOnboarding = onboarding == OnboardingStep.Model

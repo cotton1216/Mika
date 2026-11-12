@@ -96,17 +96,12 @@ import com.wangzan101.mika.ui.theme.MikaType
  * (服务商在前,底部有分页点和「下一步」);设置 › 模型([ModelsScreen])也是这一页,标题和引导语不同,没有底部按钮。
  * 选用途、服务商详情、服务商的全部模型是这一页里的子页面。上手时「下一步」选好主模型才可点,点了调 [onDone]。
  */
+/** 登录页和模型设置页共用的 VM 工厂:登录跑在 App 级的 signIns 上（退后台、界面重建都不断）。 */
 @Composable
-fun ModelSetupScreen(
-    store: ProviderStore, onboarding: Boolean, onBack: () -> Unit, onDone: () -> Unit,
-    /** 设置里点「语音转文字」卡片去选择页;上手流程不传,卡片就不出现。 */
-    onOpenSpeech: (() -> Unit)? = null,
-    /** 设置里查看 Token 用量;上手流程不传。 */
-    onOpenUsage: (() -> Unit)? = null,
-) {
+internal fun rememberModelSetupViewModel(store: ProviderStore): ModelSetupViewModel {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val vm = remember {
+    return remember {
         val signIns = (context.applicationContext as? MikaApp)?.chatGptSignIn ?: ChatGptSignIns(scope)
         ModelSetupViewModel(
             store, scope, browser = AndroidSignInBrowser(context.applicationContext), signIns = signIns,
@@ -117,6 +112,18 @@ fun ModelSetupScreen(
             },
         )
     }
+}
+
+@Composable
+fun ModelSetupScreen(
+    store: ProviderStore, onboarding: Boolean, onBack: () -> Unit, onDone: () -> Unit,
+    /** 设置里点「语音转文字」卡片去选择页;上手流程不传,卡片就不出现。 */
+    onOpenSpeech: (() -> Unit)? = null,
+    /** 设置里查看 Token 用量;上手流程不传。 */
+    onOpenUsage: (() -> Unit)? = null,
+) {
+    val vm = rememberModelSetupViewModel(store)
+    val context = LocalContext.current
     val ui by vm.state.collectAsState()
     var picking by rememberSaveable { mutableStateOf<ModelRole?>(null) }
     var openProvider by rememberSaveable { mutableStateOf<String?>(null) }

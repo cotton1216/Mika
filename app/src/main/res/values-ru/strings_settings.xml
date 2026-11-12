@@ -185,4 +185,11 @@
     <string name="settings_token_budget_custom">Свой бюджет токенов</string>
     <string name="settings_token_budget_apply">Использовать</string>
     <string name="settings_token_budget_invalid">Введите целое число от %1$s до %2$s.</string>
+    <string name="mcp_servers_import">Импорт из JSON</string>
+    <string name="mcp_servers_import_sub">Вставьте конфигурацию mcpServers</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">Импортировать</string>
+    <string name="mcp_servers_import_ok">Добавлено: %1$s</string>
+    <string name="mcp_servers_import_updated">Обновлено: %1$s</string>
+    <string name="mcp_servers_import_fail">%1$s не удалось: %2$s</string>
 </resources>

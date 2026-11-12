@@ -181,4 +181,11 @@
     <string name="settings_token_budget_custom">Orçamento de tokens personalizado</string>
     <string name="settings_token_budget_apply">Usar</string>
     <string name="settings_token_budget_invalid">Digite um número inteiro de %1$s a %2$s.</string>
+    <string name="mcp_servers_import">Importar de JSON</string>
+    <string name="mcp_servers_import_sub">Cole uma configuração mcpServers</string>
+    <string name="mcp_servers_import_hint">JSON do mcpServers</string>
+    <string name="mcp_servers_import_action">Importar</string>
+    <string name="mcp_servers_import_ok">%1$s adicionado</string>
+    <string name="mcp_servers_import_updated">%1$s atualizado</string>
+    <string name="mcp_servers_import_fail">Falha em %1$s: %2$s</string>
 </resources>

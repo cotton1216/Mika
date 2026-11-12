@@ -173,4 +173,11 @@
     <string name="settings_token_budget_custom">カスタム Token 予算</string>
     <string name="settings_token_budget_apply">使用</string>
     <string name="settings_token_budget_invalid">%1$s〜%2$s の整数を入力してください。</string>
+    <string name="mcp_servers_import">JSON から取り込む</string>
+    <string name="mcp_servers_import_sub">mcpServers 設定を貼り付け</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">取り込む</string>
+    <string name="mcp_servers_import_ok">%1$s を追加しました</string>
+    <string name="mcp_servers_import_updated">%1$s を更新しました</string>
+    <string name="mcp_servers_import_fail">%1$s に失敗しました: %2$s</string>
 </resources>

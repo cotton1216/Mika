@@ -2,6 +2,7 @@ package com.wangzan101.mika.settings
 
 import com.wangzan101.mika.core.chatgpt.ChatGptAuth
 import com.wangzan101.mika.core.net.LocalHosts
+import com.wangzan101.mika.core.oauth.RuyiAuth
 import com.wangzan101.mika.core.usage.AllowanceSource
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
@@ -32,6 +33,7 @@ internal data class AllowanceRoute(
                 "Kimi" -> AllowanceRoute(AllowanceSource.Kimi, "https://platform.kimi.com/console/account")
                 "硅基流动" -> AllowanceRoute(AllowanceSource.SiliconFlow, "https://cloud.siliconflow.cn/expensebill")
                 "OpenRouter" -> AllowanceRoute(AllowanceSource.OpenRouter, "https://openrouter.ai/settings/credits")
+                "如意" -> AllowanceRoute(dashboard = RuyiAuth.KEYS_PAGE)
                 "通义千问" -> AllowanceRoute(dashboard = "https://bailian.console.aliyun.com/")
                 "智谱" -> AllowanceRoute(dashboard = "https://bigmodel.cn/finance/overview")
                 "智谱 Coding Plan" -> AllowanceRoute(dashboard = "https://www.bigmodel.cn/usercenter/glm-coding/usage")

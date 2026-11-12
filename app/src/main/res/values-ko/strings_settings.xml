@@ -173,4 +173,11 @@
     <string name="settings_token_budget_custom">사용자 지정 Token 예산</string>
     <string name="settings_token_budget_apply">사용</string>
     <string name="settings_token_budget_invalid">%1$s~%2$s 사이의 정수를 입력하세요.</string>
+    <string name="mcp_servers_import">JSON에서 가져오기</string>
+    <string name="mcp_servers_import_sub">mcpServers 설정 붙여넣기</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">가져오기</string>
+    <string name="mcp_servers_import_ok">%1$s 추가됨</string>
+    <string name="mcp_servers_import_updated">%1$s 업데이트됨</string>
+    <string name="mcp_servers_import_fail">%1$s 실패: %2$s</string>
 </resources>

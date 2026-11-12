@@ -212,4 +212,17 @@
     <string name="models_daily_token_budget">ميزانية Token اليومية للمزود</string>
     <string name="models_daily_token_budget_sub">تُحسب رموز الإدخال والإخراج المُبلغ عنها لجميع نماذج هذا المزود وأغراضه خلال اليوم المحلي. عند بلوغ الحد يُحظر الطلب التالي، وقد تتجاوزه الطلبات الجارية. الاستخدام غير المُبلغ عنه يساوي صفرًا، وتُستأنف الطلبات عند تغير التاريخ المحلي.</string>
     <string name="models_daily_token_budget_save_failed">تعذر حفظ الميزانية. ما زال الإعداد السابق ساريًا.</string>
+    <string name="ruyi_login_subtitle">سجّل الدخول بحساب روي، وسيتم جلب النماذج المتاحة لك وإعدادها تلقائياً.</string>
+    <string name="ruyi_login_cta">تسجيل الدخول بحساب روي</string>
+    <string name="ruyi_login_waiting">في انتظار التفويض…</string>
+    <string name="ruyi_login_skip">ليس الآن</string>
+    <string name="signin_row_ruyi">سجّل الدخول بحساب روي لمزامنة نماذجه</string>
+    <string name="signin_ruyi_title">تسجيل الدخول بحساب روي</string>
+    <string name="signin_ruyi_body">يفتح صفحة تفويض روي. بعد تسجيل الدخول، يمنحك روي مفتاح استدلال خاصاً بك، ويُحسب الاستهلاك من حسابك في روي، وتصبح نماذج الحساب جاهزة فوراً.</string>
+    <string name="signin_ruyi_note">تُحفظ تفاصيل تسجيل الدخول مشفّرة على هذا الهاتف فقط ولا تُكتب في السجلات. يصدر المفتاح من حسابك في روي؛ إذا لم تعد تريده احذفه من صفحة Keys في روي.</string>
+    <string name="signin_ruyi_waiting">أكمل تسجيل الدخول في المتصفح ثم عد إلى Mika.</string>
+    <string name="signin_ruyi_manage">فتح صفحة Keys في روي</string>
+    <string name="signin_ruyi_signed_in_note">يُحسب الاستهلاك من حسابك في روي. المفتاح محفوظ مشفّراً على هذا الهاتف؛ لإيقاف استخدامه احذفه من صفحة Keys في روي.</string>
+    <string name="signin_ruyi_signed_out_note">حُذف المفتاح من هذا الهاتف. لا يزال موجوداً في روي؛ يمكنك حذفه من صفحة Keys. تبقى اختيارات النماذج كما هي.</string>
+    <string name="signin_ruyi_name">%1$s (مسجّل الدخول)</string>
 </resources>

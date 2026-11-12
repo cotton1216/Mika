@@ -190,4 +190,17 @@
     <string name="models_daily_token_budget">제공업체 일일 Token 예산</string>
     <string name="models_daily_token_budget_sub">현지 달력 날짜를 기준으로 이 제공업체의 모든 모델과 용도에서 보고된 입력 및 출력 Token을 집계합니다. 예산에 도달하면 다음 요청을 차단하며, 진행 중인 요청은 예산을 초과할 수 있습니다. 보고되지 않은 사용량은 0으로 계산하고 현지 날짜가 바뀌면 초기화됩니다.</string>
     <string name="models_daily_token_budget_save_failed">예산을 저장하지 못했습니다. 이전 설정이 그대로 유지됩니다.</string>
+    <string name="ruyi_login_subtitle">루이(Ruyi) 계정으로 로그인하면 사용 가능한 모델을 자동으로 가져와 설정합니다.</string>
+    <string name="ruyi_login_cta">루이 계정으로 로그인</string>
+    <string name="ruyi_login_waiting">승인 대기 중…</string>
+    <string name="ruyi_login_skip">나중에</string>
+    <string name="signin_row_ruyi">루이(Ruyi) 계정으로 로그인해 모델 목록을 동기화합니다</string>
+    <string name="signin_ruyi_title">루이 계정으로 로그인</string>
+    <string name="signin_ruyi_body">루이 인증 페이지를 엽니다. 로그인하면 루이가 전용 추론 키를 발급하고, 사용량은 루이 계정에서 차감되며 계정의 모델을 바로 사용할 수 있습니다.</string>
+    <string name="signin_ruyi_note">로그인 정보는 이 휴대폰에만 암호화되어 저장되며 로그에 기록되지 않습니다. 키는 루이 계정에서 발급되며, 더 이상 사용하지 않으려면 루이의 Keys 페이지에서 삭제하세요.</string>
+    <string name="signin_ruyi_waiting">브라우저에서 로그인을 완료한 뒤 Mika로 돌아오세요.</string>
+    <string name="signin_ruyi_manage">루이 Keys 페이지 열기</string>
+    <string name="signin_ruyi_signed_in_note">사용량은 루이 계정에서 차감됩니다. 키는 이 휴대폰에 암호화되어 저장됩니다. 사용을 중단하려면 루이의 Keys 페이지에서 삭제하세요.</string>
+    <string name="signin_ruyi_signed_out_note">이 휴대폰의 키는 삭제되었습니다. 키 자체는 루이에 남아 있으며 Keys 페이지에서 삭제할 수 있습니다. 선택한 모델 설정은 유지됩니다.</string>
+    <string name="signin_ruyi_name">%1$s(로그인됨)</string>
 </resources>

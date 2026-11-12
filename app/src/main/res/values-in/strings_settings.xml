@@ -173,4 +173,11 @@
     <string name="settings_token_budget_custom">Anggaran token kustom</string>
     <string name="settings_token_budget_apply">Pakai</string>
     <string name="settings_token_budget_invalid">Masukkan bilangan bulat dari %1$s sampai %2$s.</string>
+    <string name="mcp_servers_import">Impor dari JSON</string>
+    <string name="mcp_servers_import_sub">Tempel konfigurasi mcpServers</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">Impor</string>
+    <string name="mcp_servers_import_ok">%1$s ditambahkan</string>
+    <string name="mcp_servers_import_updated">%1$s diperbarui</string>
+    <string name="mcp_servers_import_fail">%1$s gagal: %2$s</string>
 </resources>
