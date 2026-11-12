@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.wangzan101.mika.R
 import com.wangzan101.mika.settings.ProviderStore
+import com.wangzan101.mika.ui.components.MikaLogo
 
 /**
  * 首屏登录页:还没登录如意时,App 打开先停在这里。点「登录」走和设置 › 模型里一样的如意授权
@@ -47,6 +48,8 @@ fun RuyiLoginScreen(store: ProviderStore, onSignedIn: () -> Unit, onSkip: () -> 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
+            MikaLogo(92.dp)
+            Spacer(Modifier.height(22.dp))
             Text(
                 stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displaySmall,
