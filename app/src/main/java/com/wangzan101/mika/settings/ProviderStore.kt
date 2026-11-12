@@ -9,6 +9,7 @@ import com.wangzan101.mika.core.oauth.AccountSession
 import com.wangzan101.mika.core.oauth.AccountTokens
 import com.wangzan101.mika.core.oauth.OauthTokenResult
 import com.wangzan101.mika.core.oauth.OpenRouterAuth
+import com.wangzan101.mika.core.oauth.RuyiAuth
 import com.wangzan101.mika.core.oauth.XaiAuth
 import com.wangzan101.mika.core.model.AnthropicModel
 import com.wangzan101.mika.core.model.BearerToken
@@ -297,6 +298,8 @@ class ProviderStore(
     val xaiAuth: XaiAuth = defaultXaiAuth,
     /** OpenRouter 账号授权(换 Key)。 */
     val openRouterAuth: OpenRouterAuth = defaultOpenRouterAuth,
+    /** 如意账号授权(换 Key)。 */
+    val ruyiAuth: RuyiAuth = defaultRuyiAuth,
     /**
      * 建可调用的模型:配置、Key、服务商列表里给这个模型单独指定的接口(没有为 null,按配置的接口类型和地址)、请求头等。
      * 为 null 时用内置的适配器(测试里换成假的)。
@@ -798,6 +801,25 @@ class ProviderStore(
         if (provider(providerId)?.signIn == OPENROUTER_SIGN_IN && providerId in keys) setKey(providerId, "")
     }
 
+    // ---------- 用如意账号登录 ----------
+
+    /** 用如意账号授权连上的那一家;没有为 null。 */
+    fun ruyiAccount(): Provider? = _providers.value.firstOrNull { it.signIn == RUYI_SIGN_IN }
+
+    /**
+     * 授权换到了 Key:按如意预设存成一家普通的 OpenAI 兼容服务商(Key 照常加密),标上是授权来的。
+     * 已经有授权来的那一家就更新它;用户自己填 Key 的如意不动,两家并存。
+     */
+    @Synchronized
+    fun connectRuyi(apiKey: String, models: List<ListedModel>): Provider =
+        connect(RUYI_NAME, ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, apiKey, models, signIn = RUYI_SIGN_IN)
+
+    /** 退出如意登录:删掉这台手机上的 Key;服务商、模型和用途留着。如意那边的 Key 要用户到 Keys 页面删。 */
+    @Synchronized
+    fun signOutRuyi(providerId: String) {
+        if (provider(providerId)?.signIn == RUYI_SIGN_IN && providerId in keys) setKey(providerId, "")
+    }
+
     /**
      * 刷新换到的令牌写回去,前提是这期间存着的登录没变:换令牌要等网络,用户可能已经退出或重新登录,
      * 那样旧的刷新结果不能盖掉(否则退出了又被悄悄登录回来,或新登录被旧令牌顶掉)。
@@ -1201,6 +1223,7 @@ class ProviderStore(
 
         private val defaultChatGptAuth by lazy { ChatGptAuth(shortHttp) }
         private val defaultOpenRouterAuth by lazy { OpenRouterAuth(shortHttp) }
+        private val defaultRuyiAuth by lazy { RuyiAuth(shortHttp) }
         private val defaultXaiAuth by lazy { XaiAuth(shortHttp) }
 
         /** ChatGPT 服务商的名字(品牌名,不随界面语言变)。 */
@@ -1210,6 +1233,9 @@ class ProviderStore(
         /** 用 OpenRouter 账号授权的服务商:名字和预设一样,[Provider.signIn] 标成这个。 */
         const val OPENROUTER_NAME = "OpenRouter"
         const val OPENROUTER_SIGN_IN = "openrouter"
+        /** 用如意账号授权的服务商:名字和预设一样,[Provider.signIn] 标成这个。 */
+        const val RUYI_NAME = "如意"
+        const val RUYI_SIGN_IN = "ruyi"
         /** 出错说明里怎么称呼这家的登录。 */
         private const val XAI_ACCOUNT = "xAI"
 

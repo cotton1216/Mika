@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 data class ChatGptSignInFailureRecord(val atMs: Long, val kind: String, val code: String?, val detail: String)
 
 /** 这次登录是哪一家。前台服务和界面重建时靠它认,避免把别家的登录显示成 ChatGPT。 */
-enum class SignInTarget { None, ChatGpt, Xai, OpenRouter }
+enum class SignInTarget { None, ChatGpt, Xai, OpenRouter, Ruyi }
 
 /** 设备码登录给用户看的用户码、验证页和到什么时候失效。设备码本身不在这里。 */
 data class DevicePrompt(val userCode: String, val openUrl: String, val expiresAtMs: Long = 0)

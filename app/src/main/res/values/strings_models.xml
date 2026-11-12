@@ -171,6 +171,15 @@
     <string name="signin_sign_out_note">Only clears the sign-in on this phone</string>
     <string name="signin_busy">Another sign-in is in progress. Finish or cancel it first.</string>
     <string name="signin_openrouter_name">%1$s (signed in)</string>
+    <string name="signin_row_ruyi">Sign in with your Ruyi account to sync its models</string>
+    <string name="signin_ruyi_title">Sign in with Ruyi</string>
+    <string name="signin_ruyi_body">Opens Ruyi\'s authorization page. Once you sign in, Ruyi gives Mika an inference key of your own; usage comes out of your Ruyi account, and its models are ready at once.</string>
+    <string name="signin_ruyi_note">Sign-in details are stored encrypted on this phone only and are never written to logs. The key is issued by your Ruyi account; delete it on Ruyi\'s Keys page if you no longer want it.</string>
+    <string name="signin_ruyi_waiting">Finish signing in in the browser, then come back to Mika.</string>
+    <string name="signin_ruyi_manage">Open Ruyi\'s Keys page</string>
+    <string name="signin_ruyi_signed_in_note">Usage comes out of your Ruyi account. The key is stored encrypted on this phone; delete it on Ruyi\'s Keys page to stop using it.</string>
+    <string name="signin_ruyi_signed_out_note">The key was deleted from this phone. It still exists on Ruyi; delete it on the Keys page. Model choices are kept.</string>
+    <string name="signin_ruyi_name">%1$s (signed in)</string>
 
     <!-- Settings > Models: speech-to-text usage and its picker page -->
     <string name="role_speech">Speech to text</string>

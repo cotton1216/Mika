@@ -492,8 +492,16 @@ private fun ChatGptConnection(ui: ModelSetupUi, state: ListState?, actions: Prov
 @Composable
 private fun AccountConnection(ui: ModelSetupUi, p: Provider, state: ListState?, actions: ProviderDetailActions) {
     val c = MikaTheme.colors
-    val kind = if (p.kind == ProviderConfig.Kind.Xai) SignInKind.Xai else SignInKind.OpenRouter
-    val account = if (kind == SignInKind.Xai) ui.xaiAccount else ui.openRouterAccount
+    val kind = when {
+        p.kind == ProviderConfig.Kind.Xai -> SignInKind.Xai
+        p.signIn == ProviderStore.RUYI_SIGN_IN -> SignInKind.Ruyi
+        else -> SignInKind.OpenRouter
+    }
+    val account = when (kind) {
+        SignInKind.Xai -> ui.xaiAccount
+        SignInKind.Ruyi -> ui.ruyiAccount
+        else -> ui.openRouterAccount
+    }
     val signedIn = account?.signedIn == true
     val (_, waiting, failure) = ui.signInState(kind)
     GroupCard {
@@ -729,9 +737,12 @@ object ModelsCopy {
     val SIGN_IN_USE_KEY: String get() = tr(R.string.signin_use_key)
     val SIGN_IN_BUSY: String get() = tr(R.string.signin_busy)
 
-    /** 界面上服务商的名字:授权来的 OpenRouter 加一句来历,和用户自己填 Key 的那一家分得开。 */
-    fun providerName(p: Provider): String =
-        if (p.signIn == ProviderStore.OPENROUTER_SIGN_IN) tr(R.string.signin_openrouter_name, p.name) else p.name
+    /** 界面上服务商的名字:授权来的 OpenRouter、如意加一句来历,和用户自己填 Key 的那一家分得开。 */
+    fun providerName(p: Provider): String = when (p.signIn) {
+        ProviderStore.OPENROUTER_SIGN_IN -> tr(R.string.signin_openrouter_name, p.name)
+        ProviderStore.RUYI_SIGN_IN -> tr(R.string.signin_ruyi_name, p.name)
+        else -> p.name
+    }
     val XAI_CODE_TITLE: String get() = tr(R.string.signin_xai_code_title)
     val XAI_CODE_BODY: String get() = tr(R.string.signin_xai_code_body)
     val XAI_CODE_COPY_REOPEN: String get() = tr(R.string.signin_xai_code_copy_reopen)
@@ -750,18 +761,21 @@ object ModelsCopy {
         SignInKind.ChatGpt -> tr(R.string.signin_row_chatgpt)
         SignInKind.Xai -> tr(R.string.signin_row_xai)
         SignInKind.OpenRouter -> tr(R.string.signin_row_openrouter)
+        SignInKind.Ruyi -> tr(R.string.signin_row_ruyi)
     }
 
     fun signInTitle(kind: SignInKind) = when (kind) {
         SignInKind.ChatGpt -> CHATGPT_TITLE
         SignInKind.Xai -> tr(R.string.signin_xai_title)
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_title)
+        SignInKind.Ruyi -> tr(R.string.signin_ruyi_title)
     }
 
     fun signInBody(kind: SignInKind) = when (kind) {
         SignInKind.ChatGpt -> CHATGPT_BODY
         SignInKind.Xai -> tr(R.string.signin_xai_body)
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_body)
+        SignInKind.Ruyi -> tr(R.string.signin_ruyi_body)
     }
 
     /** 登录前要先说清的风险(黄底);没有为 null。 */
@@ -772,28 +786,33 @@ object ModelsCopy {
         SignInKind.ChatGpt -> null
         SignInKind.Xai -> tr(R.string.signin_stored_note)
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_note)
+        SignInKind.Ruyi -> tr(R.string.signin_ruyi_note)
     }
 
     fun signInStart(kind: SignInKind) = when (kind) {
         SignInKind.ChatGpt -> CHATGPT_CONTINUE
         SignInKind.Xai -> tr(R.string.signin_continue)
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_authorize)
+        SignInKind.Ruyi -> tr(R.string.signin_continue)
     }
 
     fun signInWaiting(kind: SignInKind) = when (kind) {
         SignInKind.ChatGpt -> CHATGPT_WAITING
         SignInKind.Xai -> tr(R.string.signin_xai_starting)
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_waiting)
+        SignInKind.Ruyi -> tr(R.string.signin_ruyi_waiting)
     }
 
     fun accountManage(kind: SignInKind) = when (kind) {
         SignInKind.OpenRouter -> tr(R.string.signin_openrouter_manage)
+        SignInKind.Ruyi -> tr(R.string.signin_ruyi_manage)
         else -> tr(R.string.account_manage_xai)
     }
 
     /** 账号登录详情下面的说明:在用什么、退出后怎样。 */
     fun accountNote(kind: SignInKind, signedIn: Boolean) = when (kind) {
         SignInKind.OpenRouter -> tr(if (signedIn) R.string.signin_openrouter_signed_in_note else R.string.signin_openrouter_signed_out_note)
+        SignInKind.Ruyi -> tr(if (signedIn) R.string.signin_ruyi_signed_in_note else R.string.signin_ruyi_signed_out_note)
         else -> tr(if (signedIn) R.string.account_signed_in_note_xai else R.string.account_signed_out_note)
     }
 

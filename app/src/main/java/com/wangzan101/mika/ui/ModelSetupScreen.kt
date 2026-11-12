@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.wangzan101.mika.R
 import com.wangzan101.mika.core.chatgpt.ChatGptAuth
 import com.wangzan101.mika.core.oauth.OpenRouterAuth
+import com.wangzan101.mika.core.oauth.RuyiAuth
 import com.wangzan101.mika.MikaApp
 import com.wangzan101.mika.voice.SystemSpeech
 import com.wangzan101.mika.settings.ChatGptSignIns
@@ -145,6 +146,7 @@ fun ModelSetupScreen(
             val accountKind = when {
                 provider.kind == ProviderConfig.Kind.Xai -> SignInKind.Xai
                 provider.signIn == ProviderStore.OPENROUTER_SIGN_IN -> SignInKind.OpenRouter
+                provider.signIn == ProviderStore.RUYI_SIGN_IN -> SignInKind.Ruyi
                 else -> null
             }
             val actions = ProviderDetailActions(
@@ -161,6 +163,7 @@ fun ModelSetupScreen(
                     openInBrowser(context, when (accountKind) {
                         SignInKind.Xai -> ModelsCopy.ACCOUNT_MANAGE_URL
                         SignInKind.OpenRouter -> OpenRouterAuth.KEYS_PAGE
+                        SignInKind.Ruyi -> RuyiAuth.KEYS_PAGE
                         else -> ChatGptAuth.USAGE_URL
                     })
                 },

@@ -168,6 +168,15 @@
     <string name="signin_sign_out_note">只清这台手机上的登录信息</string>
     <string name="signin_busy">另一个登录还没结束，先完成或取消它。</string>
     <string name="signin_openrouter_name">%1$s（账号登录）</string>
+    <string name="signin_row_ruyi">用如意账号登录，模型列表自动同步</string>
+    <string name="signin_ruyi_title">用如意账号登录</string>
+    <string name="signin_ruyi_body">会打开如意的授权页。你登录后，如意给 Mika 一把属于你的推理 Key，用量从你的如意账号里扣，一次就能用上账号下的模型。</string>
+    <string name="signin_ruyi_note">登录信息只加密存在这台手机上，不会写进日志。Key 由如意账号下发；不想用了，可以在如意的 Keys 页面删掉它。</string>
+    <string name="signin_ruyi_waiting">请在浏览器里完成登录，再回到 Mika。</string>
+    <string name="signin_ruyi_manage">打开如意的 Keys 页面</string>
+    <string name="signin_ruyi_signed_in_note">用量从你的如意账号里扣。Key 加密存在这台手机上；不想用了，可以在如意的 Keys 页面删掉它。</string>
+    <string name="signin_ruyi_signed_out_note">这台手机上的 Key 已删掉。如意那边的这把 Key 还在，可以在 Keys 页面删掉。选好的模型都还在。</string>
+    <string name="signin_ruyi_name">%1$s（账号登录）</string>
 
     <!-- 设置 › 模型:语音转文字这个用途和它的选择页 -->
     <string name="role_speech">语音转文字</string>
