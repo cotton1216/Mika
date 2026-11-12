@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">Place a call</string>
     <string name="calls_rules">Answering rules</string>
     <string name="calls_setup_credentials">Configure Volcengine realtime voice credentials.</string>
-    <string name="calls_setup_shell">Connect the built-in Mika assistant first.</string>
+    <string name="calls_setup_shell">Connect the built-in 如愿 assistant first.</string>
     <string name="calls_sim_clear_preferred">Clear preferred SIM</string>
     <string name="calls_sim_preferred">Preferred SIM: %1$s</string>
     <string name="calls_sim_save_preferred">Use this SIM by default</string>

@@ -104,7 +104,7 @@ object CapsuleCopy {
     val EXPAND: String get() = tr(R.string.capsule_expand)
     val TALK: String get() = tr(R.string.capsule_talk)
     val SWAP_SIDE: String get() = tr(R.string.capsule_swap_side)
-    const val IDLE = "Mika"
+    const val IDLE = "如愿"
 
     /** 读屏时一颗图标的说法:在做什么、要不要你处理、结果;好几件时的件数已在 [CapsuleView.Shown.text] 里。 */
     fun describe(view: CapsuleView.Shown): String = when {
@@ -112,12 +112,12 @@ object CapsuleCopy {
         view.kind.needsYou -> tr(R.string.capsule_desc_needs, view.text)
         view.kind == CapsuleKind.Running -> tr(R.string.capsule_desc_running, view.text)
         view.kind == CapsuleKind.Held || view.kind == CapsuleKind.Cancelled -> tr(R.string.capsule_desc_other, view.text)
-        else -> "Mika ${view.text}"
+        else -> "如愿 ${view.text}"
     }
 }
 
 /**
- * 悬浮胶囊,不带状态:平时是一颗 Mika 图标,状态画在外圈和角标上(干活中蓝弧绕着转、等条件灰圈、要你处理整颗变橙、
+ * 悬浮胶囊,不带状态:平时是一颗如愿图标,状态画在外圈和角标上(干活中蓝弧绕着转、等条件灰圈、要你处理整颗变橙、
  * 外圈一呼一吸;好几件时角上写件数;办好了绿勾,没办成、已停止灰色角标;空闲时什么都没有);
  * [CapsuleView.Shown.pill] 时展开成一行字的胶囊(要你处理、刚办完),宽度慢慢变,图标贴着停靠的那一边([side])不动;
  * App 交到你手上时是顶部那一条「你来处理 · 不做了 · 处理好了」。
@@ -439,7 +439,7 @@ private fun TakeoverBar(view: CapsuleView.Shown, onStop: () -> Unit, onHandBack:
     }
 }
 
-/** 胶囊上的 Mika 图标(圆形)。 */
+/** 胶囊上的如愿图标(圆形)。 */
 @Composable
 private fun CapsuleLogo() {
     MikaLogo(LogoSize, corner = LogoSize / 2)

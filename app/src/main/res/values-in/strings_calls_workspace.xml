@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Tanpa SIM pilihan</string>
     <string name="calls_task_back_to_edit">Kembali mengedit</string>
     <string name="calls_task_confirm_dial">Konfirmasi dan telepon</string>
-    <string name="calls_task_confirm_note">Mika memakai tugas ini hanya untuk panggilan ini. SIM pilihan digunakan dan biaya operator serta suara real-time dapat berlaku.</string>
+    <string name="calls_task_confirm_note">如愿 memakai tugas ini hanya untuk panggilan ini. SIM pilihan digunakan dan biaya operator serta suara real-time dapat berlaku.</string>
     <string name="calls_task_constraints">Apa yang tidak boleh dijanjikan</string>
     <string name="calls_task_context">Konteks tambahan</string>
     <string name="calls_task_filled">Terisi</string>

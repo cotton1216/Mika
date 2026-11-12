@@ -36,7 +36,7 @@ interface BearerToken {
 /**
  * OpenAI Responses 接口(`POST {base}/responses`),一律流式、不在服务端存对话(`store:false`):每次把要用的上下文都放在
  * `input` 数组里发,系统提示词放 `instructions`,对话里的系统消息改成 developer 消息(system 消息条目有的服务端不收)。
- * 工具是 function 工具(`strict:false`,Mika 的参数 schema 不按严格模式写);结果按 `function_call_output` 回给模型。
+ * 工具是 function 工具(`strict:false`,如愿的参数 schema 不按严格模式写);结果按 `function_call_output` 回给模型。
  * 默认只发这几项和 `include`;用户选了思考档位才发 `reasoning.effort`。温度、输出上限不发(套餐接口不收)。
  *
  * 推理模型的思考:请求加密后的思考内容(`include: reasoning.encrypted_content`),原样存在这一回合第一个工具调用的

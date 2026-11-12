@@ -16,12 +16,12 @@
     <string name="dev_parallel_sub">Las tareas de chats distintos tienen cada una su pantalla virtual y se ejecutan a la vez</string>
     <string name="dev_compaction">Resúmenes estructurados en tareas largas</string>
     <string name="dev_compaction_sub">Cuando hay que comprimir muchos pasos, anota objetivo, hechos, progreso y siguiente paso</string>
-    <string name="dev_group">Cómo trabaja Mika</string>
+    <string name="dev_group">Cómo trabaja 如愿</string>
     <string name="dev_autonomy">Modo autónomo</string>
-    <string name="dev_autonomy_sub">Activado, Mika no pregunta ni siquiera antes de pagar y simplemente termina; desactivado, pregunta solo antes de pagar</string>
-    <string name="dev_note">Estos interruptores afectan a cómo y a qué velocidad trabaja Mika. Normalmente es mejor dejarlos como vienen.</string>
+    <string name="dev_autonomy_sub">Activado, 如愿 no pregunta ni siquiera antes de pagar y simplemente termina; desactivado, pregunta solo antes de pagar</string>
+    <string name="dev_note">Estos interruptores afectan a cómo y a qué velocidad trabaja 如愿. Normalmente es mejor dejarlos como vienen.</string>
     <string name="dev_grounding">Localización visual verificada</string>
-    <string name="dev_grounding_sub">Actívalo cuando el modelo de visión %1$s se haya probado y localice las cosas con precisión; desactivado, las posiciones que marca necesitan otra comprobación antes de que Mika toque.</string>
+    <string name="dev_grounding_sub">Actívalo cuando el modelo de visión %1$s se haya probado y localice las cosas con precisión; desactivado, las posiciones que marca necesitan otra comprobación antes de que 如愿 toque.</string>
     <string name="dev_speed">Velocidad</string>
     <string name="dev_experiments">Experimentos</string>
     <string name="dev_run_log">Registros de ejecución</string>

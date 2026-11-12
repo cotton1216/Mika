@@ -13,7 +13,7 @@ data class Brand(val brand: String, val major: String, val full: String)
  * 桌面版网页的身份:Linux 桌面的 UA 与 UA-CH,内核版本号如实沿用本机 WebView 的,品牌沿用内核自己的(去掉 Android WebView)。
  * 页面能读到的都要和这个身份对得上:UA / UA-CH / navigator.platform 与视口、屏幕、像素比由仿真设([userAgentOverride]、
  * [metricsOverride]、[emulationCalls]);仿真设不了的(触摸能力、指针与悬停的媒体查询、窗口外框、WebView 特有的痕迹)
- * 由文档开始时注入的 [identityScript] 补上。时区不动,沿用本机的;语言默认也沿用本机的,用户在 Mika 里选定了语言时
+ * 由文档开始时注入的 [identityScript] 补上。时区不动,沿用本机的;语言默认也沿用本机的,用户在如愿里选定了语言时
  * 请求头与 navigator.language(s) 换成那一种(见 [PageLanguage])。
  * 手机版站点一律不改,用本机真实的手机身份。
  */
@@ -47,7 +47,7 @@ object DesktopProfile {
 
     /**
      * `Emulation.setUserAgentOverride` 的参数。这里不带 acceptLanguage:跟随系统时语言保持用户的;
-     * 用户在 Mika 里选定了语言时由 [PageLanguage.withLanguage] 加上。
+     * 用户在如愿里选定了语言时由 [PageLanguage.withLanguage] 加上。
      */
     fun userAgentOverride(major: String, full: String, brands: List<Brand>): JsonObject = buildJsonObject {
         put("userAgent", userAgent(major))

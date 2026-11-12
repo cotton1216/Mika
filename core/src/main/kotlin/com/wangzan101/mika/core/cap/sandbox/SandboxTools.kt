@@ -176,7 +176,7 @@ internal class SandboxTools(
         if (sandbox.hostPath(ws, path, forWrite = false)?.isFile != true) return unavailable("$rel is missing from the source directory.")
         storageLow()?.let { return it }
         // /opt/mika/skills 在沙箱里写得动(PRoot 的绑定可写),所以跑之前逐字节核对打包的那份
-        if (!sandbox.verifyScript(skillRel, rel)) return unavailable("$rel differs from the copy that comes with Mika and could not be restored, so it was not run.")
+        if (!sandbox.verifyScript(skillRel, rel)) return unavailable("$rel differs from the copy that comes with 如愿 and could not be restored, so it was not run.")
         (onScript ?: onCommand)((listOf("$skillRel/$rel") + args).joinToString(" "))
         return commandResult(sandbox.runWithPhone(ws, listOf(interpreter, path) + args, null, timeout * 1000L, onProgress,
             phoneHandler(callId, sub, tools)), ws)

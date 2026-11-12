@@ -19,7 +19,7 @@ class ResultDeliveryTest {
     @get:Rule val texts = ChineseTexts()
     private val peer = ChannelPeer("wechat", "owner", "thread")
     private val result = Delivery.Result("result:run", "thread", "完成")
-    private fun file(name: String, id: Int) = SharedFile(name, 12L, "Download/Mika/$name", "content://downloads/$id", "a".repeat(64))
+    private fun file(name: String, id: Int) = SharedFile(name, 12L, "Download/如愿/$name", "content://downloads/$id", "a".repeat(64))
 
     private class RecordingChannel(override val supportsImages: Boolean = true, val outcome: (Delivery) -> SendOutcome = { SendOutcome.Delivered }) : Channel {
         override val id = "wechat"

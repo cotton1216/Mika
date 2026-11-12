@@ -203,7 +203,7 @@ class ToolDispatcherSandboxTest {
         val m = found["matches"]!!.jsonArray.single().jsonObject
         assertEquals("/workspace/out/notes.txt", m.s("file")); assertEquals("2", m.s("line"))
         val shared = d.execute(call("share_file", buildJsonObject { put("path", "out/notes.txt"); put("name", "笔记.txt") })).content
-        assertEquals("Download/Mika/笔记.txt", shared.s("savedAs"))
+        assertEquals("Download/如愿/笔记.txt", shared.s("savedAs"))
         assertEquals(File(ws, "out/notes.txt").canonicalFile, sb.shared.single().first.canonicalFile)
     }
 
@@ -365,7 +365,7 @@ class ToolDispatcherSandboxTest {
         // 写进去又读回来的是助手自己写的字:只记写入的路径,读回的内容不进证据
         assertTrue(e.read(ObsKind.Output).any { "/workspace/out/r.txt" in it })
         assertFalse(e.read(ObsKind.Output).toString(), e.read(ObsKind.Output).any { "报告正文" in it })
-        assertTrue(e.read(ObsKind.Output).any { "Download/Mika/r.txt" in it })
+        assertTrue(e.read(ObsKind.Output).any { "Download/如愿/r.txt" in it })
         assertTrue(e.actions.toString(), e.actions.any { it.contains("run_command(wc -l data.csv)") })
         assertTrue(e.actions.any { it.contains("share_file(out/r.txt)") })
         assertFalse(e.nothingRead)

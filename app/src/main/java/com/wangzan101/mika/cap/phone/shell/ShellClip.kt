@@ -27,7 +27,7 @@ internal object ShellClip {
     enum class Restore {
         /** 把用户原来的放回去。 */
         PutBack,
-        /** 原来就是空的,把 Mika 的清掉。 */
+        /** 原来就是空的,把如愿的清掉。 */
         Clear,
         /** 不动:用户中途复制了别的、或此刻读不到。 */
         Leave,

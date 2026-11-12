@@ -26,7 +26,7 @@ data class DevicePrompt(val userCode: String, val openUrl: String, val expiresAt
 data class AccountOutcome(val target: SignInTarget, val providerId: String? = null, val failure: String? = null)
 
 /**
- * 用账号登录(ChatGPT、xAI、OpenRouter)在进程里的那一份。登录要等用户在外部浏览器里输密码、过两步验证,期间 Mika 在后台:
+ * 用账号登录(ChatGPT、xAI、OpenRouter)在进程里的那一份。登录要等用户在外部浏览器里输密码、过两步验证,期间如愿在后台:
  * 跑在 App 的作用域 [scope] 里(界面重建、退到后台都不断),开始时调 [keepAlive] 撑住进程(前台服务,
  * 免得进程被冻住、本机回调没人接);它起不来只记一句,登录照常。前台服务看着 [running],变回假就自己停,
  * 所以成功、失败、取消、超时都会停。同一时刻只有一次登录;[cancel] 放弃(通知上的「取消」也走这里)。

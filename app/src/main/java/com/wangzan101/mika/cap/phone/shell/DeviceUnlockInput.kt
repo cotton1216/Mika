@@ -14,7 +14,7 @@ import com.wangzan101.mika.core.device.CredentialKind
 import com.wangzan101.mika.core.device.DeviceCredential
 
 /**
- * 只由已认证的 Mika Binder 调用。主屏专用;凭据从不进命令行、剪贴板、截图或日志。
+ * 只由已认证的如愿 Binder 调用。主屏专用;凭据从不进命令行、剪贴板、截图或日志。
  * 凭据的每个按键都经 [injectTo] 只投给 SystemUI 拥有的焦点窗口:锁屏上方另有窗口(锁屏时显示的 App、来电、
  * 全屏通知)或已经解锁回到 App 时,系统拒绝注入,按键不会落到别处。[inject] 只用于不含秘密的亮屏键。
  */

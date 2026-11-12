@@ -10,7 +10,7 @@
     <string name="memory_procedures">Cómo hacerlo</string>
     <string name="memory_fact">Datos</string>
     <string name="search">Buscar</string>
-    <string name="memory_unreadable">No se pudo leer la memoria anterior; se apartó y Mika empieza de cero.</string>
+    <string name="memory_unreadable">No se pudo leer la memoria anterior; se apartó y 如愿 empieza de cero.</string>
     <string name="memory_pending_n">Por revisar %1$d</string>
     <string name="memory_pending">Por revisar</string>
     <string name="memory_memory">Memoria</string>
@@ -22,11 +22,11 @@
     <string name="memory_pending_title">Memoria a la espera de tu visto bueno</string>
     <string name="memory_switches">Interruptores</string>
     <string name="memory_use">Usar la memoria</string>
-    <string name="memory_use_sub">Desactivado, Mika ni lee ni guarda memoria</string>
+    <string name="memory_use_sub">Desactivado, 如愿 ni lee ni guarda memoria</string>
     <string name="memory_auto">Recordar lo que digo</string>
     <string name="memory_auto_sub">Se organiza a partir de tus propias palabras después de cada tarea</string>
     <string name="memory_learn">Aprender de tareas anteriores (habilidades y notas de apps)</string>
-    <string name="memory_learn_sub">Lo que Mika aprende solo se usa después de que lo aceptes</string>
+    <string name="memory_learn_sub">Lo que 如愿 aprende solo se usa después de que lo aceptes</string>
     <string name="memory_clear_sub">Eliminar toda la memoria y las habilidades aprendidas</string>
     <string name="edit_it">Editar</string>
     <string name="unpin">Desfijar</string>
@@ -51,7 +51,7 @@
     <string name="skill_missing_description">Necesita una descripción de una línea</string>
     <string name="skill_missing_section">Necesita cinco secciones: entrada, pasos, errores frecuentes, qué cuenta como terminado y cuándo parar y pasarte el control</string>
     <string name="skill_too_long">La habilidad es demasiado larga; máximo 4000 caracteres</string>
-    <string name="skill_unknown_tool">Menciona herramientas que Mika no tiene</string>
+    <string name="skill_unknown_tool">Menciona herramientas que 如愿 no tiene</string>
     <string name="memory_manual">Escrito por ti</string>
     <string name="date_pattern_md">d MMM</string>
     <string name="memory_said_via">Dijiste el %1$s por %2$s: “%3$s”</string>

@@ -10,7 +10,7 @@
     <string name="memory_procedures">كيفية التنفيذ</string>
     <string name="memory_fact">حقائق</string>
     <string name="search">بحث</string>
-    <string name="memory_unreadable">تعذّرت قراءة الذاكرة السابقة؛ فتم عزلها ويبدأ Mika من جديد.</string>
+    <string name="memory_unreadable">تعذّرت قراءة الذاكرة السابقة؛ فتم عزلها ويبدأ 如愿 من جديد.</string>
     <string name="memory_pending_n">للمراجعة %1$d</string>
     <string name="memory_pending">للمراجعة</string>
     <string name="memory_memory">الذاكرة</string>
@@ -22,11 +22,11 @@
     <string name="memory_pending_title">ذاكرة بانتظار موافقتك</string>
     <string name="memory_switches">مفاتيح التحكم</string>
     <string name="memory_use">استخدام الذاكرة</string>
-    <string name="memory_use_sub">عند إيقافه، لا يقرأ Mika الذاكرة ولا يحفظ فيها</string>
+    <string name="memory_use_sub">عند إيقافه، لا يقرأ 如愿 الذاكرة ولا يحفظ فيها</string>
     <string name="memory_auto">تذكّر ما أقوله</string>
     <string name="memory_auto_sub">تُنظّم من كلماتك بعد كل مهمة</string>
     <string name="memory_learn">التعلّم من المهام السابقة (المهارات وملاحظات التطبيقات)</string>
-    <string name="memory_learn_sub">لا يستخدم Mika ما يتعلّمه إلا بعد موافقتك</string>
+    <string name="memory_learn_sub">لا يستخدم 如愿 ما يتعلّمه إلا بعد موافقتك</string>
     <string name="memory_clear_sub">حذف كل الذاكرة والمهارات المتعلّمة</string>
     <string name="edit_it">تعديل</string>
     <string name="unpin">إلغاء التثبيت</string>
@@ -51,7 +51,7 @@
     <string name="skill_missing_description">يلزم وصف من سطر واحد</string>
     <string name="skill_missing_section">تلزم خمسة أقسام: المدخل، والخطوات، والمزالق الشائعة، ومعيار الإنجاز، ومتى يجب التوقف وتسليم المهمة</string>
     <string name="skill_too_long">المهارة طويلة جدًا؛ الحد الأقصى 4000 حرف</string>
-    <string name="skill_unknown_tool">تشير إلى أدوات لا يملكها Mika</string>
+    <string name="skill_unknown_tool">تشير إلى أدوات لا يملكها 如愿</string>
     <string name="memory_manual">كتبتها أنت</string>
     <string name="date_pattern_md">MMM d</string>
     <string name="memory_said_via">قلت في %1$s عبر %2$s: «%3$s»</string>

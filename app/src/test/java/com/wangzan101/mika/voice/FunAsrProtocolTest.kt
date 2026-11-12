@@ -98,7 +98,7 @@ class FunAsrProtocolTest {
 
     @Test fun acknowledgementsDoNotChangeText() {
         val p = FunAsrProtocol()
-        assertEquals(LiveAsrUpdate.None, p.read("""{"event": "hotwords_set", "hotwords": ["Mika"]}"""))
+        assertEquals(LiveAsrUpdate.None, p.read("""{"event": "hotwords_set", "hotwords": ["如愿"]}"""))
         assertEquals(LiveAsrUpdate.None, p.read("""{"event": "language_set", "language": "中文"}"""))
     }
 

@@ -28,7 +28,7 @@ import android.os.Build
 
 /**
  * shell 进程里的系统上下文。系统服务会核对「包名属于调用方 uid」,
- * 所以对外报 com.android.shell(uid 2000),而不是 Mika 自己的包名。
+ * 所以对外报 com.android.shell(uid 2000),而不是如愿自己的包名。
  */
 internal class ShellContext private constructor(base: Context) : ContextWrapper(base) {
     override fun getPackageName(): String = SHELL_PACKAGE

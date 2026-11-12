@@ -10,7 +10,7 @@
     <string name="memory_procedures">やり方</string>
     <string name="memory_fact">事実</string>
     <string name="search">検索</string>
-    <string name="memory_unreadable">以前のメモリを読み取れなかったため、脇に置いて、Mika は新しく始めます。</string>
+    <string name="memory_unreadable">以前のメモリを読み取れなかったため、脇に置いて、如愿 は新しく始めます。</string>
     <string name="memory_pending_n">確認待ち %1$d</string>
     <string name="memory_pending">確認待ち</string>
     <string name="memory_memory">メモリ</string>
@@ -22,11 +22,11 @@
     <string name="memory_pending_title">あなたの確認待ちのメモリ</string>
     <string name="memory_switches">スイッチ</string>
     <string name="memory_use">メモリを使う</string>
-    <string name="memory_use_sub">オフにすると、Mika はメモリを読み込みも保存もしません</string>
+    <string name="memory_use_sub">オフにすると、如愿 はメモリを読み込みも保存もしません</string>
     <string name="memory_auto">私の言ったことを覚える</string>
     <string name="memory_auto_sub">タスクのあとに、あなた自身の言葉から整理します</string>
     <string name="memory_learn">過去のタスクから学ぶ(スキルとアプリのメモ)</string>
-    <string name="memory_learn_sub">Mika が学んだ内容は、あなたが承認してから使われます</string>
+    <string name="memory_learn_sub">如愿 が学んだ内容は、あなたが承認してから使われます</string>
     <string name="memory_clear_sub">すべてのメモリと学習したスキルを削除</string>
     <string name="edit_it">編集</string>
     <string name="unpin">ピン留めを解除</string>
@@ -51,7 +51,7 @@
     <string name="skill_missing_description">1 行の説明が必要です</string>
     <string name="skill_missing_section">5 つの項目が必要です: 入口、手順、よくある落とし穴、完了の基準、止めて引き継ぐタイミング</string>
     <string name="skill_too_long">スキルが長すぎます。4000 文字までです</string>
-    <string name="skill_unknown_tool">Mika にないツールが含まれています</string>
+    <string name="skill_unknown_tool">如愿 にないツールが含まれています</string>
     <string name="memory_manual">あなたが作成</string>
     <string name="date_pattern_md">M月d日</string>
     <string name="memory_said_via">%1$s に %2$s で言ったこと: 「%3$s」</string>

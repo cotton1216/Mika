@@ -164,7 +164,7 @@ class AdbIdentityTest {
     fun selfSignedCertificateParsesAndVerifies() {
         val cert = TestTls.client.certificate
         assertEquals(3, cert.version)
-        assertEquals("CN=Mika", cert.subjectX500Principal.name)
+        assertEquals("CN=如愿", cert.subjectX500Principal.name)
         assertEquals(cert.subjectX500Principal, cert.issuerX500Principal)
         assertEquals("SHA256withRSA", cert.sigAlgName)
         assertArrayEquals(TestTls.client.publicKey.encoded, cert.publicKey.encoded)

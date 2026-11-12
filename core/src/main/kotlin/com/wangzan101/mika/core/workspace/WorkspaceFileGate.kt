@@ -12,7 +12,7 @@ import java.util.UUID
 /**
  * 宿主侧进出沙箱目录(工作区、技能目录、根文件系统)的文件都过这一道。
  *
- * 沙箱里的命令和 Mika 是同一个用户,随时能把文件或目录换成符号链接、硬链接或 FIFO,所以「先按路径检查、再按路径使用」
+ * 沙箱里的命令和如愿是同一个用户,随时能把文件或目录换成符号链接、硬链接或 FIFO,所以「先按路径检查、再按路径使用」
  * 挡不住。这里每一段都相对上一段已经打开的目录句柄打开、不跟随链接;最后的文件只打开一次,在句柄上核实
  * (实际位置仍在根目录里、是普通文件、只有一个硬链接),之后的读写都在这同一个句柄上。删除也先这样核实。
  *
@@ -200,7 +200,7 @@ class WorkspaceFileGate(private val sys: FdSys) {
         if (!inside(real, rootReal) || real != dir.realPath().trimEnd('/') + "/" + name) throw outside()
         val st = f.stat()
         if (st.kind != FdStat.Kind.FILE) throw notAFile()
-        if (st.nlink != 1L) throw SandboxError(LINKED_FILE, "The file has more than one hard link, so Mika does not use it; copy it (cp) and use the copy.", recoverable = true)
+        if (st.nlink != 1L) throw SandboxError(LINKED_FILE, "The file has more than one hard link, so 如愿 does not use it; copy it (cp) and use the copy.", recoverable = true)
         return st
     }
 
@@ -209,7 +209,7 @@ class WorkspaceFileGate(private val sys: FdSys) {
         FdSysException.Kind.EXISTS -> SandboxError(FILE_EXISTS, "A file with this name already exists.", recoverable = true)
         FdSysException.Kind.NOT_DIR -> SandboxError(FILE_NOT_FOUND, "A folder on this path is not a folder.", recoverable = true)
         FdSysException.Kind.LINK ->
-            if (dirStep) SandboxError(NOT_A_FILE, "A folder on this path is a link; Mika's file tools do not follow links. Use the real path.", recoverable = true)
+            if (dirStep) SandboxError(NOT_A_FILE, "A folder on this path is a link; 如愿's file tools do not follow links. Use the real path.", recoverable = true)
             else notAFile()
         FdSysException.Kind.NOT_FILE -> notAFile()
     }

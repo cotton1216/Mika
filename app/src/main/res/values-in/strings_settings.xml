@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">Bahasa</string>
     <string name="language_system">Ikuti sistem</string>
-    <string name="language_system_detail">Memakai bahasa sistem Anda jika Mika mendukungnya, jika tidak memakai bahasa Inggris</string>
+    <string name="language_system_detail">Memakai bahasa sistem Anda jika 如愿 mendukungnya, jika tidak memakai bahasa Inggris</string>
     <string name="settings_basic">Umum</string>
     <string name="settings_language_appearance">Bahasa &amp; tampilan</string>
     <string name="settings_model">Model</string>
@@ -33,7 +33,7 @@
     <string name="settings_recovery">Pemulihan &amp; perbaikan</string>
     <string name="settings_developer_group">Developer</string>
     <string name="settings_developer">Opsi developer</string>
-    <string name="settings_about">Tentang Mika</string>
+    <string name="settings_about">Tentang 如愿</string>
     <string name="pill_unsupported">Tidak didukung</string>
     <string name="pill_available">Siap</string>
     <string name="pill_needs_attention">Perlu perhatian</string>
@@ -43,7 +43,7 @@
     <string name="settings_all_ready_detail">Model sudah diatur · Kontrol ponsel siap</string>
     <string name="settings_status">Status</string>
     <string name="settings_a11y">Layanan aksesibilitas</string>
-    <string name="settings_a11y_sub">Membaca dan mengendalikan layar virtual Mika</string>
+    <string name="settings_a11y_sub">Membaca dan mengendalikan layar virtual 如愿</string>
     <string name="settings_notif_progress_sub">Kemajuan dan peringatan “Perlu Anda”</string>
     <string name="settings_system_version">Versi sistem</string>
     <string name="settings_android_focus">Android %1$s · Di Android 12–13 pekerjaan latar belakang bisa merebut fokus dari layar Anda; disarankan Android 14+</string>
@@ -55,7 +55,7 @@
     <string name="settings_keep_on">Biarkan layar menyala</string>
     <string name="settings_keep_on_sub">Layar tetap menyala selama tugas berjalan (tetap meredup seperti biasa saat tidak dipakai), lalu kembali normal</string>
     <string name="settings_mute">Bisukan aplikasi yang dipakai</string>
-    <string name="settings_mute_sub">Aplikasi yang dipakai Mika tetap senyap; suara kembali saat Anda mengambil alih</string>
+    <string name="settings_mute_sub">Aplikasi yang dipakai 如愿 tetap senyap; suara kembali saat Anda mengambil alih</string>
     <string name="settings_pace">Kecepatan pengoperasian</string>
     <string name="settings_pace_fast">Cepat</string>
     <string name="settings_pace_fast_detail">Tanpa jeda antarlangkah; teks langsung diisi sekaligus</string>
@@ -71,14 +71,14 @@
     </plurals>
     <string name="capsule_settings_title">Kapsul mengambang</string>
     <string name="capsule_settings_sub">Lihat kemajuan tugas di layar saat memakai aplikasi lain</string>
-    <string name="capsule_settings_foot">Kapsul digambar memakai layanan aksesibilitas Mika yang sudah aktif, jadi tidak perlu izin tambahan. Jika layanan itu nonaktif atau tidak bisa menggambar, Anda tetap mendapat notifikasi.</string>
-    <string name="capsule_settings_background">Beberapa ponsel menutup aplikasi di latar belakang. Jika kapsul menghilang, izinkan Mika berjalan di latar belakang dan mulai otomatis di setelan sistem ponsel Anda.</string>
+    <string name="capsule_settings_foot">Kapsul digambar memakai layanan aksesibilitas 如愿 yang sudah aktif, jadi tidak perlu izin tambahan. Jika layanan itu nonaktif atau tidak bisa menggambar, Anda tetap mendapat notifikasi.</string>
+    <string name="capsule_settings_background">Beberapa ponsel menutup aplikasi di latar belakang. Jika kapsul menghilang, izinkan 如愿 berjalan di latar belakang dan mulai otomatis di setelan sistem ponsel Anda.</string>
     <string name="capsule_mode_off">Nonaktif</string>
     <string name="capsule_mode_tasks">Saat ada tugas</string>
     <string name="capsule_mode_always">Selalu</string>
     <string name="capsule_mode_off_detail">Hanya notifikasi</string>
     <string name="capsule_mode_tasks_detail">Muncul saat tugas berjalan atau menunggu Anda, dan hilang beberapa detik setelahnya</string>
-    <string name="capsule_mode_always_detail">Menampilkan ikon Mika di layar walau tidak ada tugas</string>
+    <string name="capsule_mode_always_detail">Menampilkan ikon 如愿 di layar walau tidak ada tugas</string>
     <string name="capsule_idle_opacity">Opasitas saat diam</string>
     <string name="capsule_idle_opacity_detail">Setelah beberapa detik tidak disentuh; hal yang memerlukan perhatian Anda tetap terlihat penuh</string>
     <string name="routes_saved">Rute tersimpan</string>
@@ -88,14 +88,14 @@
     </plurals>
     <string name="routes_clear_all">Hapus semua</string>
     <string name="routes_clear_title">Hapus semua rute tersimpan?</string>
-    <string name="routes_clear_body">Setelah dihapus, Mika menyelesaikan segalanya langkah demi langkah lagi lain kali. Pengaturan lain tidak terpengaruh.</string>
+    <string name="routes_clear_body">Setelah dihapus, 如愿 menyelesaikan segalanya langkah demi langkah lagi lain kali. Pengaturan lain tidak terpengaruh.</string>
     <string name="clear">Hapus</string>
     <string name="sandbox_proxy_off">%1$s · dipakai setelah akses jaringan aktif</string>
     <string name="net_proxy">Proksi jaringan</string>
     <string name="net_proxy_row_sub">Untuk panggilan model, pembaruan, browser bawaan, dan perintah</string>
-    <string name="net_proxy_hint">Dipakai untuk panggilan model Mika (obrolan, daftar model, masuk dengan akun), unduhan pembaruan di dalam aplikasi, browser bawaan, dan perintah di Berkas &amp; lingkungan komputasi selama akses jaringan di sana aktif. Alamat di ponsel ini atau jaringan lokal (localhost, 192.168.x.x, 10.x.x.x, nama yang berakhiran .local) selalu tersambung langsung, jadi model lokal tetap bisa dipakai. Bisa menyertakan user:password@, yang disimpan terenkripsi di ponsel ini. Kosongkan untuk koneksi langsung.</string>
+    <string name="net_proxy_hint">Dipakai untuk panggilan model 如愿 (obrolan, daftar model, masuk dengan akun), unduhan pembaruan di dalam aplikasi, browser bawaan, dan perintah di Berkas &amp; lingkungan komputasi selama akses jaringan di sana aktif. Alamat di ponsel ini atau jaringan lokal (localhost, 192.168.x.x, 10.x.x.x, nama yang berakhiran .local) selalu tersambung langsung, jadi model lokal tetap bisa dipakai. Bisa menyertakan user:password@, yang disimpan terenkripsi di ponsel ini. Kosongkan untuk koneksi langsung.</string>
     <string name="net_proxy_invalid">Tulis sebagai http://host:port (socks5, socks5h, dan https juga bisa), opsional dengan user:password@ sebelum host.</string>
-    <string name="net_proxy_container_only">Proksi https:// hanya dipakai oleh perintah di Berkas &amp; lingkungan komputasi; koneksi Mika sendiri tetap langsung. Pakai http:// atau socks5:// agar semuanya lewat proksi.</string>
+    <string name="net_proxy_container_only">Proksi https:// hanya dipakai oleh perintah di Berkas &amp; lingkungan komputasi; koneksi 如愿 sendiri tetap langsung. Pakai http:// atau socks5:// agar semuanya lewat proksi.</string>
     <string name="net_proxy_browser_unsupported">WebView di ponsel ini tidak mendukung proksi khusus aplikasi, jadi browser bawaan tersambung langsung.</string>
     <string name="net_proxy_browser_socks_auth">Browser bawaan tidak bisa memakai proksi SOCKS yang memerlukan nama pengguna dan sandi, jadi tersambung langsung.</string>
     <string name="net_proxy_unreachable">Tidak bisa terhubung ke proksi jaringan, atau proksi tidak meneruskan permintaan. Pastikan proksi berjalan dan alamat di Pengaturan › Proksi jaringan sudah benar.</string>
@@ -122,7 +122,7 @@
     <string name="appearance_system_detail">Terang atau gelap, mengikuti mode ponsel</string>
     <string name="appearance_light">Selalu terang</string>
     <string name="appearance_dark">Selalu gelap</string>
-    <string name="settings_self_config">Biarkan Mika mengubah pengaturannya sendiri</string>
+    <string name="settings_self_config">Biarkan 如愿 mengubah pengaturannya sendiri</string>
     <string name="settings_self_config_sub">Jika aktif, tugas mendapat satu alat untuk membaca dan mengubah preferensi ini (kecepatan, bisu, kapsul, tampilan, layar menyala). Model, kunci API, jaringan kontainer, dan apa pun yang menghapus data tidak pernah disertakan</string>
     <string name="settings_step_limit">Batas langkah per tugas</string>
     <string name="settings_step_limit_sub">Mati berarti tanpa batas. Saat batas tercapai, tugas berhenti dan menyebutkan di mana berhentinya.</string>
@@ -132,7 +132,7 @@
     <string name="settings_step_limit_invalid">Masukkan bilangan bulat 1 sampai 500.</string>
     <string name="mcp_servers_title">Server MCP</string>
     <string name="mcp_servers_empty">Belum ada server MCP</string>
-    <string name="mcp_servers_empty_sub">Tambahkan server MCP eksternal agar Mika dapat memakai alatnya.</string>
+    <string name="mcp_servers_empty_sub">Tambahkan server MCP eksternal agar 如愿 dapat memakai alatnya.</string>
     <string name="mcp_servers_add">Tambah server</string>
     <string name="mcp_servers_edit">Edit server</string>
     <string name="mcp_servers_name">Nama</string>
@@ -163,9 +163,9 @@
     <string name="mcp_servers_status_fail">Gagal terhubung: %1$s</string>
     <string name="mcp_servers_refresh_all">Uji semua</string>
     <string name="mcp_servers_allowlist">Alat yang diizinkan (dipisah koma, kosong = semua)</string>
-    <string name="quit_title">Keluar dari Mika sepenuhnya</string>
+    <string name="quit_title">Keluar dari 如愿 sepenuhnya</string>
     <string name="quit_row_sub">Menghentikan tugas latar belakang dan menyembunyikan kapsul mengambang</string>
-    <string name="quit_confirm_body">Tugas yang sedang berjalan akan berhenti, kapsul mengambang dan notifikasi akan hilang. Saat Mika dibuka lagi, semuanya kembali.</string>
+    <string name="quit_confirm_body">Tugas yang sedang berjalan akan berhenti, kapsul mengambang dan notifikasi akan hilang. Saat 如愿 dibuka lagi, semuanya kembali.</string>
     <string name="quit_confirm_action">Keluar</string>
     <string name="settings_task_token_budget">Anggaran token per tugas</string>
     <string name="settings_task_token_budget_sub">Hanya token input dan output yang dilaporkan penyedia yang dihitung. Setelah anggaran tercapai, permintaan berikutnya tidak dikirim. Permintaan yang sedang berjalan dapat melampaui anggaran; panggilan tanpa penggunaan yang dilaporkan dihitung 0.</string>

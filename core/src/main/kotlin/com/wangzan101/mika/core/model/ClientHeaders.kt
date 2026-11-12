@@ -21,7 +21,7 @@ value class ModelSession(val id: String) {
 /** 发给模型服务的每个请求都带的头;Key 的头由各适配器自己加。 */
 object ClientHeaders {
     /**
-     * [userAgent] 标明是 Mika 哪个版本(由 App 给,core 不写版本号);[sessionHeader] 是服务商声明要放会话号的头名,
+     * [userAgent] 标明是如愿哪个版本(由 App 给,core 不写版本号);[sessionHeader] 是服务商声明要放会话号的头名,
      * 没声明(null 或空)就不发会话号。
      */
     fun of(userAgent: String, sessionHeader: String?, session: ModelSession): Map<String, String> = buildMap {

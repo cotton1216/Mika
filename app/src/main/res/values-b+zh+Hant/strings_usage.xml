@@ -8,7 +8,7 @@
     <string name="usage_title">Token 用量</string>
     <string name="usage_none">還沒有</string>
     <string name="usage_empty_title">這段時間還沒有用量</string>
-    <string name="usage_empty_body">讓 Mika 辦件事，這裡就會記下用了多少 Token。</string>
+    <string name="usage_empty_body">讓如愿辦件事，這裡就會記下用了多少 Token。</string>
     <string name="usage_note">數字以服務商返回的為準，只存在這臺手機上。</string>
     <string name="usage_total">總用量</string>
     <string name="usage_trend">用量趨勢</string>

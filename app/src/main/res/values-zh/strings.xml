@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">这项系统权限能让 Mika 读取和操作任何屏幕上的内容。Mika 只在它自己的虚拟屏幕上用它来完成你交给它的任务；只有你把主屏幕上的任务交给它时，才会在主屏幕上操作。</string>
+    <string name="a11y_service_description">这项系统权限能让如愿读取和操作任何屏幕上的内容。如愿只在它自己的虚拟屏幕上用它来完成你交给它的任务；只有你把主屏幕上的任务交给它时，才会在主屏幕上操作。</string>
     <string name="channel_attention">需要你处理</string>
     <string name="takeover_title">需要你处理</string>
     <string name="takeover_title_reason">需要你处理:%1$s</string>
@@ -12,7 +12,7 @@
     <string name="takeover_handed_over_hint">已把这个 App 放到主屏。处理完点「处理好了」;如果你已经自己把事办完了,点「我自己做完了」。</string>
     <string name="takeover_web_busy">设置里正在登录网站,先在那边点「完成」,再点「我来处理」。</string>
     <string name="takeover_move_to_main_failed">没能把 App 挪到主屏,再点一次「我来处理」试试。</string>
-    <string name="takeover_move_back_failed">没能把 App 挪回 Mika 的屏幕,再点一次试试。</string>
+    <string name="takeover_move_back_failed">没能把 App 挪回如愿的屏幕,再点一次试试。</string>
     <string name="action_take_over">我来处理</string>
     <string name="action_hand_back">处理好了</string>
     <string name="action_finished_myself">我自己做完了</string>
@@ -20,7 +20,7 @@
     <string name="action_cancel_task">取消任务</string>
     <string name="input_title">需要你回答</string>
     <string name="no_answer_note">%1$d 分钟内没回答会按没回答处理。</string>
-    <string name="input_too_late">回答来晚了:已过 %1$d 分钟,Mika 已按没回答继续。</string>
+    <string name="input_too_late">回答来晚了:已过 %1$d 分钟,如愿已按没回答继续。</string>
     <string name="action_approve">同意</string>
     <string name="action_decline">不同意</string>
     <string name="confirmation_locked_hint">解锁后查看对象和内容</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">关闭</string>
     <string name="terminal_retry">重新打开</string>
     <string name="terminal_stop">停止</string>
-    <string name="terminal_task_running">Mika 也在这个工作区里工作，两边同时改可能互相影响。</string>
+    <string name="terminal_task_running">如愿也在这个工作区里工作，两边同时改可能互相影响。</string>
     <string name="terminal_copy_all">复制全部</string>
     <string name="terminal_copied">已复制</string>
 </resources>

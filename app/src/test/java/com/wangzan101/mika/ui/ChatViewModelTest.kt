@@ -1632,7 +1632,7 @@ class ChatViewModelTest {
         val vm = ChatViewModel(backgroundScope, state, stage, actions, store, sharedFiles = files).also { runCurrent() }
         vm.send("导出表格", ok)
         emit(TaskState.Running(1, "整理"))
-        val f = com.wangzan101.mika.chat.SharedFile("表.xlsx", 5000, "Download/Mika/表.xlsx", "content://media/1")
+        val f = com.wangzan101.mika.chat.SharedFile("表.xlsx", 5000, "Download/如愿/表.xlsx", "content://media/1")
         files.value = listOf(f)
         runCurrent()
         assertEquals(listOf(f), vm.ui.value.exchanges.last().files)
@@ -1940,7 +1940,7 @@ class ChatViewModelTest {
 
     @Test fun suspendedSkillRestoreAndView() = runTest {
         val vm = vmWithHistory()
-        val learned = com.wangzan101.mika.core.skills.SkillNote("Mika 学会了一项技能:发微信", draftId = "d1")
+        val learned = com.wangzan101.mika.core.skills.SkillNote("如愿学会了一项技能:发微信", draftId = "d1")
         val suspended = com.wangzan101.mika.core.skills.SkillNote("这项技能最近不灵,先停用了", suspended = "wechat-msg")
         notesFlow.value = mapOf("r1" to com.wangzan101.mika.memory.RunNotes("c1", "r1", skillNotes = listOf(learned, suspended)))
         runCurrent()
@@ -1992,12 +1992,12 @@ class ChatViewModelTest {
         active.value = listOf("a", "b")
         vm.switchTo("a")
         show("a", TaskState.Running(1, "整理"))
-        val mine = com.wangzan101.mika.chat.SharedFile("a.csv", 1, "Download/Mika/a.csv", "content://media/1")
+        val mine = com.wangzan101.mika.chat.SharedFile("a.csv", 1, "Download/如愿/a.csv", "content://media/1")
         files.value = listOf(mine)
         runCurrent()
         assertEquals(listOf(mine), vm.ui.value.exchanges.last().files)
         show("b", TaskState.Running(1, "查快递"))
-        files.value = listOf(com.wangzan101.mika.chat.SharedFile("b.csv", 1, "Download/Mika/b.csv", "content://media/2"))
+        files.value = listOf(com.wangzan101.mika.chat.SharedFile("b.csv", 1, "Download/如愿/b.csv", "content://media/2"))
         runCurrent()
         assertEquals(listOf(mine), vm.ui.value.exchanges.last().files)
     }
@@ -2098,7 +2098,7 @@ class ChatViewModelTest {
     // 那一问一答的原话、步骤(包括切走期间的)、文件都要在,不能另起一条空原话的
     @Test fun switchingBackRestoresTheRunningExchange() = runTest {
         val runStates = mapOf("a" to MutableStateFlow<TaskState>(TaskState.Running(0, "")), "b" to MutableStateFlow<TaskState>(TaskState.Running(0, "")))
-        val fileA = com.wangzan101.mika.chat.SharedFile("a.csv", 1, "Download/Mika/a.csv", "content://media/1")
+        val fileA = com.wangzan101.mika.chat.SharedFile("a.csv", 1, "Download/如愿/a.csv", "content://media/1")
         val runFiles = mapOf("a" to listOf(fileA), "b" to emptyList())
         val goals = mapOf("a" to "第一个任务", "b" to "第二个任务")
         val files = MutableStateFlow<List<com.wangzan101.mika.chat.SharedFile>>(emptyList())

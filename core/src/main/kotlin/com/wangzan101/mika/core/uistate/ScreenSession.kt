@@ -134,7 +134,7 @@ internal class ScreenSession(
     var stale = false
         private set
 
-    /** Mika 自己动过这块屏(停留里轻轻滚了几下):模型手里那一屏的位置已不准,标成过时。 */
+    /** 如愿自己动过这块屏(停留里轻轻滚了几下):模型手里那一屏的位置已不准,标成过时。 */
     fun movedByMika() { stale = true }
 
     /**
@@ -338,14 +338,14 @@ internal class ScreenSession(
             internal set
     }
 
-    /** 这次动作前看的那一眼,动作判完效果前留着:动作开始之前 Mika 自己又动过界面时由 [reprobe] 重看。 */
+    /** 这次动作前看的那一眼,动作判完效果前留着:动作开始之前如愿自己又动过界面时由 [reprobe] 重看。 */
     private var pendingProbe: EffectProbe? = null
 
     /** 这次动作的效果判完了(或不判了)。 */
     fun probeDone() { pendingProbe = null }
 
     /**
-     * 动作开始之前 Mika 自己动过界面(网页停留里轻轻滚了页面):重看一眼当作动作前的样子,免得把这点滚动算成动作的效果;
+     * 动作开始之前如愿自己动过界面(网页停留里轻轻滚了页面):重看一眼当作动作前的样子,免得把这点滚动算成动作的效果;
      * 模型手里那一屏的位置也已不准,标成过时。没有在等判效果的动作时什么也不做。
      */
     suspend fun reprobe() {

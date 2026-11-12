@@ -38,8 +38,8 @@ import java.io.File
 import java.util.UUID
 
 /**
- * 浏览器页此刻打开的网页。[desktop]:标签此刻用的是电脑版网页;[loginFor]:这次是「给 Mika 登录」,为要登录的网站
- * (照 Mika 办事时的身份打开,见 [BrowserIdentity]),平常浏览为 null。
+ * 浏览器页此刻打开的网页。[desktop]:标签此刻用的是电脑版网页;[loginFor]:这次是「给如愿登录」,为要登录的网站
+ * (照如愿办事时的身份打开,见 [BrowserIdentity]),平常浏览为 null。
  */
 data class BrowserPage(
     val url: String,
@@ -73,8 +73,8 @@ internal fun findMatchIndex(active: Int, matches: Int): Int =
 
 /**
  * 用户自己用的浏览器(侧栏「浏览器」):一个看得见的 [WebTab],和 Agent 的标签同一个网页配置(Cookie、网页存储)。
- * 在这里登录了,Mika 办事时也是登录的。用哪一版网页由 [BrowserIdentity] 定:平常默认手机版、按网站可换成电脑版
- * (记在 [modes]),「给 Mika 登录」时照 Mika 办事时的那一版;规则只装在这个标签上(WebDevtools.setModePolicy),
+ * 在这里登录了,如愿办事时也是登录的。用哪一版网页由 [BrowserIdentity] 定:平常默认手机版、按网站可换成电脑版
+ * (记在 [modes]),「给如愿登录」时照如愿办事时的那一版;规则只装在这个标签上(WebDevtools.setModePolicy),
  * Agent 的标签不受影响。
  *
  * 不进任何任务的标签池,也不走 [com.wangzan101.mika.cap.web.WebHandover] 的那一次接管:Agent 的标签、接管照常进行,互不影响。
@@ -82,7 +82,7 @@ internal fun findMatchIndex(active: Int, matches: Int): Int =
  * 视图挂在哪一处、哪一处走了才关网页,见 [PageHosts]。
  * WebView 的环境是 [MutableContextWrapper]:挂到界面上时换成那个 Activity(下拉框、长按菜单要它),摘下时换回 App。
  * 页面打开前过一遍 [WebUrlPolicy.checkNavigable];访问过的页面记进 [recent];页面停下来后看一眼登录状态,记进站点登记表。
- * 用户在页面上问 Mika 时,看着的这一页借给那个对话的任务当当前网页标签(见 [loans]):页面开关弹窗时借的跟着换,
+ * 用户在页面上问如愿时,看着的这一页借给那个对话的任务当当前网页标签(见 [loans]):页面开关弹窗时借的跟着换,
  * 关掉页面时交给任务接着用、不销毁;用户亲手摸页面([userTouched])时告诉借着它的任务。
  * 只在主线程调用。
  */
@@ -116,7 +116,7 @@ class UserBrowser private constructor(private val app: Context) {
     /** 页面弹出的窗口开着时([tab] 是弹窗),打开它的那一页;没有弹窗为 null。 */
     private var opener: WebTab? = null
     private val hosts = PageHosts<ViewGroup, Context>()
-    /** 每个标签各自的「给 Mika 登录」网站;平常浏览为 null。 */
+    /** 每个标签各自的「给如愿登录」网站;平常浏览为 null。 */
     private val loginFor = HashMap<WebTab, String?>()
     /** 每个标签各自的登录探测任务。 */
     private val probes = HashMap<WebTab, Runnable>()
@@ -205,12 +205,12 @@ class UserBrowser private constructor(private val app: Context) {
     /** 平常浏览打开网址;打不开时返回原因。 */
     fun open(url: String): String? = load(url, null)
 
-    /** 打开常用网站:还没登录的走「给 Mika 登录」,照 Mika 办事时的那一版打开。 */
+    /** 打开常用网站:还没登录的走「给如愿登录」,照如愿办事时的那一版打开。 */
     fun openFavorite(site: FavoriteSite): String? =
         load("https://${site.host}/", site.host.takeIf { BrowserIdentity.loginFlow(site) })
 
     /**
-     * 当前网站换成电脑版([desktop])或换回手机版,记住,下次也这样;不再算「给 Mika 登录」。
+     * 当前网站换成电脑版([desktop])或换回手机版,记住,下次也这样;不再算「给如愿登录」。
      * 按新的版本重新打开当前页。
      */
     fun setDesktop(desktop: Boolean) {
@@ -223,7 +223,7 @@ class UserBrowser private constructor(private val app: Context) {
     }
 
     /**
-     * 「给 Mika 登录」里点了「登录好了」:看一眼页面。看出还没登录时提示一句;看出已登录、或看不出来(信用户的话)时
+     * 「给如愿登录」里点了「登录好了」:看一眼页面。看出还没登录时提示一句;看出已登录、或看不出来(信用户的话)时
      * 把这个网站记成已登录,回到起始页。页面还在加载等看不了时,等 [CONFIRM_WAIT_MS] 后按看不出来算。
      */
     fun confirmLogin() {
@@ -458,7 +458,7 @@ class UserBrowser private constructor(private val app: Context) {
 
     // ---------- 清除浏览数据 ----------
 
-    /** 清掉选中的浏览数据。网站数据会退出所有网站,包括 Mika 办事时用的那些。 */
+    /** 清掉选中的浏览数据。网站数据会退出所有网站,包括如愿办事时用的那些。 */
     fun clearBrowsingData(history: Boolean, siteData: Boolean, cache: Boolean) {
         if (history) recent.clear()
         if (siteData) {
@@ -484,9 +484,9 @@ class UserBrowser private constructor(private val app: Context) {
         Log.i(TAG, "browser page ${t.id} handed to the task that borrowed it")
     }
 
-    // ---------- 在这一页上问 Mika ----------
+    // ---------- 在这一页上问如愿 ----------
 
-    /** 此刻看着的这一页(给 Mika 的说明用);没有打开的网页为 null。 */
+    /** 此刻看着的这一页(给如愿的说明用);没有打开的网页为 null。 */
     fun pageInfo(): com.wangzan101.mika.core.cap.web.AttachedPage.Page? {
         val url = currentUrl()?.takeIf { it.startsWith("http") } ?: return null
         val title = tab?.view?.title?.takeIf { it != url }.orEmpty().ifEmpty { _page.value?.title.orEmpty() }
@@ -509,7 +509,7 @@ class UserBrowser private constructor(private val app: Context) {
     fun claim(conversationId: String, runKey: String): PageLoans.Loan<WebTab>? =
         loans.claim(conversationId, runKey, tab?.takeIf { !it.destroyed && !it.crashed })
 
-    /** 用户亲手摸了看着的页面(真实的触摸,不是 Mika 自己发的输入)。 */
+    /** 用户亲手摸了看着的页面(真实的触摸,不是如愿自己发的输入)。 */
     fun userTouched() {
         tab?.let(loans::touched)
     }
@@ -791,7 +791,7 @@ class UserBrowser private constructor(private val app: Context) {
                     state == LoginState.SignedIn -> sites.markLoggedIn(host)
                     else -> Unit
                 }
-                // 「给 Mika 登录」时自己看出登录好了:告诉用户一声(横幅随登录状态收起)
+                // 「给如愿登录」时自己看出登录好了:告诉用户一声(横幅随登录状态收起)
                 if (login != null && !wasIn && state == LoginState.SignedIn && BrowserFavorites.siteKey(host) == BrowserFavorites.siteKey(login)) {
                     _notice.value = LOGGED_IN_NOTICE
                 }

@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">语言</string>
     <string name="language_system">跟随系统</string>
-    <string name="language_system_detail">系统语言 Mika 有译文时用它,没有时用英文</string>
+    <string name="language_system_detail">系统语言如愿有译文时用它,没有时用英文</string>
     <string name="settings_basic">常用</string>
     <string name="settings_language_appearance">语言与外观</string>
     <string name="settings_model">模型</string>
@@ -33,7 +33,7 @@
     <string name="settings_recovery">恢复与修复</string>
     <string name="settings_developer_group">开发者</string>
     <string name="settings_developer">开发者选项</string>
-    <string name="settings_about">关于 Mika</string>
+    <string name="settings_about">关于如愿</string>
     <string name="pill_unsupported">不支持</string>
     <string name="pill_available">可用</string>
     <string name="pill_needs_attention">需要处理</string>
@@ -43,7 +43,7 @@
     <string name="settings_all_ready_detail">模型已配置 · 手机操作可用</string>
     <string name="settings_status">状态</string>
     <string name="settings_a11y">无障碍服务</string>
-    <string name="settings_a11y_sub">读取和操作 Mika 的虚拟屏</string>
+    <string name="settings_a11y_sub">读取和操作如愿的虚拟屏</string>
     <string name="settings_notif_progress_sub">进度和「需要你」提醒</string>
     <string name="settings_system_version">系统版本</string>
     <string name="settings_android_focus">安卓 %1$s · 安卓 12、13 上后台操作可能影响主屏焦点,建议安卓 14+</string>
@@ -55,7 +55,7 @@
     <string name="settings_keep_on">屏幕保持常亮</string>
     <string name="settings_keep_on_sub">任务进行时屏幕不熄灭(没在用时照常变暗),结束后恢复</string>
     <string name="settings_mute">被操作的 App 静音</string>
-    <string name="settings_mute_sub">Mika 操作的 App 不出声,你接手时恢复声音</string>
+    <string name="settings_mute_sub">如愿操作的 App 不出声,你接手时恢复声音</string>
     <string name="settings_pace">操作节奏</string>
     <string name="settings_pace_fast">快</string>
     <string name="settings_pace_fast_detail">步与步之间不停，文字一次填好</string>
@@ -71,14 +71,14 @@
     </plurals>
     <string name="capsule_settings_title">悬浮胶囊</string>
     <string name="capsule_settings_sub">用别的 App 时，在屏幕上看任务进展</string>
-    <string name="capsule_settings_foot">胶囊借用 Mika 已开着的无障碍服务画在屏幕上，不用另外授权；无障碍服务没开或画不出来时，照旧用通知提醒你。</string>
-    <string name="capsule_settings_background">有的手机会关掉后台的 App；胶囊不见了的话，请在系统设置里允许 Mika 后台运行、自启动。</string>
+    <string name="capsule_settings_foot">胶囊借用如愿已开着的无障碍服务画在屏幕上，不用另外授权；无障碍服务没开或画不出来时，照旧用通知提醒你。</string>
+    <string name="capsule_settings_background">有的手机会关掉后台的 App；胶囊不见了的话，请在系统设置里允许如愿后台运行、自启动。</string>
     <string name="capsule_mode_off">关闭</string>
     <string name="capsule_mode_tasks">有任务时显示</string>
     <string name="capsule_mode_always">一直显示</string>
     <string name="capsule_mode_off_detail">只用通知</string>
     <string name="capsule_mode_tasks_detail">有任务在跑或等你时出现，做完几秒后消失</string>
-    <string name="capsule_mode_always_detail">没有任务时也留一颗 Mika 图标</string>
+    <string name="capsule_mode_always_detail">没有任务时也留一颗如愿图标</string>
     <string name="capsule_idle_opacity">静置不透明度</string>
     <string name="capsule_idle_opacity_detail">几秒没碰后的显示程度；需要你处理时始终完整显示</string>
     <string name="routes_saved">已记住的操作路线</string>
@@ -93,9 +93,9 @@
     <string name="sandbox_proxy_off">%1$s · 允许联网后才生效</string>
     <string name="net_proxy">网络代理</string>
     <string name="net_proxy_row_sub">调模型、下更新、内置浏览器和命令都走它</string>
-    <string name="net_proxy_hint">Mika 调模型（对话、模型列表、账号登录）、在 App 里下载更新、内置浏览器，以及「文件与计算环境」里的命令（那里允许联网时）都走这个代理。这台手机和局域网里的地址（localhost、192.168.x.x、10.x.x.x、以 .local 结尾的名字）始终直连，本地模型照常能用。可以带「用户:密码@」，加密保存在这台手机上。留空表示直连。</string>
+    <string name="net_proxy_hint">如愿调模型（对话、模型列表、账号登录）、在 App 里下载更新、内置浏览器，以及「文件与计算环境」里的命令（那里允许联网时）都走这个代理。这台手机和局域网里的地址（localhost、192.168.x.x、10.x.x.x、以 .local 结尾的名字）始终直连，本地模型照常能用。可以带「用户:密码@」，加密保存在这台手机上。留空表示直连。</string>
     <string name="net_proxy_invalid">写成 http://主机:端口 的样子（也可以是 socks5、socks5h、https），主机前面可以带「用户:密码@」。</string>
-    <string name="net_proxy_container_only">https:// 代理只给「文件与计算环境」里的命令用，Mika 自己的连接照旧直连。想全部走代理，请用 http:// 或 socks5://。</string>
+    <string name="net_proxy_container_only">https:// 代理只给「文件与计算环境」里的命令用，如愿自己的连接照旧直连。想全部走代理，请用 http:// 或 socks5://。</string>
     <string name="net_proxy_browser_unsupported">这台手机的 WebView 不支持单独设代理，内置浏览器直连。</string>
     <string name="net_proxy_browser_socks_auth">内置浏览器用不了要账号密码的 SOCKS 代理，它直连。</string>
     <string name="net_proxy_unreachable">连不上网络代理，或代理没有转发这个请求。请检查代理是否开着、设置 › 网络代理 里的地址是否正确。</string>
@@ -122,7 +122,7 @@
     <string name="appearance_system_detail">手机是浅色就浅色，深色就深色</string>
     <string name="appearance_light">一直浅色</string>
     <string name="appearance_dark">一直深色</string>
-    <string name="settings_self_config">允许 Mika 改自己的设置</string>
+    <string name="settings_self_config">允许如愿改自己的设置</string>
     <string name="settings_self_config_sub">打开后，任务里会多一件工具，能看和改这些偏好（操作节奏、静音、胶囊、外观、屏幕常亮）。模型和 Key、容器联网、任何删数据的操作都不在其中</string>
     <string name="settings_step_limit">每个任务的步数上限</string>
     <string name="settings_step_limit_sub">关着表示不限制。到达上限时任务会停下，并说明停在哪一步。</string>
@@ -132,7 +132,7 @@
     <string name="settings_step_limit_invalid">请输入 1 到 500 的整数。</string>
     <string name="mcp_servers_title">MCP 服务器</string>
     <string name="mcp_servers_empty">还没有 MCP 服务器</string>
-    <string name="mcp_servers_empty_sub">添加外部 MCP 服务器，把它的工具交给 Mika。</string>
+    <string name="mcp_servers_empty_sub">添加外部 MCP 服务器，把它的工具交给如愿。</string>
     <string name="mcp_servers_add">添加服务器</string>
     <string name="mcp_servers_import">从 JSON 导入</string>
     <string name="mcp_servers_import_sub">粘贴 mcpServers 配置</string>
@@ -170,9 +170,9 @@
     <string name="mcp_servers_status_fail">连接失败:%1$s</string>
     <string name="mcp_servers_refresh_all">测试全部</string>
     <string name="mcp_servers_allowlist">允许的工具(英文逗号分隔,留空为全部)</string>
-    <string name="quit_title">完全退出 Mika</string>
+    <string name="quit_title">完全退出如愿</string>
     <string name="quit_row_sub">停止后台任务，收起悬浮胶囊</string>
-    <string name="quit_confirm_body">正在进行的任务会停止，悬浮胶囊和通知都会收起。下次打开 Mika 就回来。</string>
+    <string name="quit_confirm_body">正在进行的任务会停止，悬浮胶囊和通知都会收起。下次打开如愿就回来。</string>
     <string name="quit_confirm_action">退出</string>
     <string name="settings_task_token_budget">每个任务的 Token 预算</string>
     <string name="settings_task_token_budget_sub">只统计服务商报告的输入与输出 Token。达到预算后不再发起下一次请求；在途请求可能使用量超过预算，未报告用量的请求按 0 计。</string>

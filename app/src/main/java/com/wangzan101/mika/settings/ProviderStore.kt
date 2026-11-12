@@ -261,7 +261,7 @@ data class ClientSetup(
 sealed interface ProbeResult {
     /** 模型调用了试用的工具:接口通,也会调用工具。 */
     data object ToolCalled : ProbeResult
-    /** 接口通,模型只回了话、没调用工具:Mika 干活靠工具,这个模型当不了主模型。 */
+    /** 接口通,模型只回了话、没调用工具:如愿干活靠工具,这个模型当不了主模型。 */
     data object NoToolCall : ProbeResult
     /** 请求失败;[error] 带着服务端的报错。 */
     data class Failed(val error: ModelError) : ProbeResult
@@ -288,8 +288,8 @@ class ProviderStore(
     /** 每次请求前实时查询这家当前本地日的已报告 Token；默认不启用每日限制。 */
     private val dailyUsage: (String) -> Long = { 0L },
     private val newId: () -> String = { UUID.randomUUID().toString() },
-    /** 发给模型服务的 User-Agent;App 给 `Mika/<版本>`。 */
-    private val userAgent: String = "Mika",
+    /** 发给模型服务的 User-Agent;App 给 `Yuan/<版本>`(header 必须是 ASCII,品牌名只用在界面里)。 */
+    private val userAgent: String = "Yuan",
     /** 列模型:接口类型、地址、Key、每个请求都带的头。 */
     private val modelLister: suspend (ProviderConfig.Kind, String, String?, Map<String, String>) -> ModelListResult = ::listAvailable,
     /** 「用 ChatGPT 登录」的授权服务(换令牌、刷新、注销)。 */

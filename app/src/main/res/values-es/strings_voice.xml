@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">El micrófono no está disponible. Puede que otra app lo esté usando</string>
     <string name="voice_hold_to_talk">Mantén pulsado para hablar</string>
     <string name="voice_mic_blocked_title">El micrófono sigue sin estar disponible</string>
-    <string name="voice_mic_blocked_body">La grabación ya está permitida, pero Mika sigue sin poder grabar. Comprueba que el interruptor de acceso al micrófono de los Ajustes rápidos esté activado (Android 12 y posteriores) y que el micrófono de Mika no esté desactivado en el administrador de permisos del sistema. También puede que otra app esté usando el micrófono.</string>
+    <string name="voice_mic_blocked_body">La grabación ya está permitida, pero 如愿 sigue sin poder grabar. Comprueba que el interruptor de acceso al micrófono de los Ajustes rápidos esté activado (Android 12 y posteriores) y que el micrófono de 如愿 no esté desactivado en el administrador de permisos del sistema. También puede que otra app esté usando el micrófono.</string>
     <string name="voice_provider_failed">No se pudo convertir en texto: %1$s</string>
     <string name="voice_unavailable_title">La entrada de voz no está lista</string>
     <string name="voice_unavailable_no_engine">Este teléfono no tiene reconocimiento de voz integrado y no se ha elegido ningún modelo de voz a texto. Elige el modelo de voz de un proveedor en Ajustes › Modelos › Voz a texto y funcionará.</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">Se eliminó el proveedor del modelo de voz elegido. Elige otro en Ajustes › Modelos › Voz a texto.</string>
     <string name="voice_unavailable_off">Voz a texto está desactivado. Elige uno en Ajustes › Modelos › Voz a texto.</string>
     <string name="voice_go_pick">Elegir uno</string>
-    <string name="voice_permission_title">Mika necesita el micrófono</string>
-    <string name="voice_permission_body">Para oírte mientras mantienes pulsado para hablar, Mika necesita grabar audio. Se denegó antes, así que el teléfono no volverá a preguntar. Activa el micrófono en la página de permisos de Mika en los ajustes del sistema.</string>
+    <string name="voice_permission_title">如愿 necesita el micrófono</string>
+    <string name="voice_permission_body">Para oírte mientras mantienes pulsado para hablar, 如愿 necesita grabar audio. Se denegó antes, así que el teléfono no volverá a preguntar. Activa el micrófono en la página de permisos de 如愿 en los ajustes del sistema.</string>
     <string name="voice_permission_open">Abrir ajustes</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">Hablar</string>
     <string name="capsule_voice_send">Enviar</string>
-    <string name="capsule_voice_answer_title">Respondiendo a Mika</string>
+    <string name="capsule_voice_answer_title">Respondiendo a 如愿</string>
     <string name="capsule_voice_continue_title">Continuando “%1$s”</string>
     <string name="capsule_voice_cancel">Cancelar</string>
     <string name="capsule_voice_edit">Editar</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">Se lo dijiste a la tarea: %1$s</string>
     <string name="capsule_voice_answered">Respondido: %1$s</string>
     <string name="capsule_voice_sent">Enviado: %1$s</string>
-    <string name="capsule_voice_need_mic">Toca para permitir el micrófono en Mika</string>
+    <string name="capsule_voice_need_mic">Toca para permitir el micrófono en 如愿</string>
     <string name="capsule_voice_not_ready">La entrada de voz no está lista · toca</string>
-    <string name="capsule_voice_open">Abrir Mika</string>
+    <string name="capsule_voice_open">Abrir 如愿</string>
 </resources>

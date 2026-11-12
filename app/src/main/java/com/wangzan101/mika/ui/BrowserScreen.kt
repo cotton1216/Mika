@@ -74,9 +74,9 @@ import com.wangzan101.mika.ui.theme.MikaType
 /**
  * 浏览器页(侧栏「浏览器」):没有打开的网页时是起始页([BrowserStart]:搜索框、常用网站、最近打开),
  * 打开了是网页([BrowserPageBar] + 网页 + [BrowserToolbar],「更多」是 [BrowserMoreSheet])。
- * 网页底下是「问问 Mika」([PageAskBar]):对着这一页问,这一页借给那个任务当它的当前网页标签;干活时网页下半截盖一块对话面板
- * ([PagePanel]),页面四周亮一圈光边([PageGlow]);你一摸页面 Mika 就暂停,面板收成小卡片([PageCard]),顶上一条「继续」([PausedBanner])。
- * 选中网页上的文字时,文字选择菜单里多一项「问 Mika」,选中的字带进去。状态在 [PageChat]。
+ * 网页底下是「问问如愿」([PageAskBar]):对着这一页问,这一页借给那个任务当它的当前网页标签;干活时网页下半截盖一块对话面板
+ * ([PagePanel]),页面四周亮一圈光边([PageGlow]);你一摸页面如愿就暂停,面板收成小卡片([PageCard]),顶上一条「继续」([PausedBanner])。
+ * 选中网页上的文字时,文字选择菜单里多一项「问如愿」,选中的字带进去。状态在 [PageChat]。
  * 系统返回键先在网页里后退,退不了回到起始页,起始页上再按回到进来的地方。
  * 网页视图放在进程里([UserBrowser]),转屏时接着用;离开这一页(不是转屏、也没有别处的浏览器页)时关掉。
  */
@@ -222,7 +222,7 @@ fun BrowserScreen(browser: UserBrowser, onBack: () -> Unit) {
                 if (loginBanner) LoginBanner(desktop = p.desktop, onDone = browser::confirmLogin)
                 val mode = chat.mode
                 Box(Modifier.weight(1f).fillMaxWidth()) {
-                    // 网页视图由 UserBrowser 放进这个容器(换了标签也放进同一个);手指按下告诉借着页面的任务,选中文字时菜单里有「问 Mika」
+                    // 网页视图由 UserBrowser 放进这个容器(换了标签也放进同一个);手指按下告诉借着页面的任务,选中文字时菜单里有「问如愿」
                     AndroidView(
                         factory = { ctx ->
                             PageFrame(ctx, onTouch = chat::touched, onAsk = { done ->

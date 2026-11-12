@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">Это системное разрешение позволяет Mika читать и использовать содержимое любого экрана. Mika применяет его только на своём виртуальном экране, чтобы выполнять ваши задачи, а на основном экране действует, только когда вы сами поручили ей задачу там.</string>
+    <string name="a11y_service_description">Это системное разрешение позволяет 如愿 читать и использовать содержимое любого экрана. 如愿 применяет его только на своём виртуальном экране, чтобы выполнять ваши задачи, а на основном экране действует, только когда вы сами поручили ей задачу там.</string>
     <string name="channel_attention">Нужны вы</string>
     <string name="takeover_title">Нужны вы</string>
     <string name="takeover_title_reason">Нужны вы: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">Приложение сейчас на основном экране. Когда закончите, нажмите «Готово». Если вы уже всё сделали сами, нажмите «Сделано вручную».</string>
     <string name="takeover_web_busy">В настройках открыт вход на сайт. Сначала нажмите там «Готово», потом «Беру на себя».</string>
     <string name="takeover_move_to_main_failed">Не удалось перенести приложение на основной экран. Нажмите «Беру на себя», чтобы повторить.</string>
-    <string name="takeover_move_back_failed">Не удалось вернуть приложение на экран Mika. Попробуйте ещё раз.</string>
+    <string name="takeover_move_back_failed">Не удалось вернуть приложение на экран 如愿. Попробуйте ещё раз.</string>
     <string name="action_take_over">Беру на себя</string>
     <string name="action_hand_back">Готово</string>
     <string name="action_finished_myself">Сделано вручную</string>
     <string name="action_skip">Пропустить</string>
     <string name="action_cancel_task">Отменить задачу</string>
     <string name="input_title">Нужен ваш ответ</string>
-    <string name="no_answer_note">Если ответа не будет в течение %1$d мин, Mika продолжит без него.</string>
-    <string name="input_too_late">Поздно: через %1$d мин Mika продолжила без ответа.</string>
+    <string name="no_answer_note">Если ответа не будет в течение %1$d мин, 如愿 продолжит без него.</string>
+    <string name="input_too_late">Поздно: через %1$d мин 如愿 продолжила без ответа.</string>
     <string name="action_approve">Разрешить</string>
     <string name="action_decline">Отклонить</string>
     <string name="confirmation_locked_hint">Разблокируйте, чтобы увидеть получателя и содержимое</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">Закрыть</string>
     <string name="terminal_retry">Открыть снова</string>
     <string name="terminal_stop">Остановить</string>
-    <string name="terminal_task_running">Mika тоже работает в этой рабочей области; изменения с обеих сторон могут мешать друг другу.</string>
+    <string name="terminal_task_running">如愿 тоже работает в этой рабочей области; изменения с обеих сторон могут мешать друг другу.</string>
     <string name="terminal_copy_all">Копировать всё</string>
     <string name="terminal_copied">Скопировано</string>
 </resources>

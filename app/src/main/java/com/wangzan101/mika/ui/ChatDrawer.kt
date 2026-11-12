@@ -218,7 +218,7 @@ fun conversationTime(at: Long, now: Long, zone: ZoneId = ZoneId.systemDefault())
     }
 }
 
-/** 侧栏顶上 Mika 名字下面那行状态,和它是不是好的(绿点)还是要处理(橙点)。 */
+/** 侧栏顶上如愿名字下面那行状态,和它是不是好的(绿点)还是要处理(橙点)。 */
 fun readiness(check: Prerequisites.Check): Pair<String, Boolean> = when {
     !check.canStartTask -> tr(R.string.chat_cannot_start) to false
     !check.phoneReady -> tr(R.string.drawer_phone_not_ready) to false
@@ -249,13 +249,15 @@ fun ChatDrawer(
     onBrowser: () -> Unit,
     onFiles: () -> Unit = {},
     onModels: () -> Unit = {},
+    /** 从侧栏进「MCP 服务器」配置。 */
+    onMcp: () -> Unit = {},
     onScreens: () -> Unit = {},
     onSettings: () -> Unit,
     onOpen: (DrawerConversation) -> Unit,
     onAbout: () -> Unit = {},
-    /** 完全退出 Mika(先问一句)。 */
+    /** 完全退出如愿(先问一句)。 */
     onQuit: () -> Unit = {},
-    /** 有新版本:「关于 Mika」带小红点。 */
+    /** 有新版本:「关于如愿」带小红点。 */
     aboutDot: Boolean = false,
     /** 长按一条存过的对话:在它原地弹出操作菜单(置顶、改名、删除);带上那一行在窗口里的位置和大小。 */
     onActions: (DrawerConversation, Rect) -> Unit = { _, _ -> },
@@ -315,7 +317,8 @@ fun ChatDrawer(
             NavEntry(MikaIcons.Globe, stringResource(R.string.drawer_browser), onClick = onBrowser)
             NavEntry(MikaIcons.Paperclip, stringResource(R.string.file_library_title), onClick = onFiles)
             NavEntry(MikaIcons.Spark, stringResource(R.string.settings_model), onClick = onModels)
-            // 和上面几项隔开一点:这是把 Mika 整个停下来,不是换一页
+            NavEntry(MikaIcons.Link, stringResource(R.string.mcp_servers_title), onClick = onMcp)
+            // 和上面几项隔开一点:这是把如愿整个停下来,不是换一页
             Box(Modifier.padding(top = 4.dp)) {
                 NavEntry(MikaIcons.Power, stringResource(R.string.quit_title), onClick = onQuit)
             }
@@ -725,10 +728,11 @@ fun ChatWithDrawer(
     onBrowser: () -> Unit,
     onFiles: () -> Unit = {},
     onModels: () -> Unit = {},
+    onMcp: () -> Unit = {},
     onScreens: () -> Unit = {},
     onSettings: () -> Unit,
     onAbout: () -> Unit = {},
-    /** 有新版本:侧栏「关于 Mika」带小红点。 */
+    /** 有新版本:侧栏「关于如愿」带小红点。 */
     updateAvailable: Boolean = false,
     /** 从侧栏进去的页面刚退回来:当场打开侧栏,回到进去之前的样子。 */
     reopen: Boolean = false,
@@ -927,6 +931,7 @@ fun ChatWithDrawer(
                     onBrowser = { leave(onBrowser) },
                     onFiles = { leave(onFiles) },
                     onModels = { leave(onModels) },
+                    onMcp = { leave(onMcp) },
                     onScreens = { leave(onScreens) },
                     onAbout = { leave(onAbout) },
                     onQuit = { leave { confirmingQuit = true } },

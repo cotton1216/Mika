@@ -49,7 +49,7 @@ class TaskRecoveryTest {
     @Test fun restoresClipboardFromEncryptedBackupAfterKill() {
         var stored: String? = null
         val backup = ClipBackup({ stored }, { stored = it }, XorCipher())
-        backup.save("用户原来的文字", "Mika 要粘贴的")
+        backup.save("用户原来的文字", "如愿要粘贴的")
         assertFalse(stored!!.contains("用户原来的文字"))
 
         val restored = mutableListOf<Pair<String, String>>()
@@ -57,7 +57,7 @@ class TaskRecoveryTest {
             restored += o to u
             true
         })
-        assertEquals(listOf("用户原来的文字" to "Mika 要粘贴的"), restored)
+        assertEquals(listOf("用户原来的文字" to "如愿要粘贴的"), restored)
         assertNull(stored)
         // 没有留底就什么也不做
         assertTrue(TaskRecovery.restoreClip(backup) { _, _ -> error("nothing to restore") })
@@ -66,7 +66,7 @@ class TaskRecoveryTest {
     @Test fun unreadableClipboardKeepsTheEncryptedBackupForAnotherAttempt() {
         var stored: String? = null
         val backup = ClipBackup({ stored }, { stored = it }, XorCipher())
-        backup.save("用户原来的文字", "Mika 要粘贴的")
+        backup.save("用户原来的文字", "如愿要粘贴的")
         assertFalse(TaskRecovery.restoreClip(backup) { _, _ -> false })
         assertTrue(stored != null)
         assertTrue(TaskRecovery.restoreClip(backup) { _, _ -> true })

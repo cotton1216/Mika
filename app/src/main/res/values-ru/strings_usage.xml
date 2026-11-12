@@ -8,7 +8,7 @@
     <string name="usage_title">Расход токенов</string>
     <string name="usage_none">Пока нет</string>
     <string name="usage_empty_title">За этот период расхода нет</string>
-    <string name="usage_empty_body">Поручите Mika что-нибудь, и израсходованные токены будут записаны здесь.</string>
+    <string name="usage_empty_body">Поручите 如愿 что-нибудь, и израсходованные токены будут записаны здесь.</string>
     <string name="usage_note">Числа приведены так, как их сообщают провайдеры, и остаются только на этом телефоне.</string>
     <string name="usage_total">Всего</string>
     <string name="usage_trend">Динамика</string>

@@ -174,10 +174,10 @@ internal object ScheduleTask : AgentTool {
             if (!saved.onTime) {
                 put("exactAlarm", false)
                 put("userNotified", saved.userNotified)
-                put("message", "Saved, but the phone has not granted Mika the alarms & reminders permission, so this task may run late or not start at all. " +
-                    (if (saved.userNotified) "Mika has just shown the user a notification that opens the setting. "
+                put("message", "Saved, but the phone has not granted 如愿 the alarms & reminders permission, so this task may run late or not start at all. " +
+                    (if (saved.userNotified) "如愿 has just shown the user a notification that opens the setting. "
                     else "The user has not been shown a prompt for it this time. ") +
-                    "Tell the user plainly that scheduled tasks need this permission and that it can be turned on from Mika's scheduled tasks page.")
+                    "Tell the user plainly that scheduled tasks need this permission and that it can be turned on from 如愿's scheduled tasks page.")
             }
         })
     }

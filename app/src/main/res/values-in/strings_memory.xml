@@ -10,7 +10,7 @@
     <string name="memory_procedures">Cara-cara</string>
     <string name="memory_fact">Fakta</string>
     <string name="search">Cari</string>
-    <string name="memory_unreadable">Memori sebelumnya tidak bisa dibaca; disisihkan dan Mika mulai dari awal.</string>
+    <string name="memory_unreadable">Memori sebelumnya tidak bisa dibaca; disisihkan dan 如愿 mulai dari awal.</string>
     <string name="memory_pending_n">Perlu ditinjau %1$d</string>
     <string name="memory_pending">Perlu ditinjau</string>
     <string name="memory_memory">Memori</string>
@@ -22,11 +22,11 @@
     <string name="memory_pending_title">Memori menunggu persetujuan Anda</string>
     <string name="memory_switches">Sakelar</string>
     <string name="memory_use">Gunakan memori</string>
-    <string name="memory_use_sub">Jika nonaktif, Mika tidak membaca maupun menyimpan memori</string>
+    <string name="memory_use_sub">Jika nonaktif, 如愿 tidak membaca maupun menyimpan memori</string>
     <string name="memory_auto">Ingat apa yang saya katakan</string>
     <string name="memory_auto_sub">Dirangkum dari kata-kata Anda sendiri setelah tiap tugas</string>
     <string name="memory_learn">Belajar dari tugas sebelumnya (keterampilan dan catatan aplikasi)</string>
-    <string name="memory_learn_sub">Hal yang dipelajari Mika baru dipakai setelah Anda menerimanya</string>
+    <string name="memory_learn_sub">Hal yang dipelajari 如愿 baru dipakai setelah Anda menerimanya</string>
     <string name="memory_clear_sub">Hapus semua memori dan keterampilan yang dipelajari</string>
     <string name="edit_it">Ubah</string>
     <string name="unpin">Lepas sematan</string>
@@ -51,7 +51,7 @@
     <string name="skill_missing_description">Perlu deskripsi satu baris</string>
     <string name="skill_missing_section">Perlu lima bagian: titik masuk, langkah, jebakan umum, tanda selesai, dan kapan berhenti lalu menyerahkan</string>
     <string name="skill_too_long">Keterampilan terlalu panjang; maksimal 4000 karakter</string>
-    <string name="skill_unknown_tool">Menyebut alat yang tidak dimiliki Mika</string>
+    <string name="skill_unknown_tool">Menyebut alat yang tidak dimiliki 如愿</string>
     <string name="memory_manual">Ditulis oleh Anda</string>
     <string name="date_pattern_md">d MMM</string>
     <string name="memory_said_via">Anda berkata pada %1$s lewat %2$s: “%3$s”</string>

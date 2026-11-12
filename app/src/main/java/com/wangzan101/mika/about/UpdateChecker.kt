@@ -114,7 +114,7 @@ class UpdateChecker(
 
     private fun get(url: String): String {
         val req = Request.Builder().url(url)
-            .header("User-Agent", "Mika/$currentVersion")
+            .header("User-Agent", "Yuan/$currentVersion")
             .header("Accept", "application/vnd.github+json")
             .header("X-GitHub-Api-Version", "2022-11-28")
             .build()

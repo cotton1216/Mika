@@ -124,8 +124,8 @@ internal object CallPolicy {
             ?: "default".takeIf { modes.isEmpty() && noOverride }
     }
 
-    private const val IDENTITY_GREETING = "您好，我是 Mika AI 电话助手。"
-    private const val LEGACY_IDENTITY_GREETING = "您好，我是 Mika 的 AI 电话助手。"
+    private const val IDENTITY_GREETING = "您好，我是如愿 AI 电话助手。"
+    private const val LEGACY_IDENTITY_GREETING = "您好，我是如愿的 AI 电话助手。"
     private const val INCOMING_GREETING = "请问有什么需要我转告？"
     const val DEFAULT_GREETING = IDENTITY_GREETING + INCOMING_GREETING
     const val TASK_GREETING = IDENTITY_GREETING + "请问现在方便通话吗？"

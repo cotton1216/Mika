@@ -488,7 +488,7 @@ private fun PresetSuggestion(f: AddForm, label: String, onUse: () -> Unit) {
     )
 }
 
-/** 第一次用 ChatGPT 登录成功后说明一次:Mika 里的用量走你的 ChatGPT 套餐。 */
+/** 第一次用 ChatGPT 登录成功后说明一次:如愿里的用量走你的 ChatGPT 套餐。 */
 @Composable
 private fun ChatGptWelcome(onDismiss: () -> Unit) {
     MikaDialog(
@@ -500,8 +500,8 @@ private fun ChatGptWelcome(onDismiss: () -> Unit) {
 }
 
 /**
- * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到 Mika 的链接(intent 链接,点了由浏览器打开 Mika);
- * 登录完(成功或失败)把 Mika 带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
+ * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到如愿的链接(intent 链接,点了由浏览器打开如愿);
+ * 登录完(成功或失败)把如愿带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
  */
 private class AndroidSignInBrowser(private val context: Context) : SignInBrowser {
     override fun open(url: String) {

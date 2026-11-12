@@ -24,7 +24,7 @@ import java.io.IOException
 import com.wangzan101.mika.shell.IMikaShell
 
 /**
- * Mika 进程里内置助手 Binder 的落点。助手经 [HandoffProvider] 交来 Binder,在这里核对后收下;
+ * 如愿进程里内置助手 Binder 的落点。助手经 [HandoffProvider] 交来 Binder,在这里核对后收下;
  * 由 [com.wangzan101.mika.cap.phone.PhoneServices] 建一份(助手只认一个进程里的一个落点),
  * [BuiltinShellConnection] 和看门狗都看它的 [shell]。
  */
@@ -36,7 +36,7 @@ class HelperHub(context: Context) {
     val shell: StateFlow<IMikaShell?> = _shell.asStateFlow()
 
     private val _restores = MutableStateFlow<HelperRestoreReport?>(null)
-    /** 助手交接时报来的「Mika 被杀后由它拉起来」的记录(诊断信息用);没拉过为 null。 */
+    /** 助手交接时报来的「如愿被杀后由它拉起来」的记录(诊断信息用);没拉过为 null。 */
     val restores: StateFlow<HelperRestoreReport?> = _restores.asStateFlow()
 
     private val handoffDiagnostics = HandoffDiagnostics()
@@ -50,7 +50,7 @@ class HelperHub(context: Context) {
         return sh.openDevtoolsSocket(endpoint)
     }
 
-    /** 交给助手的本进程令牌:Mika 进程一死,助手就从它的死亡通知得知,撤掉 Mika 留下的改动。 */
+    /** 交给助手的本进程令牌:如愿进程一死,助手就从它的死亡通知得知,撤掉如愿留下的改动。 */
     private val token = Binder()
     private val nonces: HandoffNonces by lazy { HandoffNonces(PrefsNonceStore(app), SystemClock::elapsedRealtime, System::currentTimeMillis) }
 
@@ -139,7 +139,7 @@ class HelperHub(context: Context) {
             prefs.getString("resume", null), prefs.getString("launch", null), prefs.getLong("launchAt", 0),
             prefs.getString("usb", null), prefs.getLong("usbAt", 0),
         )
-        // 同步写:助手拿到新口令后 Mika 可能马上被杀,新进程要认得它
+        // 同步写:助手拿到新口令后如愿可能马上被杀,新进程要认得它
         override fun save(slots: NonceSlots) {
             prefs.edit().putString("resume", slots.resume).putString("launch", slots.launch).putLong("launchAt", slots.launchAt)
                 .putString("usb", slots.usb).putLong("usbAt", slots.usbAt).commit()

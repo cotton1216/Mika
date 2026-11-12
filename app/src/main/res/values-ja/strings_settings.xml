@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">言語</string>
     <string name="language_system">システムに合わせる</string>
-    <string name="language_system_detail">Mika が対応していればシステムの言語を使い、対応していなければ英語を使います</string>
+    <string name="language_system_detail">如愿 が対応していればシステムの言語を使い、対応していなければ英語を使います</string>
     <string name="settings_basic">よく使う項目</string>
     <string name="settings_language_appearance">言語と外観</string>
     <string name="settings_model">モデル</string>
@@ -33,7 +33,7 @@
     <string name="settings_recovery">復旧と修復</string>
     <string name="settings_developer_group">開発者向け</string>
     <string name="settings_developer">開発者向けオプション</string>
-    <string name="settings_about">Mika について</string>
+    <string name="settings_about">如愿 について</string>
     <string name="pill_unsupported">非対応</string>
     <string name="pill_available">準備完了</string>
     <string name="pill_needs_attention">要確認</string>
@@ -43,7 +43,7 @@
     <string name="settings_all_ready_detail">モデルを設定済み · スマホの操作の準備完了</string>
     <string name="settings_status">状態</string>
     <string name="settings_a11y">ユーザー補助サービス</string>
-    <string name="settings_a11y_sub">Mika の仮想画面を読み取って操作します</string>
+    <string name="settings_a11y_sub">如愿 の仮想画面を読み取って操作します</string>
     <string name="settings_notif_progress_sub">進行状況と「対応が必要」の通知</string>
     <string name="settings_system_version">システムのバージョン</string>
     <string name="settings_android_focus">Android %1$s · Android 12～13 では、バックグラウンドの作業があなたの画面のフォーカスを奪うことがあります。Android 14 以降をおすすめします</string>
@@ -55,7 +55,7 @@
     <string name="settings_keep_on">画面をオンのままにする</string>
     <string name="settings_keep_on_sub">タスクの実行中は画面をオンのままにし(操作していないときは通常どおり暗くなります)、終わると通常に戻します</string>
     <string name="settings_mute">使用中のアプリをミュート</string>
-    <string name="settings_mute_sub">Mika が使っているアプリは無音になり、あなたが操作を引き継ぐと音が戻ります</string>
+    <string name="settings_mute_sub">如愿 が使っているアプリは無音になり、あなたが操作を引き継ぐと音が戻ります</string>
     <string name="settings_pace">操作のペース</string>
     <string name="settings_pace_fast">速い</string>
     <string name="settings_pace_fast_detail">ステップの間に間を置かず、テキストは一度に入力します</string>
@@ -71,14 +71,14 @@
     </plurals>
     <string name="capsule_settings_title">フローティングカプセル</string>
     <string name="capsule_settings_sub">ほかのアプリを使っている間も、画面上でタスクの進行状況を確認できます</string>
-    <string name="capsule_settings_foot">カプセルは、すでにオンになっている Mika のユーザー補助サービスで表示するので、追加の権限は不要です。そのサービスがオフの場合や、表示できない場合でも、通知は届きます。</string>
-    <string name="capsule_settings_background">スマホによっては、バックグラウンドのアプリが終了されます。カプセルが消える場合は、スマホのシステム設定で、Mika のバックグラウンド実行と自動起動を許可してください。</string>
+    <string name="capsule_settings_foot">カプセルは、すでにオンになっている 如愿 のユーザー補助サービスで表示するので、追加の権限は不要です。そのサービスがオフの場合や、表示できない場合でも、通知は届きます。</string>
+    <string name="capsule_settings_background">スマホによっては、バックグラウンドのアプリが終了されます。カプセルが消える場合は、スマホのシステム設定で、如愿 のバックグラウンド実行と自動起動を許可してください。</string>
     <string name="capsule_mode_off">オフ</string>
     <string name="capsule_mode_tasks">タスク中</string>
     <string name="capsule_mode_always">常に表示</string>
     <string name="capsule_mode_off_detail">通知のみ</string>
     <string name="capsule_mode_tasks_detail">タスクの実行中や対応待ちの間だけ表示し、終わって数秒後に消えます</string>
-    <string name="capsule_mode_always_detail">タスクがないときも、Mika のアイコンを画面に表示し続けます</string>
+    <string name="capsule_mode_always_detail">タスクがないときも、如愿 のアイコンを画面に表示し続けます</string>
     <string name="capsule_idle_opacity">待機時の不透明度</string>
     <string name="capsule_idle_opacity_detail">数秒間操作しないときの表示の濃さ。対応が必要な状態は常に完全不透明で表示します</string>
     <string name="routes_saved">保存した手順</string>
@@ -88,14 +88,14 @@
     </plurals>
     <string name="routes_clear_all">すべて消去</string>
     <string name="routes_clear_title">保存した手順をすべて消去しますか？</string>
-    <string name="routes_clear_body">消去すると、次回から Mika は一歩ずつ考え直して進めます。ほかの設定には影響しません。</string>
+    <string name="routes_clear_body">消去すると、次回から 如愿 は一歩ずつ考え直して進めます。ほかの設定には影響しません。</string>
     <string name="clear">消去</string>
     <string name="sandbox_proxy_off">%1$s · ネットワーク接続をオンにすると使われます</string>
     <string name="net_proxy">ネットワークプロキシ</string>
     <string name="net_proxy_row_sub">モデル呼び出し、アップデート、内蔵ブラウザ、コマンドに使われます</string>
-    <string name="net_proxy_hint">Mika のモデル呼び出し(チャット、モデル一覧、アカウントでのサインイン)、アプリ内でのアップデートのダウンロード、内蔵ブラウザ、そして「ファイルと計算環境」のコマンド(そこでネットワーク接続がオンのとき)に使われます。このスマホやローカルネットワーク上のアドレス(localhost、192.168.x.x、10.x.x.x、.local で終わる名前)は常に直接接続するので、ローカルのモデルもそのまま使えます。user:password@ を含めることができ、このスマホに暗号化して保存されます。直接接続する場合は空欄にしてください。</string>
+    <string name="net_proxy_hint">如愿 のモデル呼び出し(チャット、モデル一覧、アカウントでのサインイン)、アプリ内でのアップデートのダウンロード、内蔵ブラウザ、そして「ファイルと計算環境」のコマンド(そこでネットワーク接続がオンのとき)に使われます。このスマホやローカルネットワーク上のアドレス(localhost、192.168.x.x、10.x.x.x、.local で終わる名前)は常に直接接続するので、ローカルのモデルもそのまま使えます。user:password@ を含めることができ、このスマホに暗号化して保存されます。直接接続する場合は空欄にしてください。</string>
     <string name="net_proxy_invalid">http://ホスト:ポート の形式で入力してください(socks5、socks5h、https も使えます)。ホストの前に user:password@ を付けることもできます。</string>
-    <string name="net_proxy_container_only">https:// のプロキシは「ファイルと計算環境」のコマンドだけに使われ、Mika 自身の接続は直接接続のままです。すべてに使うには http:// か socks5:// を指定してください。</string>
+    <string name="net_proxy_container_only">https:// のプロキシは「ファイルと計算環境」のコマンドだけに使われ、如愿自身の接続は直接接続のままです。すべてに使うには http:// か socks5:// を指定してください。</string>
     <string name="net_proxy_browser_unsupported">このスマホの WebView はアプリ単位のプロキシに対応していないため、内蔵ブラウザは直接接続します。</string>
     <string name="net_proxy_browser_socks_auth">内蔵ブラウザはユーザー名とパスワードが必要な SOCKS プロキシを使えないため、直接接続します。</string>
     <string name="net_proxy_unreachable">ネットワークプロキシに接続できないか、プロキシがリクエストを転送しませんでした。プロキシが動いているか、設定 › ネットワークプロキシ のアドレスが正しいか確認してください。</string>
@@ -122,7 +122,7 @@
     <string name="appearance_system_detail">スマホの設定に合わせて、ライトまたはダーク</string>
     <string name="appearance_light">常にライト</string>
     <string name="appearance_dark">常にダーク</string>
-    <string name="settings_self_config">Mika に自分の設定を変更させる</string>
+    <string name="settings_self_config">如愿 に自分の設定を変更させる</string>
     <string name="settings_self_config_sub">オンにすると、タスクがこれらの設定(ペース、ミュート、カプセル、外観、画面オン)を読み取り・変更するツールを 1 つ使えるようになります。モデル、API キー、コンテナのネットワーク、データを削除するものは含まれません</string>
     <string name="settings_step_limit">タスクごとのステップ上限</string>
     <string name="settings_step_limit_sub">オフは無制限です。上限に達するとタスクは止まり、どこで止まったかを表示します。</string>
@@ -132,7 +132,7 @@
     <string name="settings_step_limit_invalid">1〜500 の整数を入力してください。</string>
     <string name="mcp_servers_title">MCP サーバー</string>
     <string name="mcp_servers_empty">MCP サーバーはまだありません</string>
-    <string name="mcp_servers_empty_sub">外部 MCP サーバーを追加すると、そのツールを Mika から使えます。</string>
+    <string name="mcp_servers_empty_sub">外部 MCP サーバーを追加すると、そのツールを 如愿 から使えます。</string>
     <string name="mcp_servers_add">サーバーを追加</string>
     <string name="mcp_servers_edit">サーバーを編集</string>
     <string name="mcp_servers_name">名前</string>
@@ -163,9 +163,9 @@
     <string name="mcp_servers_status_fail">接続に失敗:%1$s</string>
     <string name="mcp_servers_refresh_all">すべてテスト</string>
     <string name="mcp_servers_allowlist">許可するツール(カンマ区切り、空欄はすべて)</string>
-    <string name="quit_title">Mika を完全に終了</string>
+    <string name="quit_title">如愿 を完全に終了</string>
     <string name="quit_row_sub">バックグラウンドのタスクを停止し、フローティングカプセルを閉じます</string>
-    <string name="quit_confirm_body">実行中のタスクは停止し、フローティングカプセルと通知は消えます。次に Mika を開くと元に戻ります。</string>
+    <string name="quit_confirm_body">実行中のタスクは停止し、フローティングカプセルと通知は消えます。次に 如愿 を開くと元に戻ります。</string>
     <string name="quit_confirm_action">終了</string>
     <string name="settings_task_token_budget">タスクごとの Token 予算</string>
     <string name="settings_task_token_budget_sub">プロバイダーが報告した入力・出力 Token のみを集計します。予算に達すると次のリクエストを開始しません。実行中のリクエストで予算を超える場合があり、使用量が報告されない呼び出しは 0 として扱います。</string>

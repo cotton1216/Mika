@@ -24,7 +24,7 @@
     <string name="voice_mic_unavailable">O microfone não está disponível. Outro app pode estar usando</string>
     <string name="voice_hold_to_talk">Segure para falar</string>
     <string name="voice_mic_blocked_title">O microfone ainda não está disponível</string>
-    <string name="voice_mic_blocked_body">A gravação já está permitida, mas o Mika ainda não consegue gravar. Confira se a opção de acesso ao microfone nas Configurações rápidas está ativada (Android 12 ou superior) e se o microfone do Mika não está desativado no gerenciador de permissões do sistema. Outro app também pode estar usando o microfone.</string>
+    <string name="voice_mic_blocked_body">A gravação já está permitida, mas o 如愿 ainda não consegue gravar. Confira se a opção de acesso ao microfone nas Configurações rápidas está ativada (Android 12 ou superior) e se o microfone do 如愿 não está desativado no gerenciador de permissões do sistema. Outro app também pode estar usando o microfone.</string>
     <string name="voice_provider_failed">Não foi possível transformar em texto: %1$s</string>
     <string name="voice_unavailable_title">A entrada por voz não está pronta</string>
     <string name="voice_unavailable_no_engine">Este celular não tem reconhecimento de fala integrado, e nenhum modelo de fala para texto foi escolhido. Escolha o modelo de fala de um provedor em Configurações › Modelos › Fala para texto e vai funcionar.</string>
@@ -33,12 +33,12 @@
     <string name="voice_unavailable_provider_gone">O provedor do modelo de fala escolhido foi removido. Escolha outro em Configurações › Modelos › Fala para texto.</string>
     <string name="voice_unavailable_off">Fala para texto está desativado. Escolha uma opção em Configurações › Modelos › Fala para texto.</string>
     <string name="voice_go_pick">Escolher</string>
-    <string name="voice_permission_title">O Mika precisa do microfone</string>
-    <string name="voice_permission_body">Para ouvir você enquanto segura para falar, o Mika precisa gravar áudio. A permissão foi negada antes, então o celular não vai perguntar de novo. Ative o microfone na página de permissões do Mika nas configurações do sistema.</string>
+    <string name="voice_permission_title">O 如愿 precisa do microfone</string>
+    <string name="voice_permission_body">Para ouvir você enquanto segura para falar, o 如愿 precisa gravar áudio. A permissão foi negada antes, então o celular não vai perguntar de novo. Ative o microfone na página de permissões do 如愿 nas configurações do sistema.</string>
     <string name="voice_permission_open">Abrir configurações</string>
     <string name="capsule_voice_talk">Falar</string>
     <string name="capsule_voice_send">Enviar</string>
-    <string name="capsule_voice_answer_title">Respondendo ao Mika</string>
+    <string name="capsule_voice_answer_title">Respondendo ao 如愿</string>
     <string name="capsule_voice_continue_title">Continuando “%1$s”</string>
     <string name="capsule_voice_cancel">Cancelar</string>
     <string name="capsule_voice_edit">Editar</string>
@@ -52,7 +52,7 @@
     <string name="capsule_voice_steered">Disse à tarefa: %1$s</string>
     <string name="capsule_voice_answered">Respondido: %1$s</string>
     <string name="capsule_voice_sent">Enviado: %1$s</string>
-    <string name="capsule_voice_need_mic">Toque para permitir o microfone no Mika</string>
+    <string name="capsule_voice_need_mic">Toque para permitir o microfone no 如愿</string>
     <string name="capsule_voice_not_ready">A entrada por voz não está pronta · toque</string>
-    <string name="capsule_voice_open">Abrir o Mika</string>
+    <string name="capsule_voice_open">Abrir o 如愿</string>
 </resources>

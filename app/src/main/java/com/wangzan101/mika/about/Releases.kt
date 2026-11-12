@@ -35,7 +35,7 @@ object Releases {
     private val json = Json { ignoreUnknownKeys = true }
 
     /**
-     * 发布里除了全架构的 `Mika-v<版本>.apk`,还可能有只带某个架构原生库的包,名字以 `-<后缀>.apk` 结尾。
+     * 发布里除了全架构的 `如愿-v<版本>.apk`,还可能有只带某个架构原生库的包,名字以 `-<后缀>.apk` 结尾。
      * 键是 Android 的 ABI 名,值是附件名后缀。
      */
     private val ABI_APK_SUFFIX = mapOf("arm64-v8a" to "arm64")

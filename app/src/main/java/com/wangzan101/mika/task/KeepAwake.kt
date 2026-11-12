@@ -20,7 +20,7 @@ interface WakeLockPort {
  *
  * 只在 Running(含等另一个任务用完某个 App)和排在别的任务后面等虚拟屏时持有。等待接管/回答/继续/解锁时屏幕不需要为 Agent 亮着,
  * 再保持 [GRACE_MS](用户多半正要处理,别让屏幕在他眼前熄掉)后释放,任务继续跑时重新持有。
- * 结束、失败、取消立即释放。锁随进程走:Mika 异常退出时系统自动收回,不需要持久化恢复。
+ * 结束、失败、取消立即释放。锁随进程走:如愿异常退出时系统自动收回,不需要持久化恢复。
  * 用户按电源键照样能熄屏(没带 ACQUIRE_CAUSES_WAKEUP),这时 gate 会让任务等待解锁。
  */
 class KeepAwake(private val lock: WakeLockPort, private val scope: CoroutineScope) {
@@ -116,12 +116,12 @@ class SharedWakeLock(private val lock: WakeLockPort) {
  * 屏幕锁用 SCREEN_DIM_WAKE_LOCK:屏幕保持开着,用户一段时间没碰手机时由系统照常调暗,
  * 用户一碰又回到原来的亮度。不改系统亮度,也不调亮。调暗时屏幕仍是开着、可交互的状态,
  * 注入的触摸照样送达;Agent 操作的是另一块虚拟显示屏,那边的输入也不受主屏明暗影响。
- * 这类锁已标为弃用(推荐窗口的 FLAG_KEEP_SCREEN_ON),但 Mika 在后台跑任务时没有自己的窗口,
+ * 这类锁已标为弃用(推荐窗口的 FLAG_KEEP_SCREEN_ON),但如愿在后台跑任务时没有自己的窗口,
  * 而前台服务持有的这类锁仍然有效。
  */
 class ScreenWakeLock(context: Context) : WakeLockPort {
     private val lock = context.getSystemService(PowerManager::class.java)
-        .newWakeLock(LEVEL, "Mika:task")
+        .newWakeLock(LEVEL, "如愿:task")
         .apply { setReferenceCounted(false) }
 
     override fun acquire() = lock.acquire(MAX_HOLD_MS)

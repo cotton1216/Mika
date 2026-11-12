@@ -187,7 +187,7 @@ internal object AppAfterTask : PhoneTool {
 }
 
 /**
- * 把一段文字分享给一个 App(ACTION_SEND text/plain),在 Mika 的屏上打开它的分享页:收件人、发出都在那一页上点,
+ * 把一段文字分享给一个 App(ACTION_SEND text/plain),在如愿的屏上打开它的分享页:收件人、发出都在那一页上点,
  * 这里不发出任何东西。读不到的界面里打不进字时,经分享把字带进去。
  */
 internal object ShareText : PhoneTool {

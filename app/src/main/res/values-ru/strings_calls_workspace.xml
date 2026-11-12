@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Без предпочитаемой SIM</string>
     <string name="calls_task_back_to_edit">Вернуться к редактированию</string>
     <string name="calls_task_confirm_dial">Подтвердить и позвонить</string>
-    <string name="calls_task_confirm_note">Mika использует задание только для этого звонка. Вызов с выбранной SIM может повлечь плату оператора и голосового сервиса.</string>
+    <string name="calls_task_confirm_note">如愿 использует задание только для этого звонка. Вызов с выбранной SIM может повлечь плату оператора и голосового сервиса.</string>
     <string name="calls_task_constraints">Чего нельзя обещать</string>
     <string name="calls_task_context">Дополнительные сведения</string>
     <string name="calls_task_filled">Заполнено</string>

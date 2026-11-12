@@ -12,7 +12,7 @@
     <string name="takeover_handed_over_hint">앱이 메인 화면으로 넘어왔어요. 끝나면 “완료”를 누르고, 이미 직접 다 마쳤다면 “직접 했어요”를 눌러 주세요.</string>
     <string name="takeover_web_busy">설정에서 웹사이트 로그인이 열려 있어요. 먼저 거기서 “완료”를 누른 다음 “직접 할게요”를 눌러 주세요.</string>
     <string name="takeover_move_to_main_failed">앱을 메인 화면으로 옮기지 못했어요. “직접 할게요”를 눌러 다시 시도해 주세요.</string>
-    <string name="takeover_move_back_failed">앱을 Mika 화면으로 되돌리지 못했어요. 다시 시도해 주세요.</string>
+    <string name="takeover_move_back_failed">앱을 如愿 화면으로 되돌리지 못했어요. 다시 시도해 주세요.</string>
     <string name="action_take_over">직접 할게요</string>
     <string name="action_hand_back">완료</string>
     <string name="action_finished_myself">직접 했어요</string>

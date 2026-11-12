@@ -146,7 +146,7 @@ object AppCapabilities {
     /**
      * 跑完后 `{app:<能力>}` 取哪个包:Agent 打开过的候选优先(手机上可能有好几个日历),其次第一个候选。
      * 没有候选(没有标准 Intent 或这台手机上查不到)时,只认 Agent 打字时在前台的 App([written],见 [RunFacts.appsWrittenIn]),
-     * 而且只有一个;说不准是哪个就不定(核对按没找到算),不拿「第一个打开的 App」凑数。[own] 是 Mika 自己的包名。
+     * 而且只有一个;说不准是哪个就不定(核对按没找到算),不拿「第一个打开的 App」凑数。[own] 是如愿自己的包名。
      */
     fun choose(candidates: List<String>, launched: List<String>, own: String? = null, written: List<String> = emptyList()): String? {
         val used = launched.filter { it != own && it != SYSTEM_PACKAGE }

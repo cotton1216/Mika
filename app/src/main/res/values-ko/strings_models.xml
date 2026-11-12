@@ -86,7 +86,7 @@
     <string name="models_used_by">%1$s로 사용 중</string>
 
     <string name="chatgpt_use_plan_title">ChatGPT 요금제 사용</string>
-    <string name="chatgpt_use_plan_body">이 앱의 해당 AI 요청을 ChatGPT 요금제에 포함된 사용량이나 크레딧 잔액으로 처리해요. ChatGPT Plus와 Pro에서 쓸 수 있어요. Mika 자체는 무료이며 Mika가 청구하는 비용은 없어요.</string>
+    <string name="chatgpt_use_plan_body">이 앱의 해당 AI 요청을 ChatGPT 요금제에 포함된 사용량이나 크레딧 잔액으로 처리해요. ChatGPT Plus와 Pro에서 쓸 수 있어요. 如愿 자체는 무료이며 Mika가 청구하는 비용은 없어요.</string>
     <string name="chatgpt_continue">ChatGPT로 계속</string>
     <string name="chatgpt_waiting">브라우저에서 로그인을 마친 다음 Mika로 돌아오세요.</string>
     <string name="chatgpt_welcome_title">ChatGPT 요금제를 사용 중이에요</string>
@@ -99,10 +99,10 @@
     <string name="chatgpt_manage_usage">사용량 관리</string>
     <string name="chatgpt_plan_note">ChatGPT 요금제를 사용 중이에요. Plus는 5시간 한도를 이 요금제를 쓰는 다른 앱과 공유하고, Pro는 5시간 한도가 없어요.</string>
     <string name="chatgpt_signed_out_note">이 휴대전화에서 로그아웃했어요. 요금제를 다시 쓰려면 ChatGPT로 계속을 누르세요. 모델 선택은 유지돼요.</string>
-    <string name="chatgpt_revoke_unconfirmed">이 휴대전화에서는 로그아웃했지만 ChatGPT가 확인해 주지 않았어요. ChatGPT 설정에서 Mika 연결을 해제할 수도 있어요.</string>
+    <string name="chatgpt_revoke_unconfirmed">이 휴대전화에서는 로그아웃했지만 ChatGPT가 확인해 주지 않았어요. ChatGPT 설정에서 如愿 연결을 해제할 수도 있어요.</string>
     <string name="chatgpt_fail_denied">로그인이 취소됐어요. 페이지에 필요한 권한을 쓸 수 없다고 나왔다면, 요금제 사용에는 ChatGPT Plus나 Pro가 필요해요. 무료 계정이라면 다른 제공업체의 API 키를 추가하세요.</string>
     <string name="chatgpt_fail_mismatch">로그인 응답이 이번 시도와 맞지 않아요. 다시 시도하세요.</string>
-    <string name="chatgpt_fail_no_client">ChatGPT가 Mika 등록을 마치지 못했어요. 다시 시도하세요.</string>
+    <string name="chatgpt_fail_no_client">ChatGPT가 如愿 등록을 마치지 못했어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_timed_out">로그인 시간이 초과됐어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_exchange">ChatGPT가 이 로그인을 거부했어요 (오류: %1$s). 다시 시도하세요.</string>
     <string name="chatgpt_fail_code_expired">로그인 코드가 만료됐거나 이미 사용됐어요. 다시 로그인하세요.</string>
@@ -111,7 +111,7 @@
     <string name="chatgpt_fail_id_token">ChatGPT 계정을 확인하지 못했어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_no_plan">Mika가 ChatGPT 요금제를 사용하도록 허용되지 않았어요. 다시 로그인하고 요금제 사용을 허용하세요 (Plus 또는 Pro 필요).</string>
     <string name="chatgpt_fail_network">ChatGPT에 연결하지 못했어요. 네트워크를 확인하고 다시 시도하세요.</string>
-    <string name="chatgpt_page_title">Mika</string>
+    <string name="chatgpt_page_title">如愿</string>
     <string name="chatgpt_page_done">로그인했어요. Mika로 돌아가세요.</string>
     <string name="chatgpt_signin_notif_title">ChatGPT에 로그인하는 중</string>
     <string name="chatgpt_signin_notif_body">브라우저에서 ChatGPT에 로그인하기를 기다리는 중</string>
@@ -159,7 +159,7 @@
     <string name="signin_openrouter_authorize">OpenRouter에서 인증</string>
     <string name="signin_openrouter_waiting">브라우저에서 승인한 다음 Mika로 돌아오세요.</string>
     <string name="signin_openrouter_manage">OpenRouter의 Keys 페이지 열기</string>
-    <string name="signin_openrouter_signed_in_note">사용량은 OpenRouter 잔액에서 차감돼요. 키는 이 휴대전화에 암호화되어 저장돼요. 더 이상 쓰지 않으려면 OpenRouter의 Keys 페이지에서 \"Mika\"라는 키를 삭제하세요.</string>
+    <string name="signin_openrouter_signed_in_note">사용량은 OpenRouter 잔액에서 차감돼요. 키는 이 휴대전화에 암호화되어 저장돼요. 더 이상 쓰지 않으려면 OpenRouter의 Keys 페이지에서 \"如愿\"라는 키를 삭제하세요.</string>
     <string name="signin_openrouter_signed_out_note">이 휴대전화에서 키를 삭제했어요. OpenRouter에는 아직 남아 있으니 Keys 페이지에서 삭제하세요. 모델 선택은 유지돼요.</string>
     <string name="signin_set_main">메인 모델로 설정</string>
     <string name="signin_set_main_note">Mika가 일을 처리할 때 사용해요</string>

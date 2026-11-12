@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Напоминание от Mika</string>
+    <string name="trigger_reminder">Напоминание от 如愿</string>
     <string name="trigger_not_started_body">Не удалось запустить задачу по расписанию. Проверьте её на странице «Задачи по расписанию» и запустите снова.</string>
     <string name="trigger_start_failed">Не удалось запустить</string>
     <string name="trigger_not_started">Задача по расписанию не запустилась</string>
-    <string name="trigger_interrupted_body">Задача по расписанию была прервана, и её результат подтвердить нельзя. Сначала проверьте, что произошло на самом деле; Mika не будет повторять её автоматически.</string>
+    <string name="trigger_interrupted_body">Задача по расписанию была прервана, и её результат подтвердить нельзя. Сначала проверьте, что произошло на самом деле; 如愿 не будет повторять её автоматически.</string>
     <string name="trigger_unconfirmed">Нужно проверить результат задачи по расписанию</string>
     <string name="trigger_unlock_failed">Задаче по расписанию не удалось пробудить или разблокировать телефон. Разблокируйте его перед следующим запуском или проверьте «Разрешить удалённое пробуждение и разблокировку» и сохранённые данные блокировки экрана в разделе «Настройки › Подключить компьютер».</string>
     <string name="trigger_alarm_title">Для задач по расписанию нужно разрешение «Будильники и напоминания»</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">Без этого разрешения задачи по расписанию могут запускаться с опозданием или не запускаться вовсе. Включить его нужно только один раз.</string>
     <string name="plans_running_n">Активных: %1$d</string>
     <string name="plans_stopped_n">Выключенных: %1$d</string>
-    <string name="plans_empty">Задач по расписанию пока нет\nНажмите +, чтобы создать задачу, или скажите Mika в чате, когда вам напомнить или что-то для вас сделать.</string>
+    <string name="plans_empty">Задач по расписанию пока нет\nНажмите +, чтобы создать задачу, или скажите 如愿 в чате, когда вам напомнить или что-то для вас сделать.</string>
     <string name="plans_none_running">Нет активных задач по расписанию</string>
     <string name="plans_none_stopped">Нет выключенных задач по расписанию</string>
     <string name="plans_footer">Нажмите +, чтобы создать задачу, или скажите в чате «каждый день в 8…» или «сообщи, когда цена упадёт»; результаты вернутся в этот чат. На запуск по времени может влиять экономия заряда; выключение или удаление затрагивает только будущие запуски.</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">Новая задача по расписанию</string>
     <string name="plans_task_mode">Выполнить задачу</string>
     <string name="plans_reminder_mode">Только напоминание</string>
-    <string name="plans_content_task">Что должна сделать Mika?</string>
+    <string name="plans_content_task">Что должна сделать 如愿?</string>
     <string name="plans_content_reminder">Текст напоминания</string>
     <string name="plans_repeat_interval">Интервал</string>
     <string name="plans_repeat_weekly">Еженедельно</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">При изменении</string>
     <string name="plans_notify_each">Каждый раз</string>
     <string name="plans_cooldown_minutes">Минимум минут между запусками (необязательно)</string>
-    <string name="plans_when_idle">Запускать только когда Mika свободна</string>
+    <string name="plans_when_idle">Запускать только когда 如愿 свободна</string>
     <string name="plans_enabled">Включена</string>
     <string name="plans_error_content">Введите задачу или напоминание</string>
     <string name="plans_error_content_long">Не более 4 000 символов, для напоминания — 2 000</string>

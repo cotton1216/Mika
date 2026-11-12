@@ -53,7 +53,7 @@ data class CallAudioReport(
     @Serializable
     enum class Turn { NONE, SPEECH_DETECTED, TRANSCRIPT_RECEIVED, REPLY_AUDIO_RECEIVED }
 
-    fun supportSummary(): String = "Mika audio: speech_starts=$speechStarts " +
+    fun supportSummary(): String = "如愿 audio: speech_starts=$speechStarts " +
         "complete_transcripts=$completeTranscripts last_observed_turn=${lastObservedTurn.name} " +
         "reply_bytes=$receivedAudioBytes pipe_bytes=$pipeWrittenBytes device_bytes=${deviceAcceptedBytes ?: "unknown"} " +
         "input_frames_after_audio_done=${inputFramesAfterLastReply ?: "unknown"} " +

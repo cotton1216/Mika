@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">مساء الخير</string>
     <string name="chat_greeting_evening">مساء الخير</string>
     <string name="chat_greeting_night">ما زلت مستيقظًا؟</string>
-    <string name="chat_empty_prompt">ما الذي تريد من Mika أن تفعله؟</string>
+    <string name="chat_empty_prompt">ما الذي تريد من 如愿 أن تفعله؟</string>
     <string name="chat_example_github_star">افتح https://github.com/wangzan101/mika وأضف نجمة إلى المشروع.</string>
     <string name="chat_example_follow">افتح X وابحث عن Wang Zan (@wangzan101)، ثم تابع الحساب.</string>
     <string name="chat_example_group_summary">افتح WhatsApp ولخّص رسائل اليوم غير المقروءة، مع إبراز كل ما يحتاج إلى ردي.</string>
@@ -56,7 +56,7 @@
     </plurals>
     <string name="chat_background_note">يعمل في الخلفية — واصل استخدام هاتفك. انقر على العرض المصغّر لتكبيره.</string>
     <string name="chat_placeholder_busy">أضف تفاصيل أو عدّلها…</string>
-    <string name="chat_placeholder_answer">أجب عن سؤال Mika</string>
+    <string name="chat_placeholder_answer">أجب عن سؤال 如愿</string>
     <string name="chat_placeholder_more">أضف مزيدًا من التفاصيل…</string>
     <string name="chat_cannot_start">يتعذر بدء المهام الآن</string>
     <string name="chat_missing">مفقود: %1$s</string>
@@ -66,7 +66,7 @@
     <string name="chat_expand_steps">عرض الخطوات</string>
     <string name="chat_collapse_steps">إخفاء الخطوات</string>
     <string name="chat_view_process">عرض ما حدث</string>
-    <string name="chat_unlock_body">هاتفك مقفل. ستتابع Mika العمل بعد إلغاء قفله.</string>
+    <string name="chat_unlock_body">هاتفك مقفل. ستتابع 如愿 العمل بعد إلغاء قفله.</string>
     <string name="chat_input_body">%1$s\nانقر على خيار أو اكتب أدناه. %2$s</string>
     <string name="chat_refuse">رفض</string>
     <string name="chat_allow_once">السماح هذه المرة</string>
@@ -207,11 +207,11 @@
     <string name="attach_album">الصور</string>
     <string name="attach_files">الملفات</string>
     <string name="attach_recent">الصور الأخيرة</string>
-    <string name="attach_recent_partial">الصور التي سمحت لـ Mika بالوصول إليها</string>
+    <string name="attach_recent_partial">الصور التي سمحت لـ 如愿 بالوصول إليها</string>
     <string name="attach_all">كل الصور</string>
     <string name="attach_change">تغيير إمكانية الوصول</string>
     <string name="attach_no_photos">لا توجد صور بعد</string>
-    <string name="attach_need_access">لاختيار الصور هنا، اسمح لـ Mika بالوصول إلى صورك</string>
+    <string name="attach_need_access">لاختيار الصور هنا، اسمح لـ 如愿 بالوصول إلى صورك</string>
     <string name="attach_grant">السماح بالوصول إلى الصور</string>
     <string name="attach_grant_hint">يمكنك أيضًا النقر على «الصور» أعلاه لاستخدام منتقي الصور في النظام</string>
     <string name="attach_full">يمكنك إرفاق %1$d مرفقًا كحد أقصى في المرة الواحدة</string>
@@ -236,10 +236,10 @@
     <string name="attach_file_and_more">%1$s و%2$d من الملفات الأخرى</string>
     <string name="screen_tag">ما يظهر على شاشتك الآن</string>
     <string name="screen_blocked">تعذّر الالتقاط: هذه الصفحة لا تسمح بلقطات الشاشة</string>
-    <string name="screen_camera">التقط صورة لهذه الشاشة لـ Mika</string>
+    <string name="screen_camera">التقط صورة لهذه الشاشة لـ 如愿</string>
     <string name="screen_remove">إزالة لقطة الشاشة هذه</string>
-    <string name="screen_send">أرسل شاشتك الحالية إلى Mika</string>
-    <string name="pip_screen">الشاشة الافتراضية لـ Mika</string>
+    <string name="screen_send">أرسل شاشتك الحالية إلى 如愿</string>
+    <string name="pip_screen">الشاشة الافتراضية لـ 如愿</string>
     <string name="collapse">طيّ</string>
     <string name="no_app_for_link">لا يوجد تطبيق يمكنه فتح هذا الرابط</string>
     <string name="source_none">لم يُحفظ مصدر لهذه الإجابة</string>
@@ -266,7 +266,7 @@
     <string name="chat_conversation_tokens_partial">هذه المحادثة: %1$s على الأقل</string>
     <string name="chat_select_hint">اضغط مطولًا على النص لتحديده</string>
     <string name="chat_quote_remove">إزالة الاقتباس</string>
-    <string name="chat_quoting_mika">اقتباس من Mika: %1$s</string>
+    <string name="chat_quoting_mika">اقتباس من 如愿: %1$s</string>
     <string name="chat_quoting_you">اقتباس منك: %1$s</string>
     <string name="chat_edit_message">تعديل الرسالة</string>
     <string name="chat_withdraw_message">سحب الرسالة</string>

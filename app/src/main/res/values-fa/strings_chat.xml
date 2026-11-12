@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">بعدازظهر بخیر</string>
     <string name="chat_greeting_evening">عصر بخیر</string>
     <string name="chat_greeting_night">هنوز بیدارید؟</string>
-    <string name="chat_empty_prompt">میکا چه کاری انجام دهد؟</string>
+    <string name="chat_empty_prompt">如愿 چه کاری انجام دهد؟</string>
     <string name="chat_example_follow">ایکس را باز کن، وانگ زان (@wangzan101) را جست‌وجو کن و حساب او را دنبال کن.</string>
     <string name="chat_example_group_summary">واتساپ را باز کن و پیام‌های خوانده‌نشدهٔ امروز را خلاصه کن؛ مواردی را که به پاسخ من نیاز دارند مشخص کن.</string>
     <string name="chat_example_alarms">برای فردا صبح در ساعت‌های ۹:۴۰، ۹:۵۰ و ۱۰:۰۰ زنگ هشدار تنظیم کن.</string>
@@ -26,7 +26,7 @@
     </plurals>
     <string name="chat_background_note">در پس‌زمینه اجرا می‌شود؛ می‌توانید به استفاده از گوشی ادامه دهید. برای بزرگ کردن نمای کوچک روی آن بزنید.</string>
     <string name="chat_placeholder_busy">جزئیات را اضافه یا تغییر دهید…</string>
-    <string name="chat_placeholder_answer">به پرسش میکا پاسخ دهید</string>
+    <string name="chat_placeholder_answer">به پرسش 如愿 پاسخ دهید</string>
     <string name="chat_placeholder_more">چیز دیگری بنویسید…</string>
     <string name="chat_cannot_start">هنوز نمی‌توان کارها را شروع کرد</string>
     <string name="chat_missing">موارد لازم: %1$s</string>
@@ -36,7 +36,7 @@
     <string name="chat_expand_steps">نمایش مراحل</string>
     <string name="chat_collapse_steps">پنهان کردن مراحل</string>
     <string name="chat_view_process">مشاهدهٔ روند کار</string>
-    <string name="chat_unlock_body">گوشی شما قفل است. پس از باز کردن قفل، میکا ادامه می‌دهد.</string>
+    <string name="chat_unlock_body">گوشی شما قفل است. پس از باز کردن قفل، 如愿 ادامه می‌دهد.</string>
     <string name="chat_input_body">%1$s\nیک گزینه را انتخاب کنید یا در زیر بنویسید. %2$s</string>
     <string name="chat_refuse">رد کردن</string>
     <string name="chat_allow_once">فقط این بار اجازه بده</string>
@@ -134,11 +134,11 @@
     <string name="attach_album">عکس‌ها</string>
     <string name="attach_files">فایل‌ها</string>
     <string name="attach_recent">عکس‌های اخیر</string>
-    <string name="attach_recent_partial">عکس‌هایی که اجازهٔ دسترسی به آن‌ها را به میکا داده‌اید</string>
+    <string name="attach_recent_partial">عکس‌هایی که اجازهٔ دسترسی به آن‌ها را به 如愿 داده‌اید</string>
     <string name="attach_all">همهٔ عکس‌ها</string>
     <string name="attach_change">تغییر دسترسی</string>
     <string name="attach_no_photos">هنوز عکسی وجود ندارد</string>
-    <string name="attach_need_access">برای انتخاب عکس در اینجا، به میکا اجازهٔ دسترسی به عکس‌ها را بدهید</string>
+    <string name="attach_need_access">برای انتخاب عکس در اینجا، به 如愿 اجازهٔ دسترسی به عکس‌ها را بدهید</string>
     <string name="attach_grant">اجازهٔ دسترسی به عکس‌ها</string>
     <string name="attach_grant_hint">همچنین می‌توانید برای استفاده از انتخاب‌گر عکس سیستم، در بالا روی «عکس‌ها» بزنید</string>
     <string name="attach_full">هر بار حداکثر %1$d پیوست</string>
@@ -159,10 +159,10 @@
     <string name="attach_file_and_more">%1$s و %2$d فایل دیگر</string>
     <string name="screen_tag">صفحهٔ فعلی شما</string>
     <string name="screen_blocked">گرفتن عکس ممکن نشد: این صفحه اجازهٔ عکس‌برداری نمی‌دهد</string>
-    <string name="screen_camera">گرفتن عکس از این صفحه برای میکا</string>
+    <string name="screen_camera">گرفتن عکس از این صفحه برای 如愿</string>
     <string name="screen_remove">حذف این عکس صفحه</string>
-    <string name="screen_send">ارسال صفحهٔ فعلی شما به میکا</string>
-    <string name="pip_screen">صفحهٔ مجازی میکا</string>
+    <string name="screen_send">ارسال صفحهٔ فعلی شما به 如愿</string>
+    <string name="pip_screen">صفحهٔ مجازی 如愿</string>
     <string name="collapse">جمع کردن</string>
     <string name="no_app_for_link">برنامه‌ای برای باز کردن این پیوند وجود ندارد</string>
     <string name="source_none">منبعی برای این پاسخ ذخیره نشده است</string>
@@ -183,7 +183,7 @@
     <string name="chat_branch_attachments_readd">پیوست‌های موردنظر را دوباره اضافه کنید</string>
     <string name="chat_select_hint">برای انتخاب، متن را لمس کنید و نگه دارید</string>
     <string name="chat_quote_remove">حذف نقل‌قول</string>
-    <string name="chat_quoting_mika">نقل‌قول از میکا: %1$s</string>
+    <string name="chat_quoting_mika">نقل‌قول از 如愿: %1$s</string>
     <string name="chat_quoting_you">نقل‌قول از شما: %1$s</string>
     <string name="chat_edit_message">ویرایش پیام</string>
     <string name="chat_withdraw_message">پس گرفتن پیام</string>

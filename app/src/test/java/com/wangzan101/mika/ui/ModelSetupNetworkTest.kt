@@ -75,7 +75,7 @@ class ModelSetupNetworkTest {
     )
 
     private fun setUp(): Pair<ProviderStore, ModelSetupViewModel> {
-        val store = ProviderStore(tmp.root, AesGcmKeyCipher { key }, userAgent = "Mika/1.2.3")
+        val store = ProviderStore(tmp.root, AesGcmKeyCipher { key }, userAgent = "Yuan/1.2.3")
         val vm = ModelSetupViewModel(store, scope, io = Dispatchers.IO)
         vm.selectPreset(ProviderPresets.custom.label)
         vm.setKind(ProviderConfig.Kind.OpenAiCompat)

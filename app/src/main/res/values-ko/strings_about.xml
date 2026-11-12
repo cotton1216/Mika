@@ -48,7 +48,7 @@
     <string name="about_current">현재 %1$s</string>
     <string name="about_released_on">" · %1$s 릴리스"</string>
     <string name="about_released_under">%1$s 라이선스로 배포</string>
-    <string name="issue_body">- 기기: %1$s\n- Android 버전: %2$s (SDK %3$d)\n- Mika 버전: %4$s (빌드 %5$s)\n\n### 어떤 문제가 있었나요\n\n\n### 어떻게 했나요\n\n\n### 기대한 동작\n\n\n### 진단 정보\n(선택) Mika에서 정보 › 의견 보내기 › 진단 정보 복사를 눌러 여기에 붙여넣으세요\n\n</string>
+    <string name="issue_body">- 기기: %1$s\n- Android 버전: %2$s (SDK %3$d)\n- 如愿 버전: %4$s (빌드 %5$s)\n\n### 어떤 문제가 있었나요\n\n\n### 어떻게 했나요\n\n\n### 기대한 동작\n\n\n### 진단 정보\n(선택) Mika에서 정보 › 의견 보내기 › 진단 정보 복사를 눌러 여기에 붙여넣으세요\n\n</string>
     <string name="licenses_third_party">서드파티 구성 요소 · %1$d</string>
     <string name="licenses_footer">전체 라이선스 문서와 저작권 고지는 소스 저장소의 LICENSE와 licenses/ 폴더(THIRD_PARTY_NOTICES.md 포함)에 있어요.</string>
     <string name="diagnostics_copy">진단 정보 복사</string>
@@ -62,8 +62,8 @@
     <string name="about_auto_update">자동 업데이트</string>
     <string name="about_auto_update_detail">Wi-Fi 연결 시에만 새 버전을 백그라운드에서 다운로드하고 설치 전에 확인합니다</string>
     <string name="about_auto_update_disable">자동 업데이트 끄기</string>
-    <string name="about_auto_update_ready">Mika %1$s 다운로드 완료</string>
-    <string name="about_auto_update_confirm_title">새 Mika 버전이 준비됐어요</string>
+    <string name="about_auto_update_ready">如愿 %1$s 다운로드 완료</string>
+    <string name="about_auto_update_confirm_title">새 如愿 버전이 준비됐어요</string>
     <string name="about_auto_update_confirm_detail">지금 %1$s을 설치하거나 자동 업데이트를 끄고 설정에서 수동으로 확인할 수 있습니다.</string>
     <string name="about_auto_update_now">지금 업데이트</string>
 </resources>

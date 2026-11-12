@@ -18,8 +18,8 @@
     <string name="dev_compaction_sub">步骤多了要压缩时,按目标、事实、进展、下一步记下来</string>
     <string name="dev_group">做事方式</string>
     <string name="dev_autonomy">自主模式</string>
-    <string name="dev_autonomy_sub">打开后连付款也不先问你，Mika 直接做完；关着时只有付款先问</string>
-    <string name="dev_note">这些开关影响 Mika 做事的方式和速度，一般保持默认。</string>
+    <string name="dev_autonomy_sub">打开后连付款也不先问你，如愿直接做完；关着时只有付款先问</string>
+    <string name="dev_note">这些开关影响如愿做事的方式和速度，一般保持默认。</string>
     <string name="dev_grounding">看图定位已验证</string>
     <string name="dev_grounding_sub">看图模型 %1$s 实测过框得准再打开；关着时，它框出的位置要另有佐证才会去点。</string>
     <string name="dev_speed">速度</string>

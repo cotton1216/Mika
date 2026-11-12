@@ -53,7 +53,7 @@ class ModelErrorReasonTest {
             StopRules.modelFailed(ModelError.ModelNotAvailable("qwen-max", "not activated")).reason,
         )
         assertEquals(
-            "模型「gemma」不支持调用工具,Mika 干活要靠工具。去设置 › 模型换一个会调用工具的模型。",
+            "模型「gemma」不支持调用工具,如愿干活要靠工具。去设置 › 模型换一个会调用工具的模型。",
             StopRules.modelFailed(ModelError.ToolsUnsupported("gemma")).reason,
         )
     }

@@ -107,7 +107,7 @@ class McpOAuth(
     }
 
     /** 动态注册公开客户端;redirect URI 用本机回调。 */
-    suspend fun register(server: McpOAuthServer, redirectUri: String, clientName: String = "Mika"): McpOAuthRegistration {
+    suspend fun register(server: McpOAuthServer, redirectUri: String, clientName: String = "如愿"): McpOAuthRegistration {
         val endpoint = server.registrationEndpoint ?: throw McpOAuthException("oauth_registration_unsupported")
         requireSafeEndpoint(endpoint)
         val body = JsonObject(

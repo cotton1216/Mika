@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">Idioma</string>
     <string name="language_system">Seguir el sistema</string>
-    <string name="language_system_detail">Usa el idioma del sistema si Mika lo tiene; si no, inglés</string>
+    <string name="language_system_detail">Usa el idioma del sistema si 如愿 lo tiene; si no, inglés</string>
     <string name="settings_basic">Frecuentes</string>
     <string name="settings_language_appearance">Idioma y apariencia</string>
     <string name="settings_model">Modelo</string>
@@ -37,7 +37,7 @@
     <string name="settings_recovery">Recuperación y reparación</string>
     <string name="settings_developer_group">Desarrollo</string>
     <string name="settings_developer">Opciones de desarrollador</string>
-    <string name="settings_about">Acerca de Mika</string>
+    <string name="settings_about">Acerca de 如愿</string>
     <string name="pill_unsupported">No compatible</string>
     <string name="pill_available">Listo</string>
     <string name="pill_needs_attention">Requiere atención</string>
@@ -47,7 +47,7 @@
     <string name="settings_all_ready_detail">Modelo configurado · Control del teléfono listo</string>
     <string name="settings_status">Estado</string>
     <string name="settings_a11y">Servicio de accesibilidad</string>
-    <string name="settings_a11y_sub">Lee y controla la pantalla virtual de Mika</string>
+    <string name="settings_a11y_sub">Lee y controla la pantalla virtual de 如愿</string>
     <string name="settings_notif_progress_sub">Progreso y avisos de “Te necesita”</string>
     <string name="settings_system_version">Versión del sistema</string>
     <string name="settings_android_focus">Android %1$s · En Android 12–13 el trabajo en segundo plano puede quitarle el foco a tu pantalla; se recomienda Android 14 o posterior</string>
@@ -59,7 +59,7 @@
     <string name="settings_keep_on">Mantener la pantalla encendida</string>
     <string name="settings_keep_on_sub">La pantalla se queda encendida mientras se ejecuta una tarea (se atenúa como siempre si no la usas) y luego vuelve a la normalidad</string>
     <string name="settings_mute">Silenciar la app en uso</string>
-    <string name="settings_mute_sub">Las apps que Mika usa se quedan en silencio; el sonido vuelve cuando tomas el control</string>
+    <string name="settings_mute_sub">Las apps que 如愿 usa se quedan en silencio; el sonido vuelve cuando tomas el control</string>
     <string name="settings_pace">Ritmo de manejo</string>
     <string name="settings_pace_fast">Rápido</string>
     <string name="settings_pace_fast_detail">Sin pausas entre pasos; el texto se rellena de golpe</string>
@@ -77,14 +77,14 @@
     </plurals>
     <string name="capsule_settings_title">Cápsula flotante</string>
     <string name="capsule_settings_sub">Ve el progreso de las tareas en pantalla mientras usas otras apps</string>
-    <string name="capsule_settings_foot">La cápsula se dibuja con el servicio de accesibilidad de Mika que ya está activado, así que no hace falta ningún permiso extra. Si ese servicio está desactivado o no puede dibujar, seguirás recibiendo notificaciones.</string>
-    <string name="capsule_settings_background">Algunos teléfonos cierran las apps en segundo plano. Si la cápsula desaparece, permite que Mika se ejecute en segundo plano y se inicie automáticamente en los ajustes del sistema de tu teléfono.</string>
+    <string name="capsule_settings_foot">La cápsula se dibuja con el servicio de accesibilidad de 如愿 que ya está activado, así que no hace falta ningún permiso extra. Si ese servicio está desactivado o no puede dibujar, seguirás recibiendo notificaciones.</string>
+    <string name="capsule_settings_background">Algunos teléfonos cierran las apps en segundo plano. Si la cápsula desaparece, permite que 如愿 se ejecute en segundo plano y se inicie automáticamente en los ajustes del sistema de tu teléfono.</string>
     <string name="capsule_mode_off">Desactivada</string>
     <string name="capsule_mode_tasks">Durante las tareas</string>
     <string name="capsule_mode_always">Siempre</string>
     <string name="capsule_mode_off_detail">Solo notificaciones</string>
     <string name="capsule_mode_tasks_detail">Aparece mientras una tarea se ejecuta o espera por ti, y desaparece unos segundos después</string>
-    <string name="capsule_mode_always_detail">Mantiene un icono de Mika en pantalla incluso sin tareas</string>
+    <string name="capsule_mode_always_detail">Mantiene un icono de 如愿 en pantalla incluso sin tareas</string>
     <string name="capsule_idle_opacity">Opacidad en reposo</string>
     <string name="capsule_idle_opacity_detail">Tras unos segundos sin tocarla; lo que necesite tu atención permanece totalmente visible</string>
     <string name="routes_saved">Rutas guardadas</string>
@@ -96,14 +96,14 @@
     </plurals>
     <string name="routes_clear_all">Borrar todas</string>
     <string name="routes_clear_title">¿Borrar todas las rutas guardadas?</string>
-    <string name="routes_clear_body">Tras borrarlas, Mika volverá a resolver las cosas paso a paso la próxima vez. Los demás ajustes no se ven afectados.</string>
+    <string name="routes_clear_body">Tras borrarlas, 如愿 volverá a resolver las cosas paso a paso la próxima vez. Los demás ajustes no se ven afectados.</string>
     <string name="clear">Borrar</string>
     <string name="sandbox_proxy_off">%1$s · se usa cuando el acceso a la red está activado</string>
     <string name="net_proxy">Proxy de red</string>
     <string name="net_proxy_row_sub">Para las llamadas al modelo, las actualizaciones, el navegador integrado y los comandos</string>
-    <string name="net_proxy_hint">Se usa para las llamadas de Mika al modelo (chat, listas de modelos, inicio de sesión con cuenta), las descargas de actualizaciones dentro de la app, el navegador integrado y los comandos de Archivos y entorno de cómputo mientras allí está activado el acceso a la red. Las direcciones de este teléfono o de tu red local (localhost, 192.168.x.x, 10.x.x.x, nombres que terminan en .local) siempre se conectan directamente, así que los modelos locales siguen funcionando. Puede incluir usuario:contraseña@, que se guarda cifrado en este teléfono. Déjalo vacío para una conexión directa.</string>
+    <string name="net_proxy_hint">Se usa para las llamadas de 如愿 al modelo (chat, listas de modelos, inicio de sesión con cuenta), las descargas de actualizaciones dentro de la app, el navegador integrado y los comandos de Archivos y entorno de cómputo mientras allí está activado el acceso a la red. Las direcciones de este teléfono o de tu red local (localhost, 192.168.x.x, 10.x.x.x, nombres que terminan en .local) siempre se conectan directamente, así que los modelos locales siguen funcionando. Puede incluir usuario:contraseña@, que se guarda cifrado en este teléfono. Déjalo vacío para una conexión directa.</string>
     <string name="net_proxy_invalid">Escríbelo como http://host:puerto (también valen socks5, socks5h y https), opcionalmente con usuario:contraseña@ antes del host.</string>
-    <string name="net_proxy_container_only">Los proxies https:// solo los usan los comandos de Archivos y entorno de cómputo; las conexiones propias de Mika siguen siendo directas. Usa http:// o socks5:// para cubrirlo todo.</string>
+    <string name="net_proxy_container_only">Los proxies https:// solo los usan los comandos de Archivos y entorno de cómputo; las conexiones propias de 如愿 siguen siendo directas. Usa http:// o socks5:// para cubrirlo todo.</string>
     <string name="net_proxy_browser_unsupported">El WebView de este teléfono no admite un proxy propio para la app, así que el navegador integrado se conecta directamente.</string>
     <string name="net_proxy_browser_socks_auth">El navegador integrado no puede usar un proxy SOCKS que pida usuario y contraseña, así que se conecta directamente.</string>
     <string name="net_proxy_unreachable">No se pudo conectar con el proxy de red, o no reenvió la solicitud. Comprueba que el proxy esté en marcha y que la dirección en Ajustes › Proxy de red sea correcta.</string>
@@ -130,7 +130,7 @@
     <string name="appearance_system_detail">Claro u oscuro, según esté el teléfono</string>
     <string name="appearance_light">Siempre claro</string>
     <string name="appearance_dark">Siempre oscuro</string>
-    <string name="settings_self_config">Dejar que Mika cambie sus propios ajustes</string>
+    <string name="settings_self_config">Dejar que 如愿 cambie sus propios ajustes</string>
     <string name="settings_self_config_sub">Si está activado, las tareas tienen una herramienta para leer y cambiar estas preferencias (ritmo, silencio, cápsula, apariencia, pantalla encendida). Nunca se incluyen los modelos, las claves de API, la red del contenedor ni nada que elimine datos</string>
     <string name="settings_step_limit">Límite de pasos por tarea</string>
     <string name="settings_step_limit_sub">Desactivado significa sin límite. Al alcanzarlo, la tarea se detiene e indica dónde se detuvo.</string>
@@ -140,7 +140,7 @@
     <string name="settings_step_limit_invalid">Introduce un número entero de 1 a 500.</string>
     <string name="mcp_servers_title">Servidores MCP</string>
     <string name="mcp_servers_empty">Aún no hay servidores MCP</string>
-    <string name="mcp_servers_empty_sub">Añade un servidor MCP externo para que Mika use sus herramientas.</string>
+    <string name="mcp_servers_empty_sub">Añade un servidor MCP externo para que 如愿 use sus herramientas.</string>
     <string name="mcp_servers_add">Añadir servidor</string>
     <string name="mcp_servers_edit">Editar servidor</string>
     <string name="mcp_servers_name">Nombre</string>
@@ -171,9 +171,9 @@
     <string name="mcp_servers_status_fail">Error de conexión: %1$s</string>
     <string name="mcp_servers_refresh_all">Probar todo</string>
     <string name="mcp_servers_allowlist">Herramientas permitidas (separadas por comas, vacío = todas)</string>
-    <string name="quit_title">Salir de Mika por completo</string>
+    <string name="quit_title">Salir de 如愿 por completo</string>
     <string name="quit_row_sub">Detiene las tareas en segundo plano y oculta la cápsula flotante</string>
-    <string name="quit_confirm_body">Las tareas en curso se detendrán, y la cápsula flotante y las notificaciones desaparecerán. Al volver a abrir Mika, todo vuelve.</string>
+    <string name="quit_confirm_body">Las tareas en curso se detendrán, y la cápsula flotante y las notificaciones desaparecerán. Al volver a abrir 如愿, todo vuelve.</string>
     <string name="quit_confirm_action">Salir</string>
     <string name="settings_task_token_budget">Presupuesto de tokens por tarea</string>
     <string name="settings_task_token_budget_sub">Solo cuentan los tokens de entrada y salida informados por el proveedor. Al alcanzar el presupuesto no se envían más solicitudes. Una solicitud en curso puede superarlo; las llamadas sin uso informado cuentan como 0.</string>

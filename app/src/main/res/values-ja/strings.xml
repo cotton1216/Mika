@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">このシステム権限により、Mika は画面に表示されている内容を読み取って操作できます。Mika は、頼まれたタスクを自分の仮想画面でこなすときにだけ使い、メイン画面で操作するのは、そこでタスクを任されたときだけです。</string>
+    <string name="a11y_service_description">このシステム権限により、如愿 は画面に表示されている内容を読み取って操作できます。如愿 は、頼まれたタスクを自分の仮想画面でこなすときにだけ使い、メイン画面で操作するのは、そこでタスクを任されたときだけです。</string>
     <string name="channel_attention">あなたの対応が必要</string>
     <string name="takeover_title">あなたの対応が必要</string>
     <string name="takeover_title_reason">対応が必要: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">アプリをメイン画面に移しました。終わったら「完了」をタップしてください。すべて自分で済ませた場合は「自分でやった」をタップします。</string>
     <string name="takeover_web_busy">設定でウェブサイトのログインが開いています。先にそちらで「完了」をタップしてから、「自分でやる」をタップしてください。</string>
     <string name="takeover_move_to_main_failed">アプリをメイン画面に移せませんでした。「自分でやる」をタップして、もう一度お試しください。</string>
-    <string name="takeover_move_back_failed">アプリを Mika の画面に戻せませんでした。もう一度お試しください。</string>
+    <string name="takeover_move_back_failed">アプリを 如愿 の画面に戻せませんでした。もう一度お試しください。</string>
     <string name="action_take_over">自分でやる</string>
     <string name="action_hand_back">完了</string>
     <string name="action_finished_myself">自分でやった</string>
     <string name="action_skip">スキップ</string>
     <string name="action_cancel_task">タスクをキャンセル</string>
     <string name="input_title">回答が必要です</string>
-    <string name="no_answer_note">%1$d 分以内に回答がない場合、Mika は回答なしで先に進みます。</string>
-    <string name="input_too_late">時間切れ: %1$d 分経過したため、Mika は回答なしで先に進みました。</string>
+    <string name="no_answer_note">%1$d 分以内に回答がない場合、如愿 は回答なしで先に進みます。</string>
+    <string name="input_too_late">時間切れ: %1$d 分経過したため、如愿 は回答なしで先に進みました。</string>
     <string name="action_approve">許可</string>
     <string name="action_decline">拒否</string>
     <string name="confirmation_locked_hint">ロックを解除すると宛先と内容を確認できます</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">閉じる</string>
     <string name="terminal_retry">もう一度開く</string>
     <string name="terminal_stop">停止</string>
-    <string name="terminal_task_running">Mika もこのワークスペースで作業しています。同時に変更すると互いに影響する場合があります。</string>
+    <string name="terminal_task_running">如愿 もこのワークスペースで作業しています。同時に変更すると互いに影響する場合があります。</string>
     <string name="terminal_copy_all">すべてコピー</string>
     <string name="terminal_copied">コピーしました</string>
 </resources>

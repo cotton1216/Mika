@@ -224,7 +224,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        // 用户先前点了「完全退出」:打开 Mika 就回来,胶囊和退出时略过的启动工作在这里补上
+        // 用户先前点了「完全退出」:打开如愿就回来,胶囊和退出时略过的启动工作在这里补上
         com.wangzan101.mika.quit.MikaQuit.resume(this)
         monitor.start()
         // 每次打开都悄悄查一次新版本(两分钟内连着打开的只查一次),失败不吭声
@@ -510,6 +510,7 @@ private fun MikaRoot(
                 onBrowser = { nav.pushFromDrawer(Route.Browser) },
                 onFiles = { filesFromDrawer = true; filesConversation = app.chat.ui.value.conversationId; nav.pushFromDrawer(Route.Files) },
                 onModels = { nav.pushFromDrawer(Route.Models) },
+                onMcp = { nav.pushFromDrawer(Route.Mcp) },
                 onScreens = { nav.pushFromDrawer(Route.Screens) },
                 onAbout = { nav.pushFromDrawer(Route.About) },
                 updateAvailable = AboutCopy.drawerDot(updateState),
@@ -581,6 +582,7 @@ private fun MikaRoot(
         Route.Models -> ModelsScreen(store, onBack = back, onOpenSpeech = { nav.push(Route.SpeechModel) }, onOpenUsage = { nav.push(Route.Usage) })
         Route.Usage -> UsageScreen(app.usage, store, onBack = back, onOpenUrl = { openInBrowser(context, it) })
         Route.SpeechModel -> SpeechModelScreen(store, onBack = back)
+        Route.Mcp -> McpServersScreen(app.mcpServers, onBack = back)
         Route.About -> AboutScreen(
             versionName = BuildConfig.VERSION_NAME, build = BuildConfig.GIT_HASH, beta = BuildConfig.BETA,
             update = updateState,

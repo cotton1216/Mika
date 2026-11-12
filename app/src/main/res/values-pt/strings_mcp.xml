@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. Preparar o computador</string>
     <string name="mcp_cli_install_sub">Envie o guia de instalação para a IA do seu computador ou siga-o você mesmo no computador.</string>
     <string name="mcp_copy_install">Copiar guia de instalação</string>
-    <string name="mcp_cli_install_prompt">Siga https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md para instalar a CLI do Mika ou a Skill para este agente. Use o método de conexão escolhido no celular: USB usa o ADB autorizado; Wi-Fi/VPN privada usa o endereço HTTP e um arquivo de token privado. Execute connect para verificar a conexão. Com apenas a Skill, use o script incluído nela. Não envie tarefas ao celular nem exiba tokens na conversa.</string>
+    <string name="mcp_cli_install_prompt">Siga https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md para instalar a CLI do 如愿 ou a Skill para este agente. Use o método de conexão escolhido no celular: USB usa o ADB autorizado; Wi-Fi/VPN privada usa o endereço HTTP e um arquivo de token privado. Execute connect para verificar a conexão. Com apenas a Skill, use o script incluído nela. Não envie tarefas ao celular nem exiba tokens na conversa.</string>
     <string name="mcp_cli_connect">2. Conectar o celular</string>
     <string name="mcp_cli_connect_sub">Execute no computador por USB ou por depuração sem fio pareada. connect verifica a conexão. Com apenas a Skill, peça ao agente para executar o cliente incluído nela.</string>
     <string name="mcp_copy_command">Copiar comando</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. Configurar o cliente MCP</string>
     <string name="mcp_usb_client_sub">O comando de início mostra o endereço e o token no computador. Adicione-os ao seu cliente e confira se o horário da solicitação acima é atualizado.</string>
     <string name="mcp_copy_instructions">Copiar instruções de configuração</string>
-    <string name="mcp_usb_client_instructions">Adicione um servidor MCP Streamable HTTP em http://127.0.0.1:%1$d/mcp neste computador. Defina o cabeçalho Authorization como Bearer seguido do token exibido pelo comando de início do Mika. Não exiba o token na conversa. Conecte ou atualize a lista de ferramentas e confira se o horário da solicitação no celular é atualizado. Guia: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">Adicione um servidor MCP Streamable HTTP em http://127.0.0.1:%1$d/mcp neste computador. Defina o cabeçalho Authorization como Bearer seguido do token exibido pelo comando de início do 如愿. Não exiba o token na conversa. Conecte ou atualize a lista de ferramentas e confira se o horário da solicitação no celular é atualizado. Guia: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">Permitir esta conexão de rede</string>
     <string name="mcp_network_enable_action">Ativar acesso pela rede</string>
     <string name="mcp_network_address_step">1. Escolher um endereço acessível</string>

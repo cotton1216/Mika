@@ -8,7 +8,7 @@
     <string name="usage_title">Penggunaan token</string>
     <string name="usage_none">Belum ada</string>
     <string name="usage_empty_title">Tidak ada penggunaan pada periode ini</string>
-    <string name="usage_empty_body">Minta Mika mengerjakan sesuatu dan token yang terpakai akan dicatat di sini.</string>
+    <string name="usage_empty_body">Minta 如愿 mengerjakan sesuatu dan token yang terpakai akan dicatat di sini.</string>
     <string name="usage_note">Angka sesuai laporan penyedia Anda dan hanya tersimpan di ponsel ini.</string>
     <string name="usage_total">Total</string>
     <string name="usage_trend">Tren</string>

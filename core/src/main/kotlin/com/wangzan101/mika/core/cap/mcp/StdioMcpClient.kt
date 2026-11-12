@@ -151,7 +151,7 @@ class StdioMcpEndpoint private constructor(
             launcher: McpStdioLauncher,
             workspace: String,
             timeoutSec: Int = 60,
-            clientName: String = "Mika",
+            clientName: String = "如愿",
             clientVersion: String = "1",
             protocolVersion: String = PROTOCOL_VERSION,
         ): Result<StdioMcpEndpoint> {

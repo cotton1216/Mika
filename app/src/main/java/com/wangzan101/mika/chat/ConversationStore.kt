@@ -200,7 +200,7 @@ class ConversationStore(
     }
 
     /**
-     * 对话是从哪一页开始的(用户在浏览器页上对着一页问 Mika);不是、读不到为 null。
+     * 对话是从哪一页开始的(用户在浏览器页上对着一页问如愿);不是、读不到为 null。
      * 放在对话文件旁边的 `.page` 文件里(JSON:url、host、title),不动对话文件的格式;旧对话没有这个文件。
      */
     @Synchronized
@@ -481,7 +481,7 @@ data class ConversationSummary(
 data class BranchOrigin(val parentId: String, val parentTurn: Int, val afterTurn: Boolean, val at: Long)
 
 /**
- * 用户此刻在哪个对话:App 里新开、还没说过话的是 [Fresh],正在看的是 [Open];没有记录(没进过 Mika、旧版本)为 null。
+ * 用户此刻在哪个对话:App 里新开、还没说过话的是 [Fresh],正在看的是 [Open];没有记录(没进过如愿、旧版本)为 null。
  * 悬浮胶囊据此接着该接的那个,而不是按「哪个对话文件最后被写过」去猜——新开的对话还没有文件,猜出来的会是上一个。
  */
 sealed interface CurrentChat {

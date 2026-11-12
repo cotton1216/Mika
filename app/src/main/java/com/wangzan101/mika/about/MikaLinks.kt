@@ -4,10 +4,10 @@ import com.wangzan101.mika.R
 import com.wangzan101.mika.i18n.tr
 import java.net.URLEncoder
 
-/** Mika 对外的地址都在这里:仓库、问题、检查更新用的两个来源。换地址只改这一处。 */
+/** 如愿对外的地址都在这里:仓库、问题、检查更新用的两个来源。换地址只改这一处。 */
 object MikaLinks {
     const val REPO = "https://github.com/wangzan101/Mika"
-    const val REPO_LABEL = "github.com/wangzan101/Mika"
+    const val REPO_LABEL = "github.com/wangzan101/如愿"
     const val README = "$REPO#readme"
     const val RELEASES = "$REPO/releases"
     const val NEW_ISSUE = "$REPO/issues/new"
@@ -24,7 +24,7 @@ object MikaLinks {
         val build: String,
     )
 
-    /** 预先填好的问题正文:机型、安卓版本、Mika 版本三行,下面留空几段给用户写。 */
+    /** 预先填好的问题正文:机型、安卓版本、如愿版本三行,下面留空几段给用户写。 */
     fun issueBody(d: Device): String {
         val model = if (d.model.startsWith(d.manufacturer, ignoreCase = true)) d.model else "${d.manufacturer} ${d.model}"
         return buildString {

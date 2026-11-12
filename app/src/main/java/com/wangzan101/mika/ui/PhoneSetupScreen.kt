@@ -100,7 +100,7 @@ private val StepSetSaver = Saver<Set<SetupStep>, String>(
 
 /**
  * 「设置手机操作」引导页:接上实时状态。每一步按系统开关自动打勾,读不到或读不准时用户点「我已经打开了,下一步」;
- * 点清单里前面的某一步可以回去重做。停在配对一步时开始找配对窗口:无障碍开着就由 Mika 自己读配对码,否则发带输入框的通知。
+ * 点清单里前面的某一步可以回去重做。停在配对一步时开始找配对窗口:无障碍开着就由如愿自己读配对码,否则发带输入框的通知。
  * [repair] 是从设置页「重新配对」进来的。
  */
 @Composable
@@ -499,7 +499,7 @@ private fun CurrentStepBody(
         if (view.autoRead) AutoReadHint() else NotifyGuide()
         if (view.portFound && !view.autoRead) Text(PhoneSetupCopy.PORT_FOUND, Modifier.padding(top = 8.dp), fontSize = 13.sp, color = MikaTheme.colors.ok)
     }
-    // 无障碍一步推荐跳过:配对后 Mika 自己打开,也不会被「受限制的设置」拦住
+    // 无障碍一步推荐跳过:配对后如愿自己打开,也不会被「受限制的设置」拦住
     val a11y = step == SetupStep.Accessibility
     if (a11y) PillButton(PhoneSetupCopy.ACCESSIBILITY_SKIP, primary = true, tag = "setup-skip-a11y", onClick = onSkipAccessibility)
     if (view.failure == null && copy.action != null) {
@@ -520,7 +520,7 @@ private fun LinkText(text: String, tag: String?, onClick: () -> Unit) {
     )
 }
 
-/** 无障碍开着:去系统设置前说一句,Mika 会自己读配对码。 */
+/** 无障碍开着:去系统设置前说一句,如愿会自己读配对码。 */
 @Composable
 private fun AutoReadHint() {
     val c = MikaTheme.colors
@@ -532,7 +532,7 @@ private fun AutoReadHint() {
         Icon(MikaIcons.Check, null, Modifier.size(20.dp), tint = c.ok)
         Column {
             Text(PhoneSetupCopy.AUTO_READ_HINT, fontSize = 14.sp, lineHeight = 20.sp, fontWeight = FontWeight.SemiBold, color = c.ink)
-            // 有的系统一进设置就停掉 Mika 的无障碍、冻结后台:读不到时填码通知已经在通知栏里了
+            // 有的系统一进设置就停掉如愿的无障碍、冻结后台:读不到时填码通知已经在通知栏里了
             Text(PhoneSetupCopy.AUTO_READ_FALLBACK, Modifier.padding(top = 4.dp), fontSize = 13.sp, lineHeight = 18.sp, color = c.ink2)
         }
     }

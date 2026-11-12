@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">بدون سیم‌کارت ترجیحی</string>
     <string name="calls_task_back_to_edit">بازگشت به ویرایش</string>
     <string name="calls_task_confirm_dial">تأیید و شماره‌گیری</string>
-    <string name="calls_task_confirm_note">Mika از این خلاصه برای این تماس استفاده می‌کند. شماره‌گیری از سیم‌کارت انتخاب‌شده استفاده می‌کند و ممکن است هزینه اپراتور و صدای بلادرنگ را به همراه داشته باشد.</string>
+    <string name="calls_task_confirm_note">如愿 از این خلاصه برای این تماس استفاده می‌کند. شماره‌گیری از سیم‌کارت انتخاب‌شده استفاده می‌کند و ممکن است هزینه اپراتور و صدای بلادرنگ را به همراه داشته باشد.</string>
     <string name="calls_task_constraints">آنچه نباید وعده داده شود</string>
     <string name="calls_task_context">زمینه اضافی</string>
     <string name="calls_task_filled">اضافه شد</string>

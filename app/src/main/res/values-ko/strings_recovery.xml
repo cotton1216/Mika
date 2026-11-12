@@ -8,7 +8,7 @@
     <string name="rec_boot">재부팅 후 복원</string>
     <string name="rec_boot_body">“무선 디버깅”은 재부팅하면 저절로 꺼져요. 이 기능을 켜면 Mika가 시작할 때 무선 디버깅을 다시 켜고 다시 연결해요. “시스템 설정 수정” 권한이 필요하며, 무선 디버깅을 켜는 데만 사용해요. 신뢰한 Wi-Fi에서만 동작해요. 이 기능을 끄거나 페어링을 해제하면 권한을 반환해요.</string>
     <string name="rec_auto_wireless">무선 디버깅 자동으로 켜기</string>
-    <string name="rec_auto_wireless_body">Wi-Fi가 끊기거나 휴대전화를 재부팅하면 시스템이 “무선 디버깅”을 꺼요. 휴대전화 제어는 보통 무선 디버깅이 필요 없고, Mika 업데이트 후처럼 다시 시작할 때만 필요해요. 이 기능을 켜면 그런 때 Wi-Fi에 연결되어 있으면 Mika가 무선 디버깅을 켜고 다시 연결해요. 대신 꺼 주지는 않아요. “재부팅 후 복원”과 같은 “시스템 설정 수정” 권한을 쓰며, 허용한 Wi-Fi에서만 동작해요. 끄면 Mika가 이 동작을 멈춰요.</string>
+    <string name="rec_auto_wireless_body">Wi-Fi가 끊기거나 휴대전화를 재부팅하면 시스템이 “무선 디버깅”을 꺼요. 휴대전화 제어는 보통 무선 디버깅이 필요 없고, 如愿 업데이트 후처럼 다시 시작할 때만 필요해요. 이 기능을 켜면 그런 때 Wi-Fi에 연결되어 있으면 Mika가 무선 디버깅을 켜고 다시 연결해요. 대신 꺼 주지는 않아요. “재부팅 후 복원”과 같은 “시스템 설정 수정” 권한을 쓰며, 허용한 Wi-Fi에서만 동작해요. 끄면 Mika가 이 동작을 멈춰요.</string>
     <string name="rec_need_setup">먼저 휴대전화 제어 설정을 마치세요</string>
     <string name="rec_failed">완료하지 못했어요. 휴대전화 제어가 준비됐는지 확인하고 다시 시도하세요.</string>
     <string name="rec_working">처리 중…</string>

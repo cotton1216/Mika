@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Mika 알림</string>
+    <string name="trigger_reminder">如愿 알림</string>
     <string name="trigger_not_started_body">예약 작업을 시작하지 못했어요. 예약 작업 페이지에서 확인하고 다시 실행하세요.</string>
     <string name="trigger_start_failed">시작하지 못했어요</string>
     <string name="trigger_not_started">예약 작업이 시작되지 않았어요</string>

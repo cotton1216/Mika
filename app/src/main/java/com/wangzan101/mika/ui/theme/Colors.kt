@@ -38,7 +38,7 @@ class MikaColors(
     val badSoft: Color,
     /** 图标块的底。 */
     val neutralSoft: Color,
-    /** Mika 回答的底:比页面背景深一点点的灰,和用户的蓝色气泡区分开。 */
+    /** 如愿回答的底:比页面背景深一点点的灰,和用户的蓝色气泡区分开。 */
     val answer: Color,
     /** 灰色胶囊、关着的开关。 */
     val greySoft: Color,

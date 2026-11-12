@@ -6,8 +6,8 @@
     <string name="metrics_other">其他（等待、重试）</string>
     <string name="metrics_title">运行统计</string>
     <string name="metrics_sub">最近几次运行的用时、来回次数和 Token</string>
-    <string name="metrics_empty">还没有运行统计。让 Mika 办件事，这里就会记下。</string>
-    <string name="metrics_note">只统计这台手机上最近 %1$d 次运行；时间从 Mika 开始处理算起，第一次反馈是第一次看到它在做什么的时候。</string>
+    <string name="metrics_empty">还没有运行统计。让如愿办件事，这里就会记下。</string>
+    <string name="metrics_note">只统计这台手机上最近 %1$d 次运行；时间从如愿开始处理算起，第一次反馈是第一次看到它在做什么的时候。</string>
     <string name="metrics_copy">复制 JSON</string>
     <string name="metrics_share">分享 JSON</string>
     <string name="metrics_last_10">最近 10 次</string>

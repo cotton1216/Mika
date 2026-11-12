@@ -29,7 +29,7 @@ data class ApkDownloadState(
 /**
  * 手动直连下载交给系统;保存任务编号,进程重启后仍能查询、取消或安装。方法在 IO 线程调用。
  * 文件放在本应用的外部专属目录(别的 App 读写不到),同一时间只留一个;换版本、删除、装好后都清掉。
- * 自动下载和经代理的手动下载由 Mika 在进程里执行,以便绑定 Wi-Fi 或使用应用代理([ProxiedApkDownload])。
+ * 自动下载和经代理的手动下载由如愿在进程里执行,以便绑定 Wi-Fi 或使用应用代理([ProxiedApkDownload])。
  */
 class ApkUpdater(private val context: Context, private val net: NetProxy = NetProxy.shared) {
     private val manager = context.getSystemService(DownloadManager::class.java)
@@ -37,7 +37,7 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
     private val directory: File get() = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
         ?: error("external files unavailable"), "updates")
     private val file: File? get() = prefs.getString("file", null)?.let { File(directory, it) }
-    /** 这一份由 Mika 自己下载。 */
+    /** 这一份由如愿自己下载。 */
     private val viaApp: Boolean get() = prefs.getBoolean("viaApp", false)
 
     @Synchronized
@@ -86,7 +86,7 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
             return
         }
         val request = DownloadManager.Request(Uri.parse(url))
-            .setTitle("Mika ${release.version}")
+            .setTitle("如愿 ${release.version}")
             .setMimeType("application/vnd.android.package-archive")
             // 只在下载中显示通知:完成后的通知一点就会绕过下面的校验直接打开安装包,所以不留。
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)

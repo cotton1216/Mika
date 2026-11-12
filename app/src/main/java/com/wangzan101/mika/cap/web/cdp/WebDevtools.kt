@@ -59,7 +59,7 @@ import com.wangzan101.mika.cap.web.WebOwner
  *
  * 桌面版网页也在这里:标签一建好就把 WebView 设置换成桌面 UA(连不上 DevTools 时的退路)并在文档开始注入身份补丁,
  * 会话连上后再用仿真把 UA-CH、视口、触摸与指针一并换成桌面(见 [DesktopProfile]);按站点记住的手机版站点都换回默认。
- * 用户在 Mika 里选定了界面语言时,两种版本的网页都按那种语言请求(见 [PageLanguage]);跟随系统时不动。
+ * 用户在如愿里选定了界面语言时,两种版本的网页都按那种语言请求(见 [PageLanguage]);跟随系统时不动。
  */
 class WebDevtools(private val relay: ((String) -> ParcelFileDescriptor?)?) {
     enum class Route { Unknown, Direct, Relay, None }
@@ -120,7 +120,7 @@ class WebDevtools(private val relay: ((String) -> ParcelFileDescriptor?)?) {
         val mobile = wantsMobile(link, url) ?: false
         val changed = link.mobile != mobile
         if (changed) switchMode(link, mobile)
-        // 用户中途换了 Mika 的语言:已开着的标签在下一次主文档加载前换过来(这里重设仿真,这一页就按新的语言请求)
+        // 用户中途换了如愿的语言:已开着的标签在下一次主文档加载前换过来(这里重设仿真,这一页就按新的语言请求)
         chosenAcceptLanguage().let { lang ->
             if (lang != link.acceptLanguage) {
                 link.acceptLanguage = lang
@@ -256,7 +256,7 @@ class WebDevtools(private val relay: ((String) -> ParcelFileDescriptor?)?) {
         @Volatile var policy: ((String?) -> Boolean)? = null
         /** 用户亲手操作的标签(见 [setHandOperated]):不加视口仿真。 */
         @Volatile var handOperated = false
-        /** 网页按哪种语言请求(Accept-Language 的值);null 是跟随系统、不覆盖。建标签和每次主文档加载前按 Mika 的语言取。 */
+        /** 网页按哪种语言请求(Accept-Language 的值);null 是跟随系统、不覆盖。建标签和每次主文档加载前按如愿的语言取。 */
         @Volatile var acceptLanguage: String? = null
         /** 会话上已设好的版本;null 是还没设。 */
         @Volatile var configured: Boolean? = null
@@ -335,7 +335,7 @@ class WebDevtools(private val relay: ((String) -> ParcelFileDescriptor?)?) {
     }
 
     /**
-     * 用户在 Mika 里选定的语言对应的 Accept-Language;跟随系统为 null。标签先按 ICU 的常见写法补全
+     * 用户在如愿里选定的语言对应的 Accept-Language;跟随系统为 null。标签先按 ICU 的常见写法补全
      * (en → en-Latn-US)再写成请求头。
      */
     private fun chosenAcceptLanguage(): String? {

@@ -17,7 +17,7 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
 /**
- * 留下的那一页为什么关了;[wire] 记进对话。到时间、内存不够被系统收回、渲染进程崩了、用户关的、留了另一页、Mika 退出了。
+ * 留下的那一页为什么关了;[wire] 记进对话。到时间、内存不够被系统收回、渲染进程崩了、用户关的、留了另一页、如愿退出了。
  */
 enum class KeptPageClose(val wire: String) {
     Expired("expired"), Memory("memory"), Crashed("crashed"), User("user"), Replaced("replaced"), AppExit("app_exit");

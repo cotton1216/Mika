@@ -822,7 +822,7 @@ class TaskRun(
                 phoneCalls = (service.application as MikaApp).callPort.takeIf {
                     !conditionCheck && (service.application as MikaApp).calls.settings.state.value.enabled
                 },
-                // 设置里允许 Mika 改自己时,才把 settings_list、settings_set 发给模型
+                // 设置里允许如愿改自己时,才把 settings_list、settings_set 发给模型
                 selfConfig = if (FeatureFlags.get(service).selfConfig()) {
                     com.wangzan101.mika.settings.SelfConfigImpl(FeatureFlags.get(service))
                 } else null,
@@ -858,7 +858,7 @@ class TaskRun(
                 mcpServers = mcpEndpoints(),
                 // 仅用户明确配置并启用时提供通用搜索;否则继续用浏览器搜索。
                 webSearch = com.wangzan101.mika.settings.WebSearchSettings.get(service).service(),
-                // 已 root 的手机上用户打开了「允许 Mika 执行 root 命令」才登记 root 工具(子任务、条件检查不给)
+                // 已 root 的手机上用户打开了「允许如愿执行 root 命令」才登记 root 工具(子任务、条件检查不给)
                 root = phoneServices.shellManager.root.takeIf { !conditionCheck && it.commandsAllowed() }
                     ?.let { r -> RootCommands(RootShell::su, r::commandsAllowed) { a -> if (a == null) r.suGone() else r.commandsDenied(a) } })
             dispatcher = tools
@@ -870,7 +870,7 @@ class TaskRun(
                     if (phoneScreen.acquired && dispatcher?.surface != WEB) phone?.screen?.let { awaitUserPick(it, taskGate, w) }
                     taskGate.pass({ phoneScreen.acquired && dispatcher?.surface != WEB }, w)
                 }, knowledge = knowledge, sink = sink, trace = trace, installedApps = { apps },
-                // 选渠道用的事实:装了哪些 App、在 Mika 里登录过哪些网站、有没有内置浏览器
+                // 选渠道用的事实:装了哪些 App、在如愿里登录过哪些网站、有没有内置浏览器
                 channelFacts = {
                     val registry = WebSites.registry(service)
                     ChannelFacts(
@@ -1037,7 +1037,7 @@ class TaskRun(
             withContext(Dispatchers.IO + NonCancellable) {
                 // 前面哪步抛错,屏和网页显示也照放(按建的反序)
                 try {
-                    // 先定 Mika 屏上 App 的去留(留下的挪到主屏后面、正在出声的关掉)并释放屏,再还原静音:留下的不会突然出声
+                    // 先定如愿屏上 App 的去留(留下的挪到主屏后面、正在出声的关掉)并释放屏,再还原静音:留下的不会突然出声
                     val apps = phone?.takeIf { !shellDied }?.let { p ->
                         p.display.current?.let { d -> AppsAfterTaskEnd.finish(p.shell, d.displayId, afterTask) }
                     }
@@ -1069,7 +1069,7 @@ class TaskRun(
     )
 
     /**
-     * 这次任务的静音规则(见 [AppMuter]):Mika 自己不静;没有桌面入口的系统包不静(系统界面、选择框一类);
+     * 这次任务的静音规则(见 [AppMuter]):如愿自己不静;没有桌面入口的系统包不静(系统界面、选择框一类);
      * 用户在主屏上看得见的不静;没静成的记下,任务进度上提示可能出声。
      */
     private fun appMuter(shell: com.wangzan101.mika.shell.IMikaShell, audio: AudioMute): AppMuter {
@@ -1110,7 +1110,7 @@ class TaskRun(
 
     /**
      * 目标 App 换了就静音(启动前多半已静上,这里补上没静成的),并盯着它有没有被用户挪到主屏。
-     * Mika 屏上冒出别的 App(从目标 App 里点开的、另一份顶上来的)也是第一次看到就静;静音按「包 + 用户」,另一份单独静。
+     * 如愿屏上冒出别的 App(从目标 App 里点开的、另一份顶上来的)也是第一次看到就静;静音按「包 + 用户」,另一份单独静。
      * 用户接管期间屏上的事归用户,不去静。
      */
     private fun watchTarget(p: PhoneSide, states: DeviceStateWatcher) {
@@ -1345,7 +1345,7 @@ class TaskRun(
         const val WEB_FRAME_MS = 500L
         const val SHELL_WAIT_MS = 15_000L
         const val DISPLAY_RETRY_MS = 1_000L
-        /** Mika 屏上的前台 App 两次重读之间至少隔这么久。 */
+        /** 如愿屏上的前台 App 两次重读之间至少隔这么久。 */
         const val FOREGROUND_GAP_MS = 300L
         val WAITING_DISPLAY: String get() = tr(R.string.task_waiting_display)
         const val A11Y_WAIT_MS = 5_000L

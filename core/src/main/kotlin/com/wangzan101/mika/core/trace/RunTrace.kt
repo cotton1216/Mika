@@ -122,7 +122,7 @@ class RunTrace internal constructor(internal val archive: TraceArchive, private 
     private val wallStart = TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis())
     private val tickStart = System.nanoTime()
     private fun nowNanos() = wallStart + (System.nanoTime() - tickStart)
-    private val root = LocalSpan(LocalSpan.randomId(16), "invoke_agent Mika", start = nowNanos())
+    private val root = LocalSpan(LocalSpan.randomId(16), "invoke_agent 如愿", start = nowNanos())
         .setAttribute("gen_ai.operation.name", "invoke_agent").setAttribute("mika.status", "partial")
         .setAttribute("mika.trace.format_version", 2L)
     private val pending = mutableSetOf<LocalSpan>()

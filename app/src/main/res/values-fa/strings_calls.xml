@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">برقراری تماس</string>
     <string name="calls_rules">قوانین پاسخ‌دهی</string>
     <string name="calls_setup_credentials">اعتبارنامه‌های صدای بلادرنگ Volcengine را پیکربندی کنید.</string>
-    <string name="calls_setup_shell">ابتدا دستیار داخلی Mika را متصل کنید.</string>
+    <string name="calls_setup_shell">ابتدا دستیار داخلی 如愿 را متصل کنید.</string>
     <string name="calls_sim_clear_preferred">پاک کردن سیم‌کارت ترجیحی</string>
     <string name="calls_sim_preferred">سیم‌کارت ترجیحی: %1$s</string>
     <string name="calls_sim_save_preferred">استفاده از این سیم‌کارت به‌صورت پیش‌فرض</string>

@@ -32,9 +32,9 @@ private const val WAKE_RETRY_MS = 50L
 private const val TAG = "SandboxBridge"
 
 /**
- * 沙箱命令回调 Mika 的桥:每次运行开一个抽象命名空间的 Unix 套接字(名字随机)和一次性令牌,经环境变量交给命令,
+ * 沙箱命令回调如愿的桥:每次运行开一个抽象命名空间的 Unix 套接字(名字随机)和一次性令牌,经环境变量交给命令,
  * 命令结束(含超时、被杀、取消)即关闭。断网过滤只拦 AF_INET/AF_INET6,所以断网时桥照样能用。
- * 只接受与 Mika 同一身份(uid)的连接;协议见 [BridgeProtocol]。
+ * 只接受与如愿同一身份(uid)的连接;协议见 [BridgeProtocol]。
  */
 class SandboxBridge(
     private val onProgress: (String) -> Unit,

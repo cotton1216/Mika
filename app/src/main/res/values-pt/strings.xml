@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">Esta permissão do sistema permite que o Mika leia e opere o que aparece em qualquer tela. O Mika a usa apenas na tela virtual dele para fazer as tarefas que você pedir, e só age na sua tela principal quando você entrega uma tarefa lá.</string>
+    <string name="a11y_service_description">Esta permissão do sistema permite que o 如愿 leia e opere o que aparece em qualquer tela. O 如愿 a usa apenas na tela virtual dele para fazer as tarefas que você pedir, e só age na sua tela principal quando você entrega uma tarefa lá.</string>
     <string name="channel_attention">Precisa de você</string>
     <string name="takeover_title">Precisa de você</string>
     <string name="takeover_title_reason">Precisa de você: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">O app agora está na sua tela principal. Toque em “Concluir” quando terminar; se você já fez tudo sozinho, toque em “Já fiz sozinho”.</string>
     <string name="takeover_web_busy">Há um login de site aberto em Configurações. Toque em “Concluir” lá primeiro e depois em “Eu cuido”.</string>
     <string name="takeover_move_to_main_failed">Não foi possível mover o app para a tela principal. Toque em “Eu cuido” para tentar de novo.</string>
-    <string name="takeover_move_back_failed">Não foi possível devolver o app para a tela do Mika. Tente de novo.</string>
+    <string name="takeover_move_back_failed">Não foi possível devolver o app para a tela do 如愿. Tente de novo.</string>
     <string name="action_take_over">Eu cuido</string>
     <string name="action_hand_back">Concluir</string>
     <string name="action_finished_myself">Já fiz sozinho</string>
     <string name="action_skip">Pular</string>
     <string name="action_cancel_task">Cancelar tarefa</string>
     <string name="input_title">Precisa da sua resposta</string>
-    <string name="no_answer_note">Se não houver resposta em %1$d min, o Mika continuará sem ela.</string>
-    <string name="input_too_late">Tarde demais: após %1$d min o Mika continuou sem resposta.</string>
+    <string name="no_answer_note">Se não houver resposta em %1$d min, o 如愿 continuará sem ela.</string>
+    <string name="input_too_late">Tarde demais: após %1$d min o 如愿 continuou sem resposta.</string>
     <string name="action_approve">Aprovar</string>
     <string name="action_decline">Recusar</string>
     <string name="confirmation_locked_hint">Desbloqueie para ver o destinatário e o conteúdo</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">Fechar</string>
     <string name="terminal_retry">Abrir novamente</string>
     <string name="terminal_stop">Parar</string>
-    <string name="terminal_task_running">Mika também está trabalhando neste espaço. Alterações dos dois lados podem interferir.</string>
+    <string name="terminal_task_running">如愿 também está trabalhando neste espaço. Alterações dos dois lados podem interferir.</string>
     <string name="terminal_copy_all">Copiar tudo</string>
     <string name="terminal_copied">Copiado</string>
 </resources>

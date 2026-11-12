@@ -16,7 +16,7 @@
     <string name="phone_step_usb_body">“개발자 옵션”에서 “USB 디버깅”을 찾아 켜고, 물어보면 “확인”을 누르세요. 다른 스위치는 바꾸지 마세요. 일부는 휴대전화를 초기화할 수 있어요. 케이블은 필요 없어요. 켜 두면 Wi-Fi가 꺼져도 Mika가 계속 일할 수 있어요.</string>
     <string name="phone_open_dev_options">개발자 옵션 열기</string>
     <string name="phone_step_usb_brief">Wi-Fi 없이도 계속 동작</string>
-    <string name="phone_step_a11y">Mika 접근성 켜기</string>
+    <string name="phone_step_a11y">如愿 접근성 켜기</string>
     <string name="phone_step_a11y_body">시스템의 “접근성” 설정에서 Mika를 찾아 켜세요. 그러면 페어링할 때 Mika가 페어링 코드를 직접 읽어서 입력할 필요가 없어요. 건너뛰어도 돼요(권장). 페어링한 뒤 Mika가 Android의 “제한된 설정”에 막히지 않고 알아서 켜며, 이때는 알림에서 코드를 입력해요. 시스템에서 “앱이 권한 요청을 가리고 있습니다”라고 하면 다른 앱의 플로팅 창이나 버블을 닫고 다시 시도하세요.</string>
     <string name="phone_step_a11y_action">접근성 설정 열기</string>
     <string name="phone_step_a11y_brief">Mika가 페어링 코드를 직접 읽어요</string>
@@ -58,7 +58,7 @@
     <string name="phone_working">페어링하고 연결하는 중이에요. 몇 초면 돼요</string>
     <string name="phone_success">휴대전화 제어가 설정됐어요</string>
     <string name="phone_success_note">USB 디버깅은 계속 켜 두세요. 재부팅한 뒤에는 무선 디버깅을 켜면 Mika가 자동으로 다시 연결해요.</string>
-    <string name="phone_start_using">Mika 사용 시작</string>
+    <string name="phone_start_using">如愿 사용 시작</string>
     <string name="done">완료</string>
     <string name="fail_wrong_code">페어링 코드가 틀렸거나 만료됐어요</string>
     <string name="fail_wrong_code_body">코드는 페어링 창을 열 때마다 바뀌어요. “페어링 코드로 기기 페어링”을 다시 누르고 새 6자리를 입력하세요.</string>

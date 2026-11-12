@@ -21,7 +21,7 @@
     <string name="about_repo_sub">%1$s · beri bintang ya</string>
     <string name="about_guide">Panduan &amp; cara berkontribusi</string>
     <string name="about_guide_sub">Mulai memakai; tambahkan pengetahuan aplikasi tanpa perlu coding</string>
-    <string name="about_data_note">Apa yang Anda kirim ke Mika — pesan, isi layar, dan tangkapan layar — hanya dikirim ke penyedia model yang Anda atur. Mika tidak punya server sendiri dan tidak mengumpulkan data Anda; pemeriksaan pembaruan hanya menghubungi GitHub.</string>
+    <string name="about_data_note">Apa yang Anda kirim ke 如愿 — pesan, isi layar, dan tangkapan layar — hanya dikirim ke penyedia model yang Anda atur. 如愿 tidak punya server sendiri dan tidak mengumpulkan data Anda; pemeriksaan pembaruan hanya menghubungi GitHub.</string>
     <string name="about_license_link">Lisensi Apache-2.0</string>
     <string name="about_author">Dibuat oleh Wang Zan · © 2026</string>
     <string name="about_license_title">Lisensi Apache-2.0</string>
@@ -34,11 +34,11 @@
     <string name="about_update_retry">Unduh lagi</string>
     <string name="about_update_cancel">Hapus unduhan</string>
     <string name="about_update_working">Memproses…</string>
-    <string name="about_update_install_hint">Setelah selesai diunduh, ketuk “Instal pembaruan” dan konfirmasi di penginstal sistem. Anda mungkin perlu mengizinkan Mika menginstal aplikasi tidak dikenal terlebih dahulu.</string>
+    <string name="about_update_install_hint">Setelah selesai diunduh, ketuk “Instal pembaruan” dan konfirmasi di penginstal sistem. Anda mungkin perlu mengizinkan 如愿 menginstal aplikasi tidak dikenal terlebih dahulu.</string>
     <string name="about_update_error">Pengunduhan atau penginstalan belum selesai. Silakan coba lagi nanti.</string>
     <string name="about_update_bad_file">Paket yang diunduh tidak lengkap atau tidak cocok dengan rilisnya. Paket sudah dihapus; silakan unduh ulang.</string>
-    <string name="about_update_not_newer">Paket yang diunduh tidak lebih baru dari Mika yang terpasang. Paket sudah dihapus.</string>
-    <string name="about_update_bad_signer">Paket ini ditandatangani berbeda dari Mika yang terpasang, jadi tidak bisa memperbaruinya. Paket sudah dihapus. Jika Anda membangun Mika sendiri, copot dulu, lalu instal versi resmi.</string>
+    <string name="about_update_not_newer">Paket yang diunduh tidak lebih baru dari 如愿 yang terpasang. Paket sudah dihapus.</string>
+    <string name="about_update_bad_signer">Paket ini ditandatangani berbeda dari 如愿 yang terpasang, jadi tidak bisa memperbaruinya. Paket sudah dihapus. Jika Anda membangun 如愿 sendiri, copot dulu, lalu instal versi resmi.</string>
     <string name="about_update_later">Nanti</string>
     <string name="about_no_browser">Tidak ada browser untuk membuka tautan</string>
     <string name="about_version">Versi %1$s</string>
@@ -48,7 +48,7 @@
     <string name="about_current">Saat ini %1$s</string>
     <string name="about_released_on">" · dirilis %1$s"</string>
     <string name="about_released_under">Dirilis di bawah %1$s</string>
-    <string name="issue_body">- Perangkat: %1$s\n- Versi Android: %2$s (SDK %3$d)\n- Versi Mika: %4$s (build %5$s)\n\n### Apa yang salah\n\n\n### Langkah yang Anda lakukan\n\n\n### Yang Anda harapkan\n\n\n### Diagnostik\n(Opsional) Di Mika, buka Tentang › Kirim masukan › Salin diagnostik, lalu tempel di sini\n\n</string>
+    <string name="issue_body">- Perangkat: %1$s\n- Versi Android: %2$s (SDK %3$d)\n- Versi 如愿: %4$s (build %5$s)\n\n### Apa yang salah\n\n\n### Langkah yang Anda lakukan\n\n\n### Yang Anda harapkan\n\n\n### Diagnostik\n(Opsional) Di 如愿, buka Tentang › Kirim masukan › Salin diagnostik, lalu tempel di sini\n\n</string>
     <string name="licenses_third_party">Komponen pihak ketiga · %1$d</string>
     <string name="licenses_footer">Teks lisensi lengkap dan pemberitahuan hak cipta ada di LICENSE dan folder licenses/ (termasuk THIRD_PARTY_NOTICES.md) pada repositori kode sumber.</string>
     <string name="diagnostics_copy">Salin diagnostik</string>
@@ -62,8 +62,8 @@
     <string name="about_auto_update">Pembaruan otomatis</string>
     <string name="about_auto_update_detail">Unduh versi baru di latar belakang hanya melalui Wi-Fi dan minta konfirmasi sebelum memasang</string>
     <string name="about_auto_update_disable">Matikan pembaruan otomatis</string>
-    <string name="about_auto_update_ready">Mika %1$s telah diunduh</string>
-    <string name="about_auto_update_confirm_title">Versi baru Mika siap</string>
+    <string name="about_auto_update_ready">如愿 %1$s telah diunduh</string>
+    <string name="about_auto_update_confirm_title">Versi baru 如愿 siap</string>
     <string name="about_auto_update_confirm_detail">Pasang %1$s sekarang atau matikan pembaruan otomatis dan periksa secara manual di Pengaturan.</string>
     <string name="about_auto_update_now">Perbarui sekarang</string>
 </resources>

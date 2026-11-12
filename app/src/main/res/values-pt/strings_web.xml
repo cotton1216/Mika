@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">Alguns logins podem permanecer; use “Sair de todos” para limpar tudo.</string>
-    <string name="web_challenged_note">O Mika encontrou recentemente um CAPTCHA ou bloqueio de acesso neste site. Se continuar acontecendo, limpe os dados deste site (cookies e armazenamento web) e entre de novo.</string>
-    <string name="web_data_note">Os dados de login em sites ficam só na pasta privada do Mika neste celular, sem criptografia extra — a mesma proteção do navegador do sistema.</string>
+    <string name="web_challenged_note">O 如愿 encontrou recentemente um CAPTCHA ou bloqueio de acesso neste site. Se continuar acontecendo, limpe os dados deste site (cookies e armazenamento web) e entre de novo.</string>
+    <string name="web_data_note">Os dados de login em sites ficam só na pasta privada do 如愿 neste celular, sem criptografia extra — a mesma proteção do navegador do sistema.</string>
     <string name="web_none">Nenhum site visitado ainda</string>
-    <string name="web_none_sub">Os sites aparecem aqui depois que o Mika trabalha neles ou você entra aqui</string>
-    <string name="web_signed_in_by_you">Login feito no Mika</string>
+    <string name="web_none_sub">Os sites aparecem aqui depois que o 如愿 trabalha neles ou você entra aqui</string>
+    <string name="web_signed_in_by_you">Login feito no 如愿</string>
     <string name="web_challenged">Encontrou verificação ou bloqueio</string>
     <string name="web_last_visit">Última visita %1$s</string>
     <string name="web_manage">Gerenciar</string>
     <string name="web_logout_all_title">Sair de todos e limpar dados da web</string>
-    <string name="web_you_signed_in">Você entrou neste site pelo Mika.</string>
-    <string name="web_mika_visited">O Mika já visitou este site.</string>
+    <string name="web_you_signed_in">Você entrou neste site pelo 如愿.</string>
+    <string name="web_mika_visited">O 如愿 já visitou este site.</string>
     <string name="web_open_login">Abrir login</string>
     <string name="web_cleared">Cookies e armazenamento web de %1$s foram limpos; você precisará entrar de novo. Alguns dados podem permanecer; use “Sair de todos” para limpar tudo.</string>
     <string name="web_signed_out">Saiu de %1$s. %2$s</string>
     <string name="web_clear_site">Limpar os dados deste site</string>
     <string name="web_sign_out_site">Sair deste site</string>
     <string name="web_logout_all_q">Sair de todos e limpar dados da web?</string>
-    <string name="web_logout_all_body">Sai de todos os sites no navegador integrado e limpa os dados da web deles guardados no Mika. O Mika precisará entrar de novo quando usar esses sites.</string>
+    <string name="web_logout_all_body">Sai de todos os sites no navegador integrado e limpa os dados da web deles guardados no 如愿. O 如愿 precisará entrar de novo quando usar esses sites.</string>
     <string name="web_logged_out_all">Saiu de todos e os dados da web foram limpos.</string>
     <string name="web_logout_all">Sair de todos</string>
     <string name="date_pattern_md_compact">d MMM</string>
-    <string name="web_takeover_login">Entre no navegador do Mika e toque em “Concluir”</string>
-    <string name="web_takeover_waiting">O Mika está esperando por você: %1$s</string>
+    <string name="web_takeover_login">Entre no navegador do 如愿 e toque em “Concluir”</string>
+    <string name="web_takeover_waiting">O 如愿 está esperando por você: %1$s</string>
     <string name="web_reason_security">Verificação de segurança</string>
     <string name="kept_notif_title">Página da web rodando em segundo plano</string>
     <string name="kept_row_detail">%1$s · fecha em %2$s</string>
@@ -38,7 +38,7 @@
     <string name="kept_reason_crashed">a página travou</string>
     <string name="kept_reason_user">você a fechou</string>
     <string name="kept_reason_replaced">outra página foi mantida</string>
-    <string name="kept_reason_app_exit">o Mika foi encerrado</string>
+    <string name="kept_reason_app_exit">o 如愿 foi encerrado</string>
     <string name="kept_chat_sub">1 página da web rodando em segundo plano</string>
     <string name="kept_capsule">Página em segundo plano rodando</string>
     <string name="kept_card_title">Página em segundo plano</string>

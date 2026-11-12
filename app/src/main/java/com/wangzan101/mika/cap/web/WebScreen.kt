@@ -847,7 +847,7 @@ class WebScreen(
         }
     }
 
-    /** web_script:在当前标签真实页面的隔离世界里跑;动作经 [bridge] 回到 Mika 的动作路径。没有 DevTools 会话时报 devtools_unavailable。 */
+    /** web_script:在当前标签真实页面的隔离世界里跑;动作经 [bridge] 回到如愿的动作路径。没有 DevTools 会话时报 devtools_unavailable。 */
     override suspend fun runScript(code: String, timeoutMs: Long, bridge: ScriptBridge): ScriptRun {
         crashedTab()?.takeIf { currentTab() == null }?.let { throw WebTabCrashed(it) }
         val tab = currentTab() ?: return ScriptRun.Failed(NO_TAB, "No web page is open.")

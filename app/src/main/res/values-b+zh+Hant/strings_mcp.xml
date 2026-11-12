@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. 準備電腦端工具</string>
     <string name="mcp_cli_install_sub">把安裝指引傳給電腦上的 AI 助手，或在電腦依指南手動安裝。</string>
     <string name="mcp_copy_install">複製安裝指引</string>
-    <string name="mcp_cli_install_prompt">請按 https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.md 在電腦安裝 Mika CLI 或適合目前 Agent 的 Skill。依手機上選擇的方式連線：USB 使用已授權的 ADB，Wi-Fi/私人 VPN 使用 HTTP 位址及私人權杖檔案。執行 connect 驗證連線；只裝 Skill 時使用隨附指令碼。不提交手機任務，也不要將權杖貼回對話。</string>
+    <string name="mcp_cli_install_prompt">請按 https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.md 在電腦安裝如愿 CLI 或適合目前 Agent 的 Skill。依手機上選擇的方式連線：USB 使用已授權的 ADB，Wi-Fi/私人 VPN 使用 HTTP 位址及私人權杖檔案。執行 connect 驗證連線；只裝 Skill 時使用隨附指令碼。不提交手機任務，也不要將權杖貼回對話。</string>
     <string name="mcp_cli_connect">2. 連接手機</string>
     <string name="mcp_cli_connect_sub">透過 USB 或已配對的無線偵錯，在電腦執行。connect 會驗證連線；只裝 Skill 時，讓 AI 助手使用隨附指令碼。</string>
     <string name="mcp_copy_command">複製命令</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. 設定 MCP 用戶端</string>
     <string name="mcp_usb_client_sub">啟動命令會在電腦顯示位址和權杖。填入用戶端並連線，確認頂部請求時間更新。</string>
     <string name="mcp_copy_instructions">複製設定說明</string>
-    <string name="mcp_usb_client_instructions">在電腦的 MCP 用戶端新增 Streamable HTTP 伺服器，位址 http://127.0.0.1:%1$d/mcp。Authorization 請求標頭使用 Bearer 加上 Mika 啟動命令在電腦輸出的權杖，不要將權杖貼回對話。連線或重新整理工具清單後，確認手機頂部請求時間更新。指南：https://github.com/wangzan101/Mika/blob/main/docs/mcp.md</string>
+    <string name="mcp_usb_client_instructions">在電腦的 MCP 用戶端新增 Streamable HTTP 伺服器，位址 http://127.0.0.1:%1$d/mcp。Authorization 請求標頭使用 Bearer 加上如愿啟動命令在電腦輸出的權杖，不要將權杖貼回對話。連線或重新整理工具清單後，確認手機頂部請求時間更新。指南：https://github.com/wangzan101/Mika/blob/main/docs/mcp.md</string>
     <string name="mcp_network_enable">允許透過網路連線</string>
     <string name="mcp_network_enable_action">開啟網路存取</string>
     <string name="mcp_network_address_step">1. 選擇電腦能存取的位址</string>

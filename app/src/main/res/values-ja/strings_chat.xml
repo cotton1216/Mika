@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">こんにちは</string>
     <string name="chat_greeting_evening">こんばんは</string>
     <string name="chat_greeting_night">夜更かしですね</string>
-    <string name="chat_empty_prompt">Mika に何をお願いしますか？</string>
+    <string name="chat_empty_prompt">如愿 に何をお願いしますか？</string>
     <string name="chat_example_github_star">https://github.com/wangzan101/mika を開いて、このプロジェクトにスターを付けて</string>
     <string name="chat_example_follow">X を開いて Wang Zan（@wangzan101）を検索し、アカウントをフォローして</string>
     <string name="chat_example_group_summary">WhatsApp を開いて今日の未読メッセージをまとめ、返信が必要なものを拾って</string>
@@ -51,7 +51,7 @@
     </plurals>
     <string name="chat_background_note">バックグラウンドで実行中です。そのままスマホを使えます。小さな表示をタップすると拡大します。</string>
     <string name="chat_placeholder_busy">補足や変更を入力…</string>
-    <string name="chat_placeholder_answer">Mika の質問に答える</string>
+    <string name="chat_placeholder_answer">如愿 の質問に答える</string>
     <string name="chat_placeholder_more">さらにひとこと…</string>
     <string name="chat_cannot_start">まだタスクを開始できません</string>
     <string name="chat_missing">不足: %1$s</string>
@@ -61,7 +61,7 @@
     <string name="chat_expand_steps">ステップを表示</string>
     <string name="chat_collapse_steps">ステップを非表示</string>
     <string name="chat_view_process">経過を見る</string>
-    <string name="chat_unlock_body">スマホがロックされています。ロックを解除すると、Mika が続きを進めます。</string>
+    <string name="chat_unlock_body">スマホがロックされています。ロックを解除すると、如愿 が続きを進めます。</string>
     <string name="chat_input_body">%1$s\n選択肢をタップするか、下に入力してください。%2$s</string>
     <string name="chat_refuse">拒否</string>
     <string name="chat_allow_once">今回だけ許可</string>
@@ -157,11 +157,11 @@
     <string name="attach_album">写真</string>
     <string name="attach_files">ファイル</string>
     <string name="attach_recent">最近の写真</string>
-    <string name="attach_recent_partial">Mika にアクセスを許可した写真</string>
+    <string name="attach_recent_partial">如愿 にアクセスを許可した写真</string>
     <string name="attach_all">すべての写真</string>
     <string name="attach_change">アクセスを変更</string>
     <string name="attach_no_photos">写真はまだありません</string>
-    <string name="attach_need_access">ここで写真を選ぶには、Mika に写真へのアクセスを許可してください</string>
+    <string name="attach_need_access">ここで写真を選ぶには、如愿 に写真へのアクセスを許可してください</string>
     <string name="attach_grant">写真へのアクセスを許可</string>
     <string name="attach_grant_hint">上の「写真」をタップして、システムの写真ピッカーを使うこともできます</string>
     <string name="attach_full">一度に添付できるのは %1$d 件までです</string>
@@ -181,10 +181,10 @@
     <string name="attach_file_and_more">%1$s ほか %2$d 件のファイル</string>
     <string name="screen_tag">今のあなたの画面</string>
     <string name="screen_blocked">キャプチャできませんでした: このページではスクリーンショットが許可されていません</string>
-    <string name="screen_camera">この画面を Mika にキャプチャ</string>
+    <string name="screen_camera">この画面を 如愿 にキャプチャ</string>
     <string name="screen_remove">このスクリーンショットを削除</string>
-    <string name="screen_send">今の画面を Mika に送る</string>
-    <string name="pip_screen">Mika の仮想画面</string>
+    <string name="screen_send">今の画面を 如愿 に送る</string>
+    <string name="pip_screen">如愿 の仮想画面</string>
     <string name="collapse">閉じる</string>
     <string name="no_app_for_link">このリンクを開けるアプリがありません</string>
     <string name="source_none">この回答のソースは保存されていません</string>
@@ -209,7 +209,7 @@
     <string name="chat_retry_failed">%1$s: コピーできませんでした</string>
     <string name="chat_select_hint">テキストを長押しして選択します</string>
     <string name="chat_quote_remove">引用を削除</string>
-    <string name="chat_quoting_mika">Mika を引用: %1$s</string>
+    <string name="chat_quoting_mika">如愿 を引用: %1$s</string>
     <string name="chat_quoting_you">自分を引用: %1$s</string>
     <string name="chat_edit_message">メッセージを編集</string>
     <string name="chat_withdraw_message">メッセージを取り消す</string>

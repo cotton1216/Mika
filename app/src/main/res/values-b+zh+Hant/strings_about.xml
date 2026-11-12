@@ -21,7 +21,7 @@
     <string name="about_repo_sub">%1$s · 歡迎點星</string>
     <string name="about_guide">使用說明與參與方式</string>
     <string name="about_guide_sub">上手指南；不會寫程式碼也能補充 App 知識</string>
-    <string name="about_data_note">你發給 Mika 的話、螢幕內容和截圖，只發給你自己設定的模型服務商。Mika 沒有自己的伺服器，不收集你的資料；檢查更新時只連線 GitHub。</string>
+    <string name="about_data_note">你發給如愿的話、螢幕內容和截圖，只發給你自己設定的模型服務商。如愿沒有自己的伺服器，不收集你的資料；檢查更新時只連線 GitHub。</string>
     <string name="about_license_link">Apache-2.0 開源許可</string>
     <string name="about_author">由 王贊 開發 · © 2026</string>
     <string name="about_license_title">Apache-2.0 授權條款</string>
@@ -35,7 +35,7 @@
     <string name="about_current">目前 %1$s</string>
     <string name="about_released_on">" · %1$s 釋出"</string>
     <string name="about_released_under">基於 %1$s 釋出</string>
-    <string name="issue_body">- 機型：%1$s\n- Android 版本：%2$s（SDK %3$d）\n- Mika 版本：%4$s（建置 %5$s）\n\n### 遇到了什麼問題\n\n\n### 做了哪幾步\n\n\n### 期望是什麼樣\n\n\n### 診斷資訊\n（選填）在 Mika「關於 › 回報問題 › 複製診斷資訊」複製後貼上在這裡\n\n</string>
+    <string name="issue_body">- 機型：%1$s\n- Android 版本：%2$s（SDK %3$d）\n- 如愿版本：%4$s（建置 %5$s）\n\n### 遇到了什麼問題\n\n\n### 做了哪幾步\n\n\n### 期望是什麼樣\n\n\n### 診斷資訊\n（選填）在如愿「關於 › 回報問題 › 複製診斷資訊」複製後貼上在這裡\n\n</string>
     <string name="licenses_third_party">第三方元件 · %1$d 個</string>
     <string name="licenses_footer">完整的授權條款文字與版權宣告見原始碼儲存庫的 LICENSE 與 licenses/ 目錄（含 THIRD_PARTY_NOTICES.md）。</string>
     <string name="diagnostics_copy">複製診斷資訊</string>
@@ -54,16 +54,16 @@
     <string name="about_update_retry">重新下載</string>
     <string name="about_update_cancel">刪除下載</string>
     <string name="about_update_working">正在處理…</string>
-    <string name="about_update_install_hint">下載完成後點「安裝更新」，在系統安裝頁確認。第一次安裝需要允許 Mika 安裝未知應用程式。</string>
+    <string name="about_update_install_hint">下載完成後點「安裝更新」，在系統安裝頁確認。第一次安裝需要允許如愿安裝未知應用程式。</string>
     <string name="about_update_error">下載或安裝沒有完成，請稍後再試。</string>
     <string name="about_update_bad_file">下載的安裝包不完整，或和發布的不一致，已刪除，請重新下載。</string>
-    <string name="about_update_not_newer">下載的安裝包不比已安裝的 Mika 新，已刪除。</string>
-    <string name="about_update_bad_signer">這個安裝包的簽名和已安裝的 Mika 不同，不能覆蓋安裝，已刪除。自己編譯的版本請先解除安裝，再裝官方版本。</string>
+    <string name="about_update_not_newer">下載的安裝包不比已安裝的如愿新，已刪除。</string>
+    <string name="about_update_bad_signer">這個安裝包的簽名和已安裝的如愿不同，不能覆蓋安裝，已刪除。自己編譯的版本請先解除安裝，再裝官方版本。</string>
     <string name="about_auto_update">自動更新</string>
     <string name="about_auto_update_detail">僅在連上 Wi-Fi 時於背景下載新版本，安裝前會詢問</string>
     <string name="about_auto_update_disable">關閉自動更新</string>
-    <string name="about_auto_update_ready">Mika %1$s 已下載</string>
-    <string name="about_auto_update_confirm_title">新版 Mika 已就緒</string>
+    <string name="about_auto_update_ready">如愿 %1$s 已下載</string>
+    <string name="about_auto_update_confirm_title">新版如愿已就緒</string>
     <string name="about_auto_update_confirm_detail">可以現在安裝 %1$s，也可以關閉自動更新，之後在設定中手動檢查。</string>
     <string name="about_auto_update_now">立即更新</string>
 </resources>

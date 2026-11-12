@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Sem SIM preferido</string>
     <string name="calls_task_back_to_edit">Voltar à edição</string>
     <string name="calls_task_confirm_dial">Confirmar e ligar</string>
-    <string name="calls_task_confirm_note">O Mika usa a tarefa nesta chamada. A ligação usa o SIM escolhido e pode gerar tarifas da operadora e de voz em tempo real.</string>
+    <string name="calls_task_confirm_note">O 如愿 usa a tarefa nesta chamada. A ligação usa o SIM escolhido e pode gerar tarifas da operadora e de voz em tempo real.</string>
     <string name="calls_task_constraints">O que não pode ser prometido</string>
     <string name="calls_task_context">Contexto adicional</string>
     <string name="calls_task_filled">Preenchido</string>

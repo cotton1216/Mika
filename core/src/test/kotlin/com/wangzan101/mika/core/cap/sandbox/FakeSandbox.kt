@@ -67,7 +67,7 @@ class FakeSandbox(var status: SandboxStatus = SandboxStatus.Ready(network = fals
         else -> skillsDir to normalized.removePrefix(SandboxPaths.SKILLS).trimStart('/')
     }
 
-    override suspend fun share(file: File, name: String): String { shared += file to name; return "Download/Mika/$name" }
+    override suspend fun share(file: File, name: String): String { shared += file to name; return "Download/如愿/$name" }
     override fun freeBytes() = free
     override fun workspaceBytes(workspace: String) = used
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="card_approve_once">只同意這一次</string>
-    <string name="card_see_process">回到 Mika 看完整過程</string>
-    <string name="card_back_to_mika">回到 Mika</string>
+    <string name="card_see_process">回到如愿看完整過程</string>
+    <string name="card_back_to_mika">回到如愿</string>
     <string name="card_continue_last">接著上次聊</string>
     <string name="card_screen">背景畫面，點一下放大</string>
     <string name="card_screen_label">背景</string>
     <string name="card_zoomed">放大的背景畫面，點一下關閉</string>
-    <string name="card_zoom_hint">Mika 正在背景操作 · 點一下關閉</string>
+    <string name="card_zoom_hint">如愿正在背景操作 · 點一下關閉</string>
     <string name="card_continuing">接著「%1$s」聊</string>
     <string name="card_queued_ahead">先處理完另一件的接管，再處理這件</string>
-    <string name="card_hint_answer">回答 Mika…</string>
+    <string name="card_hint_answer">回答如愿…</string>
     <string name="card_hint_continue">接著說…</string>
     <plurals name="capsule_behind">
         <item quantity="other">處理好這件後，還有 %1$d 件等你</item>
@@ -23,11 +23,11 @@
     <string name="capsule_stopped">已停止</string>
     <string name="capsule_stop">不做了</string>
     <string name="capsule_expand">展開看這件事</string>
-    <string name="capsule_talk">和 Mika 說話</string>
+    <string name="capsule_talk">和如愿說話</string>
     <string name="capsule_swap_side">移到螢幕另一邊</string>
     <string name="capsule_desc_needs">%1$s，點開處理</string>
-    <string name="capsule_desc_running">Mika 在幹活：%1$s，點開看詳情</string>
-    <string name="capsule_desc_other">Mika %1$s，點開看詳情</string>
+    <string name="capsule_desc_running">如愿在幹活：%1$s，點開看詳情</string>
+    <string name="capsule_desc_other">如愿 %1$s，點開看詳情</string>
     <string name="capsule_then_tap_right">弄好後點右邊</string>
     <string name="capsule_need_of_total">%1$d 件要你處理 · 共 %2$d 件</string>
     <string name="capsule_of_total">%1$s · 共 %2$d 件</string>
@@ -36,7 +36,7 @@
     <string name="capsule_needs_you">需要你：%1$s</string>
     <string name="capsule_handle_it">處理一下</string>
     <string name="capsule_needs_ok">要你同意：%1$s</string>
-    <string name="capsule_asks">Mika 問你：%1$s</string>
+    <string name="capsule_asks">如愿問你：%1$s</string>
     <string name="capsule_hold_why">先等等：%1$s</string>
     <string name="capsule_you_handle">你來處理</string>
     <string name="capsule_thinking">在想下一步</string>

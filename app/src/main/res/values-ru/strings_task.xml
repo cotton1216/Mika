@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notif_channel_prepare">Фоновая настройка</string>
-    <string name="notif_preparing">Mika готовится к работе</string>
-    <string name="notif_result_title">Результат задачи Mika</string>
+    <string name="notif_preparing">如愿 готовится к работе</string>
+    <string name="notif_result_title">Результат задачи 如愿</string>
     <string name="parallel_second_display_failed">Не удалось создать второй виртуальный экран, поэтому пока выполняется только одна задача за раз</string>
     <string name="parallel_needs_14">Для одновременного выполнения нескольких задач нужен Android 14 или новее</string>
     <string name="parallel_low_ram">У этого телефона мало памяти, поэтому задачи выполняются по одной</string>
     <string name="skill_suspended">Этот навык в последнее время не срабатывал, поэтому он приостановлен</string>
     <string name="skill_verified">Навык сработал и теперь используется постоянно: %1$s</string>
-    <string name="skill_learned">Mika выучила навык: %1$s</string>
-    <string name="skill_app_draft">Mika записала несколько фактов о приложении «%1$s», чтобы вы их просмотрели</string>
-    <string name="skill_app_revised">Mika переработала свои заметки о приложении «%1$s», чтобы вы их просмотрели</string>
+    <string name="skill_learned">如愿 выучила навык: %1$s</string>
+    <string name="skill_app_draft">如愿 записала несколько фактов о приложении «%1$s», чтобы вы их просмотрели</string>
+    <string name="skill_app_revised">如愿 переработала свои заметки о приложении «%1$s», чтобы вы их просмотрели</string>
     <string name="recovered_result">Восстановленный результат задачи</string>
     <string name="recover_delivery_failed">Последняя задача завершена, но уведомление с результатом не отправилось. Проверьте чат.</string>
     <string name="recover_maybe_delivered">Последний результат, возможно, уже был доставлен. Сначала проверьте чат, чтобы не сделать всё дважды.</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">«%1$s» ждёт вас на экране. Нажмите «Продолжить», когда закончите</string>
     <string name="gate_finish_unknown">Только что открытое приложение ждёт вас на экране. Нажмите «Продолжить», когда закончите</string>
     <string name="gate_moved_away">Вы открыли это приложение. Нажмите «Продолжить», когда закончите</string>
-    <string name="gate_move_back_failed">Не удалось вернуть приложение на экран Mika. Нажмите «Продолжить», чтобы повторить</string>
+    <string name="gate_move_back_failed">Не удалось вернуть приложение на экран 如愿. Нажмите «Продолжить», чтобы повторить</string>
     <string name="gate_shell_down">Управление телефоном отключилось. Нажмите «Продолжить», когда оно подключится снова (или исправьте это в настройках)</string>
     <plurals name="queue_ahead">
         <item quantity="one">В очереди: перед вами %1$d задача</item>
@@ -33,19 +33,19 @@
     <string name="fail_model_untested">Основная модель ещё не прошла проверку у провайдера %1$s. Откройте «Настройки» › «Модели» › %1$s и нажмите «Проверить снова».</string>
     <string name="fail_no_web">На этом устройстве нет доступа к интернету, поэтому проверить условие нельзя</string>
     <string name="task_waiting_display">В очереди: начнётся после завершения другой задачи</string>
-    <string name="task_no_phone_helper">Управление телефоном не готово. Завершите «Настройку управления телефоном» в Mika. Задачи с сайтами и файлами это не затрагивает.</string>
-    <string name="task_no_a11y">Служба специальных возможностей Mika выключена. Включите Mika в разделе «Специальные возможности» системных настроек.</string>
-    <string name="task_a11y_not_running">Служба специальных возможностей Mika включена, но Android ещё не подключил её. Выключите Mika и включите снова в разделе «Специальные возможности» системных настроек. Если Android блокирует включение, сначала разрешите ограниченные настройки в сведениях о Mika.</string>
+    <string name="task_no_phone_helper">Управление телефоном не готово. Завершите «Настройку управления телефоном» в 如愿. Задачи с сайтами и файлами это не затрагивает.</string>
+    <string name="task_no_a11y">Служба специальных возможностей 如愿 выключена. Включите 如愿 в разделе «Специальные возможности» системных настроек.</string>
+    <string name="task_a11y_not_running">Служба специальных возможностей 如愿 включена, но Android ещё не подключил её. Выключите 如愿 и включите снова в разделе «Специальные возможности» системных настроек. Если Android блокирует включение, сначала разрешите ограниченные настройки в сведениях о 如愿.</string>
     <string name="task_error">Ошибка задачи: %1$s</string>
-    <string name="task_app_blocked">Приложение «%1$s» отключено, поэтому Mika не может его читать и использовать. Разрешите его в разделе «Настройки» › «Доступ к приложениям» и повторите попытку.</string>
+    <string name="task_app_blocked">Приложение «%1$s» отключено, поэтому 如愿 не может его читать и использовать. Разрешите его в разделе «Настройки» › «Доступ к приложениям» и повторите попытку.</string>
     <string name="task_app_this_app">Это приложение</string>
     <string name="task_app_access_unavailable">Не удаётся прочитать настройки доступа к приложениям. Сбросьте их в разделе «Настройки» › «Доступ к приложениям» и повторите попытку.</string>
-    <string name="task_app_protected">Этот экран нужно обработать самостоятельно; Mika не может автоматизировать его.</string>
+    <string name="task_app_protected">Этот экран нужно обработать самостоятельно; 如愿 не может автоматизировать его.</string>
     <string name="task_app_unverified">Не удалось подтвердить, какое приложение сейчас на переднем плане, поэтому больше ничего не сделано. Повторите попытку или сначала откройте нужное приложение.</string>
     <string name="task_condition_interrupted">Проверка условия прервана</string>
     <string name="task_check_unfinished">Проверка по расписанию не завершена: %1$s</string>
     <string name="task_may_make_sound">Это приложение может издавать звук</string>
-    <string name="task_notif_title">Mika: %1$s</string>
+    <string name="task_notif_title">如愿: %1$s</string>
     <plurals name="task_active">
         <item quantity="one">Выполняется %1$d задача</item>
         <item quantity="few">Выполняются %1$d задачи</item>
@@ -72,8 +72,8 @@
     <string name="task_not_done">Задача не завершена</string>
     <string name="task_stopped">Задача остановлена</string>
     <string name="task_stopped_body">Вы остановили эту задачу</string>
-    <string name="gate_user_on_page">Вы работаете со страницей, поэтому Mika приостановилась</string>
-    <string name="task_no_phone_helper_usb">Помощник управления телефоном остановился (обычно после перезагрузки телефона). Откройте Mika и снова выполните команду запуска по USB; её можно скопировать в разделе «Настройка управления телефоном». Задачи с сайтами и файлами это не затрагивает.</string>
+    <string name="gate_user_on_page">Вы работаете со страницей, поэтому 如愿 приостановилась</string>
+    <string name="task_no_phone_helper_usb">Помощник управления телефоном остановился (обычно после перезагрузки телефона). Откройте 如愿 и снова выполните команду запуска по USB; её можно скопировать в разделе «Настройка управления телефоном». Задачи с сайтами и файлами это не затрагивает.</string>
     <string name="drawer_screens">Фоновые экраны</string>
     <string name="screens_title">Фоновые экраны</string>
     <string name="screens_empty">Сейчас нет выполняемых задач.</string>

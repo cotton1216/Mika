@@ -97,7 +97,7 @@ data class AccountSignInUi(
 )
 
 /**
- * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到 Mika、本机回调收到后浏览器里显示的网页。
+ * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到如愿、本机回调收到后浏览器里显示的网页。
  * 界面给出(要 Context);测试里不给,就不能登录。
  */
 interface SignInBrowser {
@@ -740,9 +740,9 @@ class ModelSetupViewModel(
     // ---------- 用 ChatGPT 登录 ----------
 
     /**
-     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到 Mika。
+     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到如愿。
      * 还没有主模型时选它的一个模型为主模型。第一次注册成功后说明一次在用套餐额度。失败说原因(并记下给诊断信息)。
-     * 跑在 [signIns] 里:用户在浏览器里登录时 Mika 在后台,不能跟着界面走。
+     * 跑在 [signIns] 里:用户在浏览器里登录时如愿在后台,不能跟着界面走。
      */
     fun signInWithChatGpt() {
         val browser = browser ?: return
@@ -798,7 +798,7 @@ class ModelSetupViewModel(
      * 用账号登录 xAI 或 OpenRouter:xAI 在浏览器里打开核对过的验证页、界面留下短码,等用户确认;
      * OpenRouter 打开授权页,同意后回到本机回调、换到一把属于用户的 Key。
      * 成功后列出模型、存下这一家,还没有主模型时选一个,再打开它的详情页([ModelSetupUi.signedInProvider])。
-     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时 Mika 在后台。
+     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时如愿在后台。
      */
     fun signInWithAccount(provider: AccountProvider) {
         val browser = browser ?: return

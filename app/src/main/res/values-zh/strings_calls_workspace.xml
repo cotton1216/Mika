@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">不指定默认 SIM</string>
     <string name="calls_task_back_to_edit">返回修改</string>
     <string name="calls_task_confirm_dial">确认并拨打</string>
-    <string name="calls_task_confirm_note">Mika 只为这通电话使用任务单。确认后使用所选 SIM 拨号，可能产生运营商和实时语音费用。</string>
+    <string name="calls_task_confirm_note">如愿只为这通电话使用任务单。确认后使用所选 SIM 拨号，可能产生运营商和实时语音费用。</string>
     <string name="calls_task_constraints">不能承诺什么</string>
     <string name="calls_task_context">补充情况</string>
     <string name="calls_task_filled">已填写</string>

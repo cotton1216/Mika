@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">전화 걸기</string>
     <string name="calls_rules">전화 받기 규칙</string>
     <string name="calls_setup_credentials">Volcengine 실시간 음성 인증 정보를 설정하세요.</string>
-    <string name="calls_setup_shell">먼저 Mika 내장 어시스턴트에 연결하세요.</string>
+    <string name="calls_setup_shell">먼저 如愿 내장 어시스턴트에 연결하세요.</string>
     <string name="calls_sim_clear_preferred">선호 SIM 지우기</string>
     <string name="calls_sim_preferred">선호 SIM: %1$s</string>
     <string name="calls_sim_save_preferred">이 SIM을 기본값으로 사용</string>

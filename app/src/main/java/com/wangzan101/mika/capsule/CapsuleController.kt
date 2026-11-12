@@ -87,7 +87,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * 悬浮胶囊的接线:把各任务的状态([TaskCenterState.runs] 和每个 [TaskRun] 的状态、接管阶段、活动)、开关、
- * Mika 界面在不在前台([AppForeground])、屏幕亮没亮([DeviceStateWatcher])、无障碍服务在不在交给 [CapsuleModel],
+ * 如愿界面在不在前台([AppForeground])、屏幕亮没亮([DeviceStateWatcher])、无障碍服务在不在交给 [CapsuleModel],
  * 按它的结果经 [com.wangzan101.mika.cap.phone.a11y.OverlayHost] 加上、挪动或拆掉浮层窗口。
  * 点一颗或胶囊展开卡片([CapsuleCards] 定内容,只说一件事),点卡片外面、收起按钮或返回收回成一颗(看过的不再展开,模型记着);卡片和胶囊上的按钮都转成任务服务现有的动作。
  * 一颗和卡片各在一个窗口里、各待各的位置(见 [window]):展开时一颗那个窗口显式隐藏,卡片在自己的窗口里从那一颗的方位缩放、淡入,
@@ -241,7 +241,7 @@ class CapsuleController(
 
     fun start() {
         val screen = DeviceStateWatcher(context) { -1 }
-        // 用户点了「完全退出」:按开关关着算,直到用户重新打开 Mika([resume] 清掉标记后再亮出来)
+        // 用户点了「完全退出」:按开关关着算,直到用户重新打开如愿([resume] 清掉标记后再亮出来)
         val mode = combine(flags.capsuleModeChanges(), flags.quitChanges()) { m, quit -> if (quit) CapsuleMode.Off else m }
         scope.launch {
             combine(
@@ -294,7 +294,7 @@ class CapsuleController(
         hide()
     }
 
-    /** 用户又打开了 Mika:退出标记已清掉,按此刻的状态重新画(进程没被杀、又回到前台时用得上)。 */
+    /** 用户又打开了如愿:退出标记已清掉,按此刻的状态重新画(进程没被杀、又回到前台时用得上)。 */
     fun resume() {
         quitConfirm = false
         refresh()
@@ -525,7 +525,7 @@ class CapsuleController(
 
     /**
      * 发出输入框里的话,和在对话页里发的走同一条路(都记进那个对话):在跑、等条件时插话给它,
-     * Mika 问你时作为回答,办完后在同一个对话里接着说,空闲时接着最近的对话或开新对话;后两种之后卡片跟着那个对话的任务看回答。
+     * 如愿问你时作为回答,办完后在同一个对话里接着说,空闲时接着最近的对话或开新对话;后两种之后卡片跟着那个对话的任务看回答。
      */
     private fun send() {
         val app = context.applicationContext as? com.wangzan101.mika.MikaApp
@@ -629,7 +629,7 @@ class CapsuleController(
 
     /**
      * 截下用户此刻的屏幕:输入框开着先收起(等输入法下去),浮层藏起来、真的从屏幕上下去了再截,截完马上出来、一颗上闪一下;
-     * 再在后台整理屏上的字。前台是 Mika 自己、截不到时为 null。
+     * 再在后台整理屏上的字。前台是如愿自己、截不到时为 null。
      */
     private suspend fun captureScreen(): CapturedScreen? {
         val service = windowOn ?: return null
@@ -1066,7 +1066,7 @@ class CapsuleController(
 
     /**
      * 开始说:先等着的单击、双击不算了。说给谁按单击会展开的那张卡片(空闲图标上先去读最近那段对话,读到后面板顶上那句跟着换)。
-     * 没有录音权限(胶囊弹不了权限框)、语音输入用不了时不录,胶囊上说一句,点一下打开 Mika。
+     * 没有录音权限(胶囊弹不了权限框)、语音输入用不了时不录,胶囊上说一句,点一下打开如愿。
      */
     private fun beginTalk(byTouch: Boolean) {
         val v = view ?: return
@@ -1162,7 +1162,7 @@ class CapsuleController(
         note = null
     }
 
-    /** 胶囊上闪着一句时点它:那句说要打开 Mika 就打开,否则只收掉那句;这一下不参与单击或双击计时。 */
+    /** 胶囊上闪着一句时点它:那句说要打开如愿就打开,否则只收掉那句;这一下不参与单击或双击计时。 */
     private fun tapCapsule() {
         val n = note
         clearNote()
@@ -1414,10 +1414,10 @@ class CapsuleController(
         return ChatCopy.clock(now - startedAt)
     }
 
-    /** 回到 Mika 的那个对话(和点通知同一个入口)。 */
+    /** 回到如愿的那个对话(和点通知同一个入口)。 */
     private fun open(conversationId: String?) {
         runCatching { context.startActivity(TaskService.openAppIntent(context, conversationId)) }
-            .onFailure { Log.w(TAG, "could not open Mika from capsule", it) }
+            .onFailure { Log.w(TAG, "could not open 如愿 from capsule", it) }
     }
 
     private fun appLabel(pkg: String): String = appLabels.getOrPut(pkg) { ConfirmationNotifier.appLabel(context, pkg) }
@@ -1462,5 +1462,5 @@ internal data class CapsuleWindowVisibility(val capsule: Boolean, val card: Bool
 internal fun capsuleWindowVisibility(expanded: Boolean, cardOut: Boolean, closing: Boolean): CapsuleWindowVisibility =
     CapsuleWindowVisibility(capsule = !expanded || !cardOut || closing, card = expanded)
 
-/** 胶囊上临时闪的一句:[kind] 定前面的标记(办好了是勾、没办成是叹号);[opensMika] 时点它打开 Mika;[id] 每句不同(胶囊按它重新定宽)。 */
+/** 胶囊上临时闪的一句:[kind] 定前面的标记(办好了是勾、没办成是叹号);[opensMika] 时点它打开如愿;[id] 每句不同(胶囊按它重新定宽)。 */
 private data class CapsuleNote(val text: String, val kind: CapsuleKind, val opensMika: Boolean, val id: Int)

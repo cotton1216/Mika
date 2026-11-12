@@ -20,7 +20,7 @@ fun interface ShellCommandRunner {
 }
 
 /**
- * 手机操作的几项能力:默认打开(连接可用时 Mika 自己补上),都能在设置里关掉,解除配对时一并收回。
+ * 手机操作的几项能力:默认打开(连接可用时如愿自己补上),都能在设置里关掉,解除配对时一并收回。
  * [RestoreAfterReboot] 和 [AutoWirelessDebugging] 用的是同一份修改系统设置的授权(都只用来打开无线调试),
  * 两项都关掉才收回。
  */
@@ -34,7 +34,7 @@ enum class RecoveryCapability {
 }
 
 /**
- * 每项能力的两件事分开记:[applied] 是 Mika 已经替用户在系统里打开、此刻有效的;
+ * 每项能力的两件事分开记:[applied] 是如愿已经替用户在系统里打开、此刻有效的;
  * [declined] 是用户亲手关掉的,之后不再自动打开。两边都没有的就是「没动过」,按默认打开。
  */
 data class RecoveryConsent(
@@ -185,7 +185,7 @@ class RecoveryPermissions(
     }
 
     /**
-     * 解除配对时用:收回 Mika 在这里打开过的每一项,外加修改系统设置的授权(无论记录如何都收一次,收不存在的授权无害)。
+     * 解除配对时用:收回如愿在这里打开过的每一项,外加修改系统设置的授权(无论记录如何都收一次,收不存在的授权无害)。
      * 用户自己在系统里开的无障碍或白名单不是这里给的,不动。「已生效」无论成败都清空:配对没了,这些能力也不再生效;
      * 用户的选择留着:再配对时没关掉的几项照样自动打开,亲手关掉的仍然关着。
      */
@@ -200,8 +200,8 @@ class RecoveryPermissions(
     }
 
     /**
-     * 让 Mika 的无障碍服务重新运行起来(服务没在运行时用,见 [AccessibilityRepair]),别的服务一个不动:
-     * 列表里没有 Mika 就直接加上;有却没绑定,就先去掉,等 [gapMs] 让系统处理完,再重读列表加回去。
+     * 让如愿的无障碍服务重新运行起来(服务没在运行时用,见 [AccessibilityRepair]),别的服务一个不动:
+     * 列表里没有如愿就直接加上;有却没绑定,就先去掉,等 [gapMs] 让系统处理完,再重读列表加回去。
      * 去掉之后一定会加回去,中途被取消也一样,免得把服务留在关着的状态;加回失败时写回原来的列表,仍报失败。不改 [RecoveryConsent]:这不是打开或收回能力。
      */
     suspend fun restartAccessibility(gapMs: Long): PermissionResult = lock.withLock {
@@ -217,9 +217,9 @@ class RecoveryPermissions(
                 delay(gapMs)
                 val now = shell.exec(PermissionCommands.READ_ACCESSIBILITY)
                 val back = runAll(shell, PermissionCommands.writeAccessibility(AccessibilityList.with(now, me)))
-                // 加回失败时把原来的列表(连同总开关)写回:宁可回到「有却没绑定」,也不让 Mika 从列表里消失;
+                // 加回失败时把原来的列表(连同总开关)写回:宁可回到「有却没绑定」,也不让如愿从列表里消失;
                 // 写回只是兜底,这次仍按加回失败报
-                // (读到的原样带着换行;它本来就有 Mika,with 只把它整理成干净的列表,内容不变)
+                // (读到的原样带着换行;它本来就有如愿,with 只把它整理成干净的列表,内容不变)
                 if (back != PermissionResult.Done) runCatching { runAll(shell, PermissionCommands.writeAccessibility(AccessibilityList.with(current, me))) }
                 back
             }

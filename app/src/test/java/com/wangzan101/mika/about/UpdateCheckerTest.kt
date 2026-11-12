@@ -47,7 +47,7 @@ class UpdateCheckerTest {
     )
 
     private fun release(tag: String) =
-        MockResponse().setBody("""{"tag_name":"$tag","name":"Mika $tag","body":"- 新东西","html_url":"https://github.com/wangzan101/Mika/releases/tag/$tag","assets":[]}""")
+        MockResponse().setBody("""{"tag_name":"$tag","name":"如愿 $tag","body":"- 新东西","html_url":"https://github.com/wangzan101/如愿/releases/tag/$tag","assets":[]}""")
 
     @Test
     fun newerReleaseFromGitHubShowsUpdate() = runTest {
@@ -62,7 +62,7 @@ class UpdateCheckerTest {
         assertEquals(listOf("/api"), hits)
         val req = server.takeRequest()
         assertEquals("application/vnd.github+json", req.getHeader("Accept"))
-        assertTrue(req.getHeader("User-Agent")!!.startsWith("Mika/"))
+        assertTrue(req.getHeader("User-Agent")!!.startsWith("Yuan/"))
     }
 
     @Test

@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">優先 SIM を指定しない</string>
     <string name="calls_task_back_to_edit">編集に戻る</string>
     <string name="calls_task_confirm_dial">確認して発信</string>
-    <string name="calls_task_confirm_note">Mika はこの通話に限りタスクを使用します。選んだ SIM から発信し、通信会社やリアルタイム音声の料金が発生する場合があります。</string>
+    <string name="calls_task_confirm_note">如愿 はこの通話に限りタスクを使用します。選んだ SIM から発信し、通信会社やリアルタイム音声の料金が発生する場合があります。</string>
     <string name="calls_task_constraints">約束してはいけないこと</string>
     <string name="calls_task_context">補足情報</string>
     <string name="calls_task_filled">入力済み</string>

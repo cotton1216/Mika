@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">個別網站的登入可能仍在,如需徹底清除請用「全部退出」。</string>
-    <string name="web_challenged_note">Mika 最近在這個網站上碰到過人機驗證或存取攔截。如果一直這樣,可以清除這個網站的資料(Cookie 與網頁儲存)後重新登入。</string>
-    <string name="web_data_note">網站的登入資料只存在這臺手機上 Mika 的私有目錄裡,沒有另行加密,和系統瀏覽器的保護程度相同。</string>
+    <string name="web_challenged_note">如愿最近在這個網站上碰到過人機驗證或存取攔截。如果一直這樣,可以清除這個網站的資料(Cookie 與網頁儲存)後重新登入。</string>
+    <string name="web_data_note">網站的登入資料只存在這臺手機上如愿的私有目錄裡,沒有另行加密,和系統瀏覽器的保護程度相同。</string>
     <string name="web_none">還沒有造訪過的網站</string>
-    <string name="web_none_sub">Mika 在網頁上辦過事、或你在這裡登入過之後會列在這裡</string>
-    <string name="web_signed_in_by_you">在 Mika 裡登入過</string>
+    <string name="web_none_sub">如愿在網頁上辦過事、或你在這裡登入過之後會列在這裡</string>
+    <string name="web_signed_in_by_you">在如愿裡登入過</string>
     <string name="web_challenged">碰到過驗證或攔截</string>
     <string name="web_last_visit">最近造訪 %1$s</string>
     <string name="web_manage">管理</string>
     <string name="web_logout_all_title">全部退出並清除網頁資料</string>
-    <string name="web_you_signed_in">你在 Mika 裡登入過這個網站。</string>
-    <string name="web_mika_visited">Mika 造訪過這個網站。</string>
+    <string name="web_you_signed_in">你在如愿裡登入過這個網站。</string>
+    <string name="web_mika_visited">如愿造訪過這個網站。</string>
     <string name="web_open_login">開啟登入</string>
     <string name="web_cleared">已清除 %1$s 的 Cookie 與網頁儲存,下次用要重新登入。個別資料可能仍在,如需徹底清除請用「全部退出」。</string>
     <string name="web_signed_out">已退出 %1$s。%2$s</string>
     <string name="web_clear_site">清除這個網站的資料</string>
     <string name="web_sign_out_site">退出這個網站</string>
     <string name="web_logout_all_q">全部退出並清除網頁資料?</string>
-    <string name="web_logout_all_body">會退出內建瀏覽器裡所有網站的登入,並清除它們存在 Mika 裡的網頁資料。之後 Mika 用網頁辦事時要重新登入。</string>
+    <string name="web_logout_all_body">會退出內建瀏覽器裡所有網站的登入,並清除它們存在如愿裡的網頁資料。之後如愿用網頁辦事時要重新登入。</string>
     <string name="web_logged_out_all">已全部退出並清除網頁資料。</string>
     <string name="web_logout_all">全部退出</string>
     <string name="date_pattern_md_compact">M月d日</string>
-    <string name="web_takeover_login">在 Mika 的瀏覽器裡登入,登好後點「完成」</string>
-    <string name="web_takeover_waiting">Mika 在等你:%1$s</string>
+    <string name="web_takeover_login">在如愿的瀏覽器裡登入,登好後點「完成」</string>
+    <string name="web_takeover_waiting">如愿在等你:%1$s</string>
     <string name="web_reason_security">安全驗證</string>
     <!-- 任務結束後留在背景執行的那一頁 -->
     <string name="kept_notif_title">背景網頁在執行</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">網頁出錯了</string>
     <string name="kept_reason_user">你關掉了</string>
     <string name="kept_reason_replaced">留下了另一頁</string>
-    <string name="kept_reason_app_exit">Mika 結束了</string>
+    <string name="kept_reason_app_exit">如愿結束了</string>
     <string name="kept_chat_sub">背景保持著 1 個網頁</string>
     <string name="kept_capsule">背景網頁執行中</string>
     <string name="kept_card_title">背景網頁</string>

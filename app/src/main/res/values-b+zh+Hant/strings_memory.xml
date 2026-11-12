@@ -51,7 +51,7 @@
     <string name="skill_missing_description">要寫一句描述(description)</string>
     <string name="skill_missing_section">要有入口、步驟、容易出錯的地方、怎樣算辦成、什麼時候停下交給使用者五個小節</string>
     <string name="skill_too_long">技能太長了,最多 4000 字</string>
-    <string name="skill_unknown_tool">裡面提到了 Mika 沒有的工具</string>
+    <string name="skill_unknown_tool">裡面提到了如愿沒有的工具</string>
     <string name="memory_manual">你手寫的</string>
     <string name="date_pattern_md">M 月 d 日</string>
     <string name="memory_said_via">你在 %1$s透過%2$s說:『%3$s』</string>

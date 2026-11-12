@@ -66,7 +66,7 @@ import com.wangzan101.mika.core.cap.web.KeptPageClose
 
 /**
  * 这条通知照发、照进通知栏,但不响、不振、不弹横幅:用系统的分组提醒规则(只让组摘要提醒,这条是组里的普通通知,
- * 组里没有摘要),和系统自己的「静音通知」是同一个做法;不换频道、不新建频道。安卓 8 起都有,Mika 支持的系统都能用。
+ * 组里没有摘要),和系统自己的「静音通知」是同一个做法;不换频道、不新建频道。安卓 8 起都有,如愿支持的系统都能用。
  */
 internal fun Notification.Builder.alertQuietly(): Notification.Builder =
     setGroup(QUIET_GROUP).setGroupAlertBehavior(Notification.GROUP_ALERT_SUMMARY)
@@ -674,7 +674,7 @@ class TaskService : Service() {
     }
 
     /**
-     * 给模型的上文里,留页那一轮的页面此刻是不是还开着:记着「留着」却已经不在了(Mika 中途退出过)的,按已关算。
+     * 给模型的上文里,留页那一轮的页面此刻是不是还开着:记着「留着」却已经不在了(如愿中途退出过)的,按已关算。
      */
     private fun withKeptState(t: Turn): Turn =
         if (t.keptPage != null && t.keptPageClosed == null && keeper.page.value?.runId != t.runId) t.copy(keptPageClosed = KeptPageClose.AppExit.wire) else t
@@ -762,7 +762,7 @@ class TaskService : Service() {
     /** 忙着却还没有任务对象时(收尾被打断等)也得马上进前台。 */
     private fun preparingNotification(): Notification = Notification.Builder(this, CHANNEL_PROGRESS)
         .setSmallIcon(R.drawable.ic_notification)
-        .setContentTitle("Mika")
+        .setContentTitle("如愿")
         .setContentText(PREPARING)
         .setOngoing(true)
         .setOnlyAlertOnce(true)
@@ -948,7 +948,7 @@ class TaskService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
-        /** 打开 Mika;给了 [threadId] 时直接到那个对话。通知和悬浮胶囊共用。 */
+        /** 打开如愿;给了 [threadId] 时直接到那个对话。通知和悬浮胶囊共用。 */
         internal fun openAppIntent(context: Context, threadId: String? = null): Intent = Intent(context, MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .apply { if (threadId != null) putExtra(MainActivity.EXTRA_OPEN_CONVERSATION, threadId) }
@@ -969,7 +969,7 @@ class TaskService : Service() {
                     .setAutoCancel(true)
                     .build())
                 is Delivery.Notice -> nm.notify(nextResultId(), Notification.Builder(context, CHANNEL_RESULT)
-                    .setSmallIcon(R.drawable.ic_notification).setContentTitle("Mika")
+                    .setSmallIcon(R.drawable.ic_notification).setContentTitle("如愿")
                     .setContentText(delivery.text).setContentIntent(openApp(context, delivery.threadId)).setAutoCancel(true).build())
                 is Delivery.Ask, is Delivery.Progress, is Delivery.Image -> {}
             }
@@ -1134,7 +1134,7 @@ class TaskService : Service() {
         /** [runKey] 见 [send];应用内的按钮带着屏上那个对话的任务编号,不会落到别的任务上。 */
         fun cancel(context: Context, runKey: String? = null) = send(context, ACTION_CANCEL, runKey = runKey)
 
-        /** 用户点了「继续」:被挪走的 App 会被挪回 Mika 的屏幕。 */
+        /** 用户点了「继续」:被挪走的 App 会被挪回如愿的屏幕。 */
         fun resume(context: Context, runKey: String? = null) = send(context, ACTION_RESUME, runKey = runKey)
 
         /** 「我来处理」:把 App 挪到主屏并恢复它的声音。 */
@@ -1199,7 +1199,7 @@ class TaskService : Service() {
 
         /** 通知的标题和正文;[appLabel] 把包名换成 App 名。 */
         internal fun describe(state: TaskState, appLabel: (String) -> String = { it }): Pair<String, String> = when (state) {
-            TaskState.Idle -> "Mika" to ""
+            TaskState.Idle -> "如愿" to ""
             is TaskState.Running -> tr(R.string.task_running) to (state.progress?.let(StatusCopy::progress) ?: when {
                 state.step == 0 -> state.note
                 else -> tr(R.string.task_step_note, state.step, state.note).trimEnd(':', ' ')

@@ -101,7 +101,7 @@ class OpenRouterAuth(
         /** 用户在 OpenRouter 上管理(删除)Key 的页面。 */
         const val KEYS_PAGE = "https://openrouter.ai/settings/keys"
         /** 授权页上预填的 Key 名字,用户在 Keys 页上靠它认出是哪一把。 */
-        const val KEY_LABEL = "Mika"
+        const val KEY_LABEL = "如愿"
         /** 回调地址用 localhost(OpenRouter 写明本机回调任意端口都可以);监听只绑 127.0.0.1。 */
         const val CALLBACK_HOST = "localhost"
         private val JSON_TYPE = "application/json".toMediaType()

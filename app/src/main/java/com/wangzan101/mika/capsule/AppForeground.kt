@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Mika 自己的界面(对话页、网页接管页等任一 Activity)此刻是否看得见:数已经 onStart、还没 onStop 的 Activity。
+ * 如愿自己的界面(对话页、网页接管页等任一 Activity)此刻是否看得见:数已经 onStart、还没 onStop 的 Activity。
  * 转屏这类重建时旧的先停、新的再起,中间不算离开前台。由 App 在启动时登记,只在主线程回调。
  */
 class AppForeground : Application.ActivityLifecycleCallbacks {

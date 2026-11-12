@@ -22,7 +22,7 @@ import com.wangzan101.mika.settings.FeatureFlags
 
 /**
  * 运行环境准备期间的前台服务(类型 dataSync,安卓要求长时间后台工作有前台服务)。
- * 只显示一条低优先级的「Mika 正在准备」,准备完就撤掉;不发结果通知。准备本身在 [RuntimePreparer] 里。
+ * 只显示一条低优先级的「如愿正在准备」,准备完就撤掉;不发结果通知。准备本身在 [RuntimePreparer] 里。
  */
 open class SandboxForeground : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)

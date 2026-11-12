@@ -87,7 +87,7 @@ class TaskSetTest {
         sessions.forEach { (session, ts) ->
             assertTrue(session != null)
             val (tell, use) = ts.sortedBy { it.id }.also { assertEquals(2, it.size) }
-            assertTrue("${tell.id}: 第一题要让 Mika 记住", "记住" in tell.goal)
+            assertTrue("${tell.id}: 第一题要让如愿记住", "记住" in tell.goal)
             assertTrue("${tell.id}: 第一题不核对记忆", tell.checks.none { it is Check.MemoryUsed })
             assertTrue("${use.id}: 第二题要核对用到了记忆", use.checks.any { it is Check.MemoryUsed })
             assertTrue("${use.id}: 第二题不再提「记住」", "记住" !in use.goal)

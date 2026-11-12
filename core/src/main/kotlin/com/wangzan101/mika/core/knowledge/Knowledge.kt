@@ -21,7 +21,7 @@ data class KnowledgeEntry(
     val related: List<String> = emptyList(),
     /** 站点命令的声明(只有站点有);脚本正文由 [GuideCatalog.siteCommands] 取。 */
     val commands: List<SiteCommandDecl> = emptyList(),
-    /** 正文附了 Mika 自学、还没核实的 App 知识试用稿。 */
+    /** 正文附了如愿自学、还没核实的 App 知识试用稿。 */
     val trial: Boolean = false,
 ) {
     /** 同一服务的 App 与站点共用的名字:站点关联了 App 时取 App 的名字。 */

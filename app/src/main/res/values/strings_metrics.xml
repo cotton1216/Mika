@@ -6,8 +6,8 @@
     <string name="metrics_other">Other (waits, retries)</string>
     <string name="metrics_title">Run stats</string>
     <string name="metrics_sub">Time, model round trips and tokens of recent runs</string>
-    <string name="metrics_empty">No run stats yet. Ask Mika to do something and it’ll be recorded here.</string>
-    <string name="metrics_note">Only the last %1$d runs on this phone are counted. Time starts when Mika begins working; first feedback is when you first see what it’s doing.</string>
+    <string name="metrics_empty">No run stats yet. Ask 如愿 to do something and it’ll be recorded here.</string>
+    <string name="metrics_note">Only the last %1$d runs on this phone are counted. Time starts when 如愿 begins working; first feedback is when you first see what it’s doing.</string>
     <string name="metrics_copy">Copy JSON</string>
     <string name="metrics_share">Share JSON</string>
     <string name="metrics_last_10">Last 10</string>

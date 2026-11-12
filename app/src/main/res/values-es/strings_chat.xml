@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">Buenas tardes</string>
     <string name="chat_greeting_evening">Buenas noches</string>
     <string name="chat_greeting_night">Despierto hasta tarde</string>
-    <string name="chat_empty_prompt">¿Qué debería hacer Mika?</string>
+    <string name="chat_empty_prompt">¿Qué debería hacer 如愿?</string>
     <string name="chat_example_github_star">Abre https://github.com/wangzan101/mika y dale una estrella al proyecto.</string>
     <string name="chat_example_follow">Abre X, busca a Wang Zan (@wangzan101) y sigue la cuenta.</string>
     <string name="chat_example_group_summary">Abre WhatsApp y resume los mensajes no leídos de hoy, destacando todo lo que necesite mi respuesta.</string>
@@ -53,7 +53,7 @@
     </plurals>
     <string name="chat_background_note">Se ejecuta en segundo plano: sigue usando tu teléfono. Toca la vista pequeña para ampliarla.</string>
     <string name="chat_placeholder_busy">Añade o cambia detalles…</string>
-    <string name="chat_placeholder_answer">Responde a la pregunta de Mika</string>
+    <string name="chat_placeholder_answer">Responde a la pregunta de 如愿</string>
     <string name="chat_placeholder_more">Di algo más…</string>
     <string name="chat_cannot_start">Aún no se pueden iniciar tareas</string>
     <string name="chat_missing">Falta: %1$s</string>
@@ -63,7 +63,7 @@
     <string name="chat_expand_steps">Mostrar pasos</string>
     <string name="chat_collapse_steps">Ocultar pasos</string>
     <string name="chat_view_process">Ver cómo fue</string>
-    <string name="chat_unlock_body">Tu teléfono está bloqueado. Mika continuará cuando lo desbloquees.</string>
+    <string name="chat_unlock_body">Tu teléfono está bloqueado. 如愿 continuará cuando lo desbloquees.</string>
     <string name="chat_input_body">%1$s\nToca una opción o escribe abajo. %2$s</string>
     <string name="chat_refuse">Rechazar</string>
     <string name="chat_allow_once">Permitir solo esta vez</string>
@@ -177,11 +177,11 @@
     <string name="attach_album">Fotos</string>
     <string name="attach_files">Archivos</string>
     <string name="attach_recent">Fotos recientes</string>
-    <string name="attach_recent_partial">Fotos a las que dejaste acceder a Mika</string>
+    <string name="attach_recent_partial">Fotos a las que dejaste acceder a 如愿</string>
     <string name="attach_all">Todas las fotos</string>
     <string name="attach_change">Cambiar el acceso</string>
     <string name="attach_no_photos">Aún no hay fotos</string>
-    <string name="attach_need_access">Para elegir fotos aquí, permite que Mika acceda a tus fotos</string>
+    <string name="attach_need_access">Para elegir fotos aquí, permite que 如愿 acceda a tus fotos</string>
     <string name="attach_grant">Permitir el acceso a las fotos</string>
     <string name="attach_grant_hint">También puedes tocar “Fotos” arriba para usar el selector de fotos del sistema</string>
     <string name="attach_full">Hasta %1$d adjuntos a la vez</string>
@@ -203,10 +203,10 @@
     <string name="attach_file_and_more">%1$s y %2$d archivos más</string>
     <string name="screen_tag">Tu pantalla ahora mismo</string>
     <string name="screen_blocked">No se pudo capturar: esta página no permite capturas de pantalla</string>
-    <string name="screen_camera">Capturar esta pantalla para Mika</string>
+    <string name="screen_camera">Capturar esta pantalla para 如愿</string>
     <string name="screen_remove">Quitar esta captura de pantalla</string>
-    <string name="screen_send">Enviar a Mika tu pantalla actual</string>
-    <string name="pip_screen">Pantalla virtual de Mika</string>
+    <string name="screen_send">Enviar a 如愿 tu pantalla actual</string>
+    <string name="pip_screen">Pantalla virtual de 如愿</string>
     <string name="collapse">Contraer</string>
     <string name="no_app_for_link">Ninguna app puede abrir este enlace</string>
     <string name="source_none">No se guardó ningún origen de esta respuesta</string>
@@ -231,7 +231,7 @@
     <string name="chat_retry_failed">%1$s: no se pudo copiar</string>
     <string name="chat_select_hint">Mantén pulsado el texto para seleccionarlo</string>
     <string name="chat_quote_remove">Quitar cita</string>
-    <string name="chat_quoting_mika">Citando a Mika: %1$s</string>
+    <string name="chat_quoting_mika">Citando a 如愿: %1$s</string>
     <string name="chat_quoting_you">Citándote a ti: %1$s</string>
     <string name="chat_edit_message">Editar mensaje</string>
     <string name="chat_withdraw_message">Retirar mensaje</string>

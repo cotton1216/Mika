@@ -9,8 +9,8 @@ import java.io.File
 /**
  * 浏览器页用手机版还是电脑版网页:
  * - 用户自己浏览默认手机版;在「更多」里换成电脑版的网站记在 [UserSiteModes],下次也用电脑版;
- * - 「给 Mika 登录」(从常用网站打开还没登录的网站)时整个标签照 Mika 办事时的身份走([agentMobile]),
- *   登录留下的 Cookie 和 Mika 办事时看到的网站是同一版,Mika 那边也是登录的。
+ * - 「给如愿登录」(从常用网站打开还没登录的网站)时整个标签照如愿办事时的身份走([agentMobile]),
+ *   登录留下的 Cookie 和如愿办事时看到的网站是同一版,如愿那边也是登录的。
  * Agent 自己的标签不看这里,按站点记住的那份照旧(默认电脑版)。
  */
 object BrowserIdentity {
@@ -18,7 +18,7 @@ object BrowserIdentity {
     fun mobile(loginForMika: Boolean, agentMobile: Boolean, userDesktop: Boolean): Boolean =
         if (loginForMika) agentMobile else !userDesktop
 
-    /** 从常用网站打开:还没登录的走「给 Mika 登录」。 */
+    /** 从常用网站打开:还没登录的走「给如愿登录」。 */
     fun loginFlow(site: FavoriteSite): Boolean = !site.loggedIn
 }
 

@@ -112,7 +112,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
-/** 浏览器页上「问 Mika」那一块的固定说法。 */
+/** 浏览器页上「问如愿」那一块的固定说法。 */
 object PageAskCopy {
     val HINT: String get() = tr(R.string.browser_ask_hint)
     val FROM_PAGE: String get() = tr(R.string.browser_ask_from_page)
@@ -131,7 +131,7 @@ object PageAskCopy {
 }
 
 /**
- * 浏览器页上对着这一页问 Mika 的状态:这一页接着哪个对话([conversationId],同一页或同一网站最近问过的,见 [PageConversations];
+ * 浏览器页上对着这一页问如愿的状态:这一页接着哪个对话([conversationId],同一页或同一网站最近问过的,见 [PageConversations];
  * 选了「新对话」时 [fresh])、底部那一块开着没有([open])、输入框里的字和带上的选中文字;那个对话里此刻的任务([run]、[card])
  * 和对话的来回([thread],和悬浮胶囊的对话卡片同一套排法)。
  * 发出去的第一句带上这一页的说明([AttachedPage]),页面借给那个任务([UserBrowser.lend]);任务在跑时说的话是插话(回答提问时是回答),
@@ -157,7 +157,7 @@ class PageChat(private val context: Context, private val browser: UserBrowser, p
     var open by mutableStateOf(false)
     var draft by mutableStateOf("")
     var selection by mutableStateOf<String?>(null)
-    /** 点了文字选择菜单里的「问 Mika」:输入框要拿焦点(每次加一)。 */
+    /** 点了文字选择菜单里的「问如愿」:输入框要拿焦点(每次加一)。 */
     var focusAsk by mutableIntStateOf(0)
         private set
 
@@ -203,7 +203,7 @@ class PageChat(private val context: Context, private val browser: UserBrowser, p
         follow(null, null)
     }
 
-    /** 选中的文字要问 Mika:带上它,输入框拿焦点。 */
+    /** 选中的文字要问如愿:带上它,输入框拿焦点。 */
     fun askAbout(text: String) {
         selection = AttachedPage.clip(text)
         focusAsk++
@@ -393,9 +393,9 @@ class PageChat(private val context: Context, private val browser: UserBrowser, p
 }
 
 /**
- * 网页视图的容器:手指一按下就告诉 [onTouch]。只有经窗口送来的真实触摸会经过这里;Mika 自己的输入(DevTools 的鼠标键盘直接进页面,
+ * 网页视图的容器:手指一按下就告诉 [onTouch]。只有经窗口送来的真实触摸会经过这里;如愿自己的输入(DevTools 的鼠标键盘直接进页面,
  * 原生触摸直接发给网页视图)不经过它,所以不会把自己的动作当成用户在操作。
- * 网页的文字选择菜单里加一项「问 Mika」([onAsk]),点了先读出选中的字,读完调它给的 done 收起菜单。
+ * 网页的文字选择菜单里加一项「问如愿」([onAsk]),点了先读出选中的字,读完调它给的 done 收起菜单。
  */
 class PageFrame(context: Context, private val onTouch: () -> Unit, private val onAsk: (done: () -> Unit) -> Unit) : FrameLayout(context) {
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -436,7 +436,7 @@ class PageFrame(context: Context, private val onTouch: () -> Unit, private val o
 }
 
 /**
- * 盖在网页上的那几样(放在网页区域的 Box 里):干活时四周的光边;你在页面上动手、Mika 暂停时顶上一条「继续」;
+ * 盖在网页上的那几样(放在网页区域的 Box 里):干活时四周的光边;你在页面上动手、如愿暂停时顶上一条「继续」;
  * 面板开着时下半截的对话面板([PagePanel]),收着、那件事还没结束时底部的小卡片([PageCard])。平时的输入条不在这里(在网页下面)。
  */
 @Composable
@@ -453,10 +453,10 @@ fun BoxScope.PageAskOverlay(chat: PageChat, site: String, pageTitle: String) {
     }
 }
 
-/** 对话面板占网页区域的高度比例:上面露出来的网页就是 Mika 在操作的那一页。 */
+/** 对话面板占网页区域的高度比例:上面露出来的网页就是如愿在操作的那一页。 */
 private const val PANEL_SHARE = 0.58f
 
-/** 页面四周的一圈淡紫光边:Mika 正在这一页上干活。不挡触摸。 */
+/** 页面四周的一圈淡紫光边:如愿正在这一页上干活。不挡触摸。 */
 @Composable
 fun PageGlow(modifier: Modifier = Modifier) {
     Box(
@@ -475,11 +475,11 @@ fun PageGlow(modifier: Modifier = Modifier) {
 }
 
 private const val GLOW_LAYERS = 4
-/** Mika 在页面上干活时光边的颜色(淡紫,和页面本身的颜色分得开)。 */
+/** 如愿在页面上干活时光边的颜色(淡紫,和页面本身的颜色分得开)。 */
 private val GlowColor = Color(0xFF7B5CFF)
 
 /**
- * 平时浏览器页底部那一条:「✦ 问问 Mika…」输入框;这一页有接着的对话时上面一行「接着「…」 · 新对话」;
+ * 平时浏览器页底部那一条:「✦ 问问如愿…」输入框;这一页有接着的对话时上面一行「接着「…」 · 新对话」;
  * 选中文字问的时候上面一条「选中的文字」和 ×。
  */
 @Composable
@@ -575,9 +575,9 @@ private val PanelShape = RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp)
 private val CardShape = RoundedCornerShape(16.dp)
 
 /**
- * 半屏对话面板:盖在网页下半截,上面露出来的网页就是 Mika 正在操作的那一页。顶上是网站名、「从这一页开始 · 页面标题」、
+ * 半屏对话面板:盖在网页下半截,上面露出来的网页就是如愿正在操作的那一页。顶上是网站名、「从这一页开始 · 页面标题」、
  * 「在聊天中打开」和收起;中间是这个对话的来回(和悬浮胶囊的对话卡片同一套排法);干活中下面是步骤,标出那一步在网页还是 App 上;
- * 要你点的按钮(回答的选项、同意、接手、继续)固定在下面;最下面是输入框:在跑时说的话是插话(右边停止键),Mika 问你时是回答,
+ * 要你点的按钮(回答的选项、同意、接手、继续)固定在下面;最下面是输入框:在跑时说的话是插话(右边停止键),如愿问你时是回答,
  * 结束后是在这一页上接着问。页面在你手上(接手中)时是「处理好了」。
  */
 @Composable
@@ -678,7 +678,7 @@ fun PageCard(chat: PageChat, modifier: Modifier = Modifier) {
     }
 }
 
-/** 你在页面上动手、Mika 停下时顶上那一条:「你在操作，Mika 已暂停 · 继续」。 */
+/** 你在页面上动手、如愿停下时顶上那一条:「你在操作，如愿已暂停 · 继续」。 */
 @Composable
 fun PausedBanner(onResume: () -> Unit, modifier: Modifier = Modifier) {
     Row(

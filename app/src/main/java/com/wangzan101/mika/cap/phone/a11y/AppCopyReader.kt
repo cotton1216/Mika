@@ -9,7 +9,7 @@ import com.wangzan101.mika.shell.IMikaShell
 
 /** 问内置助手:能打开的另一份 App(装在分身、工作资料一类的另一份用户里)。 */
 internal object AppCopyReader {
-    /** Mika 所在的用户:本来那份 App 在这里;别的用户里的是另一份。 */
+    /** 如愿所在的用户:本来那份 App 在这里;别的用户里的是另一份。 */
     val myUser: Int get() = android.os.Process.myUid() / 100_000 // UserHandle.PER_USER_RANGE
 
     /**

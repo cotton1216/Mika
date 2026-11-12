@@ -133,7 +133,7 @@ class AgentLoop(
     private val approvals: ApprovalSettings = ApprovalSettings.ASK,
     /** 等用户回答确认的时限,到时按不同意;为 null 时一直等(测试)。 */
     confirmTimeoutMs: Long? = null,
-    /** Mika 自己的包名:作用在它上面的写操作不做。 */
+    /** 如愿自己的包名:作用在它上面的写操作不做。 */
     private val selfPackage: String? = null,
     /** 追问(ask_user 与开工前的歧义问题)等用户回答的时限;计时走协程调度器的时钟,测试里用虚拟时间。 */
     inputTimeoutMs: Long = DEFAULT_INPUT_TIMEOUT_MS,
@@ -715,7 +715,7 @@ class AgentLoop(
                         track.after(tools.verb(first.name), ok = false, guard = false, changed = null, recovery = false, app = null)
                         continue
                     }
-                    // 模型单步只会被守卫叫停、被确认关卡拦下或因作用在 Mika 自己身上不做;别的拒绝说明执行入口和这里对不上
+                    // 模型单步只会被守卫叫停、被确认关卡拦下或因作用在如愿自己身上不做;别的拒绝说明执行入口和这里对不上
                     check(action.hit != null || action.code == Refusals.OWN_APP) { "unexpected refusal ${action.code} for ${first.name}" }
                     // 被确认关卡拦下:不计入失败熔断,交给模型走确认流程
                     track.after(tools.verb(first.name), ok = false, guard = action.before.isNotEmpty(), changed = null, recovery = false, app = null)

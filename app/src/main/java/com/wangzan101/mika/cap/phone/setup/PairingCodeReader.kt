@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 /**
- * 配对时借 Mika 的无障碍服务读出系统配对窗口上的配对码,读到就直接配对,用户不用去通知里填。
+ * 配对时借如愿的无障碍服务读出系统配对窗口上的配对码,读到就直接配对,用户不用去通知里填。
  * 只在 [PairingCoordinator] 开着的这段时间里跑,只看系统设置的窗口;读到的码不写日志。
  * 无障碍没开就什么也不做,配对照样走通知。
  */

@@ -276,7 +276,7 @@ class ConversationStoreTest {
         val dir = tmp.newFolder("c")
         val a = ConversationStore(dir)
         val id = a.newConversation()
-        val f = SharedFile("图.png", 1234, "Download/Mika/图.png", "content://media/external/downloads/7")
+        val f = SharedFile("图.png", 1234, "Download/如愿/图.png", "content://media/external/downloads/7")
         a.append(id, Turn("画图", "好了", "succeeded"), listOf(f))
         a.append(id, Turn("再来", "好", "succeeded"))
         val b = ConversationStore(dir)
@@ -288,7 +288,7 @@ class ConversationStoreTest {
     @Test fun filesSurviveNoteUpdatesAndStrip() {
         val dir = tmp.newFolder("d")
         val store = ConversationStore(dir)
-        val f = SharedFile("表.csv", 10, "Download/Mika/表.csv", "content://media/external/downloads/8")
+        val f = SharedFile("表.csv", 10, "Download/如愿/表.csv", "content://media/external/downloads/8")
         store.append("c1", Turn("导出", "好了", "succeeded", runId = "r1"), listOf(f))
         val note = com.wangzan101.mika.core.memory.MemoryNote(com.wangzan101.mika.core.memory.NoteKind.added, "m1", "t1", null)
         store.updateTurn("c1", "r1") { it.copy(memoryNotes = listOf(note)) }

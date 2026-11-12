@@ -20,7 +20,7 @@ internal sealed class DwellStop(message: String) : Exception(message) {
 
 /** 本任务里这个网站来的页、限制浏览快慢的这个 App 换的屏到了上限:不再换页、换屏,先回答或问用户。[site] 是网站主机名或 App 包名。 */
 internal class PageLimitReached(val site: String, val pages: Int, val cap: Int, val scope: Scope) :
-    DwellStop("Mika reached its per-task ${scope.label} budget for $site ($pages/$cap).") {
+    DwellStop("如愿 reached its per-task ${scope.label} budget for $site ($pages/$cap).") {
     enum class Scope(val wireName: String, val label: String) {
         APP_SCREENS("app_screens", "app screen"),
         WEB_PAGES("web_pages", "web page"),

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">Some sign-ins may remain; use “Sign out of all” to clear everything.</string>
-    <string name="web_challenged_note">Mika recently hit a CAPTCHA or access block on this site. If it keeps happening, clear this site’s data (cookies and web storage) and sign in again.</string>
-    <string name="web_data_note">Website sign-in data is stored only in Mika’s private folder on this phone, without extra encryption — the same protection as the system browser.</string>
+    <string name="web_challenged_note">如愿 recently hit a CAPTCHA or access block on this site. If it keeps happening, clear this site’s data (cookies and web storage) and sign in again.</string>
+    <string name="web_data_note">Website sign-in data is stored only in 如愿’s private folder on this phone, without extra encryption — the same protection as the system browser.</string>
     <string name="web_none">No sites visited yet</string>
-    <string name="web_none_sub">Sites appear here after Mika works on them or you sign in here</string>
-    <string name="web_signed_in_by_you">Signed in within Mika</string>
+    <string name="web_none_sub">Sites appear here after 如愿 works on them or you sign in here</string>
+    <string name="web_signed_in_by_you">Signed in within 如愿</string>
     <string name="web_challenged">Hit a check or block</string>
     <string name="web_last_visit">Last visited %1$s</string>
     <string name="web_manage">Manage</string>
     <string name="web_logout_all_title">Sign out of all and clear web data</string>
-    <string name="web_you_signed_in">You signed in to this site within Mika.</string>
-    <string name="web_mika_visited">Mika has visited this site.</string>
+    <string name="web_you_signed_in">You signed in to this site within 如愿.</string>
+    <string name="web_mika_visited">如愿 has visited this site.</string>
     <string name="web_open_login">Open sign-in</string>
     <string name="web_cleared">Cleared cookies and web storage for %1$s; you’ll need to sign in again. Some data may remain; use “Sign out of all” to clear everything.</string>
     <string name="web_signed_out">Signed out of %1$s. %2$s</string>
     <string name="web_clear_site">Clear this site’s data</string>
     <string name="web_sign_out_site">Sign out of this site</string>
     <string name="web_logout_all_q">Sign out of all and clear web data?</string>
-    <string name="web_logout_all_body">Signs out of every site in the built-in browser and clears their web data stored in Mika. Mika will need to sign in again when it uses those sites.</string>
+    <string name="web_logout_all_body">Signs out of every site in the built-in browser and clears their web data stored in 如愿. 如愿 will need to sign in again when it uses those sites.</string>
     <string name="web_logged_out_all">Signed out of all and cleared web data.</string>
     <string name="web_logout_all">Sign out of all</string>
     <string name="date_pattern_md_compact">MMM d</string>
-    <string name="web_takeover_login">Sign in in Mika’s browser, then tap “Done”</string>
-    <string name="web_takeover_waiting">Mika is waiting for you: %1$s</string>
+    <string name="web_takeover_login">Sign in in 如愿’s browser, then tap “Done”</string>
+    <string name="web_takeover_waiting">如愿 is waiting for you: %1$s</string>
     <string name="web_reason_security">Security check</string>
     <!-- 任务结束后留在后台运行的那一页 -->
     <string name="kept_notif_title">Web page running in the background</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">the page crashed</string>
     <string name="kept_reason_user">you closed it</string>
     <string name="kept_reason_replaced">another page was kept</string>
-    <string name="kept_reason_app_exit">Mika quit</string>
+    <string name="kept_reason_app_exit">如愿 quit</string>
     <string name="kept_chat_sub">1 web page running in the background</string>
     <string name="kept_capsule">Background page running</string>
     <string name="kept_card_title">Background page</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">Acesso a apps</string>
     <string name="appaccess_row_sub">Bloqueie apps e o compartilhamento de tela por app</string>
-    <string name="appaccess_intro">Escolha quais apps o Mika pode ler e operar com as ferramentas padrão do celular. Comandos de shell, o sandbox e o acesso ao computador (MCP) não são limitados por esta configuração.</string>
+    <string name="appaccess_intro">Escolha quais apps o 如愿 pode ler e operar com as ferramentas padrão do celular. Comandos de shell, o sandbox e o acesso ao computador (MCP) não são limitados por esta configuração.</string>
     <string name="appaccess_privacy">Para categorizar, os nomes e os nomes de pacote dos apps são enviados ao modelo de IA; “Atualizar lista de apps” pergunta antes.</string>
     <string name="appaccess_unavailable">Não foi possível ler as configurações de acesso a apps, então o acesso padrão ao celular está pausado. Redefinir apaga as permissões e categorias salvas.</string>
     <string name="appaccess_reset">Redefinir acesso a apps</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">Cancelar</string>
 
     <string name="appaccess_recommend_title">Recomendado bloquear: apps financeiros</string>
-    <string name="appaccess_recommend_body">Estes apps são classificados como financeiros ou de pagamento, e o Mika ainda pode operá-los. Bloqueie um por um ou todos de uma vez.</string>
+    <string name="appaccess_recommend_body">Estes apps são classificados como financeiros ou de pagamento, e o 如愿 ainda pode operá-los. Bloqueie um por um ou todos de uma vez.</string>
     <string name="appaccess_recommend_empty">Nada para bloquear.</string>
     <string name="appaccess_block">Bloquear</string>
     <string name="appaccess_block_all">Bloquear todos</string>

@@ -24,7 +24,7 @@
     <string name="voice_mic_unavailable">麥克風用不了，可能正被別的 App 佔著</string>
     <string name="voice_hold_to_talk">按住說話</string>
     <string name="voice_mic_blocked_title">麥克風還是用不了</string>
-    <string name="voice_mic_blocked_body">已經允許 Mika 錄音，但還是錄不到聲音。看看快速設定裡的「麥克風存取權」開關有沒有關（Android 12 起有），再到系統的權限管理裡看 Mika 的麥克風有沒有被單獨關掉；也可能正被別的應用程式佔用。</string>
+    <string name="voice_mic_blocked_body">已經允許如愿錄音，但還是錄不到聲音。看看快速設定裡的「麥克風存取權」開關有沒有關（Android 12 起有），再到系統的權限管理裡看如愿的麥克風有沒有被單獨關掉；也可能正被別的應用程式佔用。</string>
     <string name="voice_provider_failed">沒能轉成文字：%1$s</string>
     <string name="voice_unavailable_title">還不能語音輸入</string>
     <string name="voice_unavailable_no_engine">這臺手機沒有自帶的語音辨識，也還沒選轉文字的模型。到「設定 › 模型 › 語音轉文字」選一個服務商的語音模型就能用。</string>
@@ -34,12 +34,12 @@
     <string name="voice_unavailable_off">語音轉文字設成了不用。到「設定 › 模型 › 語音轉文字」選一個就能用。</string>
     <string name="voice_go_pick">去選</string>
     <string name="voice_permission_title">要允許錄音才能按住說話</string>
-    <string name="voice_permission_body">按住說話時要錄音才能聽到你。之前沒有允許，手機不會再問了：到系統設定裡 Mika 的權限頁，打開「麥克風」就能用。</string>
+    <string name="voice_permission_body">按住說話時要錄音才能聽到你。之前沒有允許，手機不會再問了：到系統設定裡如愿的權限頁，打開「麥克風」就能用。</string>
     <string name="voice_permission_open">去設定</string>
     <!-- 懸浮膠囊:長按說話 -->
     <string name="capsule_voice_talk">說話</string>
     <string name="capsule_voice_send">發出</string>
-    <string name="capsule_voice_answer_title">回答 Mika</string>
+    <string name="capsule_voice_answer_title">回答如愿</string>
     <string name="capsule_voice_continue_title">接著「%1$s」說</string>
     <string name="capsule_voice_cancel">取消</string>
     <string name="capsule_voice_edit">改一改</string>
@@ -53,7 +53,7 @@
     <string name="capsule_voice_steered">已插話：%1$s</string>
     <string name="capsule_voice_answered">已回答：%1$s</string>
     <string name="capsule_voice_sent">已發出：%1$s</string>
-    <string name="capsule_voice_need_mic">點這裡到 Mika 允許錄音</string>
+    <string name="capsule_voice_need_mic">點這裡到如愿允許錄音</string>
     <string name="capsule_voice_not_ready">還不能語音輸入 · 點這裡</string>
-    <string name="capsule_voice_open">打開 Mika</string>
+    <string name="capsule_voice_open">打開如愿</string>
 </resources>

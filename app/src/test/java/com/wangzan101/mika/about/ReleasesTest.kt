@@ -9,7 +9,7 @@ class ReleasesTest {
     private val github = """
         {
           "tag_name": "v0.2.0",
-          "name": "Mika 0.2.0",
+          "name": "如愿 0.2.0",
           "html_url": "https://github.com/wangzan101/Mika/releases/tag/v0.2.0",
           "published_at": "2026-11-05T08:30:00Z",
           "prerelease": false,
@@ -25,7 +25,7 @@ class ReleasesTest {
     fun readsGitHubRelease() {
         val r = Releases.fromGitHub(github)
         assertEquals("0.2.0", r.version)
-        assertEquals("Mika 0.2.0", r.name)
+        assertEquals("如愿 0.2.0", r.name)
         assertEquals("2026-11-05", r.date)
         assertEquals("https://github.com/wangzan101/Mika/releases/tag/v0.2.0", r.pageUrl)
         assertEquals("https://github.com/x/mika-0.2.0.apk", r.apkUrl)
@@ -37,7 +37,7 @@ class ReleasesTest {
 
     @Test
     fun gitHubReleaseWithoutApkOrBody() {
-        val r = Releases.fromGitHub("""{"tag_name":"0.3.0","name":"","body":null,"html_url":"https://github.com/wangzan101/Mika/releases/tag/0.3.0","assets":[]}""")
+        val r = Releases.fromGitHub("""{"tag_name":"0.3.0","name":"","body":null,"html_url":"https://github.com/wangzan101/如愿/releases/tag/0.3.0","assets":[]}""")
         assertEquals("0.3.0", r.version)
         assertEquals("0.3.0", r.name)
         assertEquals("", r.notes)
@@ -66,8 +66,8 @@ class ReleasesTest {
           "tag_name": "v0.1.40",
           "html_url": "https://github.com/wangzan101/Mika/releases/tag/v0.1.40",
           "assets": [
-            {"name": "Mika-v0.1.40-arm64.apk", "browser_download_url": "https://github.com/x/Mika-v0.1.40-arm64.apk", "size": 50, "digest": "sha256:arm"},
-            {"name": "Mika-v0.1.40.apk", "browser_download_url": "https://github.com/x/Mika-v0.1.40.apk", "size": 80, "digest": "sha256:all"}
+            {"name": "如愿-v0.1.40-arm64.apk", "browser_download_url": "https://github.com/x/如愿-v0.1.40-arm64.apk", "size": 50, "digest": "sha256:arm"},
+            {"name": "如愿-v0.1.40.apk", "browser_download_url": "https://github.com/x/如愿-v0.1.40.apk", "size": 80, "digest": "sha256:all"}
           ]
         }
     """.trimIndent()
@@ -75,7 +75,7 @@ class ReleasesTest {
     @Test
     fun arm64DevicePicksTheArm64Apk() {
         val r = Releases.fromGitHub(split, listOf("arm64-v8a", "armeabi-v7a", "armeabi"))
-        assertEquals("https://github.com/x/Mika-v0.1.40-arm64.apk", r.apkUrl)
+        assertEquals("https://github.com/x/如愿-v0.1.40-arm64.apk", r.apkUrl)
         assertEquals(50L, r.apkSize)
         assertEquals("sha256:arm", r.apkDigest)
     }
@@ -84,18 +84,18 @@ class ReleasesTest {
     fun otherDevicesPickTheUniversalApk() {
         for (abis in listOf(listOf("x86_64", "x86"), listOf("armeabi-v7a", "armeabi"), emptyList())) {
             val r = Releases.fromGitHub(split, abis)
-            assertEquals(abis.toString(), "https://github.com/x/Mika-v0.1.40.apk", r.apkUrl)
+            assertEquals(abis.toString(), "https://github.com/x/如愿-v0.1.40.apk", r.apkUrl)
             assertEquals("sha256:all", r.apkDigest)
         }
     }
 
     @Test
     fun archApkForAnotherDeviceIsNotOffered() {
-        val only = """{"tag_name":"v0.1.40","html_url":"https://github.com/wangzan101/Mika/releases/tag/v0.1.40",
-            "assets":[{"name":"Mika-v0.1.40-arm64.apk","browser_download_url":"https://github.com/x/Mika-v0.1.40-arm64.apk"}]}"""
+        val only = """{"tag_name":"v0.1.40","html_url":"https://github.com/wangzan101/如愿/releases/tag/v0.1.40",
+            "assets":[{"name":"如愿-v0.1.40-arm64.apk","browser_download_url":"https://github.com/x/如愿-v0.1.40-arm64.apk"}]}"""
         val r = Releases.fromGitHub(only, listOf("x86_64", "x86"))
         assertNull(r.apkUrl)
         assertEquals(r.pageUrl, r.downloadUrl)
-        assertEquals("https://github.com/x/Mika-v0.1.40-arm64.apk", Releases.fromGitHub(only, listOf("arm64-v8a")).apkUrl)
+        assertEquals("https://github.com/x/如愿-v0.1.40-arm64.apk", Releases.fromGitHub(only, listOf("arm64-v8a")).apkUrl)
     }
 }

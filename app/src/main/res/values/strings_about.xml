@@ -21,7 +21,7 @@
     <string name="about_repo_sub">%1$s · stars welcome</string>
     <string name="about_guide">Guide &amp; how to contribute</string>
     <string name="about_guide_sub">Getting started; add app knowledge even without coding</string>
-    <string name="about_data_note">What you send Mika — messages, screen content and screenshots — goes only to the model provider you set up. Mika has no servers of its own and collects none of your data; checking for updates only contacts GitHub.</string>
+    <string name="about_data_note">What you send 如愿 — messages, screen content and screenshots — goes only to the model provider you set up. 如愿 has no servers of its own and collects none of your data; checking for updates only contacts GitHub.</string>
     <string name="about_license_link">Apache-2.0 license</string>
     <string name="about_author">Made by Wang Zan · © 2026</string>
     <string name="about_license_title">Apache-2.0 License</string>
@@ -34,11 +34,11 @@
     <string name="about_update_retry">Download again</string>
     <string name="about_update_cancel">Delete download</string>
     <string name="about_update_working">Working…</string>
-    <string name="about_update_install_hint">When downloaded, tap “Install update” and confirm in the system installer. You may first need to allow Mika to install unknown apps.</string>
+    <string name="about_update_install_hint">When downloaded, tap “Install update” and confirm in the system installer. You may first need to allow 如愿 to install unknown apps.</string>
     <string name="about_update_error">Download or installation did not complete. Please try again later.</string>
     <string name="about_update_bad_file">The downloaded package is incomplete or does not match the release. It was deleted; please download again.</string>
-    <string name="about_update_not_newer">The downloaded package is not newer than the installed Mika. It was deleted.</string>
-    <string name="about_update_bad_signer">This package is signed differently from the installed Mika, so it cannot update it. It was deleted. If you built Mika yourself, uninstall it first, then install the official version.</string>
+    <string name="about_update_not_newer">The downloaded package is not newer than the installed 如愿. It was deleted.</string>
+    <string name="about_update_bad_signer">This package is signed differently from the installed 如愿, so it cannot update it. It was deleted. If you built 如愿 yourself, uninstall it first, then install the official version.</string>
     <string name="about_update_later">Later</string>
     <string name="about_no_browser">No browser available to open the link</string>
     <string name="about_version">Version %1$s</string>
@@ -48,7 +48,7 @@
     <string name="about_current">Current %1$s</string>
     <string name="about_released_on">" · released %1$s"</string>
     <string name="about_released_under">Released under %1$s</string>
-    <string name="issue_body">- Device: %1$s\n- Android version: %2$s (SDK %3$d)\n- Mika version: %4$s (build %5$s)\n\n### What went wrong\n\n\n### Steps you took\n\n\n### What you expected\n\n\n### Diagnostics\n(Optional) In Mika, open About › Send feedback › Copy diagnostics, then paste it here\n\n</string>
+    <string name="issue_body">- Device: %1$s\n- Android version: %2$s (SDK %3$d)\n- 如愿 version: %4$s (build %5$s)\n\n### What went wrong\n\n\n### Steps you took\n\n\n### What you expected\n\n\n### Diagnostics\n(Optional) In 如愿, open About › Send feedback › Copy diagnostics, then paste it here\n\n</string>
     <string name="licenses_third_party">Third-party components · %1$d</string>
     <string name="licenses_footer">Full license texts and copyright notices are in LICENSE and the licenses/ folder (including THIRD_PARTY_NOTICES.md) of the source repository.</string>
     <string name="diagnostics_copy">Copy diagnostics</string>
@@ -60,10 +60,10 @@
     <string name="diagnostics_copied">Copied</string>
     <string name="diagnostics_loading">Collecting…</string>
     <string name="about_auto_update">Auto-update</string>
-    <string name="about_auto_update_detail">Download new versions in the background on Wi-Fi only. Mika asks before installing.</string>
+    <string name="about_auto_update_detail">Download new versions in the background on Wi-Fi only. 如愿 asks before installing.</string>
     <string name="about_auto_update_disable">Turn off auto-update</string>
-    <string name="about_auto_update_ready">Mika %1$s downloaded</string>
-    <string name="about_auto_update_confirm_title">A new Mika version is ready</string>
+    <string name="about_auto_update_ready">如愿 %1$s downloaded</string>
+    <string name="about_auto_update_confirm_title">A new 如愿 version is ready</string>
     <string name="about_auto_update_confirm_detail">Install %1$s now, or turn off auto-update and check for updates manually in Settings.</string>
     <string name="about_auto_update_now">Update now</string>
 </resources>

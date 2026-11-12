@@ -22,7 +22,7 @@ internal object SearchHttp {
     /** 一条摘要最多这么长:端点不可信,不能把整页正文塞进模型上下文。 */
     private const val MAX_SNIPPET_CHARS = 600
     private val JSON_TYPE = "application/json".toMediaType()
-    private const val USER_AGENT = "Mika (+https://github.com/wangzan101/Mika)"
+    private const val USER_AGENT = "Yuan (+https://github.com/wangzan101/Mika)"
 
     fun json(body: JsonObject): RequestBody = body.toString().toRequestBody(JSON_TYPE)
 

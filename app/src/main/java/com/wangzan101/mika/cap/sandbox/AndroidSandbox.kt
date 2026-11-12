@@ -91,7 +91,7 @@ internal class ShareQuota(private val maxFiles: Int = SHARE_MAX_FILES, private v
 
 /**
  * 启动沙箱进程的专用线程,进程存活期间一直在。启动器设了 PR_SET_PDEATHSIG,
- * 它跟的是 fork 出它的那个线程:线程池回收空闲线程时,那条线程起的命令会被当成「Mika 死了」而杀掉。
+ * 它跟的是 fork 出它的那个线程:线程池回收空闲线程时,那条线程起的命令会被当成「如愿死了」而杀掉。
  * 协程调度器把 start() 的异常交回调用方,线程本身不会因异常退出。
  */
 private val launcherThread = Executors.newSingleThreadExecutor { r -> Thread(r, "mika-sandbox-launcher").apply { isDaemon = true } }
@@ -105,7 +105,7 @@ class AndroidSandbox internal constructor(
     /** 每次运行开一个桥会话;JVM 测试里没有安卓套接字,传 false。 */
     private val bridges: Boolean = false,
     private val version: String = "",
-    /** 存到「下载/Mika」:(已过关口核实的文件, 保存名) → 导出的文件;为空时不能导出。 */
+    /** 存到「下载/如愿」:(已过关口核实的文件, 保存名) → 导出的文件;为空时不能导出。 */
     private val exporter: (suspend (GatedFile, String) -> SharedFile)? = null,
     /** 导出成功后告诉任务(文件卡片)。 */
     private val onShared: (SharedFile) -> Unit = {},
@@ -353,7 +353,7 @@ class AndroidSandbox internal constructor(
 
     /**
      * [file] 已由 ShareRules 按工作区检查过;导出时经关口打开一次(根目录是它所在的那个工作区),额度按句柄上的大小算,
-     * 复制也从这个句柄读。意外的错误只记在 Mika 这边,交出去的只有错误码和一句话,不带 Mika 的私有路径。
+     * 复制也从这个句柄读。意外的错误只记在如愿这边,交出去的只有错误码和一句话,不带如愿的私有路径。
      */
     override suspend fun share(file: File, name: String): String {
         val export = exporter ?: throw SandboxError("share_unavailable", "Saving files to Downloads is not available in this version.")

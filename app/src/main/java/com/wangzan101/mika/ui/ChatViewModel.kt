@@ -183,7 +183,7 @@ data class Exchange(
     val usedMemory: List<String> = emptyList(),
     /** 结果卡片下的技能提示(学会了 / 最近不灵先停用了)。 */
     val skillNotes: List<SkillNote> = emptyList(),
-    /** 这一轮导出到「下载/Mika」的文件,显示成文件卡片。 */
+    /** 这一轮导出到「下载/如愿」的文件,显示成文件卡片。 */
     val files: List<SharedFile> = emptyList(),
     /** 这次打开 App 后开始跟的时刻(毫秒);不知道时为 0。 */
     val startedAt: Long = 0L,
