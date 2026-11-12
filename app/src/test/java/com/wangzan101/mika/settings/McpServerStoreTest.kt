@@ -305,6 +305,79 @@ class McpServerStoreTest {
         assertTrue(s.add(McpServerConfig(name = "bad", url = "", transport = "stdio", command = "a\nb")).isFailure)
     }
 
+    @Test fun importsClaudeStyleJsonAndEncryptsTheBearerToken() {
+        val s = store()
+        val results = s.importJson(
+            """
+            {
+              "mcpServers": {
+                "accountbook": {
+                  "type": "http",
+                  "url": "`https://accountbook-mcp.dabenshu.com/mcp`",
+                  "headers": { "Authorization": "Bearer abc123", "X-Tenant": "t1" }
+                }
+              }
+            }
+            """.trimIndent(),
+        ).getOrThrow()
+
+        assertEquals(listOf("accountbook"), results.map { it.name })
+        assertTrue(results.single().ok)
+        val server = s.servers.value.single()
+        assertEquals("accountbook", server.name)
+        assertEquals("https://accountbook-mcp.dabenshu.com/mcp", server.url)
+        assertEquals("streamable-http", server.transport)
+        assertEquals(mapOf("X-Tenant" to "t1"), server.headers)
+        assertEquals("abc123", s.token(server.id))
+        assertFalse(File(tmp.root, "mcp-server-secrets.bin").readText(Charsets.ISO_8859_1).contains("abc123"))
+    }
+
+    @Test fun importMapsTypeAndKeepsFailuresOutOfTheList() {
+        val s = store()
+        val results = s.importJson(
+            """
+            {"mcpServers": {
+              "old": {"type": "sse", "url": "https://old.example/sse"},
+              "local": {"type": "stdio", "command": "python3", "args": ["/root/server.py"]},
+              "broken": {"type": "http"}
+            }}
+            """.trimIndent(),
+        ).getOrThrow()
+
+        assertEquals(listOf("old", "local", "broken"), results.map { it.name })
+        assertEquals(listOf(true, true, false), results.map { it.ok })
+        assertEquals("url is required", results.last().message)
+        assertEquals(listOf("old", "local"), s.servers.value.map { it.name })
+        assertEquals("http-sse", s.servers.value.first().transport)
+        assertEquals("stdio", s.servers.value.last().transport)
+        assertEquals("python3 /root/server.py", s.servers.value.last().command)
+    }
+
+    @Test fun reimportUpdatesTheServerWithTheSameName() {
+        val s = store()
+        s.importJson("""{"mcpServers":{"book":{"url":"https://a.example/mcp"}}}""").getOrThrow()
+        val first = s.servers.value.single()
+        s.setToken(first.id, "old")
+
+        val results = s.importJson(
+            """{"mcpServers":{"book":{"url":"https://b.example/mcp","headers":{"Authorization":"Bearer new"}}}}""",
+        ).getOrThrow()
+
+        assertTrue(results.single().updated)
+        val server = s.servers.value.single()
+        assertEquals(first.id, server.id)
+        assertEquals("https://b.example/mcp", server.url)
+        assertEquals("new", s.token(server.id))
+    }
+
+    @Test fun importRejectsTextThatIsNotAnMcpServersObject() {
+        val s = store()
+        assertTrue(s.importJson("not json").isFailure)
+        assertTrue(s.importJson("""{"other":1}""").isFailure)
+        assertTrue(s.importJson("""{"mcpServers":{}}""").isFailure)
+        assertTrue(s.servers.value.isEmpty())
+    }
+
     @Test fun oauthTokensAreEncryptedAndSurviveRestart() {
         val s = store()
         val added = s.add("oauth", "https://oauth.example/mcp").getOrThrow()

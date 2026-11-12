@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.wangzan101.mika.R
+import com.wangzan101.mika.settings.McpImportResult
 import com.wangzan101.mika.settings.McpServerConfig
 import com.wangzan101.mika.settings.McpServerStore
 import com.wangzan101.mika.ui.components.GroupCard
@@ -46,6 +47,7 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
     val health by store.health.collectAsState()
     var editing by remember { mutableStateOf<McpServerConfig?>(null) }
     var adding by remember { mutableStateOf(false) }
+    var importing by remember { mutableStateOf(false) }
     var refreshing by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -89,6 +91,15 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
                 enabled = !refreshing && servers.isNotEmpty(),
             )
         }
+        GroupCard(Modifier.padding(top = 12.dp)) {
+            ListRow(
+                MikaIcons.Code,
+                stringResource(R.string.mcp_servers_import),
+                subtitle = stringResource(R.string.mcp_servers_import_sub),
+                first = true,
+                onClick = { importing = true },
+            ) { RowChevron() }
+        }
         GroupLabel(stringResource(R.string.mcp_servers_help))
         Text(
             stringResource(R.string.mcp_servers_help_text),
@@ -104,6 +115,53 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
             onChanged = { adding = false; editing = null },
         )
     }
+
+    if (importing) McpImportDialog(store) { importing = false }
+}
+
+/** 粘贴一段 `mcpServers` JSON 导入;有失败的条目时留在弹窗里显示原因。 */
+@Composable
+private fun McpImportDialog(store: McpServerStore, onDismiss: () -> Unit) {
+    var text by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf<String?>(null) }
+    var results by remember { mutableStateOf<List<McpImportResult>?>(null) }
+
+    MikaDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.mcp_servers_import)) },
+        text = {
+            Column {
+                OutlinedTextField(
+                    text, { text = it; error = null; results = null },
+                    label = { Text(stringResource(R.string.mcp_servers_import_hint)) },
+                    minLines = 6,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                error?.let { Text(it, Modifier.padding(top = 6.dp)) }
+                results?.forEach { result ->
+                    val line = when {
+                        !result.ok -> stringResource(R.string.mcp_servers_import_fail, result.name, result.message.orEmpty())
+                        result.updated -> stringResource(R.string.mcp_servers_import_updated, result.name)
+                        else -> stringResource(R.string.mcp_servers_import_ok, result.name)
+                    }
+                    Text(line, Modifier.padding(top = 6.dp))
+                }
+            }
+        },
+        confirmButton = {
+            TextButton({
+                store.importJson(text).fold(
+                    onSuccess = { list ->
+                        error = null
+                        results = list.filterNot { it.ok }.ifEmpty { null }
+                        if (list.all { it.ok }) onDismiss()
+                    },
+                    onFailure = { error = it.message },
+                )
+            }) { Text(stringResource(R.string.mcp_servers_import_action)) }
+        },
+        dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } },
+    )
 }
 
 @Composable

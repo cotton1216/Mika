@@ -149,6 +149,13 @@
     <string name="mcp_servers_empty">No MCP server added</string>
     <string name="mcp_servers_empty_sub">Add an external MCP server to expose its tools to Mika.</string>
     <string name="mcp_servers_add">Add server</string>
+    <string name="mcp_servers_import">Import from JSON</string>
+    <string name="mcp_servers_import_sub">Paste an mcpServers config</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">Import</string>
+    <string name="mcp_servers_import_ok">Added %1$s</string>
+    <string name="mcp_servers_import_updated">Updated %1$s</string>
+    <string name="mcp_servers_import_fail">%1$s failed: %2$s</string>
     <string name="mcp_servers_edit">Edit server</string>
     <string name="mcp_servers_name">Name</string>
     <string name="mcp_servers_url">Server URL</string>

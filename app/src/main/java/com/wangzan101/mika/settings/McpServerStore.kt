@@ -28,8 +28,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.Closeable
@@ -77,6 +80,17 @@ data class McpConnections(
 
 data class McpTestResult(val serverName: String?, val instructions: String?, val tools: List<String>)
 
+/** 从 `mcpServers` JSON 里读出来的一条:解析好的配置和抽出来的 token,或者读不懂的原因。 */
+data class McpImportEntry(
+    val name: String,
+    val config: McpServerConfig? = null,
+    val token: String? = null,
+    val error: String? = null,
+)
+
+/** 导入一条的结果;同名的已有配置会被就地更新,[updated] 就是这个意思。 */
+data class McpImportResult(val name: String, val ok: Boolean, val message: String? = null, val updated: Boolean = false)
+
 /**
  * 外部 MCP server 的设置:配置存 `files/settings/mcp-servers.json`,token 用 [KeyCipher] 加密另存。
  * [connectionsFor] 在任务开始时连接所有启用项(整段有总时限),失败、超时的不影响其他任务/其他 server。
@@ -119,6 +133,29 @@ class McpServerStore(
         saveConfigs(next)
         _servers.value = next
         return Result.success(config)
+    }
+
+    /**
+     * 粘贴一段 `mcpServers` JSON 导入:同名的已有配置就地更新(换地址/头/令牌),不会出现两条同名。
+     * 整段读不懂时返回 failure;单条有问题只在结果里写原因,不影响别的条目。
+     */
+    @Synchronized fun importJson(text: String): Result<List<McpImportResult>> {
+        val entries = parseImport(text) ?: return Result.failure(IllegalArgumentException("no mcpServers found"))
+        if (entries.isEmpty()) return Result.failure(IllegalArgumentException("no servers in this JSON"))
+        return Result.success(entries.map(::applyImport))
+    }
+
+    private fun applyImport(entry: McpImportEntry): McpImportResult {
+        val config = entry.config ?: return McpImportResult(entry.name, false, entry.error)
+        validate(config)?.let { return McpImportResult(entry.name, false, it) }
+        val existing = _servers.value.firstOrNull { it.name == config.name }
+        if (existing == null) {
+            add(config, entry.token).exceptionOrNull()?.let { return McpImportResult(entry.name, false, it.message) }
+            return McpImportResult(entry.name, true)
+        }
+        update(config.copy(id = existing.id)).exceptionOrNull()?.let { return McpImportResult(entry.name, false, it.message) }
+        if (!entry.token.isNullOrBlank()) setToken(existing.id, entry.token)
+        return McpImportResult(entry.name, true, updated = true)
     }
 
     @Synchronized fun remove(id: String) {
@@ -452,6 +489,61 @@ class McpServerStore(
          * 那是给工具调用的;开头只是握手,慢的这次先不接,不让任务一直停在「准备中」。沙箱里的 stdio server 要起 PRoot,留得宽一点。
          */
         const val CONNECT_BUDGET_MS = 15_000L
+
+        /**
+         * 按 Claude/Cursor 的 `mcpServers` 写法读配置:`type` 决定传输方式(没写按 streamable-http),
+         * `headers.Authorization` 里的 `Bearer xxx` 抽成 token(另行加密存),其余请求头照抄。
+         * 读不懂的条目带上原因,不影响别的条目;整段不是 JSON 对象时返回 null。
+         */
+        fun parseImport(text: String): List<McpImportEntry>? {
+            val body = text.trim().removePrefix("```json").removePrefix("```JSON").removePrefix("```")
+                .removeSuffix("```").trim()
+            val root = runCatching { Json.parseToJsonElement(body) as? JsonObject }.getOrNull() ?: return null
+            val servers = (root["mcpServers"] as? JsonObject)
+                ?: root.takeIf { o -> o.isNotEmpty() && o.values.all { it is JsonObject } }
+                ?: return null
+            return servers.map { (name, value) -> importedEntry(name, value) }
+        }
+
+        private fun importedEntry(name: String, value: JsonElement): McpImportEntry {
+            if (name.isBlank()) return McpImportEntry(name, error = "name is required")
+            val o = value as? JsonObject ?: return McpImportEntry(name, error = "not an object")
+            val type = (o.text("type") ?: o.text("transport")).orEmpty().lowercase()
+            val transport = when (type) {
+                "stdio" -> "stdio"
+                "sse", "http-sse", "httpsse" -> "http-sse"
+                else -> "streamable-http"
+            }
+            val headers = (o["headers"] as? JsonObject)
+                ?.mapNotNull { (k, v) -> (v as? JsonPrimitive)?.contentOrNull?.let { k to it } }
+                ?.toMap().orEmpty()
+            val authorization = headers.entries.firstOrNull { it.key.equals("Authorization", ignoreCase = true) }?.value
+            val bearer = authorization?.takeIf { it.startsWith("Bearer ", ignoreCase = true) }?.substring(7)?.trim()
+            // Bearer 抽走了;不是 Bearer 的 Authorization 原样留着,不然这些 server 会连不上。
+            val restHeaders = headers.filterKeys { !it.equals("Authorization", ignoreCase = true) } +
+                listOfNotNull(authorization?.takeIf { bearer == null }?.let { "Authorization" to it }).toMap()
+            if (transport == "stdio") {
+                val args = (o["args"] as? JsonArray)?.mapNotNull { (it as? JsonPrimitive)?.contentOrNull }.orEmpty()
+                val command = (listOfNotNull(o.text("command")) + args).joinToString(" ").trim()
+                if (command.isBlank()) return McpImportEntry(name, error = "command is required")
+                return McpImportEntry(name, McpServerConfig(name = name, url = "", transport = transport, command = command))
+            }
+            // 文档里贴过来的 URL 常带着 Markdown 的反引号或引号,去掉再用。
+            val url = (o.text("url") ?: o.text("serverUrl")).orEmpty()
+                .trim().trim('`', '"', '\'', '<', '>').trim()
+            if (url.isBlank()) return McpImportEntry(name, error = "url is required")
+            val config = McpServerConfig(
+                name = name,
+                url = url,
+                transport = transport,
+                headers = restHeaders,
+                // 明写了 http 就当作本机/内网 server(validate 仍只放行内网地址)。
+                allowLocalHttp = url.startsWith("http://", ignoreCase = true),
+            )
+            return McpImportEntry(name, config, bearer)
+        }
+
+        private fun JsonObject.text(key: String): String? = (this[key] as? JsonPrimitive)?.contentOrNull?.trim()
     }
 
     private fun isBlockedHost(host: String): Boolean =

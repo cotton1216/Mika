@@ -134,6 +134,13 @@
     <string name="mcp_servers_empty">還沒有 MCP 伺服器</string>
     <string name="mcp_servers_empty_sub">新增外部 MCP 伺服器，把它的工具交給 Mika。</string>
     <string name="mcp_servers_add">新增伺服器</string>
+    <string name="mcp_servers_import">從 JSON 匯入</string>
+    <string name="mcp_servers_import_sub">貼上 mcpServers 設定</string>
+    <string name="mcp_servers_import_hint">mcpServers JSON</string>
+    <string name="mcp_servers_import_action">匯入</string>
+    <string name="mcp_servers_import_ok">已新增 %1$s</string>
+    <string name="mcp_servers_import_updated">已更新 %1$s</string>
+    <string name="mcp_servers_import_fail">%1$s 匯入失敗：%2$s</string>
     <string name="mcp_servers_edit">編輯伺服器</string>
     <string name="mcp_servers_name">名稱</string>
     <string name="mcp_servers_url">伺服器位址</string>
