@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,12 +12,28 @@ val gitHash: String = runCatching {
     providers.exec { commandLine("git", "rev-parse", "--short=7", "HEAD") }.standardOutput.asText.get().trim()
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
+// 发布签名：读 app/release-signing.properties（不入库）。缺失时 release 回退到调试签名，避免构建失败。
+val releaseSigning = file("release-signing.properties")
+    .takeIf { it.exists() }
+    ?.let { Properties().apply { it.inputStream().use { s -> load(s) } } }
+
 android {
     namespace = "com.wangzan101.mika"
     compileSdk = 36
 
+    signingConfigs {
+        create("release") {
+            releaseSigning?.let {
+                storeFile = file(it.getProperty("storeFile"))
+                storePassword = it.getProperty("storePassword")
+                keyAlias = it.getProperty("keyAlias")
+                keyPassword = it.getProperty("keyPassword")
+            }
+        }
+    }
+
     defaultConfig {
-        applicationId = "com.wangzan101.mika"
+        applicationId = "com.zl.ruyiai.yuan"
         minSdk = 30
         targetSdk = 35
         versionCode = 40
@@ -54,6 +72,10 @@ android {
     sourceSets.getByName("androidTest").assets.srcDir(rootProject.file("eval/tasks"))
 
     buildTypes {
+        // 正式发布用 ruyi 签名；无签名配置时回退调试签名。
+        getByName("release") {
+            signingConfig = if (releaseSigning != null) signingConfigs.getByName("release") else signingConfigs.getByName("debug")
+        }
         // 真机验收时并排安装,保留发行版和用户数据;默认构建标识不变。
         if (providers.gradleProperty("devInstall").isPresent) getByName("debug") {
             applicationIdSuffix = ".dev"
