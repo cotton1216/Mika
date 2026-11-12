@@ -67,6 +67,12 @@ android {
             isProfileable = true
             matchingFallbacks += "release"
         }
+        // 侧装用:官方发布包是别处的密钥签名,自己编的包盖不上去。加包名后缀装成第二个 App,
+        // 原包和数据都不动。./gradlew :app:assemblePerf -PsideInstall
+        if (providers.gradleProperty("sideInstall").isPresent) getByName("perf") {
+            applicationIdSuffix = ".perf"
+            resValue("string", "app_name", "Mika 测试版")
+        }
     }
 
     buildFeatures {
