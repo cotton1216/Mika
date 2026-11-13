@@ -161,6 +161,10 @@
     <string name="mcp_servers_run_failed">MCP サーバーに接続できません:%1$s</string>
     <string name="mcp_servers_status_ok">利用可能 · %1$d 個のツール</string>
     <string name="mcp_servers_status_fail">接続に失敗:%1$s</string>
+    <string name="mcp_tools_open">ツールを表示</string>
+    <string name="mcp_tools_count">利用可能なツール %1$d 個</string>
+    <string name="mcp_tools_empty">利用できるツールがありません</string>
+    <string name="mcp_tools_expand_hint">ツールをタップすると説明の全文を表示します</string>
     <string name="mcp_servers_refresh_all">すべてテスト</string>
     <string name="mcp_servers_allowlist">許可するツール(カンマ区切り、空欄はすべて)</string>
     <string name="quit_title">如愿 を完全に終了</string>

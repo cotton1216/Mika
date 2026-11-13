@@ -168,6 +168,10 @@
     <string name="mcp_servers_run_failed">MCP 伺服器連線失敗:%1$s</string>
     <string name="mcp_servers_status_ok">可用 · %1$d 個工具</string>
     <string name="mcp_servers_status_fail">連線失敗:%1$s</string>
+    <string name="mcp_tools_open">查看工具</string>
+    <string name="mcp_tools_count">可用 %1$d 個工具</string>
+    <string name="mcp_tools_empty">沒有可用的工具</string>
+    <string name="mcp_tools_expand_hint">點一下工具可展開完整說明</string>
     <string name="mcp_servers_refresh_all">測試全部</string>
     <string name="mcp_servers_allowlist">允許的工具(英文逗號分隔,留空為全部)</string>
     <string name="quit_title">完全結束如愿</string>

@@ -161,6 +161,10 @@
     <string name="mcp_servers_run_failed">Server MCP tidak tersedia: %1$s</string>
     <string name="mcp_servers_status_ok">Tersedia · %1$d alat</string>
     <string name="mcp_servers_status_fail">Gagal terhubung: %1$s</string>
+    <string name="mcp_tools_open">Lihat alat</string>
+    <string name="mcp_tools_count">%1$d alat tersedia</string>
+    <string name="mcp_tools_empty">Tidak ada alat tersedia</string>
+    <string name="mcp_tools_expand_hint">Ketuk alat untuk melihat deskripsi lengkap</string>
     <string name="mcp_servers_refresh_all">Uji semua</string>
     <string name="mcp_servers_allowlist">Alat yang diizinkan (dipisah koma, kosong = semua)</string>
     <string name="quit_title">Keluar dari 如愿 sepenuhnya</string>

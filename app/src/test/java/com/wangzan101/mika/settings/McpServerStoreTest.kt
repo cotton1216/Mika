@@ -474,7 +474,7 @@ class McpServerStoreTest {
         server.enqueue(MockResponse().setResponseCode(202))
         server.enqueue(MockResponse().setHeader("Content-Type", "application/json").setBody(
             """{"jsonrpc":"2.0","id":2,"result":{"tools":[""" +
-                tools.joinToString(",") { """{"name":"$it","description":"","inputSchema":{"type":"object"}}""" } + "]}}"
+                tools.joinToString(",") { """{"name":"$it","description":"desc-$it","inputSchema":{"type":"object"}}""" } + "]}}"
         ))
     }
 
@@ -495,7 +495,8 @@ class McpServerStoreTest {
             assertEquals(2, connections.connections.size)
             assertEquals(null, connections.connections.single { it.endpoint.serverId == ca.id }.allowedTools)
             assertEquals(setOf("send"), connections.connections.single { it.endpoint.serverId == cb.id }.allowedTools)
-            assertEquals(listOf("search"), s.health.value.getValue(ca.id).tools)
+            assertEquals(listOf("search"), s.health.value.getValue(ca.id).tools.map { it.name })
+            assertEquals("desc-search", s.health.value.getValue(ca.id).tools.single().description)
             assertTrue(s.health.value.getValue(cb.id).ok)
             connections.close()
         } finally {
@@ -531,7 +532,7 @@ class McpServerStoreTest {
             assertEquals(1, results.size)
             assertTrue(results.single().isSuccess)
             assertTrue(s.health.value.getValue(added.id).ok)
-            assertEquals(listOf("a"), s.health.value.getValue(added.id).tools)
+            assertEquals(listOf("a"), s.health.value.getValue(added.id).tools.map { it.name })
         } finally {
             server.shutdown()
         }

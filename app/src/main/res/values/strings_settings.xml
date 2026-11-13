@@ -183,6 +183,10 @@
     <string name="mcp_servers_run_failed">MCP servers unavailable: %1$s</string>
     <string name="mcp_servers_status_ok">Available · %1$d tools</string>
     <string name="mcp_servers_status_fail">Connection failed: %1$s</string>
+    <string name="mcp_tools_open">View tools</string>
+    <string name="mcp_tools_count">Available · %1$d tools</string>
+    <string name="mcp_tools_empty">No tools reported</string>
+    <string name="mcp_tools_expand_hint">Tap a tool to see the full description</string>
     <string name="mcp_servers_refresh_all">Test all</string>
     <string name="mcp_servers_allowlist">Allowed tools (comma separated, empty = all)</string>
     <string name="quit_title">Quit 如愿 completely</string>

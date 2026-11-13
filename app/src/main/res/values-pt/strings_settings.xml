@@ -169,6 +169,10 @@
     <string name="mcp_servers_run_failed">Servidores MCP indisponíveis: %1$s</string>
     <string name="mcp_servers_status_ok">Disponível · %1$d ferramentas</string>
     <string name="mcp_servers_status_fail">Falha na conexão: %1$s</string>
+    <string name="mcp_tools_open">Ver ferramentas</string>
+    <string name="mcp_tools_count">Disponíveis: %1$d ferramentas</string>
+    <string name="mcp_tools_empty">Nenhuma ferramenta disponível</string>
+    <string name="mcp_tools_expand_hint">Toque em uma ferramenta para ver a descrição completa</string>
     <string name="mcp_servers_refresh_all">Testar tudo</string>
     <string name="mcp_servers_allowlist">Ferramentas permitidas (separadas por vírgulas, vazio = todas)</string>
     <string name="quit_title">Sair do 如愿 completamente</string>

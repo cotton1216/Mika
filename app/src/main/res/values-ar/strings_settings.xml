@@ -181,6 +181,10 @@
     <string name="mcp_servers_run_failed">خوادم MCP غير متاحة: %1$s</string>
     <string name="mcp_servers_status_ok">متاح · %1$d أدوات</string>
     <string name="mcp_servers_status_fail">فشل الاتصال: %1$s</string>
+    <string name="mcp_tools_open">عرض الأدوات</string>
+    <string name="mcp_tools_count">متاح %1$d أدوات</string>
+    <string name="mcp_tools_empty">لا توجد أدوات متاحة</string>
+    <string name="mcp_tools_expand_hint">اضغط على أداة لعرض الوصف الكامل</string>
     <string name="mcp_servers_refresh_all">اختبار الكل</string>
     <string name="mcp_servers_allowlist">الأدوات المسموح بها (مفصولة بفواصل، فارغ = الكل)</string>
     <string name="quit_title">إنهاء 如愿 تمامًا</string>

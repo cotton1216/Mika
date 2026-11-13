@@ -176,6 +176,10 @@
     <string name="mcp_servers_run_failed">سرورهای MCP در دسترس نیستند: %1$s</string>
     <string name="mcp_servers_status_ok">در دسترس · %1$d ابزار</string>
     <string name="mcp_servers_status_fail">اتصال ناموفق بود: %1$s</string>
+    <string name="mcp_tools_open">نمایش ابزارها</string>
+    <string name="mcp_tools_count">%1$d ابزار در دسترس</string>
+    <string name="mcp_tools_empty">ابزاری در دسترس نیست</string>
+    <string name="mcp_tools_expand_hint">برای دیدن توضیح کامل روی یک ابزار بزنید</string>
     <string name="mcp_servers_refresh_all">آزمون همه</string>
     <string name="mcp_servers_allowlist">ابزارهای مجاز (با ویرگول جدا کنید؛ خالی یعنی همه)</string>
     <string name="quit_title">خروج کامل از 如愿</string>
