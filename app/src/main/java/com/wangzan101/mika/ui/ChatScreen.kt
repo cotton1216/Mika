@@ -1,11 +1,14 @@
 package com.wangzan101.mika.ui
 
 import androidx.compose.foundation.gestures.scrollBy
+import com.wangzan101.mika.cap.sandbox.AttachmentFailure
+import com.wangzan101.mika.cap.sandbox.AttachmentFailureReason
 import com.wangzan101.mika.core.agent.QuoteMessage
 import com.wangzan101.mika.core.record.ConversationTokens
 import com.wangzan101.mika.core.cap.web.AttachedPage
 import com.wangzan101.mika.ui.components.DirectionalIcon
 import com.wangzan101.mika.ui.components.keepsKeyboard
+import com.wangzan101.mika.ui.components.pageBackground
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -57,6 +60,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.runtime.CompositionLocalProvider
@@ -104,6 +109,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -170,6 +176,12 @@ fun ChatScreen(
     check: Prerequisites.Check,
     frames: StateFlow<Bitmap?>,
     webOpen: StateFlow<Boolean>,
+    /** 小窗直接操作的入口(点/滑/返回注入到虚拟屏);屏没建好或任务结束时为 null。 */
+    pipInput: StateFlow<com.wangzan101.mika.cap.phone.display.PipInput?> = MutableStateFlow(null),
+    /** 小窗目标 App 的声音被用户恢复过:声音按钮显示「静音」,否则「恢复声音」。 */
+    pipSoundOn: StateFlow<Boolean> = MutableStateFlow(false),
+    /** 用户在设置里开了「允许我在小窗里直接操作」。 */
+    pipOperateEnabled: Boolean = false,
     reduceMotion: Boolean,
     /** 左上角菜单:打开侧栏。 */
     onOpenDrawer: () -> Unit,
@@ -200,12 +212,14 @@ fun ChatScreen(
     }
     val recommendedTasks by recommendedTasksFlow.collectAsState()
     val ui by vm.ui.collectAsState()
+    val pendingJump by vm.jump.collectAsState()
     val others by vm.otherRunning.collectAsState()
     val keptAny by vm.keptPage.collectAsState()
     // 只管这个对话留下的那一页
     val kept = keptAny?.takeIf { it.conversationId == ui.conversationId }
     val live by frames.collectAsState()
     val webLive by webOpen.collectAsState()
+    val pipInputLive by pipInput.collectAsState()
     // 任务一结束虚拟屏就释放了;完成时小窗还要停留几秒打勾,继续显示最后一帧
     var lastFrame by remember { mutableStateOf<Bitmap?>(null) }
     var lastFrameWasWeb by remember { mutableStateOf(false) }
@@ -235,6 +249,14 @@ fun ChatScreen(
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
+    // 从搜索或文件库跳过来时,短暂高亮目标行;新跳转带新 serial,会重新计时。
+    var jumpHighlight by remember { mutableStateOf<ChatJump?>(null) }
+    LaunchedEffect(jumpHighlight) {
+        val active = jumpHighlight ?: return@LaunchedEffect
+        delay(JUMP_HIGHLIGHT_MS)
+        if (jumpHighlight == active) jumpHighlight = null
+    }
+
     // 只有原本跟着最新消息时才继续跟随。这个状态与列表位置一起跨页面保存。
     var followingTail by rememberSaveable { mutableStateOf(true) }
     var previousScrollMarker by rememberSaveable { mutableStateOf<String?>(null) }
@@ -253,7 +275,27 @@ fun ChatScreen(
     val last = ui.exchanges.lastOrNull()
     val rowCount = chatItemCount(ui.exchanges, kept, phoneSetupNeeded, hasBlocked = ui.blocked != null)
     val scrollMarker = "${ui.conversationId}:${ui.exchanges.size}:${last?.steps?.size}:${last?.steers?.size}:${last?.status?.hashCode()}:${ui.blocked?.hashCode()}"
-    LaunchedEffect(scrollMarker) {
+    val jump = pendingJump?.takeIf { it.conversationId == ui.conversationId }
+    // 目标行的高亮:只在目标还是当前对话时算。
+    val highlightKey = jumpHighlight
+        ?.takeIf { it.conversationId == ui.conversationId }
+        ?.let { chatTargetKey(ui.exchanges, it.target) }
+    LaunchedEffect(scrollMarker, jump) {
+        // 从搜索或文件库过来:先滚到目标消息,期间不要跟末尾;目标不在了就退回原来的逻辑。
+        if (jump != null) {
+            val keys = chatItemKeys(ui.exchanges, kept, phoneSetupNeeded, hasBlocked = ui.blocked != null)
+            val index = chatTargetKey(ui.exchanges, jump.target)?.let(keys::indexOf) ?: -1
+            if (index >= 0) {
+                previousScrollMarker = scrollMarker
+                previousConversation = ui.conversationId
+                followingTail = false
+                listState.scrollToItem(index)
+                jumpHighlight = jump
+                vm.consumeJump(jump)
+                return@LaunchedEffect
+            }
+            vm.consumeJump(jump)
+        }
         if (previousScrollMarker == scrollMarker) return@LaunchedEffect
         val firstEntry = previousScrollMarker == null
         val changedConversation = previousConversation != ui.conversationId
@@ -347,6 +389,7 @@ fun ChatScreen(
                     val backgroundNote = i == ui.exchanges.lastIndex && ui.operatingPhone
                     exchange(
                         i, ex, ui.conversationId, ui.takeoverStage, vm, reduceMotion, backgroundNote, openRun, loadSource, openSource, kept,
+                        highlightKey = highlightKey,
                         tokens = ConversationTokens.turn(ex.runId?.let(runMetrics::get)),
                         recover = { resume ->
                             val label = if (resume) R.string.chat_resume_request else R.string.chat_restart_request
@@ -450,6 +493,9 @@ fun ChatScreen(
             pip = ui.pip,
             frame = frame,
             webContent = webContent,
+            pipInput = pipInputLive,
+            soundOn = pipSoundOn.collectAsState().value,
+            operateEnabled = pipOperateEnabled,
             reduceMotion = reduceMotion,
             topInset = topHeight.toFloat(),
             bottomInset = composerHeight.toFloat(),
@@ -461,7 +507,7 @@ fun ChatScreen(
                 Toast.makeText(context, context.getString(R.string.pip_closed_hint), Toast.LENGTH_SHORT).show()
             },
             onReopen = vm::reopenPip,
-            onUnmute = vm::unmutePip,
+            onToggleSound = vm::togglePipSound,
             // 要你处理时点小窗:收起,滚到要你处理的那张卡片(在最后一问一答里,它后面只可能还有文件卡片和去设置那一行)
             onAttention = {
                 vm.attendPip()
@@ -644,16 +690,31 @@ private fun ExampleRow(icon: ImageVector, text: String, first: Boolean, onClick:
 
 // ---------- 一问一答 ----------
 
+/** 跳转目标行的短暂高亮:一条全宽淡色底,约 1.8 秒后渐隐。 */
+@Composable
+private fun JumpHighlight(active: Boolean, reduceMotion: Boolean, content: @Composable () -> Unit) {
+    val c = MikaTheme.colors
+    val alpha by animateFloatAsState(if (active) 1f else 0f, if (reduceMotion) snap() else tween(260), label = "jump-highlight")
+    Box(
+        Modifier.fillMaxWidth()
+            .background(c.accent.copy(alpha = 0.12f * alpha), RoundedCornerShape(16.dp)),
+    ) { content() }
+}
+
 private fun LazyListScope.exchange(
     index: Int, ex: Exchange, conversationId: String?, stage: Takeover.Stage, vm: ChatViewModel, reduceMotion: Boolean, backgroundNote: Boolean,
     openRun: (String) -> Unit, loadSource: suspend (String) -> EvidenceSource?, openSource: (String?, String?) -> Unit,
     kept: KeptPage? = null,
+    /** 从搜索或文件库跳过来时要高亮的行 key。 */
+    highlightKey: String? = null,
     /** 这一轮用了多少 token(结束后、读到运行小结时才有)。 */
     tokens: Long? = null,
     /** 终态后的两个新运行入口:true 从摘要断点继续,false 按原目标重新开始。 */
     recover: (Boolean) -> Unit = {},
 ) {
-    if (ex.goal.isNotEmpty()) item("u$index") { UserBubble(ex.goal, conversationId, key = "u$index") }
+    if (ex.goal.isNotEmpty()) item("u$index") {
+        JumpHighlight(highlightKey == "u$index", reduceMotion) { UserBubble(ex.goal, conversationId, key = "u$index") }
+    }
     val paused = ex.status is ExchangeStatus.Paused || ex.status is ExchangeStatus.WaitingUnlock ||
         ex.status is ExchangeStatus.NeedsTakeover || ex.status is ExchangeStatus.NeedsConfirmation ||
         ex.status is ExchangeStatus.NeedsInput || ex.status is ExchangeStatus.Queued
@@ -668,18 +729,36 @@ private fun LazyListScope.exchange(
     // 插话之前已经说完的回复照常显示;插话打断的那段留在原处(淡色、标「被你的新消息打断」);接着才是插话。
     // 还没交给模型的插话排在正在长出来的回答后面:那段回答是它到之前就在写的,不是对它的回复。
     fun steer(n: SteerNote) {
-        n.finished?.takeIf(String::isNotBlank)?.let { done -> item("a$index-${n.id}") { FinishedReply(done, "a$index-${n.id}") } }
-        n.interrupted?.takeIf(String::isNotBlank)?.let { cut -> item("i$index-${n.id}") { InterruptedReply(cut) } }
-        item("m$index-${n.id}") { UserBubble(n.text, conversationId, steerLabel(n.state, paused), "m$index-${n.id}") }
+        n.finished?.takeIf(String::isNotBlank)?.let { done ->
+            item("a$index-${n.id}") {
+                JumpHighlight(highlightKey == "a$index-${n.id}", reduceMotion) { FinishedReply(done, "a$index-${n.id}") }
+            }
+        }
+        n.interrupted?.takeIf(String::isNotBlank)?.let { cut ->
+            item("i$index-${n.id}") {
+                JumpHighlight(highlightKey == "i$index-${n.id}", reduceMotion) { InterruptedReply(cut) }
+            }
+        }
+        item("m$index-${n.id}") {
+            JumpHighlight(highlightKey == "m$index-${n.id}", reduceMotion) {
+                UserBubble(n.text, conversationId, steerLabel(n.state, paused), "m$index-${n.id}")
+            }
+        }
     }
     val (joined, waiting) = steersAroundDraft(ex.steers)
     joined.forEach(::steer)
     ex.draft?.takeIf(String::isNotBlank)?.let { draft -> item("d$index") { DraftText(draft, ex.waitingForModel) } }
     waiting.forEach(::steer)
-    item("r$index") { StatusCard(ex.status, stage, vm, ex.runId, loadSource, openSource, "r$index", recover) }
+    item("r$index") {
+        JumpHighlight(highlightKey == "r$index", reduceMotion) {
+            StatusCard(ex.status, stage, vm, ex.runId, loadSource, openSource, "r$index", recover)
+        }
+    }
     // 这一轮结束后留在后台运行的那一页:还开着是绿色一行(能关),关了是一句原因
     keptPageRow(index, ex, kept, vm::closeKeptPage)
-    if (ex.files.isNotEmpty()) item("f$index") { FileCards(ex.files) }
+    if (ex.files.isNotEmpty()) item("f$index") {
+        JumpHighlight(highlightKey == "f$index", reduceMotion) { FileCards(ex.files) }
+    }
     learningNotes(index, ex, vm)
 }
 
@@ -1304,7 +1383,7 @@ internal fun Composer(
     onTeach: (() -> Unit)? = null,
     attachments: List<PendingAttachment> = emptyList(),
     importing: Boolean = false,
-    rejected: List<String> = emptyList(),
+    rejected: List<AttachmentFailure> = emptyList(),
     overLimit: Int = 0,
     onRemove: (String) -> Unit = {},
     onDismissRejected: () -> Unit = {},
@@ -1327,6 +1406,7 @@ internal fun Composer(
     steerTarget: String? = null,
     /** 按着说话时为 true:对话内容跟着虚化。 */
     onVoiceHolding: (Boolean) -> Unit = {},
+    sendFromIme: Boolean = false,
     draftKey: String? = null,
 ) {
     val c = MikaTheme.colors
@@ -1402,12 +1482,12 @@ internal fun Composer(
     val turn by animateFloatAsState(if (panel == Panel.Open) 45f else 0f, if (reduceMotion) snap() else tween(200), label = "plus")
     Box(
         modifier.fillMaxWidth()
-            .background(fade)
+            .pageBackground(c.bg, fade)
             .windowInsetsPadding(WindowInsets.navigationBars.union(WindowInsets.ime))
             .padding(start = 12.dp, end = 12.dp, top = 10.dp, bottom = 6.dp),
     ) {
         Column(Modifier.fillMaxWidth()) {
-            if (busy || (mode == ComposerMode.Answer && attachments.isNotEmpty())) {
+            if (busy || (mode == ComposerMode.Answer && (showAttach || attachments.isNotEmpty()))) {
                 FollowUpModeBar(followUpMode, onFollowUpMode, followUpStatus)
             }
             FollowUpTray(queued, active = mode != ComposerMode.Idle, onEdit = onEditQueued, onCancel = onCancelQueued, onStartNow = onStartQueued)
@@ -1418,7 +1498,15 @@ internal fun Composer(
                     if (importing) Text(AttachCopy.IMPORTING, style = MikaType.Caption, color = c.ink3)
                     if (rejected.isNotEmpty() || overLimit > 0) {
                         val why = listOfNotNull(
-                            rejected.takeIf { it.isNotEmpty() }?.let { stringResource(R.string.chat_attach_unavailable, it.joinToString(stringResource(R.string.list_sep))) },
+                            rejected.takeIf { it.isNotEmpty() }?.map { failure ->
+                                val reason = when (failure.reason) {
+                                    AttachmentFailureReason.TOO_LARGE -> R.string.chat_attach_too_large
+                                    AttachmentFailureReason.LOW_DEVICE_SPACE -> R.string.chat_attach_low_device_space
+                                    AttachmentFailureReason.WORKSPACE_LIMIT -> R.string.chat_attach_workspace_limit
+                                    AttachmentFailureReason.IO_ERROR -> R.string.chat_attach_io_error
+                                }
+                                stringResource(reason, failure.name)
+                            }?.joinToString("\n"),
                             overLimit.takeIf { it > 0 }?.let(AttachCopy::overLimit),
                         ).joinToString("\n")
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -1439,7 +1527,7 @@ internal fun Composer(
                     val label = if (panel == Panel.Open) AttachCopy.CLOSE else AttachCopy.ADD
                     val blockedHint = stringResource(R.string.attach_blocked_running)
                     Box(
-                        Modifier.size(MikaSize.IconButton).clip(CircleShape)
+                        Modifier.size(MikaSize.IconButton).background(c.greySoft, CircleShape).clip(CircleShape)
                             .clickable(enabled = !importing, onClickLabel = label, onClick = {
                                 if (attachBlocked) {
                                     Toast.makeText(context, blockedHint, Toast.LENGTH_SHORT).show()
@@ -1447,7 +1535,7 @@ internal fun Composer(
                             }),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(MikaIcons.Plus, label, Modifier.size(MikaSize.Icon).graphicsLayer { rotationZ = turn }, tint = c.ink)
+                        Icon(MikaIcons.Plus, label, Modifier.size(20.dp).graphicsLayer { rotationZ = turn }, tint = c.ink)
                     }
                 }
                 Box(Modifier.weight(1f).padding(start = if (showAttach) 2.dp else 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp)) {
@@ -1469,6 +1557,10 @@ internal fun Composer(
                         textStyle = MikaType.Body.copy(color = c.ink, textDirection = TextDirection.Content),
                         cursorBrush = SolidColor(c.accent),
                         maxLines = 5,
+                        keyboardOptions = if (sendFromIme) KeyboardOptions(imeAction = ImeAction.Send) else KeyboardOptions.Default,
+                        keyboardActions = if (sendFromIme) KeyboardActions(onSend = {
+                            if (AttachTray.canSend(text, attachments, importing)) onSend()
+                        }) else KeyboardActions.Default,
                     )
                     // 服务商松开后在转:输入框里转圈,转好的字填进来
                     if (converting) VoiceConverting(Modifier.align(Alignment.CenterStart))
@@ -1545,6 +1637,9 @@ private val PanelMin = 280.dp
 private val PanelMax = 420.dp
 /** 让给键盘时最多等这么久(毫秒)。 */
 private const val YIELD_MS = 700L
+
+/** 跳转目标行高亮停留多久(毫秒)。 */
+private const val JUMP_HIGHLIGHT_MS = 1_800L
 
 /** 竖线的位置(从左边算起);步骤点、转圈的中心都在这条线上。 */
 private val StepRail = 8.dp

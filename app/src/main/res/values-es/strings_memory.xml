@@ -25,8 +25,13 @@
     <string name="memory_use_sub">Desactivado, 如愿 ni lee ni guarda memoria</string>
     <string name="memory_auto">Recordar lo que digo</string>
     <string name="memory_auto_sub">Se organiza a partir de tus propias palabras después de cada tarea</string>
+    <string name="memory_infer">Dejar que Mika guarde sus propias conclusiones</string>
+    <string name="memory_infer_sub">Cuando le pidas recordar, también guarda sus propias conclusiones, marcadas como no tuyas</string>
     <string name="memory_learn">Aprender de tareas anteriores (habilidades y notas de apps)</string>
     <string name="memory_learn_sub">Lo que 如愿 aprende solo se usa después de que lo aceptes</string>
+    <string name="memory_tasks">Recordar tareas anteriores</string>
+    <string name="memory_tasks_sub">Guarda un breve resumen de cada tarea terminada para recordarla la próxima vez</string>
+    <string name="memory_tasks_title">Tareas anteriores</string>
     <string name="memory_clear_sub">Eliminar toda la memoria y las habilidades aprendidas</string>
     <string name="edit_it">Editar</string>
     <string name="unpin">Desfijar</string>
@@ -56,6 +61,7 @@
     <string name="date_pattern_md">d MMM</string>
     <string name="memory_said_via">Dijiste el %1$s por %2$s: “%3$s”</string>
     <string name="memory_said">Dijiste el %1$s: “%2$s”</string>
+    <string name="memory_inferred">Conclusión de Mika del %1$s, a petición tuya: «%2$s»</string>
     <string name="verify_returned">Devuelto por la verificación</string>
     <string name="skills_drafts">Borradores de habilidades nuevas: se prueban cuando los aceptas</string>
     <string name="skills_accept_try">Aceptar y probar</string>

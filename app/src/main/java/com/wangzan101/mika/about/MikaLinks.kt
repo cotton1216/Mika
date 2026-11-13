@@ -11,6 +11,8 @@ object MikaLinks {
     const val README = "$REPO#readme"
     const val RELEASES = "$REPO/releases"
     const val NEW_ISSUE = "$REPO/issues/new"
+    const val X = "https://x.com/wangzan101"
+    const val X_HANDLE = "@wangzan101"
 
     /**
      * 如愿和原来的 Mika 包共用一个仓库发布,但 tag 各带各的前缀:Mika 发布是 v0.1.x,

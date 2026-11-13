@@ -24,6 +24,7 @@ import com.wangzan101.mika.calls.CallDirection
 import com.wangzan101.mika.calls.CallTaskBrief
 import com.wangzan101.mika.calls.CallRecord
 import com.wangzan101.mika.calls.CallTranscriptLine
+import com.wangzan101.mika.calls.SummaryStatus
 import com.wangzan101.mika.ui.components.*
 import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaTheme
@@ -43,6 +44,9 @@ internal fun CallHistorySection(
     historyWriteFailed: Boolean,
     onMark: suspend (String, Boolean) -> CallActionResult,
     onDelete: suspend (String) -> CallActionResult,
+    onRetrySummary: suspend (String) -> CallActionResult,
+    onClear: suspend () -> CallActionResult,
+    focusRecordId: String? = null,
     onReuseTask: ((String, CallTaskBrief) -> Unit)? = null,
 ) {
     var filter by rememberSaveable { mutableStateOf(HistoryFilter.ALL) }
@@ -50,10 +54,22 @@ internal fun CallHistorySection(
     var showAll by rememberSaveable { mutableStateOf(false) }
     var expanded by rememberSaveable { mutableStateOf<String?>(null) }
     var pendingDelete by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingClear by rememberSaveable { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
     var feedback by remember { mutableStateOf<CallActionResult?>(null) }
     val scope = rememberCoroutineScope()
+    LaunchedEffect(focusRecordId, history) {
+        if (focusRecordId != null && history.any { it.id == focusRecordId }) {
+            filter = HistoryFilter.ALL
+            query = ""
+            showAll = true
+            expanded = focusRecordId
+        }
+    }
     val failure = stringResource(R.string.calls_action_failed)
+    val clearFailure = stringResource(R.string.calls_history_clear_failed)
+    val summaryFailure = stringResource(R.string.calls_summary_failed)
+    val cleared = stringResource(R.string.calls_history_cleared)
     val deleted = stringResource(R.string.calls_history_deleted)
     val handled = stringResource(R.string.calls_history_done)
     val unhandled = stringResource(R.string.calls_history_open)
@@ -75,6 +91,11 @@ internal fun CallHistorySection(
                 (digits != null && record.number.orEmpty().filter(Char::isDigit).contains(digits)) ||
                 direction.contains(text, ignoreCase = true) || record.result.contains(text, ignoreCase = true) ||
                 record.transcript.any { it.text.contains(text, ignoreCase = true) } ||
+                record.summary?.let { summary ->
+                    listOfNotNull(summary.purpose, summary.conclusion).plus(summary.highlights)
+                        .plus(summary.uncertainties).plus(summary.actions.map { it.text })
+                        .any { it.contains(text, ignoreCase = true) }
+                } == true ||
                 record.task?.let { task ->
                     (listOf(task.goal, task.context, task.constraints) + task.questions).any {
                         it.contains(text, ignoreCase = true)
@@ -83,18 +104,19 @@ internal fun CallHistorySection(
         }
     }
 
-    fun change(success: String, action: suspend () -> CallActionResult) {
+    fun change(success: String, errorMessage: String? = null, action: suspend () -> CallActionResult) {
         if (busy) return
         busy = true
         feedback = null
         scope.launch {
             try {
                 val result = action()
-                feedback = if (result.ok) CallActionResult(true, success) else result
+                feedback = if (result.ok) CallActionResult(true, success)
+                    else if (errorMessage != null) CallActionResult(false, errorMessage) else result
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {
-                feedback = CallActionResult(false, failure)
+                feedback = CallActionResult(false, errorMessage ?: failure)
             } finally { busy = false }
         }
     }
@@ -107,6 +129,15 @@ internal fun CallHistorySection(
     feedback?.let { result ->
         FooterNote(result.message, Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             color = if (result.ok) MikaTheme.colors.ink3 else MaterialTheme.colorScheme.error)
+    }
+    if (history.isNotEmpty() || historyWriteFailed) {
+        TextButton(
+            onClick = { pendingClear = true },
+            enabled = !busy,
+            modifier = Modifier.fillMaxWidth().testTag("call-history-clear"),
+        ) {
+            Text(stringResource(R.string.calls_history_clear), color = MaterialTheme.colorScheme.error)
+        }
     }
     if (history.isEmpty()) {
         GroupCard { ListRow(MikaIcons.Clock, stringResource(R.string.calls_history_empty), first = true) }
@@ -140,6 +171,7 @@ internal fun CallHistorySection(
                             change(if (next) handled else unhandled) { onMark(record.id, next) }
                         },
                         onDelete = { pendingDelete = record.id },
+                        onRetrySummary = { change("摘要已更新", summaryFailure) { onRetrySummary(record.id) } },
                         onReuse = if (record.number != null && record.task != null && onReuseTask != null) {
                             { onReuseTask(record.number, record.task) }
                         } else null,
@@ -157,6 +189,23 @@ internal fun CallHistorySection(
             }
         }
     }
+
+    if (pendingClear) AlertDialog(
+        onDismissRequest = { pendingClear = false },
+        title = { Text(stringResource(R.string.calls_history_clear)) },
+        text = { Text(stringResource(R.string.calls_history_clear_confirm)) },
+        confirmButton = {
+            TextButton(onClick = {
+                pendingClear = false
+                change(cleared, clearFailure) { onClear() }
+            }, enabled = !busy, modifier = Modifier.testTag("call-history-clear-confirm")) {
+                Text(stringResource(R.string.calls_history_clear), color = MaterialTheme.colorScheme.error)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { pendingClear = false }) { Text(stringResource(R.string.calls_cancel)) }
+        },
+    )
 
     val toDelete = history.firstOrNull { it.id == pendingDelete }
     if (toDelete != null) AlertDialog(
@@ -187,7 +236,8 @@ internal fun CallHistorySection(
 @Composable
 private fun CallHistoryItem(
     record: CallRecord, expanded: Boolean, first: Boolean, busy: Boolean,
-    onExpand: () -> Unit, onMark: () -> Unit, onDelete: () -> Unit, onReuse: (() -> Unit)?,
+    onExpand: () -> Unit, onMark: () -> Unit, onDelete: () -> Unit, onRetrySummary: () -> Unit,
+    onReuse: (() -> Unit)?,
 ) {
     var showTask by rememberSaveable(record.id) { mutableStateOf(false) }
     var showTranscript by rememberSaveable(record.id) { mutableStateOf(false) }
@@ -211,6 +261,37 @@ private fun CallHistoryItem(
                 HorizontalDivider()
                 Text(stringResource(R.string.calls_history_period, start, end),
                     style = MaterialTheme.typography.bodySmall, color = MikaTheme.colors.ink3)
+                record.summary?.let { summary ->
+                    summary.purpose?.let { Text("${stringResource(R.string.calls_summary_purpose)}：$it") }
+                    if (summary.highlights.isNotEmpty()) {
+                        Text(stringResource(R.string.calls_summary_highlights), style = MaterialTheme.typography.labelLarge)
+                        summary.highlights.forEach { Text("• $it") }
+                    }
+                    summary.conclusion?.let { Text("${stringResource(R.string.calls_summary_conclusion)}：$it") }
+                    if (summary.uncertainties.isNotEmpty()) {
+                        Text(stringResource(R.string.calls_summary_uncertainties), style = MaterialTheme.typography.labelLarge)
+                        summary.uncertainties.forEach { Text("• $it") }
+                    }
+                    if (summary.actions.isNotEmpty()) {
+                        Text(stringResource(R.string.calls_summary_actions), style = MaterialTheme.typography.labelLarge)
+                        summary.actions.forEach { item ->
+                            val state = when (item.status) {
+                                com.wangzan101.mika.calls.CallFollowUp.Status.PENDING -> R.string.calls_summary_pending
+                                com.wangzan101.mika.calls.CallFollowUp.Status.DONE -> R.string.calls_summary_done
+                                com.wangzan101.mika.calls.CallFollowUp.Status.UNKNOWN -> R.string.calls_summary_unknown
+                            }
+                            Text("${stringResource(state)}：${item.text}")
+                        }
+                    }
+                }
+                if (record.summaryStatus == SummaryStatus.PENDING) {
+                    Text(stringResource(R.string.calls_summary_generating), color = MikaTheme.colors.ink3)
+                } else if (record.summaryStatus == SummaryStatus.FAILED) {
+                    Text(stringResource(R.string.calls_summary_failed), color = MaterialTheme.colorScheme.error)
+                    TextButton(onClick = onRetrySummary, enabled = !busy, modifier = Modifier.testTag("call-summary-retry")) {
+                        Text(stringResource(R.string.calls_summary_retry))
+                    }
+                }
                 record.task?.let { task ->
                     Text(stringResource(R.string.calls_record_result_unconfirmed),
                         style = MaterialTheme.typography.bodySmall, color = MikaTheme.colors.ink3)

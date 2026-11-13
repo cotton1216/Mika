@@ -25,8 +25,13 @@
     <string name="memory_use_sub">Jika nonaktif, 如愿 tidak membaca maupun menyimpan memori</string>
     <string name="memory_auto">Ingat apa yang saya katakan</string>
     <string name="memory_auto_sub">Dirangkum dari kata-kata Anda sendiri setelah tiap tugas</string>
+    <string name="memory_infer">Izinkan Mika menyimpan kesimpulannya sendiri</string>
+    <string name="memory_infer_sub">Saat Anda memintanya mengingat, kesimpulannya sendiri juga disimpan, ditandai bukan kata-kata Anda</string>
     <string name="memory_learn">Belajar dari tugas sebelumnya (keterampilan dan catatan aplikasi)</string>
     <string name="memory_learn_sub">Hal yang dipelajari 如愿 baru dipakai setelah Anda menerimanya</string>
+    <string name="memory_tasks">Ingat tugas sebelumnya</string>
+    <string name="memory_tasks_sub">Simpan ringkasan singkat setiap tugas selesai untuk diingat lain kali</string>
+    <string name="memory_tasks_title">Tugas sebelumnya</string>
     <string name="memory_clear_sub">Hapus semua memori dan keterampilan yang dipelajari</string>
     <string name="edit_it">Ubah</string>
     <string name="unpin">Lepas sematan</string>
@@ -56,6 +61,7 @@
     <string name="date_pattern_md">d MMM</string>
     <string name="memory_said_via">Anda berkata pada %1$s lewat %2$s: “%3$s”</string>
     <string name="memory_said">Anda berkata pada %1$s: “%2$s”</string>
+    <string name="memory_inferred">Kesimpulan Mika pada %1$s, atas permintaan Anda: “%2$s”</string>
     <string name="verify_returned">Dikembalikan oleh pemeriksaan</string>
     <string name="skills_drafts">Draf keterampilan baru — dicoba setelah Anda menerimanya</string>
     <string name="skills_accept_try">Terima dan coba</string>

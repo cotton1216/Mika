@@ -122,7 +122,13 @@ fun toolDispatcher(
     root: RootPort? = null,
     /** 用户配置并启用的通用网页搜索;为空时保持原有浏览器搜索路径。 */
     webSearch: com.wangzan101.mika.core.search.WebSearch? = null,
+    /** 读 Mika 自己的状态;只对手机上、有用户的 UI 主任务给。 */
+    self: com.wangzan101.mika.core.self.SelfPort? = null,
+    /** 操作 Mika 自己的界面/文件/通知/剪贴板;用户打开「允许 Mika 操作自己的界面」时才给。 */
+    selfOperate: com.wangzan101.mika.core.self.SelfPort? = null,
     phoneCalls: com.wangzan101.mika.core.calls.PhoneCallPort? = null,
+    /** 跨会话任务摘要;给了才提供 task_memory_search / task_memory_timeline / task_memory_step。 */
+    taskMemory: com.wangzan101.mika.core.memory.TaskMemoryStore? = null,
 ): ToolDispatcher {
     val screenshotStore = sandbox?.takeIf {
         it.status() !is com.wangzan101.mika.core.cap.sandbox.SandboxStatus.Unsupported &&
@@ -130,8 +136,8 @@ fun toolDispatcher(
             (runSpec.capabilities == null || "sandbox" in runSpec.capabilities)
     }?.let { com.wangzan101.mika.core.cap.sandbox.WorkspaceScreenshots(it, workspace) }
     val config = ToolConfig(visionEnabled, skills, recordFrames, vision, inlineScreen, adaptiveVision, memory, profile, utterances, conversationId,
-        imageOps, scheduleTrigger, scheduleAdmin, runSpec, childHost, userScreens, personalSkills, selfConfig, runRecords, webSearch,
-        screenshotStore?.let { store -> { path, png -> store.save(path, png) } })
+        imageOps, scheduleTrigger, scheduleAdmin, runSpec, childHost, userScreens, personalSkills, selfConfig, runRecords, webSearch, self, selfOperate,
+        screenshotStore?.let { store -> { path, png -> store.save(path, png) } }, taskMemory = taskMemory)
     val providers: List<CapabilityProvider> = listOf(
         object : CapabilityProvider {
             override val id = PHONE

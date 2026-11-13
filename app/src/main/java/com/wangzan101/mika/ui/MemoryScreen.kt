@@ -3,6 +3,7 @@ package com.wangzan101.mika.ui
 import com.wangzan101.mika.R
 import com.wangzan101.mika.i18n.tr
 import com.wangzan101.mika.i18n.trPlural
+import com.wangzan101.mika.i18n.uiLocale
 import androidx.compose.ui.res.stringResource
 import com.wangzan101.mika.ui.components.keepsKeyboard
 import com.wangzan101.mika.ui.components.KeyboardDismissArea
@@ -17,18 +18,24 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.wangzan101.mika.core.knowledge.GuideCatalog
 import com.wangzan101.mika.core.memory.MemoryKind
+import com.wangzan101.mika.core.memory.TaskMemory
+import com.wangzan101.mika.memory.MemoryRuntime
 import com.wangzan101.mika.ui.components.ActionSheet
 import com.wangzan101.mika.ui.components.BarIconButton
 import com.wangzan101.mika.ui.components.ButtonKind
@@ -50,6 +57,11 @@ import com.wangzan101.mika.ui.components.TileTone
 import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaTheme
 import com.wangzan101.mika.ui.theme.MikaType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
 
 private val SEGMENT_TAGS = Segment.entries.map { "segment-${it.name}" }
 
@@ -58,6 +70,26 @@ private val KIND_GROUPS get() = listOf(MemoryKind.fact to tr(R.string.memory_abo
 private val KIND_NAMES get() = listOf(tr(R.string.memory_fact), tr(R.string.memory_preferences), tr(R.string.memory_procedures))
 
 private enum class MemoryDataPage { Home, WebSites, Routes }
+
+/** 记忆和个人技能的首次加载会读盘解密。 */
+@Composable
+internal fun rememberMemoryViewModel(runtime: MemoryRuntime): State<MemoryViewModel?> {
+    val scope = rememberCoroutineScope()
+    return produceState<MemoryViewModel?>(null, runtime) {
+        value = withContext(Dispatchers.IO) {
+            val bundled = GuideCatalog.loadBundled()
+            MemoryViewModel(
+                runtime.store(), runtime.settings(), runtime.skills(), scope, runtime.file().brokenNotice,
+                wipe = { runtime.scope.launch(Dispatchers.IO) { runtime.wipeAll() } },
+                onForgotten = { id -> runtime.scope.launch(Dispatchers.IO) { runtime.stripMemory(setOf(id)) } },
+                runnableScripts = bundled.runnableScripts(),
+                appDrafts = runtime.appKnowledge(),
+                builtinSkillNames = bundled.items.map { it.name }.toSet(),
+                taskMemory = runtime.taskMemory(),
+            )
+        }
+    }
+}
 
 /** 记忆与数据:保留原来的记忆 / 技能 / 待确认主页,网站登录和操作路线从这里各进一层。 */
 @Composable
@@ -94,9 +126,6 @@ fun MemoryScreen(
 ) {
     BackHandler(onBack = onBack)
     val ui by vm.ui.collectAsState()
-    var editing by remember { mutableStateOf<Row?>(null) }
-    var acting by remember { mutableStateOf<Row?>(null) }
-    var adding by remember { mutableStateOf(false) }
     var searching by rememberSaveable { mutableStateOf(false) }
     val searchable = ui.segment != Segment.Skills
 
@@ -120,27 +149,7 @@ fun MemoryScreen(
         }
 
         when (ui.segment) {
-            Segment.Memories -> {
-                if (ui.rows.isEmpty()) {
-                    GroupLabel("")
-                    EmptyNote(if (ui.query.isBlank()) stringResource(R.string.memory_empty) else stringResource(R.string.not_found))
-                }
-                KIND_GROUPS.forEach { (kind, label) ->
-                    val rows = ui.rows.filter { it.kind == kind }
-                    if (rows.isNotEmpty()) {
-                        GroupLabel(label)
-                        GroupCard {
-                            rows.forEachIndexed { i, r ->
-                                MemoryRow(r, first = i == 0, onClick = { acting = r })
-                            }
-                        }
-                    }
-                }
-                GroupLabel("")
-                GroupCard {
-                    ListRow(MikaIcons.Plus, stringResource(R.string.memory_add), first = true, titleColor = MikaTheme.colors.accent, tone = TileTone.Accent, onClick = { adding = true })
-                }
-            }
+            Segment.Memories -> MemoryEntries(vm, ui)
             Segment.Skills -> SkillsSection(vm, ui.skills, pending = false)
             Segment.Pending -> {
                 if (ui.pendingCount == 0) {
@@ -169,8 +178,11 @@ fun MemoryScreen(
         GroupCard {
             SwitchRow(stringResource(R.string.memory_use), stringResource(R.string.memory_use_sub), ui.switches.useMemory, first = true) { on -> vm.setSwitches { it.copy(useMemory = on) } }
             SwitchRow(stringResource(R.string.memory_auto), stringResource(R.string.memory_auto_sub), ui.switches.autoRemember) { on -> vm.setSwitches { it.copy(autoRemember = on) } }
+            SwitchRow(stringResource(R.string.memory_infer), stringResource(R.string.memory_infer_sub), ui.switches.inferMemories) { on -> vm.setSwitches { it.copy(inferMemories = on) } }
             SwitchRow(stringResource(R.string.memory_learn), stringResource(R.string.memory_learn_sub), ui.switches.learnSkills) { on -> vm.setSwitches { it.copy(learnSkills = on) } }
+            SwitchRow(stringResource(R.string.memory_tasks), stringResource(R.string.memory_tasks_sub), ui.switches.rememberTasks) { on -> vm.setSwitches { it.copy(rememberTasks = on) } }
         }
+        TaskMemoriesSection(vm)
         if (webSitesCount != null || routes != null) {
             GroupLabel(stringResource(R.string.settings_saved_data))
             GroupCard {
@@ -195,6 +207,71 @@ fun MemoryScreen(
         }
     }
 
+    MemoryMessage(vm, ui.message)
+    if (ui.clearStage > 0) {
+        MikaDialog(
+            onDismissRequest = vm::cancelClear,
+            title = { Text(if (ui.clearStage == 1) stringResource(R.string.memory_clear_q) else stringResource(R.string.memory_clear_sure)) },
+            text = { Text(if (ui.clearStage == 1) stringResource(R.string.memory_clear_body) else stringResource(R.string.memory_clear_final)) },
+            confirmButton = { TextButton(vm::confirmClear, Modifier.testTag("confirm-clear")) { Text(if (ui.clearStage == 1) stringResource(R.string.chat_continue) else stringResource(R.string.routes_clear_all)) } },
+            dismissButton = { TextButton(vm::cancelClear) { Text(stringResource(R.string.cancel)) } },
+        )
+    }
+}
+
+/** 跨会话任务摘要(任务结束自动记的):看得见、删得掉。没有就不占地方。 */
+@Composable
+private fun TaskMemoriesSection(vm: MemoryViewModel) {
+    val tasks by vm.tasks.collectAsState()
+    if (tasks.isEmpty()) return
+    var acting by remember { mutableStateOf<TaskMemory?>(null) }
+    GroupLabel(stringResource(R.string.memory_tasks_title))
+    GroupCard {
+        tasks.forEachIndexed { i, t ->
+            val subtitle = listOfNotNull(
+                SimpleDateFormat("yyyy-MM-dd HH:mm", uiLocale()).format(Date(t.createdAt)),
+                t.conclusion.takeIf { it.isNotBlank() },
+            ).joinToString(" · ")
+            ListRow(null, t.goal, subtitle, first = i == 0, onClick = { acting = t })
+        }
+    }
+    acting?.let { t ->
+        ActionSheet(
+            t.goal,
+            listOf(SheetAction(stringResource(R.string.confirm_delete), destructive = true) { vm.deleteTask(t.id); acting = null }),
+            onDismiss = { acting = null },
+        )
+    }
+}
+
+@Composable
+internal fun MemoryEntries(vm: MemoryViewModel, ui: MemoryUi, allowAdd: Boolean = true) {
+    var editing by remember { mutableStateOf<Row?>(null) }
+    var acting by remember { mutableStateOf<Row?>(null) }
+    var adding by remember { mutableStateOf(false) }
+
+    if (ui.rows.isEmpty()) {
+        GroupLabel("")
+        EmptyNote(if (ui.query.isBlank()) stringResource(R.string.memory_empty) else stringResource(R.string.not_found))
+    }
+    KIND_GROUPS.forEach { (kind, label) ->
+        val rows = ui.rows.filter { it.kind == kind }
+        if (rows.isNotEmpty()) {
+            GroupLabel(label)
+            GroupCard {
+                rows.forEachIndexed { i, r ->
+                    MemoryRow(r, first = i == 0, onClick = { acting = r })
+                }
+            }
+        }
+    }
+    if (allowAdd) {
+        GroupLabel("")
+        GroupCard {
+            ListRow(MikaIcons.Plus, stringResource(R.string.memory_add), first = true, titleColor = MikaTheme.colors.accent, tone = TileTone.Accent, onClick = { adding = true })
+        }
+    }
+
     acting?.let { r ->
         ActionSheet(
             r.content,
@@ -212,17 +289,12 @@ fun MemoryScreen(
     if (adding) {
         EditDialog(stringResource(R.string.memory_add), "", emptyList(), onDismiss = { adding = false }, withKind = true) { content, keywords, kind -> vm.add(kind, content, keywords); adding = false }
     }
-    ui.message?.let { m ->
+}
+
+@Composable
+internal fun MemoryMessage(vm: MemoryViewModel, message: String?) {
+    message?.let { m ->
         MikaNoticeDialog(m, onDismiss = vm::dismissMessage)
-    }
-    if (ui.clearStage > 0) {
-        MikaDialog(
-            onDismissRequest = vm::cancelClear,
-            title = { Text(if (ui.clearStage == 1) stringResource(R.string.memory_clear_q) else stringResource(R.string.memory_clear_sure)) },
-            text = { Text(if (ui.clearStage == 1) stringResource(R.string.memory_clear_body) else stringResource(R.string.memory_clear_final)) },
-            confirmButton = { TextButton(vm::confirmClear, Modifier.testTag("confirm-clear")) { Text(if (ui.clearStage == 1) stringResource(R.string.chat_continue) else stringResource(R.string.routes_clear_all)) } },
-            dismissButton = { TextButton(vm::cancelClear) { Text(stringResource(R.string.cancel)) } },
-        )
     }
 }
 

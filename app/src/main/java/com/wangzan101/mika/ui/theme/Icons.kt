@@ -40,6 +40,10 @@ object MikaIcons {
     val Up = stroke("up", "M12 19 V5 M6 11 l6 -6 l6 6", width = 2.2f)
     val Check = stroke("check", "M5 12.5 l4.5 4.5 L19 7.5", width = 2.2f)
     val Close = stroke("close", "M6 6 l12 12 M18 6 L6 18", width = 2f)
+    /** 多选:勾选清单。 */
+    val ListChecks = stroke("list-checks", "M3 17 l2 2 l4 -4", "M3 7 l2 2 l4 -4", "M13 6 h8 M13 12 h8 M13 18 h8")
+    /** 加入清单:清单右边一个加号。 */
+    val ListPlus = stroke("list-plus", "M11 12 H3 M16 6 H3 M16 18 H3", "M18 9 v6 M21 12 h-6")
     /** 完全退出:电源键。 */
     val Power = stroke("power", "M12 3 v8", "M18.36 6.64 a8 8 0 1 1 -12.73 0")
     val Search = stroke("search", "M4 11 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0", "M20 20 l-4 -4")
@@ -188,6 +192,10 @@ object MikaIcons {
     val SelectText = stroke("select-text", "M9 4.5 h6 M9 19.5 h6 M12 4.5 v15")
     /** 图钉:置顶了的对话。 */
     val Pin = stroke("pin", "M9 3.5 h6 M10 3.5 v5.5 l-3 3.5 h10 l-3 -3.5 V3.5", "M12 12.5 V20.5")
+    /** 归档:带盖子的小盒子,盖子下面一道取出的口。 */
+    val Archive = stroke(
+        "archive", "M4 7 h16 v3 h-16 z", "M6 10 v9 a1 1 0 0 0 1 1 h10 a1 1 0 0 0 1 -1 v-9", "M10 14 h4",
+    )
     /** 星:常用网站。 */
     val Star = stroke("star", "M12 4.5 l2.3 4.7 l5.2 0.8 l-3.8 3.6 l0.9 5.1 L12 16.3 l-4.6 2.4 l0.9 -5.1 L4.5 10 l5.2 -0.8 z")
     /** 书签:下面一个 V 形缺口。 */

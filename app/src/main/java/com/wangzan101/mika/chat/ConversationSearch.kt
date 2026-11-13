@@ -1,18 +1,34 @@
 package com.wangzan101.mika.chat
 
+import com.wangzan101.mika.core.agent.AttachmentLines
+import com.wangzan101.mika.core.agent.QuoteMessage
 import com.wangzan101.mika.core.agent.Turn
+import com.wangzan101.mika.core.cap.web.AttachedPage
+import com.wangzan101.mika.core.cap.web.WebUrlPolicy
+import com.wangzan101.mika.core.userscreen.UserScreenMessage
+import com.wangzan101.mika.ui.AttachmentMessage
+import com.wangzan101.mika.ui.ChatTarget
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import java.io.File
 
-/** 一条命中。[inTitle] 表示标题里有词;片段取自正文,没有合适的正文片段时为 null。 */
-data class ConversationHit(val id: String, val inTitle: Boolean, val snippet: String?, val score: Int)
+/**
+ * 一条命中。[inTitle] 表示标题里有词;片段取自正文,没有合适的正文片段时为 null。
+ * [target] 是正文命中所在的聊天消息;只有标题命中时为 null。
+ */
+data class ConversationHit(
+    val id: String,
+    val inTitle: Boolean,
+    val snippet: String?,
+    val score: Int,
+    val target: ChatTarget? = null,
+)
 
 /** 一次正文搜索的结果;[truncated] 为真表示还有更多命中没返回。 */
 data class SearchResult(val hits: List<ConversationHit>, val truncated: Boolean = false)
 
 /**
- * 侧栏搜索:查对话标题和对话里看得见的文字(用户原话、插话、助手的回答)。
+ * 侧栏搜索:查对话标题和对话里看得见的文字(用户的话和插话按气泡上显示的取,见 [shown];助手的回答)。
  *
  * 正文按对话文件的修改时间缓存:文件没变就不再解析。读文件走 [turnsOf](就是 [ConversationStore] 的解析),
  * 不拿 store 的锁,后台任务收尾往对话里补写时不会被搜索挡住。
@@ -24,8 +40,11 @@ class ConversationSearch(
     /** 缓存的一条正文。[updatedAt] 是 [ConversationSummary.updatedAt],变了就重读。 */
     private data class Entry(val updatedAt: Long, val body: Body)
 
+    /** 一段看得见的文字,以及它在聊天页里对应的消息。 */
+    private data class Segment(val text: String, val target: ChatTarget)
+
     /** 一个对话里看得见的文字,按出现顺序;片段从其中一段里取。 */
-    private data class Body(val segments: List<String>, val firstUser: String?)
+    private data class Body(val segments: List<Segment>, val firstUser: String?)
 
     private val lock = Any()
     private val cache = HashMap<String, Entry>()
@@ -59,16 +78,17 @@ class ConversationSearch(
             alive += c.id
             val body = if (c.updatedAt == 0L) Body(emptyList(), null) else body(c)
             val inTitle = terms.map { c.title.contains(it, ignoreCase = true) }
-            val inBody = terms.map { t -> body.segments.any { it.contains(t, ignoreCase = true) } }
+            val inBody = terms.map { t -> body.segments.any { it.text.contains(t, ignoreCase = true) } }
             // 每个词至少出现在标题或正文的一处
             if (inTitle.indices.any { !inTitle[it] && !inBody[it] }) continue
             val titleAll = inTitle.all { it }
             val best = bestSegment(body.segments, terms)
-            // 标题就是第一句话、而且标题已经命中时,不再把同一句话当片段重复一遍
-            val snippet = best?.takeIf { !(titleAll && body.firstUser != null && it.text == body.firstUser) }?.let(::window)
+            // 标题就是第一句话(或只发了一个文件时就是文件名)、而且标题已经命中时,不再把同一句话当片段重复一遍
+            val snippet = best?.takeIf { !(titleAll && (it.text == body.firstUser || it.text == c.title)) }?.let(::window)
             hits += ConversationHit(
                 c.id, inTitle = inTitle.any { it }, snippet = snippet,
                 score = score(titleAll, inBody.all { it }, inTitle.count { it }, prefix(c.title, terms.first())),
+                target = best?.target,
             )
         }
         synchronized(lock) { cache.keys.retainAll(alive) }
@@ -85,35 +105,57 @@ class ConversationSearch(
         val cached = synchronized(lock) { cache[c.id] }
         if (cached != null && cached.updatedAt == c.updatedAt) return cached.body
         val turns = runCatching { turnsOf(fileOf(c.id)) }.getOrNull().orEmpty()
-        val segments = ArrayList<String>()
-        var firstUser: String? = null
-        for (t in turns) {
-            if (firstUser == null) firstUser = t.userText.takeIf(String::isNotBlank)
-            segments += visibleText(t)
-        }
+        val segments = ArrayList<Segment>()
+        turns.forEachIndexed { index, turn -> segments += visibleText(turn, index) }
+        // 只看第一轮:第一句只发了附件、屏幕时它打的字是空的,不拿后面一轮的话顶上
+        val firstUser = turns.firstOrNull()?.let { shown(it.userText).first() }?.takeIf(String::isNotBlank)
         val body = Body(segments, firstUser)
         synchronized(lock) { cache[c.id] = Entry(c.updatedAt, body) }
         return body
     }
 
-    /** 一轮里用户和助手看得见的字;同一轮里重复的(结局和结果常常一样)只留一份。 */
-    private fun visibleText(t: Turn): List<String> = buildList {
-        fun put(s: String?) {
-            s?.takeIf(String::isNotBlank)?.let { add(it) }
+    /**
+     * 一轮里用户和助手看得见的字;同一轮里重复的只留一份。用户的话和插话按 [shown] 取;
+     * [Turn.result] 是判出的结局代码(done、partial…),对话页不显示,不拿来搜。
+     */
+    private fun visibleText(t: Turn, turnIndex: Int): List<Segment> = buildList {
+        fun put(s: String?, target: ChatTarget) {
+            s?.takeIf(String::isNotBlank)?.let { add(Segment(it, target)) }
         }
-        put(t.userText)
-        t.steers.forEach(::put)
-        t.finishedReplies.forEach(::put)
-        t.interruptedReplies.forEach(::put)
-        put(t.outcome)
-        put(t.result)
-        put(t.note)
-    }.distinct()
+        shown(t.userText).forEach { put(it, ChatTarget.Message(turnIndex, null)) }
+        t.steers.forEachIndexed { index, steer ->
+            shown(steer).forEach { put(it, ChatTarget.Message(turnIndex, index)) }
+        }
+        t.finishedReplies.forEachIndexed { index, reply ->
+            put(reply, ChatTarget.Reply(turnIndex, index, interrupted = false))
+        }
+        t.interruptedReplies.forEachIndexed { index, reply ->
+            put(reply, ChatTarget.Reply(turnIndex, index, interrupted = true))
+        }
+        put(t.outcome, ChatTarget.Status(turnIndex))
+        put(t.note, ChatTarget.Status(turnIndex))
+    }.distinctBy { it.text }
+
+    /**
+     * 用户的一句话(开局的话、插话)在气泡上显示出来的字,拆法和气泡一样:网页显示网站和选中的字,引用显示引的那段,
+     * 文件卡片显示文件名(照片只显示图),屏幕显示截图。页面说明那几行、引用的头、附件行里的路径、屏幕那一行不显示,
+     * 不拿来搜(侧栏标题也是去掉这些再比的);文件大小卡片上有,也不拿来搜,免得搜「KB」命中每个带附件的对话。
+     * 第一项是用户这次打的字,可能是空串。
+     */
+    private fun shown(text: String): List<String> {
+        val paged = AttachedPage.parse(text)
+        val quoted = QuoteMessage.parse(paged.words)
+        val attached = AttachmentLines.parse(quoted.words)
+        val words = UserScreenMessage.parse(attached.words).words
+        val page = paged.page
+        val files = attached.files.map { (path, _) -> path.substringAfterLast('/') }.filterNot(AttachmentMessage::isPhoto)
+        return listOf(words) + listOfNotNull(page?.let { WebUrlPolicy.host(it.url) ?: it.url }, page?.selection, quoted.quote?.text) + files
+    }
 
     /** 命中词最多的一段;一样多时取命中位置靠前的。 */
-    private data class Best(val text: String, val index: Int, val length: Int)
+    private data class Best(val text: String, val target: ChatTarget, val index: Int, val length: Int)
 
-    private fun bestSegment(segments: List<String>, terms: List<String>): Best? {
+    private fun bestSegment(segments: List<Segment>, terms: List<String>): Best? {
         var best: Best? = null
         var bestCount = 0
         for (seg in segments) {
@@ -121,7 +163,7 @@ class ConversationSearch(
             var first = -1
             var firstLength = 0
             for (term in terms) {
-                val i = seg.indexOf(term, ignoreCase = true)
+                val i = seg.text.indexOf(term, ignoreCase = true)
                 if (i < 0) continue
                 count++
                 if (first < 0 || i < first) {
@@ -131,7 +173,7 @@ class ConversationSearch(
             }
             if (count == 0) continue
             if (count > bestCount || (count == bestCount && (best == null || first < best.index))) {
-                best = Best(seg, first, firstLength)
+                best = Best(seg.text, seg.target, first, firstLength)
                 bestCount = count
             }
         }

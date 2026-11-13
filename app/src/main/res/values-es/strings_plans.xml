@@ -67,6 +67,9 @@
     <string name="plans_condition">Se ejecuta solo si: %1$s · %2$s</string>
     <string name="plans_last">Última %1$s · %2$s</string>
     <string name="plans_never_run">Aún no se ha ejecutado</string>
+    <string name="plans_source_user">Manual</string>
+    <string name="plans_source_model">Modelo</string>
+    <string name="plans_source_external">Script</string>
     <string name="plans_delivered">Entregada</string>
     <string name="plans_unchanged">La condición no cambió</string>
     <string name="plans_not_met">La condición no se cumplió</string>
@@ -76,4 +79,5 @@
     <string name="plans_running_now">En ejecución</string>
     <string name="trigger_deleted">Se eliminó la tarea programada</string>
     <string name="trigger_busy">Esta tarea sigue en ejecución</string>
+    <string name="plans_run_history">Historial de ejecuciones</string>
 </resources>
