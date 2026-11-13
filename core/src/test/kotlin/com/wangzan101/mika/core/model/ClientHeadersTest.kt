@@ -52,6 +52,21 @@ class ClientHeadersTest {
         assertEquals(session.id, ClientHeaders.of("Yuan/1", "x-s", session)["x-s"])
     }
 
+    /** OkHttp 遇到中文头值直接抛 Unexpected char,整个模型调用都发不出去(0.1.39 真机事故)。 */
+    @Test fun chineseUserAgentIsMadeAscii() {
+        val ua = ClientHeaders.of("如愿/0.1.39", null, session).getValue("User-Agent")
+        assertTrue("需要是 ASCII,实际 $ua", ua.all { it.code in 0x20..0x7e })
+        assertTrue("版本号要留着,实际 $ua", ua.contains("0.1.39"))
+        assertEquals("Yuan", ClientHeaders.of("如愿", null, session).getValue("User-Agent"))
+        assertEquals("Yuan", ClientHeaders.of("", null, session).getValue("User-Agent"))
+    }
+
+    /** 头名写了中文同样发不出去,当成没配。 */
+    @Test fun chineseSessionHeaderNameIsDropped() {
+        assertEquals(mapOf("User-Agent" to "Yuan/1"), ClientHeaders.of("Yuan/1", "会话号", session))
+        assertEquals(session.id, ClientHeaders.of("Yuan/1", "x_session-1", session)["x_session-1"])
+    }
+
     @Test fun chatCompletionsCarriesHeaders() = runTest {
         server.enqueue(ok("""{"choices":[{"message":{"role":"assistant","content":"ok"},"finish_reason":"stop"}]}"""))
         server.enqueue(sse("""{"choices":[{"delta":{"content":"ok"},"finish_reason":"stop"}]}""", "[DONE]"))
