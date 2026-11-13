@@ -58,7 +58,6 @@ import com.wangzan101.mika.MikaApp
 import com.wangzan101.mika.about.Diagnostics
 import com.wangzan101.mika.about.DiagnosticsCollector
 import com.wangzan101.mika.about.MikaLinks
-import com.wangzan101.mika.about.QrImage
 import com.wangzan101.mika.about.ReleaseInfo
 import com.wangzan101.mika.chat.ConversationStore
 import com.wangzan101.mika.chat.CurrentChat
