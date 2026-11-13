@@ -68,7 +68,7 @@ import kotlinx.coroutines.withContext
 /** 设置里的推荐任务:和首页是同一份列表,标题用来辨认,提示词留到点按后填进输入框。 */
 @Composable
 fun RecommendedTasksScreen(store: RecommendedTaskStore, onBack: () -> Unit) {
-    remember(store) { store.ensureLoaded { ChatCopy.recommendationSeeds() } }
+    remember(store) { store.ensureLoaded(ChatCopy::isRetiredSeed) { ChatCopy.recommendationSeeds() } }
     val tasks by store.tasks.collectAsState()
     val unreadable by store.unreadable.collectAsState()
     var editing by remember { mutableStateOf<RecommendedTask?>(null) }

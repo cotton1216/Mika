@@ -15,14 +15,17 @@ import java.time.ZoneId
 class ChatCopyTest {
     @get:Rule val texts = ChineseTexts()
 
-    @Test fun fourDistinctNonBlankExamplesStartWithGithubStar() {
+    @Test fun examplesAreSeedsAndRetiredOnesAreRecognised() {
         val examples = ChatCopy.examples
-        assertEquals(4, examples.size)
-        assertEquals(4, examples.map { it.text }.filter { it.isNotBlank() }.toSet().size)
-        assertEquals(ChatCopy.ExampleKind.Web, examples.first().kind)
-        assertTrue(examples.first().text.contains("https://github.com/wangzan101/mika"))
+        assertEquals(2, examples.size)
+        assertEquals(2, examples.map { it.text }.filter { it.isNotBlank() }.toSet().size)
         assertEquals(ChatCopy.examples.map { it.text }, ChatCopy.recommendationSeeds().map { it.first })
         assertEquals(ChatCopy.examples.map { it.text }, ChatCopy.recommendationSeeds().map { it.second })
+        // 下线的那两条(去仓库点 star、总结 Mika 内测群)还留在老用户的列表里,读到时按特征认出来清掉
+        assertTrue(ChatCopy.isRetiredSeed("打开网页 https://github.com/wangzan101/mika，给这个项目点 star"))
+        assertTrue(ChatCopy.isRetiredSeed("帮我总结微信群聊，Mika内测体验群今天都聊了些啥"))
+        assertFalse(ChatCopy.isRetiredSeed(examples.first().text))
+        assertFalse("用户自己写的不动", ChatCopy.isRetiredSeed("帮我订明天早上9:40 的闹钟"))
     }
 
     /** 分支标题:源标题后面加后缀,总长不超过 24 字;截的是源标题,后缀留着,emoji 不截半个。 */

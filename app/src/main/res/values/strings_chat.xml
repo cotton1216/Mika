@@ -6,9 +6,8 @@
     <string name="chat_greeting_evening">Good evening</string>
     <string name="chat_greeting_night">Up late</string>
     <string name="chat_empty_prompt">What should 如愿 do?</string>
-    <string name="chat_example_github_star">Open https://github.com/wangzan101/mika and star the project.</string>
+    <string name="chat_slogan">As you wish — your personal assistant</string>
     <string name="chat_example_follow">Open X, search for Wang Zan (@wangzan101), and follow the account.</string>
-    <string name="chat_example_group_summary">Open WhatsApp and summarize today\'s unread messages, highlighting anything that needs my reply.</string>
     <string name="chat_example_alarms">Set alarms for 9:40, 9:50 and 10:00 tomorrow morning.</string>
     <string name="chat_example_replace_title">Replace current draft?</string>
     <string name="chat_example_replace_body">This recommendation will replace what you’ve already typed.</string>

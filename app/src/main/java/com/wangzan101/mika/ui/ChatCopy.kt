@@ -19,6 +19,9 @@ object ChatCopy {
 
     val EMPTY_PROMPT get() = tr(R.string.chat_empty_prompt)
 
+    /** 空对话问候下面那行小字。 */
+    val SLOGAN get() = tr(R.string.chat_slogan)
+
     /**
      * 内置推荐任务的原文。只在本机还没有保存过推荐任务时用来初始化一次;
      * 标题和提示词都用这一句,之后用户在设置里改,不会因为换语言或升级被加回来。
@@ -27,13 +30,22 @@ object ChatCopy {
     data class Example(val kind: ExampleKind, val text: String)
 
     val examples get() = listOf(
-        Example(ExampleKind.Web, tr(R.string.chat_example_github_star)),
         Example(ExampleKind.App, tr(R.string.chat_example_follow)),
-        Example(ExampleKind.App, tr(R.string.chat_example_group_summary)),
         Example(ExampleKind.Device, tr(R.string.chat_example_alarms)),
     )
 
     fun recommendationSeeds(): List<Pair<String, String>> = examples.map { it.text to it.text }
+
+    /**
+     * 已经下线的内置推荐任务(去仓库点 star、总结 Mika 内测群)。种子只在首次启动写进用户列表,
+     * 从 [examples] 里删掉不会动到老用户的文件,所以读列表时按特征把它们认出来清掉;
+     * 只认仓库地址和「内测」这类独有字眼,不会误删用户自己写的任务。
+     */
+    fun isRetiredSeed(prompt: String): Boolean {
+        val p = prompt.trim()
+        return p.contains("github.com/wangzan101/mika", ignoreCase = true) ||
+            p.contains("Mika内测") || p.contains("Mika內測")
+    }
 
     /** 对话页顶栏的标题:固定是 App 名;副标题说此刻在做什么。 */
     const val APP_TITLE = "如愿"

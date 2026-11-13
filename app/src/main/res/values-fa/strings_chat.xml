@@ -6,8 +6,8 @@
     <string name="chat_greeting_evening">عصر بخیر</string>
     <string name="chat_greeting_night">هنوز بیدارید؟</string>
     <string name="chat_empty_prompt">如愿 چه کاری انجام دهد؟</string>
+    <string name="chat_slogan">همان‌طور که می‌خواهید — دستیار شخصی شما</string>
     <string name="chat_example_follow">ایکس را باز کن، وانگ زان (@wangzan101) را جست‌وجو کن و حساب او را دنبال کن.</string>
-    <string name="chat_example_group_summary">واتساپ را باز کن و پیام‌های خوانده‌نشدهٔ امروز را خلاصه کن؛ مواردی را که به پاسخ من نیاز دارند مشخص کن.</string>
     <string name="chat_example_alarms">برای فردا صبح در ساعت‌های ۹:۴۰، ۹:۵۰ و ۱۰:۰۰ زنگ هشدار تنظیم کن.</string>
     <string name="chat_example_replace_title">پیش‌نویس فعلی جایگزین شود؟</string>
     <string name="chat_example_replace_body">این پیشنهاد جایگزین متنی می‌شود که تاکنون نوشته‌اید.</string>
@@ -209,7 +209,6 @@
     <string name="chat_placeholder_queue">کار بعدی را بنویسید…</string>
     <string name="voice_placeholder_queue">کار بعدی را بگویید…</string>
     <string name="steer_received_paused">متوجه شدم؛ هنگام ادامهٔ کار اعمال می‌شود</string>
-    <string name="chat_example_github_star">نشانی https://github.com/wangzan101/mika را باز کن و به پروژه ستاره بده.</string>
     <string name="drawer_search_clear">پاک کردن جست‌وجو</string>
     <string name="drawer_search_empty">هیچ گفتگویی با «%1$s» مطابقت ندارد</string>
     <string name="drawer_search_empty_hint">در عنوان‌ها و متن گفتگوها جست‌وجو می‌کند</string>

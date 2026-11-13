@@ -37,7 +37,7 @@ class RecommendedTaskStore(private val file: File, private val ids: () -> String
     val unreadable: StateFlow<Boolean> = _unreadable.asStateFlow()
 
     @Synchronized
-    fun ensureLoaded(seed: () -> List<Pair<String, String>>) {
+    fun ensureLoaded(retired: (String) -> Boolean = { false }, seed: () -> List<Pair<String, String>>) {
         if (loaded || attempted) return
         attempted = true
         when (val read = read()) {
@@ -47,7 +47,11 @@ class RecommendedTaskStore(private val file: File, private val ids: () -> String
                 }
                 if (write(seeded)) publish(seeded)
             }
-            is Read.Ok -> publish(read.tasks)
+            // 已经下线的内置任务(参数里认出来的)从老用户的列表里清掉;清完写回文件,下次不再重复判断
+            is Read.Ok -> {
+                val kept = read.tasks.filterNot { retired(it.prompt) || retired(it.title) }
+                if (kept.size != read.tasks.size && write(kept)) publish(kept) else publish(read.tasks)
+            }
             Read.Corrupt, Read.Failed -> {
                 _tasks.value = emptyList()
                 _unreadable.value = true

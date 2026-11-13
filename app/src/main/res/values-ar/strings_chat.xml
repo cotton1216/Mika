@@ -6,9 +6,8 @@
     <string name="chat_greeting_evening">مساء الخير</string>
     <string name="chat_greeting_night">ما زلت مستيقظًا؟</string>
     <string name="chat_empty_prompt">ما الذي تريد من 如愿 أن تفعله؟</string>
-    <string name="chat_example_github_star">افتح https://github.com/wangzan101/mika وأضف نجمة إلى المشروع.</string>
+    <string name="chat_slogan">كما تتمنى — مساعدك الشخصي</string>
     <string name="chat_example_follow">افتح X وابحث عن Wang Zan (@wangzan101)، ثم تابع الحساب.</string>
-    <string name="chat_example_group_summary">افتح WhatsApp ولخّص رسائل اليوم غير المقروءة، مع إبراز كل ما يحتاج إلى ردي.</string>
     <string name="chat_example_alarms">اضبط المنبهات للساعة 9:40 و9:50 و10:00 صباح الغد.</string>
     <string name="chat_example_replace_title">استبدال المسودة الحالية؟</string>
     <string name="chat_example_replace_body">ستستبدل المهمة المقترحة ما كتبته بالفعل.</string>

@@ -6,9 +6,8 @@
     <string name="chat_greeting_evening">こんばんは</string>
     <string name="chat_greeting_night">夜更かしですね</string>
     <string name="chat_empty_prompt">如愿 に何をお願いしますか？</string>
-    <string name="chat_example_github_star">https://github.com/wangzan101/mika を開いて、このプロジェクトにスターを付けて</string>
+    <string name="chat_slogan">ご希望のままに — あなた専用のアシスタント</string>
     <string name="chat_example_follow">X を開いて Wang Zan（@wangzan101）を検索し、アカウントをフォローして</string>
-    <string name="chat_example_group_summary">WhatsApp を開いて今日の未読メッセージをまとめ、返信が必要なものを拾って</string>
     <string name="chat_example_alarms">明日の朝 9:40、9:50、10:00 にアラームをセットして</string>
     <string name="chat_example_replace_title">現在の下書きを置き換えますか？</string>
     <string name="chat_example_replace_body">おすすめのタスクで、入力済みの内容が置き換えられます。</string>

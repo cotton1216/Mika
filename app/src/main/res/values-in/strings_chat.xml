@@ -6,9 +6,8 @@
     <string name="chat_greeting_evening">Selamat malam</string>
     <string name="chat_greeting_night">Belum tidur?</string>
     <string name="chat_empty_prompt">Apa yang harus dikerjakan 如愿?</string>
-    <string name="chat_example_github_star">Buka https://github.com/wangzan101/mika dan beri bintang pada proyek ini.</string>
+    <string name="chat_slogan">Sesuai keinginan Anda — asisten pribadi Anda</string>
     <string name="chat_example_follow">Buka X, cari Wang Zan (@wangzan101), lalu ikuti akun tersebut.</string>
-    <string name="chat_example_group_summary">Buka WhatsApp dan rangkum pesan yang belum dibaca hari ini, dengan menandai semua yang perlu saya balas.</string>
     <string name="chat_example_alarms">Pasang alarm pukul 9.40, 9.50, dan 10.00 besok pagi.</string>
     <string name="chat_example_replace_title">Ganti draf saat ini?</string>
     <string name="chat_example_replace_body">Tugas yang direkomendasikan akan mengganti teks yang sudah Anda ketik.</string>

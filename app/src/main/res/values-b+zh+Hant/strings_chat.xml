@@ -6,9 +6,8 @@
     <string name="chat_greeting_evening">晚上好</string>
     <string name="chat_greeting_night">夜深了</string>
     <string name="chat_empty_prompt">想讓如愿做什麼？</string>
-    <string name="chat_example_github_star">開啟網頁 https://github.com/wangzan101/mika，給這個專案點 star</string>
+    <string name="chat_slogan">如您所願，您的私人助理</string>
     <string name="chat_example_follow">開啟小紅書，搜尋博主「王赞不赞」，點擊關注，然後加入群聊</string>
-    <string name="chat_example_group_summary">幫我總結微信群聊，Mika內測體驗群今天都聊了些啥</string>
     <string name="chat_example_alarms">幫我訂明天早上9:40、9:50、10:00 的鬧鐘</string>
     <string name="chat_example_replace_title">取代目前草稿？</string>
     <string name="chat_example_replace_body">推薦任務會取代你已輸入的內容。</string>

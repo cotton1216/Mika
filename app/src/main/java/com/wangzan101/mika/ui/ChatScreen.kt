@@ -195,7 +195,7 @@ fun ChatScreen(
     val recommendationStore = recommendations
         ?: (LocalContext.current.applicationContext as? MikaApp)?.recommendedTasks
     val recommendedTasksFlow = remember(recommendationStore) {
-        recommendationStore?.also { it.ensureLoaded { ChatCopy.recommendationSeeds() } }?.tasks
+        recommendationStore?.also { it.ensureLoaded(ChatCopy::isRetiredSeed) { ChatCopy.recommendationSeeds() } }?.tasks
             ?: MutableStateFlow<List<RecommendedTask>>(emptyList())
     }
     val recommendedTasks by recommendedTasksFlow.collectAsState()
@@ -608,6 +608,8 @@ private fun EmptyState(conversation: String?, tasks: List<RecommendedTask>, onPi
     Column(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(start = 8.dp, end = 8.dp, top = 52.dp)) {
             Text(ChatCopy.greeting(hour), style = MikaType.LargeTitle, color = c.ink)
+            // 牌标语:跟在问候后面,小字淡色,不抢问候和下面那一句
+            Text(ChatCopy.SLOGAN, Modifier.padding(top = 6.dp), style = MikaType.Caption, color = c.ink3)
             Text(ChatCopy.EMPTY_PROMPT, Modifier.padding(top = 6.dp), style = EmptyLead, color = c.ink2)
         }
         if (tasks.isNotEmpty()) {
