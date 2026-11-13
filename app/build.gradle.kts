@@ -12,6 +12,10 @@ val gitHash: String = runCatching {
     providers.exec { commandLine("git", "rev-parse", "--short=7", "HEAD") }.standardOutput.asText.get().trim()
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
+// 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
+val ruyiVersionName = "0.1.46"
+val ruyiVersionCode = 47
+
 // 发布签名：读 app/release-signing.properties（不入库）。缺失时 release 回退到调试签名，避免构建失败。
 val releaseSigning = file("release-signing.properties")
     .takeIf { it.exists() }
@@ -36,8 +40,8 @@ android {
         applicationId = "com.zl.ruyiai.yuan"
         minSdk = 30
         targetSdk = 35
-        versionCode = 40
-        versionName = "0.1.39"
+        versionCode = ruyiVersionCode
+        versionName = ruyiVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
         // 关于页版本号后的 Beta 标记;出正式版时改成 false
@@ -50,7 +54,7 @@ android {
 
     // 发布用的包(perf、release)按架构再出一份:除了全架构包,另出只带 arm64-v8a 原生库的小包。
     // 两个包代码、资源、版本号、签名都一样,只差 lib/ 下的其他架构;各自是完整 APK,不是一起安装的拆分包。
-    // 产物:app-universal-<类型>.apk、app-arm64-v8a-<类型>.apk。拆分对所有构建类型生效,
+    // 产物:如愿-universal-<类型>.apk、如愿-arm64-v8a-<类型>.apk。拆分对所有构建类型生效,
     // 所以只在这次构建要出 perf/release 包时打开,单独构建调试包时产物仍是 app-debug.apk。
     splits {
         abi {
@@ -148,4 +152,20 @@ dependencies {
 // LicensesTest 读仓库的 licenses/THIRD_PARTY_NOTICES.md:让它参与测试的增量判断
 tasks.withType<Test>().configureEach {
     inputs.file(rootProject.file("licenses/THIRD_PARTY_NOTICES.md")).withPropertyName("thirdPartyNotices")
+}
+
+// 发布包文件名带上品牌、版本与架构：如愿-0.1.40-arm64-v8a-release.apk / 如愿-0.1.40-universal-release.apk。
+// 调试包保持 app-debug.apk 不变，脚本与真机验收流程仍按原名引用。
+androidComponents {
+    onVariants { variant ->
+        if (variant.buildType == "debug") return@onVariants
+        variant.outputs.forEach { output ->
+            val abi = output.filters
+                .find { it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI }
+                ?.identifier
+                ?: "universal"
+            (output as com.android.build.api.variant.impl.VariantOutputImpl)
+                .outputFileName.set("如愿-$ruyiVersionName-$abi-${variant.buildType}.apk")
+        }
+    }
 }
