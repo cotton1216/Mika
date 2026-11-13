@@ -51,7 +51,8 @@ object UpdateSchedule {
 }
 
 /**
- * 检查更新,没有自己的服务器:只问 GitHub 发布页接口;连不上、限流、读不懂都算这次没查到。
+ * 检查更新,没有自己的服务器:只问 GitHub 发布列表接口,按 tag 前缀挑出如愿自己的最新发布;
+ * 连不上、限流、读不懂、没有如愿的发布都算这次没查到。
  * 查到的版本和上次自动检查的时间存在 [file],App 重开后红点还在;装了新版后当前版本不再落后,红点自然消失。
  * 这里只检查版本；用户主动下载、安装由 [ApkUpdater] 处理。
  */
@@ -109,8 +110,8 @@ class UpdateChecker(
         }
     }
 
-    /** GitHub 上最新的发布;没查到为空。 */
-    internal fun fetchLatest(): ReleaseInfo? = runCatching { Releases.fromGitHub(get(releaseApi), deviceAbis) }.getOrNull()
+    /** GitHub 上如愿的最新发布;没查到为空。 */
+    internal fun fetchLatest(): ReleaseInfo? = runCatching { Releases.latest(get(releaseApi), deviceAbis) }.getOrNull()
 
     private fun get(url: String): String {
         val req = Request.Builder().url(url)

@@ -46,8 +46,10 @@ class UpdateCheckerTest {
         now = { clock },
     )
 
-    private fun release(tag: String) =
-        MockResponse().setBody("""{"tag_name":"$tag","name":"如愿 $tag","body":"- 新东西","html_url":"https://github.com/wangzan101/如愿/releases/tag/$tag","assets":[]}""")
+    /** 发布列表接口返回的是数组;tag 带如愿前缀(发布时用 yuan-v<版本> 这样的 tag)。 */
+    private fun release(tag: String) = MockResponse().setBody(
+        """[{"tag_name":"yuan-$tag","name":"如愿 $tag","body":"- 新东西","html_url":"https://github.com/wangzan101/如愿/releases/tag/$tag","assets":[]}]"""
+    )
 
     @Test
     fun newerReleaseFromGitHubShowsUpdate() = runTest {

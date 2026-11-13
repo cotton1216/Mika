@@ -98,4 +98,28 @@ class ReleasesTest {
         assertEquals(r.pageUrl, r.downloadUrl)
         assertEquals("https://github.com/x/如愿-v0.1.40-arm64.apk", Releases.fromGitHub(only, listOf("arm64-v8a")).apkUrl)
     }
+
+    /** 发布列表:只看带如愿前缀的 tag,原 Mika 包的 v0.1.x、预发布与草稿都不参与;挑版本号最新的。 */
+    @Test
+    fun latestPicksTheNewestRuyiTagIgnoringMikaTagsPreReleasesAndDrafts() {
+        val list = """
+            [
+              {"tag_name":"v0.2.1","html_url":"https://github.com/wangzan101/Mika/releases/tag/v0.2.1","assets":[]},
+              {"tag_name":"yuan-v0.1.46","prerelease":true,"html_url":"https://github.com/x/yuan-v0.1.46","assets":[]},
+              {"tag_name":"yuan-v0.1.47","draft":true,"html_url":"https://github.com/x/yuan-v0.1.47","assets":[]},
+              {"tag_name":"yuan-v0.1.44","html_url":"https://github.com/x/yuan-v0.1.44","assets":[]},
+              {"tag_name":"yuan-v0.1.45","name":"如愿 0.1.45",
+               "html_url":"https://github.com/wangzan101/Mika/releases/tag/yuan-v0.1.45",
+               "assets":[{"name":"如愿-v0.1.45-arm64.apk","browser_download_url":"https://github.com/x/如愿-v0.1.45-arm64.apk","size":50,"digest":"sha256:arm"}]}
+            ]
+        """.trimIndent()
+        val r = Releases.latest(list, listOf("arm64-v8a"))
+        assertEquals("0.1.45", r.version)
+        assertEquals("https://github.com/x/如愿-v0.1.45-arm64.apk", r.apkUrl)
+    }
+
+    @Test(expected = Exception::class)
+    fun latestWithoutARuyiReleaseFails() {
+        Releases.latest("""[{"tag_name":"v0.2.1","assets":[]}]""")
+    }
 }
