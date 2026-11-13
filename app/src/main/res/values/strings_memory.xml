@@ -25,8 +25,13 @@
     <string name="memory_use_sub">When off, 如愿 neither reads nor saves memory</string>
     <string name="memory_auto">Remember what I say</string>
     <string name="memory_auto_sub">Organized from your own words after each task</string>
+    <string name="memory_infer">Let Mika write its own conclusions to memory</string>
+    <string name="memory_infer_sub">When you ask it to remember, its own conclusions are saved too, marked as not your words</string>
     <string name="memory_learn">Learn from past tasks (skills and app notes)</string>
     <string name="memory_learn_sub">What 如愿 learns is used only after you accept it</string>
+    <string name="memory_tasks">Remember past tasks</string>
+    <string name="memory_tasks_sub">Keep a short summary of each finished task to recall next time</string>
+    <string name="memory_tasks_title">Past tasks</string>
     <string name="memory_clear_sub">Delete all memory and learned skills</string>
     <string name="edit_it">Edit</string>
     <string name="unpin">Unpin</string>
@@ -56,6 +61,7 @@
     <string name="date_pattern_md">MMM d</string>
     <string name="memory_said_via">You said on %1$s via %2$s: “%3$s”</string>
     <string name="memory_said">You said on %1$s: “%2$s”</string>
+    <string name="memory_inferred">Mika\'s conclusion on %1$s, at your request: “%2$s”</string>
     <string name="verify_returned">Sent back by the check</string>
     <string name="skills_drafts">New skill drafts — tried out after you accept</string>
     <string name="skills_accept_try">Accept and try</string>

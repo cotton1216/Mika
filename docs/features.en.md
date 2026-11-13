@@ -25,9 +25,16 @@ Any app installed on your phone works, with no per-app integration: Mika looks a
 - Logins persist. You can browse yourself from "Browser" (浏览器) in the side drawer, and sites you log into there are available to Mika too.
 - Paces itself: consecutive page loads on the same site are spaced out, longer on sites that limit browsing speed. It recognizes anti-bot block pages and hands them to you instead of forcing through.
 
+## Mika's own pages
+
+- With Settings › During work › "Let Mika operate its own screens" turned on (off by default), Mika can open its Settings, Browser, Memory, Scheduled tasks and other pages for you. It can also open a report, image or PDF from the workspace in Mika's built-in viewer, post a notification, or put a piece of text on the clipboard.
+- After you approve it, it can also put a link or search results in your visible browser; for a site that needs a sign-in, it can open the "sign in for Mika" page so you can sign in yourself and then carry on.
+- Mika never taps its own UI and cannot change its permissions, model or budget; it only opens the page, and you still do the operating.
+
 ## The screen you are looking at
 
 - While you are in another app, a floating Mika capsule at the screen edge shows background task progress, things that need you, and results. Tap it to add a message, answer, approve or stop. If you don't want it, open it and tap "Turn off capsule" at the bottom; you can turn it back on in Settings › Floating capsule.
+- After dragging the capsule to an edge, it fades into a half circle while idle; tap to restore it. Add the Floating capsule tile in Android Quick Settings to switch it on or off. Settings › Floating capsule has optional fullscreen hiding. The expanded chat preview supports pinch resizing and size/reset buttons. See [capsule controls](dev/capsule-controls.md).
 - **Double-tap the capsule** to send the screen you are looking at to Mika, e.g. "how should I reply to this" or "note this down". You can also take a screenshot from the card and add a line before sending.
 
 ## Scheduled and conditional tasks
@@ -35,6 +42,7 @@ Any app installed on your phone works, with no per-app integration: Mika looks a
 - "Remind me at 9 tomorrow morning", "check the weather every morning and tell me only if it will rain", "do X every Friday".
 - Conditions can compare with last time: "tell me when it drops by more than 50" compares with the price from the last time the condition started the task; "tell me every time it rains" speaks up on each rainy day; you can also say "at most once a day".
 - Runs at the scheduled time in the original conversation and sends the result back. The scheduled tasks page lets you create, edit, pause, run now or delete, with a preview of the next three occurrences. A daily or weekly plan can use several local times (e.g. `08:00, 12:30, 20:00`) under one identity and pause switch. In its original conversation, you can also ask to edit its content, condition, reminder or recurrence.
+- Open a scheduled task's menu and select **Run history** to see the times and statuses of its last 10 recorded runs.
 
 ## Interrupt or stop anytime
 

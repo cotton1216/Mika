@@ -25,8 +25,13 @@
     <string name="memory_use_sub">Когда выключено, 如愿 не читает память и ничего в неё не сохраняет</string>
     <string name="memory_auto">Запоминать то, что я говорю</string>
     <string name="memory_auto_sub">Составляется из ваших слов после каждой задачи</string>
+    <string name="memory_infer">Разрешить Mika запоминать собственные выводы</string>
+    <string name="memory_infer_sub">Когда вы просите запомнить, сохраняются и собственные выводы Mika — с пометкой, что это не ваши слова</string>
     <string name="memory_learn">Учиться на прошлых задачах (навыки и заметки о приложениях)</string>
     <string name="memory_learn_sub">Чему 如愿 научилась, используется только после вашего одобрения</string>
+    <string name="memory_tasks">Помнить прошлые задачи</string>
+    <string name="memory_tasks_sub">Сохранять краткий итог каждой выполненной задачи, чтобы вспомнить в следующий раз</string>
+    <string name="memory_tasks_title">Прошлые задачи</string>
     <string name="memory_clear_sub">Удалить всю память и выученные навыки</string>
     <string name="edit_it">Изменить</string>
     <string name="unpin">Открепить</string>
@@ -56,6 +61,7 @@
     <string name="date_pattern_md">d MMM</string>
     <string name="memory_said_via">Вы сказали %1$s через «%2$s»: «%3$s»</string>
     <string name="memory_said">Вы сказали %1$s: «%2$s»</string>
+    <string name="memory_inferred">Вывод Mika от %1$s по вашей просьбе: «%2$s»</string>
     <string name="verify_returned">Возвращено проверкой</string>
     <string name="skills_drafts">Черновики новых навыков: проверяются в деле после вашего одобрения</string>
     <string name="skills_accept_try">Принять и попробовать</string>

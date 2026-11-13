@@ -46,9 +46,18 @@ internal class ToolConfig(
     val runRecords: com.wangzan101.mika.core.record.RunRecords? = null,
     /** 用户配置并启用的网页搜索;为空时不提供 web_search。 */
     val webSearch: com.wangzan101.mika.core.search.WebSearch? = null,
+    /** 读 Mika 自己的状态;只对手机上、有用户的 UI 主任务给。 */
+    val self: com.wangzan101.mika.core.self.SelfPort? = null,
+    /** 操作 Mika 自己的界面/文件/通知/剪贴板;用户打开「允许 Mika 操作自己的界面」时才给。 */
+    val selfOperate: com.wangzan101.mika.core.self.SelfPort? = null,
     /** Save a captured PNG in this task's workspace; screen tools do not depend on the sandbox capability. */
     val saveScreenshot: (suspend (String, ByteArray) -> String)? = null,
+    /** 跨会话任务摘要;给了才提供 task_memory_search / task_memory_timeline / task_memory_step。 */
+    val taskMemory: com.wangzan101.mika.core.memory.TaskMemoryStore? = null,
 )
+
+/** 一个任务里按规矩不收的记忆写入,到这么多条为止不计入连续失败;再多就照常计(见 [ToolContext.noteMemoryRefusal])。 */
+internal const val MAX_QUIET_MEMORY_REFUSALS = 12
 
 /**
  * 工具执行时共用的东西:配置、核查材料、能力放进来的东西([get]),以及跨工具的少量状态(被拒的付款申报、允许打开的链接……)。
@@ -79,6 +88,12 @@ internal class ToolContext(
     var callId = ""
     /** 自己不动界面的工具(页面脚本)里的动作经它回到执行入口;只读调用、测试里不给时里面的动作一律不做。 */
     var sub: SubActions? = null
+    /** 自身工具的当次同意;由 AgentLoop 把等用户回答的那条路接进来,测试里换成假实现。 */
+    var ask: AskPort? = null
+    /** 本任务已经发过几条自身通知(每任务限 3 条)。 */
+    var selfNotifies = 0
+    /** 本任务已经做过几次用户浏览器动作(打开/搜索/代登录,每任务限 5 次)。 */
+    var selfBrowserOps = 0
     /** 本次调用所在的轮次(循环的「第 N 步」)。 */
     var currentStep: Int
         get() = shots.step
@@ -95,6 +110,15 @@ internal class ToolContext(
     @Volatile private var memoryCandidates: List<String>? = null
     fun noteMemorySearch(ids: List<String>) { memoryCandidates = ids }
     fun memorySearchCandidates(): List<String>? = memoryCandidates
+
+    private val memoryRefusals = mutableSetOf<String>()
+    /**
+     * 记一次按规矩不收的记忆写入;返回这一次还算不算「只是答复、不计入连续失败」:头一回不收这一条,
+     * 而且本任务不收的还没超过 [MAX_QUIET_MEMORY_REFUSALS] 条。同一条被原样再提(答复里说了别再试)、或者不收的攒得太多,
+     * 就照常计失败,交给连续失败的守卫去停——手机上默认不限步数,不能指望步数上限兜底。
+     */
+    fun noteMemoryRefusal(key: String): Boolean =
+        synchronized(memoryRefusals) { memoryRefusals.add(key) && memoryRefusals.size <= MAX_QUIET_MEMORY_REFUSALS }
 
     /** 这次调用的工具会由分发器报实际效果(effect):「没变化」由效果来说,这里不另提示。 */
     var reportsEffect = false

@@ -13,8 +13,8 @@ val gitHash: String = runCatching {
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
 // 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
-val ruyiVersionName = "0.1.46"
-val ruyiVersionCode = 47
+val ruyiVersionName = "0.1.47"
+val ruyiVersionCode = 48
 
 // 发布签名：读 app/release-signing.properties（不入库）。缺失时 release 回退到调试签名，避免构建失败。
 val releaseSigning = file("release-signing.properties")
@@ -38,7 +38,8 @@ android {
 
     defaultConfig {
         applicationId = "com.zl.ruyiai.yuan"
-        minSdk = 30
+        // 29: 兼容 Android 10 老机型（如 Redmi 10X 4G）；Android 11+ 专属 API 均有 SDK_INT 版本守卫
+        minSdk = 29
         targetSdk = 35
         versionCode = ruyiVersionCode
         versionName = ruyiVersionName
@@ -46,6 +47,7 @@ android {
         buildConfigField("String", "GIT_HASH", "\"$gitHash\"")
         // 关于页版本号后的 Beta 标记;出正式版时改成 false
         buildConfigField("boolean", "BETA", "true")
+        buildConfigField("boolean", "ADB_LOGS", "false")
     }
 
     // 沙箱程序只有 arm64 版本(jniLibs/arm64-v8a);APK 不限 ABI,别的设备照常安装、显示「此设备不支持沙箱」。
@@ -97,7 +99,18 @@ android {
         // 原包和数据都不动。./gradlew :app:assemblePerf -PsideInstall
         if (providers.gradleProperty("sideInstall").isPresent) getByName("perf") {
             applicationIdSuffix = ".perf"
-            resValue("string", "app_name", "Mika 测试版")
+            resValue("string", "app_name", "如愿 测试版")
+        }
+        // 本地日志检查包：并排安装，允许 adb run-as，首次启动即记录详细 Trace。
+        create("logs") {
+            initWith(getByName("perf"))
+            applicationIdSuffix = ".logs"
+            versionNameSuffix = "-logs"
+            isDebuggable = true
+            isProfileable = false
+            resValue("string", "app_name", "如愿 Logs")
+            buildConfigField("boolean", "ADB_LOGS", "true")
+            matchingFallbacks += "release"
         }
     }
 

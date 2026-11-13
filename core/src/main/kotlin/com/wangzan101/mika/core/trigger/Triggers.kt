@@ -7,6 +7,10 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+/** 计划是谁建的:用户手动、模型(schedule_task)、外部脚本(broadcast);只影响展示,出事能追溯。 */
+@Serializable
+enum class TriggerSource { User, Model, External }
+
 @Serializable
 data class TriggerDefinition(
     val id: String,
@@ -41,6 +45,8 @@ data class TriggerDefinition(
     val lastFiredAtMs: Long? = null,
     /** 多钟点计划；单钟点仍只用 calendarTime，主文件兼容旧版，完整列表由宿主存入扩展状态。 */
     val calendarTimes: List<String> = emptyList(),
+    /** 计划是谁建的:用户手动 / 模型 / 外部脚本,只影响展示与追溯。 */
+    val source: TriggerSource = TriggerSource.Model,
 ) {
     init {
         require(id.isNotBlank() && threadId.isNotBlank() && goal.isNotBlank())
@@ -84,7 +90,14 @@ interface TriggerStore {
     fun remove(id: String)
 }
 
-@Serializable data class TriggerSnapshot(val triggers: List<TriggerDefinition>, val windows: List<TriggerWindow>)
+@Serializable
+data class TriggerSnapshot(val triggers: List<TriggerDefinition>, val windows: List<TriggerWindow>) {
+    fun recentWindows(triggerId: String, limit: Int): List<TriggerWindow> = windows.asSequence()
+        .filter { it.triggerId == triggerId }
+        .sortedWith(compareByDescending<TriggerWindow> { it.claimedAtMs }.thenByDescending { it.dueAtMs })
+        .take(limit)
+        .toList()
+}
 
 /** 纯内存实现，文件实现沿用相同的状态转换。 */
 class MemoryTriggerStore(initial: TriggerSnapshot = TriggerSnapshot(emptyList(), emptyList())) : TriggerStore {
@@ -237,7 +250,7 @@ fun upcoming(def: TriggerDefinition, afterMs: Long, count: Int): List<Long> {
         }
         def.intervalMs != null && def.intervalMs > 0 -> {
             var t = def.nextAtMs
-            if (t < afterMs) t += (afterMs - t) / def.intervalMs * def.intervalMs + def.intervalMs
+            if (t < afterMs) t += ((afterMs - t - 1) / def.intervalMs + 1) * def.intervalMs
             repeat(count) { out += t; t += def.intervalMs }
         }
         else -> out += def.nextAtMs
