@@ -171,6 +171,23 @@ class RunTimelineViewModelTest {
         assertEquals("没有核查", h.verdict)
     }
 
+    /** 每一步都记着它是几点开始的(界面在「第 N 步」后面显示):取这一步最早的一条事件,回复按到手的时刻算。 */
+    @Test fun eachStepCarriesTheClockTimeItStarted() {
+        val id = run("看电量") {
+            event(RunEvent.ModelReply(clock, 1, "", "phone_launch_app", """{"package":"com.android.settings"}""", 10, 1, null, repliedAtMs = clock + 2_000))
+            event(RunEvent.ToolResult(clock + 3_000, 1, "phone_launch_app", """{"ok":true}""", true, null))
+            event(RunEvent.ModelReply(clock + 10_000, 2, "看看", "phone_observe", "{}", 10, 1, null, repliedAtMs = clock + 10_000))
+            event(RunEvent.TaskEnded(clock + 12_000, "succeeded", "85%"))
+        }
+        val (launch, look) = ready(id).steps
+        assertEquals("回复到手的时刻才是这一步的开始,不是执行完的时刻", clock + 2_000, launch.atMs)
+        assertEquals(clock + 10_000, look.atMs)
+        assertTrue(
+            "显示成 2026-11-13 07:50:39 这样带年月日的时刻",
+            RunTimelineViewModel.clockLabel(clock + 2_000).matches(Regex("""\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}""")),
+        )
+    }
+
     @Test fun rejectedLightReplyCountsAsCallButNotStep() {
         val id = run("看电量") {
             event(RunEvent.ModelReply(clock, 1, "", "phone_observe", "{}", 10, 1, null, model = "light", role = "light_rejected"))

@@ -125,7 +125,8 @@ fun RunTimelineScreen(vm: RunTimelineViewModel, onBack: () -> Unit) {
                         item("steps") {
                             GroupCard {
                                 Column(Modifier.padding(start = 16.dp)) {
-                                    u.steps.forEachIndexed { i, s ->
+                                    // 倒序:最新的一步在最上面,接着跑就能盯着看;连接线按显示位置接,首尾断开处不变
+                                    u.steps.asReversed().forEachIndexed { i, s ->
                                         TimelineRow(s, first = i == 0, last = i == u.steps.lastIndex, vm)
                                     }
                                 }
@@ -216,6 +217,13 @@ private fun TimelineRow(s: TimelineStep, first: Boolean, last: Boolean, vm: RunT
         Column(Modifier.fillMaxWidth().padding(end = 16.dp, top = 11.dp, bottom = 11.dp)) {
             Row(verticalAlignment = Alignment.Top) {
                 Text(stringResource(R.string.step_number, s.step), style = MikaType.Label, color = c.ink3)
+                // 这一步是几点几分:紧跟「第 N 步」,字小而淡,不抢正文
+                s.atMs?.let {
+                    Text(
+                        RunTimelineViewModel.clockLabel(it), Modifier.padding(start = 6.dp),
+                        style = MikaType.Hint, color = c.ink3, maxLines = 1,
+                    )
+                }
                 Text(
                     if (s.activities.isEmpty()) listOfNotNull(s.tool, s.detail).joinToString(" · ") else "",
                     Modifier.weight(1f).padding(start = 8.dp),
