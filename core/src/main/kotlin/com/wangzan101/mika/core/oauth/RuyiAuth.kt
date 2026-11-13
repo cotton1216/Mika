@@ -47,9 +47,10 @@ class RuyiAuth(
     /** 一次登录的随机值:回调地址固定是 [CALLBACK_URI](浏览器授权后跳这个 scheme 唤起如愿)。 */
     fun newAttempt() = RuyiAttempt(Pkce.state(), Pkce.verifier(), CALLBACK_URI)
 
-    /** 授权页地址:回调地址、S256 校验、state。 */
+    /** 授权页地址:回调地址、S256 校验、state、client_id(白名单二元组的标识)。 */
     fun authorizeUrl(attempt: RuyiAttempt): String =
         OauthUrls.check(loginOrigin.trimEnd('/') + AUTHORIZE_PATH, siteHosts).newBuilder()
+            .addQueryParameter("client_id", CLIENT_ID)
             .addQueryParameter("redirect_uri", attempt.redirectUri)
             .addQueryParameter("state", attempt.state)
             .addQueryParameter("code_challenge", attempt.challenge)
@@ -91,6 +92,7 @@ class RuyiAuth(
             put("code", code)
             put("code_verifier", attempt.verifier)
             put("redirect_uri", attempt.redirectUri)
+            put("client_id", CLIENT_ID)
         }.toString().toRequestBody(JSON_TYPE)
         val raw = try {
             HttpSupport.execute(http, Request.Builder().url(url).header("Accept", "application/json").post(body).build())
@@ -173,6 +175,8 @@ class RuyiAuth(
         const val API_BASE = "https://ai.thchengtay.com/aiserver/v1"
         /** 浏览器授权后跳回如愿的 scheme 回调地址:须和 IAM 里 aiserver client 登记的回调一致。 */
         const val CALLBACK_URI = "ruyiai://auth2/callback"
+        /** 客户端标识(非凭据):与回调地址组成白名单二元组,服务端精确匹配。命名规范 `<产品>-<平台>`。 */
+        const val CLIENT_ID = "ruyi-android"
         const val AUTHORIZE_PATH = "/desktop/authorize"
         const val EXCHANGE_PATH = "/api/v1/auth/desktop/exchange"
         const val KEYS_PAGE = "https://ai.thchengtay.com/aiserver/keys"
