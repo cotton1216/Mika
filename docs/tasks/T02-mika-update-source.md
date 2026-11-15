@@ -99,7 +99,7 @@
   - `./gradlew :app:assembleRelease -PapphubBaseUrl=https://example.com/apphub/` 通过，生成 `APPHUB_BASE_URL = "https://example.com/apphub"`（尾部 `/` 已去掉），`:app:lintVitalRelease` 通过。
   - `./gradlew :app:assemblePerf`（不传参）同样在配置阶段失败。
 - 基点同步（2026-11-15，用户确认执行）：本分支原基于 `530a7f8b`，ruyuan 已前进至 `5819d70d`；先 `git stash push -u` 暂存 15 处改动，`git rebase ruyuan` 快进（本分支无自有提交），`git stash pop` 无冲突恢复。同步后重跑 `:app:testDebugUnitTest :app:assembleDebug`：BUILD SUCCESSFUL，单测 2170 项 0 失败，debug 包构建通过。
-- 最新判定语义修复 + 全语言更新文案（2026-11-15，操作人：AI；原代码负责人：未确认；Commit ID：未提交（暂无 Commit ID））：
+- 最新判定语义修复 + 全语言更新文案（2026-11-15，操作人：AI；原代码负责人：未确认；提交日期：2026-11-15；Commit ID：`6d7252db`）：
   - 问题：`latest:null`（平台无已发布版本）被 `UpdateChecker` 判成失败，界面显示「连不上 GitHub」。
   - 修复：`AppHub.parse` 改为「`latest` 缺失/为 null 返回 null；响应读不懂抛异常」；`UpdateChecker.fetchLatest(): Result<ReleaseInfo?>`，`check()` 以 `result.isSuccess` 判 Done/Failed，成功时用平台答案覆盖旧 latest（清旧红点）。
   - 文案：11 个语言目录的 `about_check_sub`、`about_offline`、`about_offline_toast`、`about_changelog_all`、`about_update_download` 及 `about_data_note` 句尾从 GitHub 口径改为发布平台口径；`about_feedback*`、`about_repo*` 仍指向 GitHub。
@@ -108,14 +108,14 @@
 - 未验证：
   - 验收标准 4、5（本地 apphub 登记更高 versionCode 后的红点、下载、SHA/包名/versionCode/签名校验、拉起系统安装器）未做——需往本地 apphub 写服务数据，待单独确认。
   - 真机未使用（按要求）。
-- 测试编译修复（2026-11-15，操作人：AI；原代码负责人：未确认；Commit ID：未提交（暂无 Commit ID））：
+- 测试编译修复（2026-11-15，操作人：AI；原代码负责人：未确认；提交日期：2026-11-15；Commit ID：`6d7252db`）：
   - 移除 `AboutScreenTest.kt` 对已不存在的 `onSaveQr` 参数的调用；`:app:compileDebugAndroidTestKotlin` 已通过。
   - 旧页面断言仍保留，未经真机验证：`showsHeroRowsNoteAndFooter`、`externalRowsOpenLinks` 和 `groupRowOpensGroupSheet` 引用当前页面已无的入口；二维码保存回调断言也已不再有调用来源。
 - 环境备注：
   - 本机默认 JDK 25 不被 Gradle 8.11.1/AGP 支持，验证统一用 `JAVA_HOME=~/.sdkman/candidates/java/21.0.5-tem`。
   - 新工作树缺少 `local.properties`，已补 `sdk.dir=/Users/binny/Library/Android/sdk`（gitignore 忽略，不入库）。
 - 未验证假设已闭合：AGP 8 的 `variant.buildConfigFields` 可写入未在 DSL 声明的 `APPHUB_BASE_URL`，debug/release 均已编译验证。
-- 后台下载 + 进度展示 + 通知栏（2026-11-15，操作人：AI；原代码负责人：未确认；提交日期：2026-11-15；Commit ID：未提交（暂无 Commit ID）；用户授权档位：A 全套）：
+- 后台下载 + 进度展示 + 通知栏（2026-11-15，操作人：AI；原代码负责人：未确认；提交日期：2026-11-15；Commit ID：`1aea07d8`；用户授权档位：A 全套）：
   - 需求：页面停留「正在下载…」且无百分比/无通知栏进度；要求后台继续下载、页面与通知栏都显示进度，完成后点通知回应用、经校验再进系统安装器；直连（DownloadManager）与应用内（代理/Wi-Fi）两条路径都要满足。
   - 改动：`ApkUpdater` 增加 `DownloadPhase.Pending` 与 `ApkDownloadState(bytes/total/percent)`、`progress(context)`；`ApkDownloadForeground`（新，前台服务 `dataSync`，500ms 轮询刷新通知进度，Ready 后发完成通知并自停）+ `UpdateNotifications`（渠道 `app_update`，进度标题/百分比/已下总量、完成通知点击回 Open）；`ApkDownloadReceiver`（新，DownloadManager 完成后补发完成通知）；`AutomaticUpdates` 识别 Pending/Downloading/Paused 继续等待；`UpdateDownloadControls` 增加进度条 + 「xx% · 已下 / 总量」+ 等待态文案；11 个语言目录补 `about_update_waiting`、`notif_channel_update`。
   - 验证（模拟器 `emulator-5554`，8 核/3MB→0.8MB/s 限速静态服务，perf 包 versionCode 49 → 50）：
@@ -125,4 +125,14 @@
     - 装后：关于页显示「版本 0.1.49」「已是最新」，自动更新开关保持开启；`Download/updates` 目录已清空（`dropInstalled` 生效）。
   - 环境限制（非代码问题）：模拟器内 `com.android.providers.downloads`（DownloadManager）连 `10.0.2.2:8099` 一律 20s 超时（`HTTP_DATA_ERROR` 每 20s 重试），同机 `toybox nc`、NetworkMonitor、App 进程均正常；因此直连路径只验证到「Pending → 等待网络连接…」文案，真机/公网 HTTPS 需另测。
   - 额外操作（模拟器侧，可回退）：`pm grant ... POST_NOTIFICATIONS`；`appops set ... REQUEST_INSTALL_PACKAGES allow`；`cmd wifi connect-network AndroidWifi open`；`settings put global captive_portal_*` 指向 `http://10.0.2.2:8099/generate_204`。
-  - 待确认：更新流程未主动申请 `POST_NOTIFICATIONS`（权限被拒时通知栏不可见），是否补申请未定。
+  - 通知权限（2026-11-15，提交日期：2026-11-15；Commit ID：`1aea07d8`）：原「待确认」已闭环——`UpdateDownloadControls` 在点「下载更新」前，Android 13+ 且未授予 `POST_NOTIFICATIONS` 时先发起运行时申请；被拒时静默跳过（不阻断下载），模拟器权限仍由 `pm grant` 预置。`:app:assemblePerf` 与 `:app:testPerfUnitTest` 均 BUILD SUCCESSFUL，权限弹窗真实交互未在模拟器复测。
+
+## 提交记录
+
+| 顺序 | Commit ID | 类型 | 内容摘要 | 提交日期 |
+| --- | --- | --- | --- | --- |
+| 1 | `6d7252db` | 更新源切换 | 检查更新改问 apphub、按 versionCode 判新旧、OSS 域名白名单、`APPHUB_BASE_URL` 构建注入与 `release.mjs` 透传、11 语言文案改口径、`AboutScreenTest` 编译修复、本任务文档 | 2026-11-15 |
+| 2 | `1aea07d8` | 后台下载进度 | `DownloadPhase.Pending`、前台服务与通知栏进度、`ApkDownloadReceiver` 完成通知、关于页进度条与等待态文案、下载前申请 `POST_NOTIFICATIONS` | 2026-11-15 |
+| 3 | 本提交 | 文档回填 | 回填上述两个 Commit ID 与提交流水（仅文档，不改代码） | 2026-11-15 |
+
+- 拆分口径：11 个 `strings_about.xml` 按内容拆开——文案口径改动归提交 1，新增的 `about_update_waiting`、`notif_channel_update` 归提交 2；两个提交的完整树已验证（`assemblePerf` + `testPerfUnitTest` 通过），中间提交未单独编译。
