@@ -1,7 +1,10 @@
 package com.wangzan101.mika.about
 
+import com.wangzan101.mika.BuildConfig
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assume
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -9,30 +12,42 @@ import org.junit.rules.TemporaryFolder
 class ApkIntegrityTest {
     @get:Rule val temp = TemporaryFolder()
 
-    @Test fun acceptsOfficialApk() {
-        ApkIntegrity.requireOfficialUrl("https://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk")
+    @Test fun acceptsOfficialApks() {
+        for (url in listOf(
+            "https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0-universal.apk",
+            "https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0-arm64-v8a.apk",
+            // 过渡期:已发出去的老客户端仍可能拿到 GitHub 发布附件地址
+            "https://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+        )) ApkIntegrity.requireOfficialUrl(url)
     }
 
     @Test fun rejectsUntrustedDownloads() {
         for (url in listOf(
-            "http://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "http://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0-universal.apk",
+            "https://oss-chuangxin.thchengtay.com.evil.test/ai/mika/android/mika-0.2.0-universal.apk",
+            "https://oss-evil.thchengtay.com/ai/mika/android/mika-0.2.0-universal.apk",
             "https://github.com.evil.test/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
-            "https://github.com/other/如愿/releases/download/v0.2.0/如愿.apk",
-            "https://github.com/wangzan101/Mika/releases/download/../../other.apk",
-            "https://github.com/wangzan101/Mika/releases/download/%2e%2e/%2E%2e/%2e%2e/%2e%2e/other/x.apk",
             "https://objects.githubusercontent.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
-            "https://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.zip",
-            "https://github.com/wangzan101/Mika/releases/tag/v0.2.0",
-            "https://user:pass@github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
-            "https://github.com:8443/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0.zip",
+            "https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0.apk/extra",
+            "https://user:u@oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0-universal.apk",
+            "https://oss-chuangxin.thchengtay.com:8443/ai/mika/android/mika-0.2.0-universal.apk",
         )) rejects { ApkIntegrity.requireOfficialUrl(url) }
+    }
+
+    /** 注入的发布地址是 http(本地联调)时,同主机的 http 直链也放行;其他域名照旧拒绝。 */
+    @Test fun devBuildAllowsDownloadsFromConfiguredHost() {
+        val base = BuildConfig.APPHUB_BASE_URL.toHttpUrl()
+        Assume.assumeTrue("仅在注入 http 地址的构建里验证", base.scheme == "http")
+        ApkIntegrity.requireOfficialUrl("http://${base.host}:8099/mika-0.1.49-universal.apk")
+        rejects { ApkIntegrity.requireOfficialUrl("http://evil.test:8099/mika-0.1.49-universal.apk") }
     }
 
     @Test fun verifiesSizeAndDigestAndRejectsPartialOrModifiedFiles() {
         val file = temp.newFile().apply { writeText("abc") }
         val digest = "sha256:ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
         ApkIntegrity.verify(file, 3, digest)
-        ApkIntegrity.verify(file, null, null) // 兼容没有附件摘要的旧发布元数据。
+        ApkIntegrity.verify(file, null, null) // 平台没给摘要时只靠包名、版本号与签名校验。
         rejects { ApkIntegrity.verify(file, 4, digest) }
         rejects { ApkIntegrity.verify(file, 3, "sha256:bad") }
         rejects { ApkIntegrity.verify(file, 3, "md5:" + "0".repeat(64)) }

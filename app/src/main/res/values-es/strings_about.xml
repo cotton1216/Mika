@@ -2,16 +2,16 @@
 <resources>
     <string name="about_tagline">Tu asistente personal en el teléfono, que hace las cosas por ti</string>
     <string name="about_check">Buscar actualizaciones</string>
-    <string name="about_check_sub">Obtén nuevas versiones desde GitHub Releases</string>
+    <string name="about_check_sub">Obtén nuevas versiones desde el servidor de versiones</string>
     <string name="about_check_sub_new">Hay una versión nueva</string>
     <string name="about_up_to_date">Al día</string>
     <string name="about_up_to_date_toast">Tienes la última versión</string>
-    <string name="about_offline">No se puede acceder a GitHub</string>
-    <string name="about_offline_toast">Ahora mismo no se puede acceder a GitHub. Inténtalo más tarde.</string>
+    <string name="about_offline">No se pudieron buscar actualizaciones</string>
+    <string name="about_offline_toast">Ahora mismo no se pueden buscar actualizaciones. Inténtalo más tarde.</string>
     <string name="about_changelog">Notas de la versión</string>
     <string name="about_changelog_sub">Qué cambió en cada versión</string>
     <string name="about_changelog_empty">Aún no hay notas de la versión. Conéctate a internet y toca “Buscar actualizaciones”.</string>
-    <string name="about_changelog_all">Ver todo en GitHub</string>
+    <string name="about_changelog_all">Ver todas las versiones</string>
     <string name="about_feedback">Enviar comentarios</string>
     <string name="about_feedback_sub">Abrir una incidencia en GitHub · Copiar diagnóstico</string>
     <string name="about_feedback_sheet_sub">¿Encontraste un problema o tienes una idea? Cuéntaselo al autor por donde te venga mejor.</string>
@@ -31,11 +31,11 @@
     <string name="about_repo_sub">%1$s · las estrellas son bienvenidas</string>
     <string name="about_guide">Guía y cómo contribuir</string>
     <string name="about_guide_sub">Primeros pasos; añade conocimiento de apps aunque no programes</string>
-    <string name="about_data_note">Lo que le envías a 如愿 (mensajes, contenido de la pantalla y capturas) va solo al proveedor de modelos que configuraste. 如愿 no tiene servidores propios y no recoge ninguno de tus datos; al buscar actualizaciones solo se conecta con GitHub.</string>
+    <string name="about_data_note">Lo que le envías a 如愿 (mensajes, contenido de la pantalla y capturas) va solo al proveedor de modelos que configuraste. 如愿 no tiene servidores propios y no recoge ninguno de tus datos; al buscar actualizaciones solo se conecta con el servidor de versiones.</string>
     <string name="about_license_link">Licencia Apache-2.0</string>
     <string name="about_author">Hecho por Wang Zan · © 2026</string>
     <string name="about_license_title">Licencia Apache-2.0</string>
-    <string name="about_update_download">Descargar desde GitHub</string>
+    <string name="about_update_download">Descargar desde la página de versiones</string>
     <string name="about_update_download_in_app">Descargar actualización</string>
     <string name="about_update_downloading">Descargando…</string>
     <string name="about_update_progress">Descargando %1$d%%</string>

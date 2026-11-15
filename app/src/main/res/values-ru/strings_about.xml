@@ -2,16 +2,16 @@
 <resources>
     <string name="about_tagline">Ваш личный помощник в телефоне: делает дела за вас</string>
     <string name="about_check">Проверить обновления</string>
-    <string name="about_check_sub">Новые версии берутся из GitHub Releases</string>
+    <string name="about_check_sub">Новые версии берутся с сервера обновлений</string>
     <string name="about_check_sub_new">Доступна новая версия</string>
     <string name="about_up_to_date">Установлена последняя версия</string>
     <string name="about_up_to_date_toast">У вас последняя версия</string>
-    <string name="about_offline">Нет связи с GitHub</string>
-    <string name="about_offline_toast">Сейчас нет связи с GitHub. Попробуйте позже.</string>
+    <string name="about_offline">Не удалось проверить обновления</string>
+    <string name="about_offline_toast">Сейчас не удалось проверить обновления. Попробуйте позже.</string>
     <string name="about_changelog">Список изменений</string>
     <string name="about_changelog_sub">Что нового в каждой версии</string>
     <string name="about_changelog_empty">Списка изменений пока нет. Подключитесь к интернету и нажмите «Проверить обновления».</string>
-    <string name="about_changelog_all">Все версии на GitHub</string>
+    <string name="about_changelog_all">Все версии</string>
     <string name="about_feedback">Отправить отзыв</string>
     <string name="about_feedback_sub">Создать issue на GitHub · Скопировать диагностику</string>
     <string name="about_feedback_sheet_sub">Нашли ошибку или есть идея? Напишите автору так, как вам удобно.</string>
@@ -31,11 +31,11 @@
     <string name="about_repo_sub">%1$s · звёзды приветствуются</string>
     <string name="about_guide">Руководство и как помочь проекту</string>
     <string name="about_guide_sub">С чего начать; можно добавлять знания о приложениях и без программирования</string>
-    <string name="about_data_note">Всё, что вы отправляете 如愿 (сообщения, содержимое экрана и снимки экрана), уходит только провайдеру модели, которого вы настроили. У 如愿 нет собственных серверов, и она не собирает ваши данные; при проверке обновлений обращение идёт только к GitHub.</string>
+    <string name="about_data_note">Всё, что вы отправляете 如愿 (сообщения, содержимое экрана и снимки экрана), уходит только провайдеру модели, которого вы настроили. У 如愿 нет собственных серверов, и она не собирает ваши данные; при проверке обновлений обращение идёт только к серверу обновлений.</string>
     <string name="about_license_link">Лицензия Apache-2.0</string>
     <string name="about_author">Автор: Wang Zan · © 2026</string>
     <string name="about_license_title">Лицензия Apache-2.0</string>
-    <string name="about_update_download">Скачать с GitHub</string>
+    <string name="about_update_download">Скачать со страницы версий</string>
     <string name="about_update_download_in_app">Скачать обновление</string>
     <string name="about_update_downloading">Загрузка…</string>
     <string name="about_update_progress">Загрузка %1$d%%</string>

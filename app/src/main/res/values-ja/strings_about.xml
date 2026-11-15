@@ -2,16 +2,16 @@
 <resources>
     <string name="about_tagline">スマホの中のあなた専用アシスタント。用事をまるごと片付けます</string>
     <string name="about_check">アップデートを確認</string>
-    <string name="about_check_sub">GitHub Releases から新しいバージョンを入手</string>
+    <string name="about_check_sub">リリースサーバーから新しいバージョンを入手</string>
     <string name="about_check_sub_new">新しいバージョンがあります</string>
     <string name="about_up_to_date">最新です</string>
     <string name="about_up_to_date_toast">最新バージョンです</string>
-    <string name="about_offline">GitHub に接続できません</string>
-    <string name="about_offline_toast">今は GitHub に接続できません。しばらくしてからもう一度お試しください。</string>
+    <string name="about_offline">アップデートを確認できませんでした</string>
+    <string name="about_offline_toast">今はアップデートを確認できません。しばらくしてからもう一度お試しください。</string>
     <string name="about_changelog">リリースノート</string>
     <string name="about_changelog_sub">各バージョンの変更点</string>
     <string name="about_changelog_empty">リリースノートはまだありません。オンラインで「アップデートを確認」をタップしてください。</string>
-    <string name="about_changelog_all">GitHub ですべて見る</string>
+    <string name="about_changelog_all">すべてのリリースを見る</string>
     <string name="about_feedback">フィードバックを送信</string>
     <string name="about_feedback_sub">GitHub で Issue を作成 · 診断情報をコピー</string>
     <string name="about_feedback_sheet_sub">問題やアイデアがあれば、お好きな方法で作者に伝えてください。</string>
@@ -31,11 +31,11 @@
     <string name="about_repo_sub">%1$s · スター歓迎</string>
     <string name="about_guide">ガイドと貢献のしかた</string>
     <string name="about_guide_sub">はじめ方。コードを書かなくてもアプリの知識を追加できます</string>
-    <string name="about_data_note">如愿 に送った内容(メッセージ、画面の内容、スクリーンショット)は、設定したモデルプロバイダーにだけ送信されます。如愿専用のサーバーはなく、データも収集しません。アップデートの確認では GitHub にだけ接続します。</string>
+    <string name="about_data_note">如愿 に送った内容(メッセージ、画面の内容、スクリーンショット)は、設定したモデルプロバイダーにだけ送信されます。如愿専用のサーバーはなく、データも収集しません。アップデートの確認ではリリースサーバーにだけ接続します。</string>
     <string name="about_license_link">Apache-2.0 ライセンス</string>
     <string name="about_author">制作: Wang Zan · © 2026</string>
     <string name="about_license_title">Apache-2.0 ライセンス</string>
-    <string name="about_update_download">GitHub からダウンロード</string>
+    <string name="about_update_download">リリースページからダウンロード</string>
     <string name="about_update_download_in_app">アップデートをダウンロード</string>
     <string name="about_update_downloading">ダウンロード中…</string>
     <string name="about_update_progress">ダウンロード中 %1$d%%</string>

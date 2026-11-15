@@ -3,6 +3,7 @@ package com.wangzan101.mika.about
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -22,7 +23,7 @@ class UpdateCheckerTest {
     @get:Rule val tmp = TemporaryFolder()
 
     private val server = MockWebServer()
-    private var github: MockResponse = MockResponse().setResponseCode(500)
+    private var response: MockResponse = MockResponse().setResponseCode(500)
     private val hits = mutableListOf<String>()
     private var clock = 1_000_000_000L
 
@@ -31,7 +32,7 @@ class UpdateCheckerTest {
         server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 hits += request.path.orEmpty()
-                return github
+                return response
             }
         }
         server.start()
@@ -40,20 +41,22 @@ class UpdateCheckerTest {
     @After
     fun stop() = server.shutdown()
 
-    private fun checker(current: String = "0.1.0") = UpdateChecker(
-        tmp.root.resolve("update.json"), current,
-        releaseApi = server.url("/api").toString(),
+    private fun checker(current: String = "0.1.0", currentCode: Int = 10) = UpdateChecker(
+        tmp.root.resolve("update-v2.json"), current, currentCode,
+        baseUrl = server.url("/apphub").toString(),
+        client = OkHttpClient(),
         now = { clock },
     )
 
-    /** 发布列表接口返回的是数组;tag 带如愿前缀(发布时用 yuan-v<版本> 这样的 tag)。 */
-    private fun release(tag: String) = MockResponse().setBody(
-        """[{"tag_name":"yuan-$tag","name":"如愿 $tag","body":"- 新东西","html_url":"https://github.com/wangzan101/如愿/releases/tag/$tag","assets":[]}]"""
-    )
+    private fun latest(version: String, code: Int? = 20, digest: String = "a".repeat(64)): MockResponse {
+        val codeField = code?.let { ",\"versionCode\":$it" } ?: ""
+        val body = """{"appKey":"com.zl.ruyiai.yuan","platform":"android","channel":"official","hasUpdate":true,"policy":"optional","latest":{"versionName":"$version"$codeField,"changelog":"- 新东西","packageSize":12345,"sha256":"$digest","publishedAt":"2026-11-13T08:30:00Z","download":{"url":"https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-$version-universal.apk"}}}"""
+        return MockResponse().setBody(body)
+    }
 
     @Test
-    fun newerReleaseFromGitHubShowsUpdate() = runTest {
-        github = release("v0.2.0")
+    fun newerVersionCodeShowsUpdate() = runTest {
+        response = latest("0.2.0")
         val c = checker()
         c.check(manual = true)
         val s = c.state.value
@@ -61,39 +64,83 @@ class UpdateCheckerTest {
         assertEquals("0.2.0", s.update?.version)
         assertTrue(s.hasUpdate)
         assertEquals(1, s.manualRounds)
-        assertEquals(listOf("/api"), hits)
+        assertEquals(
+            listOf("/apphub/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official&currentVersionCode=10"),
+            hits,
+        )
         val req = server.takeRequest()
-        assertEquals("application/vnd.github+json", req.getHeader("Accept"))
-        assertTrue(req.getHeader("User-Agent")!!.startsWith("Yuan/"))
+        assertEquals("Yuan/0.1.0", req.getHeader("User-Agent"))
+        assertNull("不再带 GitHub 的 Accept 头", req.getHeader("Accept"))
+        assertNull(req.getHeader("X-GitHub-Api-Version"))
     }
 
+    /** 平台按 versionCode 判新旧:版本号写得更花但 code 没涨,不算更新。 */
     @Test
-    fun sameVersionIsUpToDate() = runTest {
-        github = release("v0.1.0")
+    fun sameVersionCodeIsUpToDate() = runTest {
+        response = latest("0.9.0", code = 10)
         val c = checker()
         c.check(manual = true)
         assertEquals(CheckStatus.Done, c.state.value.status)
         assertNull(c.state.value.update)
-        assertEquals("0.1.0", c.state.value.latest?.version)
+        assertEquals("0.9.0", c.state.value.latest?.version)
     }
 
-    /** GitHub 限流(403)就是这次没查到:只问 GitHub 一次,不去别处找。 */
     @Test
-    fun gitHubRateLimitIsAFailure() = runTest {
-        github = MockResponse().setResponseCode(403).setBody("""{"message":"API rate limit exceeded"}""")
+    fun newerVersionNameWithSameCodeDoesNotUpdate() = runTest {
+        response = latest("0.1.1", code = 10)
+        checker().autoCheck()
+        assertNull(checker().state.value.update)
+    }
+
+    /** 平台没给 code(老数据/异常)时退回按版本号字符串比。 */
+    @Test
+    fun versionCodeMissingFallsBackToVersionName() = runTest {
+        response = latest("0.2.0", code = null)
         val c = checker()
         c.check(manual = true)
-        assertEquals(listOf("/api"), hits)
-        assertEquals(CheckStatus.Failed, c.state.value.status)
+        assertEquals("0.2.0", c.state.value.update?.version)
+
+        val same = checker(current = "0.2.0", currentCode = 10)
+        same.check(manual = true)
+        assertNull(same.state.value.update)
+        assertNotNull(same.state.value.latest)
+    }
+
+    /** 平台没有已发布版本(latest:null)是查成功,按「已是最新」处理,并把上一次的红点清掉。 */
+    @Test
+    fun platformWithoutPublishedVersionIsNotAFailure() = runTest {
+        response = latest("0.2.0")
+        val c = checker()
+        c.check(manual = true)
+        assertEquals("0.2.0", c.state.value.update?.version)
+
+        response = MockResponse().setBody("""{"appKey":"com.zl.ruyiai.yuan","policy":"none","latest":null}""")
+        c.check(manual = true)
+        assertEquals(CheckStatus.Done, c.state.value.status)
+        assertNull(c.state.value.latest)
         assertNull(c.state.value.update)
+        assertEquals(2, c.state.value.manualRounds)
+    }
+
+    /** 网关回了一页 HTML 之类读不懂的响应仍算这次失败,也不清掉上一次查到的新版。 */
+    @Test
+    fun unreadableBodyIsAFailure() = runTest {
+        response = latest("0.2.0")
+        val c = checker()
+        c.check(manual = true)
+
+        response = MockResponse().setBody("<html>gateway</html>")
+        c.check(manual = true)
+        assertEquals(CheckStatus.Failed, c.state.value.status)
+        assertEquals("0.2.0", c.state.value.update?.version)
     }
 
     @Test
-    fun manualFailureIsReported() = runTest {
+    fun serverErrorIsAFailure() = runTest {
+        response = MockResponse().setResponseCode(500)
         val c = checker()
         c.check(manual = true)
         assertEquals(CheckStatus.Failed, c.state.value.status)
-        assertEquals(1, c.state.value.manualRounds)
         assertNull(c.state.value.update)
     }
 
@@ -109,7 +156,7 @@ class UpdateCheckerTest {
         assertFalse(c.autoCheck())
         assertEquals(before, hits.size)
         clock += 1
-        github = release("v0.2.0")
+        response = latest("0.2.0")
         assertTrue(c.autoCheck())
         assertEquals("0.2.0", c.state.value.update?.version)
         assertEquals(CheckStatus.Idle, c.state.value.status)
@@ -118,16 +165,16 @@ class UpdateCheckerTest {
     /** 查到的版本存盘:重开 App 不联网也有红点;装上新版后红点消失;上次自动检查的时间也记着。 */
     @Test
     fun foundUpdateSurvivesRestart() = runTest {
-        github = release("v0.2.0")
-        checker().autoCheck()
-        github = MockResponse().setResponseCode(500)
+        response = latest("0.2.0", code = 20)
+        checker(currentCode = 10).autoCheck()
+        response = MockResponse().setResponseCode(500)
 
-        val again = checker()
+        val again = checker(currentCode = 10)
         again.load()
         assertEquals("0.2.0", again.state.value.update?.version)
         assertFalse("just checked", again.autoCheck())
 
-        val upgraded = checker(current = "0.2.0")
+        val upgraded = checker(currentCode = 20)
         upgraded.load()
         assertNull(upgraded.state.value.update)
         assertNotNull(upgraded.state.value.latest)
@@ -135,8 +182,8 @@ class UpdateCheckerTest {
 
     /** 同时进来的两次自动检查(查还没完)只真的查一次;隔十分钟再打开照样查。 */
     @Test
-    fun concurrentAutoChecksHitGitHubOnce() = runTest {
-        github = release("v0.2.0")
+    fun concurrentAutoChecksHitServerOnce() = runTest {
+        response = latest("0.2.0")
         val c = checker()
         val ran = listOf(async { c.autoCheck() }, async { c.autoCheck() }).awaitAll()
         assertEquals(1, ran.count { it })
