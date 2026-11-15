@@ -88,6 +88,11 @@ fun DshApp(
      * 由 false 变 true（切回本 Tab）时会把导航栈清回根页，见下方 wasActive。
      */
     active: Boolean = true,
+    /**
+     * 宿主悬浮球点击时递增的信号：用于「抽屉展开时点悬浮球把抽屉一并收起」。
+     * 值本身无意义，只看变化；0 为初始值，宿主每次点击 +1。
+     */
+    closeDrawerRequest: Int = 0,
 ) {
     val p = LocalRuyiPalette.current
     val signedIn = session.phase is AccountPhase.SignedIn
@@ -111,6 +116,11 @@ fun DshApp(
             drawerOpen = false
         }
         wasActive = active
+    }
+
+    // 悬浮球点击 → 收起抽屉。抽屉不在时设置 false 是无害的空操作。
+    LaunchedEffect(closeDrawerRequest) {
+        if (closeDrawerRequest > 0) drawerOpen = false
     }
 
     val push: (Screen) -> Unit = { forward = true; stack.add(it) }

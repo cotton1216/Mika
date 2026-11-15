@@ -60,6 +60,11 @@ fun RemoteHome(
      * 禁用返回键处理。独立 App 或常显时保持默认 true。
      */
     active: Boolean = true,
+    /**
+     * 宿主悬浮球点击递增的信号：抽屉展开时点悬浮球把抽屉一并收起。
+     * 值无意义，只看变化；见 [DshApp.closeDrawerRequest]。
+     */
+    closeDrawerRequest: Int = 0,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -149,6 +154,6 @@ fun RemoteHome(
     }
 
     RuyiTheme {
-        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit, active = active)
+        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit, active = active, closeDrawerRequest = closeDrawerRequest)
     }
 }

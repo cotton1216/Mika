@@ -449,6 +449,8 @@ private fun MikaRoot(
     val nav = rememberNavStack(if (personalStart && requestedConversation == null) Route.Personal else Route.Chat)
     // 顶部双 Tab:如愿(对话)｜如意(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
     var selectedTab by rememberSaveable { mutableStateOf(RootTab.Ruyuan) }
+    // 悬浮球点击时递增,通知远程抽屉(如意 Tab)把它自己收起来;0 为初始值。
+    var closeRemoteDrawer by rememberSaveable { mutableStateOf(0) }
     var filesFromDrawer by rememberSaveable { mutableStateOf(false) }
     var filesConversation by rememberSaveable { mutableStateOf<String?>(null) }
     // 从设置页「重新配对」进来时先回到配对一步
@@ -590,18 +592,10 @@ private fun MikaRoot(
             }
             // 内容区:顶部胶囊显示时消费状态栏 inset(胶囊已避让状态栏),隐藏时让各页面自己留白。
             Box(Modifier.weight(1f).then(if (showTopNav) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier)) {
-            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接。
-            // 导航栈则由 RemoteScreen 内部在 active 由 false 变 true 时清空 —— 切回如意
-            // 一律落在会话列表首页,不恢复上次停留的会话详情/设置页。
-            Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
-                RemoteScreen(
-                    callback = remoteCallback,
-                    onCallbackConsumed = onRemoteCallbackConsumed,
-                    onBack = { selectedTab = RootTab.Ruyuan },
-                    active = selectedTab == RootTab.Ruyi,
-                )
-            }
-            // 如愿(对话)
+            // 如愿(对话) —— 先组合:它的常驻 BackHandler(侧栏)先注册、优先级更低;
+            // 如意(远程电脑)放在其后组合,让它的 active 门控 BackHandler 后注册,
+            // 如意 Tab 选中时优先吃掉返回键,抽屉展开按返回能收起而非退出 App。
+            // 渲染层级由 tabContent 的 zIndex 独立控制,调换组合顺序不影响视觉。
             Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyuan)) {
                 when (nav.current) {
                     Route.PhoneSetup -> PhoneSetupScreen(status, setupRepair, onFix, onboarding = onboarding == OnboardingStep.Phone) {
@@ -845,12 +839,29 @@ private fun MikaRoot(
                     Route.Calls -> CallSettingsScreen(app.calls, onBack = back, standalone = true, initialHistoryCallId = focusedCallHistoryId)
                 }
             }
+            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接。
+            // 导航栈由 RemoteScreen 内部在 active 由 false 变 true 时清空 —— 切回如意
+            // 一律落在会话列表首页,不恢复上次停留的会话详情/设置页。
+            Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
+                RemoteScreen(
+                    callback = remoteCallback,
+                    onCallbackConsumed = onRemoteCallbackConsumed,
+                    onBack = { selectedTab = RootTab.Ruyuan },
+                    active = selectedTab == RootTab.Ruyi,
+                    closeDrawerRequest = closeRemoteDrawer,
+                )
+            }
         }
     }
         // 悬浮球只在主界面(如愿对话/如意远程两个顶层 Tab 已就绪)显示;
         // 登录页、上手引导(欢迎/配置模型/手机操作)等页面还没有这两个 Tab,不显示。
         if (nav.current == Route.Chat || nav.current == Route.Personal) {
-            FloatingDock(selectedTab, onSelect = { selectedTab = it })
+            FloatingDock(
+                selectedTab,
+                onSelect = { selectedTab = it },
+                // 点悬浮球本体时,若远程抽屉(如意 Tab)正展开,把它一并收起。
+                onBallClick = { closeRemoteDrawer++ },
+            )
         }
     }
 }
@@ -920,7 +931,7 @@ private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onC
  * 因此按钮能贴到左右边缘;展开用 spring + 错峰 + 缩放,手感更丝滑。
  */
 @Composable
-private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
+private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallClick: () -> Unit = {}) {
     val c = MikaTheme.colors
     val density = LocalDensity.current
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -1052,7 +1063,11 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
                         },
                     )
                 }
-                .clickable { expanded = !expanded },
+                .clickable {
+                    expanded = !expanded
+                    // 点球本体时,远程抽屉(如意 Tab)若展开也一并收起。
+                    onBallClick()
+                },
             contentAlignment = Alignment.Center,
         ) {
             Icon(

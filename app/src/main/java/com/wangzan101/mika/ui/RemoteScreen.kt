@@ -28,6 +28,8 @@ internal fun RemoteScreen(
     onBack: () -> Unit,
     /** 宿主底部 Tab 未选中时为 false：禁用返回键处理，让返回键交回宿主。 */
     active: Boolean = true,
+    /** 悬浮球点击递增的信号：抽屉展开时点悬浮球把抽屉一并收起。 */
+    closeDrawerRequest: Int = 0,
 ) {
     val context = LocalContext.current
     RemoteHome(
@@ -40,6 +42,7 @@ internal fun RemoteScreen(
         // 远程控制是如愿里的一页，得能明确退回去，而不是靠系统返回键猜。
         onExit = onBack,
         active = active,
+        closeDrawerRequest = closeDrawerRequest,
     )
 }
 
