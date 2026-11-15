@@ -36,6 +36,7 @@ import com.wangzan101.mika.confirm.ConfirmationNotifier
 import com.wangzan101.mika.memory.MemoryRuntime
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.compose.runtime.collectAsState
@@ -106,6 +107,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.zIndex
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -572,15 +577,18 @@ private fun MikaRoot(
     val back: () -> Unit = { nav.back() }
     // 聊天页离开组合树时保留列表位置和输入内容，返回设置页等子页面后原样恢复。
     val screenStates = rememberSaveableStateHolder()
+    // 【临时】先隐藏顶部悬浮胶囊,只看悬浮球的效果;改回 true 即恢复顶部导航。
+    val showTopNav = false
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
-            // 顶部居中悬浮导航胶囊:浮在状态栏下方,圆角玻璃底 + 阴影,不占满宽。
-        Box(Modifier.fillMaxWidth().statusBarsPadding().padding(vertical = 6.dp), contentAlignment = Alignment.Center) {
-            RootFloatingNav(selectedTab, onSelect = { selectedTab = it })
-        }
-        // 内容区消费掉状态栏 inset:悬浮导航已经避让了状态栏,聊天页/远程页内部的
-        // statusBarsPadding 若再读一次会重复留白,这里让它们读到 0。
-        Box(Modifier.weight(1f).consumeWindowInsets(WindowInsets.statusBars)) {
+            if (showTopNav) {
+                // 顶部居中悬浮导航胶囊:浮在状态栏下方,圆角玻璃底 + 阴影,不占满宽。
+                Box(Modifier.fillMaxWidth().statusBarsPadding().padding(vertical = 6.dp), contentAlignment = Alignment.Center) {
+                    RootFloatingNav(selectedTab, onSelect = { selectedTab = it })
+                }
+            }
+            // 内容区:顶部胶囊显示时消费状态栏 inset(胶囊已避让状态栏),隐藏时让各页面自己留白。
+            Box(Modifier.weight(1f).then(if (showTopNav) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier)) {
             // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接/导航栈,
             // 进入某台主机的对话后切去如愿再切回,仍停在那条对话,而不是退回「我的电脑」。
             Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
@@ -901,41 +909,52 @@ private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onC
 }
 
 /**
- * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开弹出「如愿 / 如意」两个扇形菜单项,
- * 点空白处收起;按住拖动可把它移到任意位置(自动夹在安全区内,保证扇形展开时不越界)。
- * 顶部悬浮胶囊保留,和它并存,方便对比哪种更顺手。
+ * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开从球心沿弧线弹出「如愿 / 如意」两个菜单项,
+ * 点空白处收起;按住拖动可移到任意位置。扇形朝屏幕内侧展开(按钮在右半屏朝左开、左半屏朝右开),
+ * 因此按钮能贴到左右边缘;展开用 spring + 错峰 + 缩放,手感更丝滑。
  */
 @Composable
 private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
     val c = MikaTheme.colors
     val density = LocalDensity.current
     var expanded by rememberSaveable { mutableStateOf(false) }
-    // 悬浮球圆心的像素坐标;-1 表示还没落位,首次布局给个默认位置(靠右、纵向居中)。
+    // 悬浮球圆心的像素坐标;-1 表示还没落位,首次布局贴右下角。
     var centerX by rememberSaveable { mutableStateOf(-1) }
     var centerY by rememberSaveable { mutableStateOf(-1) }
-    val progress by animateFloatAsState(if (expanded) 1f else 0f, label = "dock")
+    // 点开时球轻微放大回弹,更跟手。
+    val ballScale by animateFloatAsState(
+        targetValue = if (expanded) 1.08f else 1f,
+        animationSpec = spring(dampingRatio = 0.55f, stiffness = 480f),
+        label = "dockBall",
+    )
 
     val buttonPx = with(density) { 52.dp.roundToPx() }
     val halfButtonPx = buttonPx / 2
     val itemW = with(density) { 84.dp.roundToPx() }
     val itemH = with(density) { 40.dp.roundToPx() }
-    val radiusPxF = with(density) { 76.dp.toPx() }
-    val marginPx = with(density) { 14.dp.roundToPx() }
-    // 扇形朝上展开:横向上最远到 sin48°,纵向上最远到 cos48°;两项拉开一点更有扇形的感觉。
-    val spread = 48.0 * (Math.PI / 180.0)
-    val fanReachX = (radiusPxF * Math.sin(spread).toFloat() + itemW / 2f).roundToInt() + marginPx
-    val fanReachY = (radiusPxF * Math.cos(spread).toFloat() + itemH / 2f).roundToInt() + marginPx
-    val topSafePx = with(density) { 28.dp.roundToPx() }
-    val bottomMarginPx = with(density) { 24.dp.roundToPx() }
+    val radiusPxF = with(density) { 84.dp.toPx() }
+    val marginPx = with(density) { 8.dp.roundToPx() }
+    val topSafePx = with(density) { 20.dp.roundToPx() }
+    val bottomMarginPx = with(density) { 12.dp.roundToPx() }
+    // 两项沿朝内一侧的弧线散开:外侧项偏离竖直轴 outerAngle、内侧项只偏 innerAngle。
+    val outerAngle = 48.0 * (Math.PI / 180.0)
+    val innerAngle = 16.0 * (Math.PI / 180.0)
+    // 扇形横向最远(外侧项)、纵向最远(内侧项),再加 item 半宽/半高和边距。
+    val fanReachX = (radiusPxF * Math.sin(outerAngle).toFloat() + itemW / 2f).roundToInt() + marginPx
+    val fanReachY = (radiusPxF * Math.cos(innerAngle).toFloat() + itemH / 2f).roundToInt() + marginPx
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxW = constraints.maxWidth
         val maxH = constraints.maxHeight
-        val minCx = fanReachX
-        val maxCx = maxW - fanReachX
+        // 默认贴右下角(扇形朝左上展开)。
+        val cur = if (centerX >= 0) IntOffset(centerX, centerY)
+                  else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomMarginPx)
+        // 按钮在右半屏就朝左开、左半屏朝右开;贴边那一侧只留半颗球 + 边距,扇形朝内不越界。
+        val openLeft = cur.x > maxW / 2
+        val minCx = if (openLeft) fanReachX else halfButtonPx + marginPx
+        val maxCx = if (openLeft) maxW - halfButtonPx - marginPx else maxW - fanReachX
         val minCy = topSafePx + fanReachY
         val maxCy = maxH - halfButtonPx - bottomMarginPx
-        val cur = if (centerX >= 0) IntOffset(centerX, centerY) else IntOffset(maxW - fanReachX, (minCy + maxCy) / 2)
 
         // 展开时铺一层透明遮罩,点空白处收起。
         if (expanded) {
@@ -947,21 +966,42 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
             )
         }
 
-        // 扇形菜单项:从圆心沿弧线弹出(如愿在左、如意在右)。
         val items = listOf(
             Triple(MikaIcons.Message, "如愿", RootTab.Ruyuan),
             Triple(MikaIcons.Desktop, "如意", RootTab.Ruyi),
         )
+        // 每个菜单项一条独立 spring 进度,展开时依次错峰、收起时同步淡出。
+        val anims = remember { items.map { Animatable(0f) } }
+        LaunchedEffect(expanded) {
+            if (expanded) {
+                anims.forEachIndexed { i, a ->
+                    launch {
+                        delay(i * 55L)
+                        a.animateTo(1f, spring(dampingRatio = 0.68f, stiffness = 360f))
+                    }
+                }
+            } else {
+                anims.forEachIndexed { i, a ->
+                    launch { a.animateTo(0f, tween(120, easing = FastOutSlowInEasing)) }
+                }
+            }
+        }
+        val angles = if (openLeft) listOf(-outerAngle, -innerAngle) else listOf(outerAngle, innerAngle)
         items.forEachIndexed { index, (icon, label, tab) ->
-            val angle = spread * (index - (items.size - 1) / 2.0)
-            val dx = (radiusPxF * Math.sin(angle).toFloat() * progress).roundToInt()
-            val dy = (-radiusPxF * Math.cos(angle).toFloat() * progress).roundToInt()
+            val p = anims[index].value
+            val angle = angles[index]
+            val dx = (radiusPxF * Math.sin(angle).toFloat() * p).roundToInt()
+            val dy = (-radiusPxF * Math.cos(angle).toFloat() * p).roundToInt()
             DockItem(
                 icon, label, selected == tab,
                 onClick = { onSelect(tab); expanded = false },
                 modifier = Modifier
                     .offset { IntOffset(cur.x + dx - itemW / 2, cur.y + dy - itemH / 2) }
-                    .graphicsLayer { alpha = progress },
+                    .graphicsLayer {
+                        alpha = p
+                        scaleX = 0.6f + 0.4f * p
+                        scaleY = 0.6f + 0.4f * p
+                    },
             )
         }
 
@@ -970,6 +1010,10 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
             Modifier
                 .offset { IntOffset(cur.x - halfButtonPx, cur.y - halfButtonPx) }
                 .size(52.dp)
+                .graphicsLayer {
+                    scaleX = ballScale
+                    scaleY = ballScale
+                }
                 .floatShadow(c, MikaShapes.Pill)
                 .clip(MikaShapes.Pill)
                 .background(c.accent)
@@ -980,8 +1024,14 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
                             change.consume()
                             val baseX = if (centerX >= 0) centerX else cur.x
                             val baseY = if (centerY >= 0) centerY else cur.y
-                            centerX = (baseX + amount.x).roundToInt().coerceIn(minCx, maxCx)
-                            centerY = (baseY + amount.y).roundToInt().coerceIn(minCy, maxCy)
+                            val candX = baseX + amount.x
+                            val candY = baseY + amount.y
+                            // 按候选位置动态判断扇形朝向,避免拖拽跨中线时 clamp 滞后。
+                            val left = candX > maxW / 2
+                            val loX = if (left) fanReachX else halfButtonPx + marginPx
+                            val hiX = if (left) maxW - halfButtonPx - marginPx else maxW - fanReachX
+                            centerX = candX.roundToInt().coerceIn(loX, hiX)
+                            centerY = candY.roundToInt().coerceIn(minCy, maxCy)
                         },
                     )
                 }
