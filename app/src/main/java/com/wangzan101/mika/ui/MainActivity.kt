@@ -926,8 +926,8 @@ private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onC
 }
 
 /**
- * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开从球心沿弧线弹出「如愿 / 如意」两个菜单项,
- * 点空白处收起;按住拖动可移到任意位置。扇形朝屏幕内侧展开(按钮在右半屏朝左开、左半屏朝右开),
+ * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开横向平铺弹出「如愿 / 如意」两个菜单项,
+ * 点空白处收起;按住拖动可移到任意位置。平铺朝屏幕内侧展开(球在右半屏朝左排、左半屏朝右排),
  * 因此按钮能贴到左右边缘;展开用 spring + 错峰 + 缩放,手感更丝滑。
  */
 @Composable
@@ -955,30 +955,27 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
     val halfButtonPx = buttonPx / 2
     val itemW = with(density) { 84.dp.roundToPx() }
     val itemH = with(density) { 40.dp.roundToPx() }
-    val radiusPxF = with(density) { 100.dp.toPx() }
     val marginPx = with(density) { 8.dp.roundToPx() }
     val topSafePx = with(density) { 20.dp.roundToPx() }
     // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
     val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }
-    // 两项沿朝内一侧的弧线散开:外侧项更朝水平(outerAngle)、内侧项更朝竖直(innerAngle),
-    // 两者竖直方向错开超过 item 高(40dp),展开后不再互相遮挡。
-    val outerAngle = 58.0 * (Math.PI / 180.0)
-    val innerAngle = 8.0 * (Math.PI / 180.0)
-    // 扇形横向最远(外侧项)、纵向最远(内侧项),再加 item 半宽/半高和边距。
-    val fanReachX = (radiusPxF * Math.sin(outerAngle).toFloat() + itemW / 2f).roundToInt() + marginPx
-    val fanReachY = (radiusPxF * Math.cos(innerAngle).toFloat() + itemH / 2f).roundToInt() + marginPx
+    // 横向平铺:两个菜单项与球心同高、朝屏幕内侧一字排开(球 → 如意 → 如愿)。
+    // flatReachX = 球心到最外侧按钮外边缘的水平距离(球半径 + 两个按钮宽 + 两处间隙)。
+    val flatReachX = halfButtonPx + itemW * 2 + marginPx * 2
+    // 纵向只按按钮半高 + 边距即可(按钮与球心同高,不再上下错开)。
+    val flatReachY = itemH / 2 + marginPx
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxW = constraints.maxWidth
         val maxH = constraints.maxHeight
-        // 默认贴右下、但在输入框上方(扇形朝左上展开)。
+        // 默认贴右下、但在输入框上方(平铺朝左上展开)。
         val cur = if (centerX >= 0) IntOffset(centerX, centerY)
                   else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomReservePx)
-        // 按钮在右半屏就朝左开、左半屏朝右开;贴边那一侧只留半颗球 + 边距,扇形朝内不越界。
+        // 球在右半屏就朝左排、左半屏朝右排;贴边那一侧只留半颗球 + 边距,平铺朝内不越界。
         val openLeft = cur.x > maxW / 2
-        val minCx = if (openLeft) fanReachX else halfButtonPx + marginPx
-        val maxCx = if (openLeft) maxW - halfButtonPx - marginPx else maxW - fanReachX
-        val minCy = topSafePx + fanReachY
+        val minCx = if (openLeft) flatReachX else halfButtonPx + marginPx
+        val maxCx = if (openLeft) maxW - halfButtonPx - marginPx else maxW - flatReachX
+        val minCy = topSafePx + flatReachY
         val maxCy = maxH - halfButtonPx - bottomReservePx
 
         // 展开时铺一层透明遮罩,点空白处收起。
@@ -1002,7 +999,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                 anims.forEachIndexed { i, a ->
                     launch {
                         delay(i * 70L)
-                        // 低阻尼 spring 产生明显过冲:项先飞出过头、再弹回弧线,动态感更强。
+                        // 低阻尼 spring 产生明显过冲:项先飞出过头、再弹回水平线,动态感更强。
                         a.animateTo(1f, spring(dampingRatio = 0.42f, stiffness = 360f))
                     }
                 }
@@ -1012,17 +1009,17 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                 }
             }
         }
-        val angles = if (openLeft) listOf(-outerAngle, -innerAngle) else listOf(outerAngle, innerAngle)
+        // 横向平铺:与球心同高、朝内侧一字排开;如意(items[1])靠球、如愿(items[0])靠外。
         items.forEachIndexed { index, (icon, label, tab) ->
             val p = anims[index].value
-            val angle = angles[index]
-            val dx = (radiusPxF * Math.sin(angle).toFloat() * p).roundToInt()
-            val dy = (-radiusPxF * Math.cos(angle).toFloat() * p).roundToInt()
+            val slot = if (index == 0) 1 else 0
+            val distFromBallCenter = halfButtonPx + marginPx + itemW / 2 + slot * (itemW + marginPx)
+            val dx = (if (openLeft) -distFromBallCenter else distFromBallCenter) * p
             DockItem(
                 icon, label, selected == tab,
                 onClick = { onSelect(tab); expanded = false },
                 modifier = Modifier
-                    .offset { IntOffset(cur.x + dx - itemW / 2, cur.y + dy - itemH / 2) }
+                    .offset { IntOffset(cur.x + dx.roundToInt() - itemW / 2, cur.y - itemH / 2) }
                     .graphicsLayer {
                         alpha = p.coerceIn(0f, 1f)
                         scaleX = 0.2f + 0.8f * p
@@ -1056,8 +1053,8 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                             val candY = baseY + amount.y
                             // 按候选位置动态判断扇形朝向,避免拖拽跨中线时 clamp 滞后。
                             val left = candX > maxW / 2
-                            val loX = if (left) fanReachX else halfButtonPx + marginPx
-                            val hiX = if (left) maxW - halfButtonPx - marginPx else maxW - fanReachX
+                            val loX = if (left) flatReachX else halfButtonPx + marginPx
+                            val hiX = if (left) maxW - halfButtonPx - marginPx else maxW - flatReachX
                             centerX = candX.roundToInt().coerceIn(loX, hiX)
                             centerY = candY.roundToInt().coerceIn(minCy, maxCy)
                         },
