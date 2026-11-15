@@ -954,26 +954,32 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
     val halfButtonPx = buttonPx / 2
     val itemW = with(density) { 84.dp.roundToPx() }
     val itemH = with(density) { 40.dp.roundToPx() }
-    val marginPx = with(density) { 16.dp.roundToPx() }
+    // 两个间距分开控制:贴边余量只保证不碰屏幕边,块间距管球↔按钮、按钮↔按钮。
+    // 块间距 16 → 32dp 后,展开长度从 226dp 涨到 258dp,把右侧原本剩下的空白用掉一部分,
+    // 呼吸感和「离球远一点」都靠它;贴边余量不动,球默认落点因此不变。
+    val edgePx = with(density) { 16.dp.roundToPx() }
+    val gapMaxPx = with(density) { 32.dp.roundToPx() }
     val topSafePx = with(density) { 20.dp.roundToPx() }
     // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
     val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }
     // 横向平铺:两个菜单项与球心同高、朝屏幕内侧一字排开(球 → 如意 → 如愿)。
-    // 两按钮总宽 + 球半径 ≈ 226dp(球半径 26 + 按钮宽 84×2 + 间距 16×2),略大于半屏宽。
+    // 满间距时总长 = 球半径 26 + 间距 32×2 + 按钮宽 84×2 = 258dp。
     // 纵向只按按钮半高 + 边距即可(按钮与球心同高,不再上下错开)。
-    val flatReachY = itemH / 2 + marginPx
+    val flatReachY = itemH / 2 + edgePx
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxW = constraints.maxWidth
         val maxH = constraints.maxHeight
         // 默认贴右下、但在输入框上方(平铺朝左上展开)。
         val cur = if (centerX >= 0) IntOffset(centerX, centerY)
-                  else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomReservePx)
+                  else IntOffset(maxW - halfButtonPx - edgePx, maxH - halfButtonPx - bottomReservePx)
         // 球在右半屏就朝左排、左半屏朝右排,按钮始终朝屏幕内侧展开。
-        // 球心横向拖拽范围与展开方向解耦:球可在全屏左右自由拖动(只留贴边余量),
-        // 不再被「展开方向」卡在某一半屏。仅当球心落在正中间约 40dp 窄带时,按钮
-        // 展开会轻微贴边 —— 这是横向平铺两按钮总宽 226dp 略大于半屏 205dp 的固有权衡。
+        // 球心横向拖拽范围与展开方向解耦:球可在全屏左右自由拖动(只留贴边余量)。
         val openLeft = cur.x > maxW / 2
+        // 间距随可用空间收缩:内侧空间够就铺满 32dp;球贴近中线时间距自动收窄,
+        // 下限取 0(按钮紧挨、但绝不被推出屏幕)。
+        val sideAvailPx = if (openLeft) cur.x else maxW - cur.x
+        val gapPx = ((sideAvailPx - halfButtonPx - itemW * 2) / 2).coerceIn(0, gapMaxPx)
         val minCy = topSafePx + flatReachY
         val maxCy = maxH - halfButtonPx - bottomReservePx
 
@@ -1012,7 +1018,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
         items.forEachIndexed { index, (icon, label, tab) ->
             val p = anims[index].value
             val slot = if (index == 0) 1 else 0
-            val distFromBallCenter = halfButtonPx + marginPx + itemW / 2 + slot * (itemW + marginPx)
+            val distFromBallCenter = halfButtonPx + gapPx + itemW / 2 + slot * (itemW + gapPx)
             val dx = (if (openLeft) -distFromBallCenter else distFromBallCenter) * p
             DockItem(
                 icon, label, selected == tab,
@@ -1051,10 +1057,9 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                             val candX = baseX + amount.x
                             val candY = baseY + amount.y
                             // 球心横向全屏自由拖动,只留贴边余量;不再按「展开方向」把球
-                            // 卡在某一半屏。此前 flatReachX(226dp) > 半屏(205dp),按展开
-                            // 方向 clamp 会在中线处留下约 40dp 死区,慢拖时球跨不过中线。
-                            val loX = halfButtonPx + marginPx
-                            val hiX = maxW - halfButtonPx - marginPx
+                            // 卡在某一半屏,否则慢拖时球永远跨不过中线。
+                            val loX = halfButtonPx + edgePx
+                            val hiX = maxW - halfButtonPx - edgePx
                             centerX = candX.roundToInt().coerceIn(loX, hiX)
                             centerY = candY.roundToInt().coerceIn(minCy, maxCy)
                         },
