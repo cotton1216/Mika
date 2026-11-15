@@ -85,18 +85,23 @@ import com.wangzan101.mika.ui.theme.animationsOff
 import com.wangzan101.mika.ui.theme.appearanceDark
 import com.wangzan101.mika.ui.theme.systemBarsFor
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import com.wangzan101.mika.ui.components.floatShadow
 import com.wangzan101.mika.ui.theme.MikaIcons
-import com.wangzan101.mika.ui.theme.MikaSize
+import com.wangzan101.mika.ui.theme.MikaShapes
+import com.wangzan101.mika.ui.theme.MikaType
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.zIndex
@@ -558,8 +563,11 @@ private fun MikaRoot(
     // 聊天页离开组合树时保留列表位置和输入内容，返回设置页等子页面后原样恢复。
     val screenStates = rememberSaveableStateHolder()
     Column(Modifier.fillMaxSize()) {
-        RootTabBar(selectedTab, onSelect = { selectedTab = it })
-        // 内容区消费掉状态栏 inset:顶部 Tab 已经避让了状态栏,聊天页/远程页内部的
+        // 顶部居中悬浮导航胶囊:浮在状态栏下方,圆角玻璃底 + 阴影,不占满宽。
+        Box(Modifier.fillMaxWidth().statusBarsPadding().padding(vertical = 6.dp), contentAlignment = Alignment.Center) {
+            RootFloatingNav(selectedTab, onSelect = { selectedTab = it })
+        }
+        // 内容区消费掉状态栏 inset:悬浮导航已经避让了状态栏,聊天页/远程页内部的
         // statusBarsPadding 若再读一次会重复留白,这里让它们读到 0。
         Box(Modifier.weight(1f).consumeWindowInsets(WindowInsets.statusBars)) {
             // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接/导航栈,
@@ -839,27 +847,43 @@ private fun Modifier.tabContent(visible: Boolean): Modifier =
             }
         )
 
-/** 顶部双 Tab:如愿(对话)｜如意(远程电脑)。纯图标,选中项用强调色,未选中用辅助色。 */
+/** 顶部悬浮导航胶囊:如愿(对话)｜如意(远程电脑)。玻璃圆角底 + 阴影,选中项实心高亮。 */
 @Composable
-private fun RootTabBar(selected: RootTab, onSelect: (RootTab) -> Unit) {
+private fun RootFloatingNav(selected: RootTab, onSelect: (RootTab) -> Unit) {
     val c = MikaTheme.colors
-    Column(Modifier.fillMaxWidth().background(c.glass).statusBarsPadding()) {
-        Row(Modifier.fillMaxWidth().height(48.dp), verticalAlignment = Alignment.CenterVertically) {
-            RootTabItem(MikaIcons.Message, "如愿", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
-            RootTabItem(MikaIcons.Desktop, "如意", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }
-        }
+    Row(
+        Modifier
+            .floatShadow(c, MikaShapes.Pill)
+            .clip(MikaShapes.Pill)
+            .background(c.glass)
+            .border(0.5.dp, c.glassEdge, MikaShapes.Pill)
+            .padding(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RootNavItem(MikaIcons.Message, "如愿", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
+        RootNavItem(MikaIcons.Desktop, "如意", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }
     }
 }
 
 @Composable
-private fun RowScope.RootTabItem(icon: ImageVector, label: String, selected: Boolean, onClick: () -> Unit) {
+private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onClick: () -> Unit) {
     val c = MikaTheme.colors
-    Box(
-        Modifier.weight(1f).fillMaxHeight().clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
+    Row(
+        Modifier
+            .clip(MikaShapes.Pill)
+            .background(if (selected) c.accent else Color.Transparent)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        // 纯图标 Tab:文字只留给无障碍描述,不在界面上渲染。
-        Icon(icon, label, Modifier.size(MikaSize.Icon), tint = if (selected) c.accent else c.ink3)
+        Icon(icon, null, Modifier.size(18.dp), tint = if (selected) c.onAccent else c.ink2)
+        Text(
+            label,
+            style = MikaType.Hint,
+            color = if (selected) c.onAccent else c.ink2,
+            fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+        )
     }
 }
 
