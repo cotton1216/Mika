@@ -105,6 +105,17 @@
         <intent>
             <action android:name="android.accounts.AccountAuthenticator" />
         </intent>
+        <!-- 如意远程 SSO 登录:在外部浏览器(优选 Chromium 内核)打开登录页,要能查到这些浏览器。 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
     </queries>
 
     <application
@@ -139,6 +150,39 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <!-- 如意远程 SSO 登录:浏览器登录完把 ruyiai://auth2|auth3/callback 回跳到这,
+             再单任务转发给 MainActivity(唯一 LAUNCHER),让 DeepLinks 投给右侧 RemoteHome。 -->
+        <activity
+            android:name=".remote.MikaRemoteTrampolineActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ruyiai" android:host="auth2" android:path="/callback" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ruyiai" android:host="auth3" android:path="/callback" />
+            </intent-filter>
+        </activity>
+
+        <!-- 如意远程后台保活:右侧远程功能接入期间用前台服务托住中继 socket;进程重启后随登录状态自己停。 -->
+        <service
+            android:name="com.xxt.zl.ai.ruyiremote.keepalive.RemoteKeepAliveService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the relay connection to the user's computer open while the app is in the background" />
+        </service>
 
         <!-- 通知里接管按钮的落点:从通知启动 Activity 才会收起通知栏,让用户直接看到挪到主屏的 App -->
         <activity

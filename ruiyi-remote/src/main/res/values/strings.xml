@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">如意远程</string>
+
+    <string name="remote_keepalive_channel">远程连接</string>
+    <string name="remote_keepalive_channel_description">手机正在远程连接你的电脑时显示，断开后自动消失。</string>
+    <string name="remote_keepalive_title">正在连接你的电脑</string>
+    <string name="remote_keepalive_text">保持连接，避免后台被系统冻结</string>
+</resources>

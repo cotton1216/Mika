@@ -90,6 +90,7 @@
     <string name="drawer_plans">المهام المجدولة</string>
     <string name="memory_and_skills">الذاكرة والمهارات</string>
     <string name="drawer_browser">المتصفح</string>
+    <string name="remote_control">التحكم عن بُعد</string>
     <string name="drawer_recent">الأخيرة</string>
     <string name="drawer_busy">هناك مهمة قيد التشغيل. يمكنك التبديل بين المحادثات عند انتهائها.</string>
     <string name="drawer_delete_title">هل تريد حذف هذه المحادثة؟</string>

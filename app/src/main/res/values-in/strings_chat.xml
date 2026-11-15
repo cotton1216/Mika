@@ -85,6 +85,7 @@
     <string name="drawer_plans">Tugas terjadwal</string>
     <string name="memory_and_skills">Memori &amp; keterampilan</string>
     <string name="drawer_browser">Browser</string>
+    <string name="remote_control">Kontrol jarak jauh</string>
     <string name="drawer_recent">Terbaru</string>
     <string name="drawer_busy">Ada tugas yang sedang berjalan. Anda bisa berpindah obrolan setelah selesai.</string>
     <string name="drawer_delete_title">Hapus obrolan ini?</string>

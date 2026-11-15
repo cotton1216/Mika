@@ -60,6 +60,7 @@
     <string name="drawer_plans">کارهای زمان‌بندی‌شده</string>
     <string name="memory_and_skills">حافظه و مهارت‌ها</string>
     <string name="drawer_browser">مرورگر</string>
+    <string name="remote_control">کنترل از راه دور</string>
     <string name="drawer_recent">اخیر</string>
     <string name="drawer_busy">کاری در حال اجراست. پس از پایان آن می‌توانید گفتگو را عوض کنید.</string>
     <string name="drawer_delete_title">این گفتگو حذف شود؟</string>

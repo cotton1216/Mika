@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      targetSdk 35 起系统强制 edge-to-edge：内容会画到状态栏/导航栏底下，
+      而平台主题默认按「深色背景」给状态栏配浅色图标 —— 白底上时间和信号
+      几乎看不见（22:37 实测截图确认）。这里显式要求深色系统栏图标。
+
+      windowBackground 用 @color/ruiyi_window_bg：首帧之前的启动窗口底色必须
+      和 Compose 主题一致，否则深色模式下会闪一块白（values-night 覆盖）。
+    -->
+    <style name="Theme.RuyiRemote" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/ruiyi_window_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

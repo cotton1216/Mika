@@ -85,6 +85,7 @@
     <string name="drawer_plans">定時任務</string>
     <string name="memory_and_skills">記憶與技能</string>
     <string name="drawer_browser">瀏覽器</string>
+    <string name="remote_control">遠端控制</string>
     <string name="drawer_recent">最近</string>
     <string name="drawer_busy">任務進行中,結束後才能切換對話</string>
     <string name="drawer_delete_title">刪除這個對話？</string>

@@ -85,6 +85,7 @@
     <string name="drawer_plans">スケジュールされたタスク</string>
     <string name="memory_and_skills">メモリとスキル</string>
     <string name="drawer_browser">ブラウザ</string>
+    <string name="remote_control">リモートコントロール</string>
     <string name="drawer_recent">最近</string>
     <string name="drawer_busy">タスクを実行中です。終わったらチャットを切り替えられます。</string>
     <string name="drawer_delete_title">このチャットを削除しますか？</string>

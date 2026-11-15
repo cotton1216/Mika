@@ -86,6 +86,7 @@
     <string name="drawer_plans">Scheduled tasks</string>
     <string name="memory_and_skills">Memory &amp; skills</string>
     <string name="drawer_browser">Browser</string>
+    <string name="remote_control">Remote control</string>
     <string name="drawer_recent">Recent</string>
     <string name="drawer_busy">A task is running. You can switch chats when it ends.</string>
     <string name="drawer_delete_title">Delete this chat?</string>

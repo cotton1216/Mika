@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Mika"
 include(":core", ":app")
+include(":ruiyi-remote-core", ":ruiyi-remote-ui", ":ruiyi-remote")

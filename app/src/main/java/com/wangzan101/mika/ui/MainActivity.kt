@@ -51,6 +51,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.wangzan101.mika.cap.web.WebHandover
 import com.wangzan101.mika.cap.web.WebSites
 import com.wangzan101.mika.browser.UserBrowser
+import com.xxt.zl.ai.ruyiremote.links.DeepLinks
+import com.xxt.zl.ai.ruyiremote.ui.RemoteHome
 import com.wangzan101.mika.BuildConfig
 import com.wangzan101.mika.R
 import com.wangzan101.mika.MikaApp
@@ -84,6 +86,8 @@ class MainActivity : ComponentActivity() {
     private var requestedConversation by mutableStateOf<String?>(null)
     private var requestedCalls by mutableStateOf(false)
     private var openTeach by mutableStateOf(false)
+    /** 如意远程 SSO 回跳 URI:右侧 RemoteHome 订阅后消费。 */
+    private var pendingRemoteCallback by mutableStateOf<String?>(null)
     private var requestedSharedDraft by mutableStateOf<SharedDraftRequest?>(null)
     private var shareJob: Job? = null
     private var shareSerial = 0L
@@ -110,6 +114,8 @@ class MainActivity : ComponentActivity() {
         requestedConversation = intent.getStringExtra(EXTRA_OPEN_CONVERSATION)
         requestedCalls = intent.getBooleanExtra(EXTRA_OPEN_CALLS, false)
         takeTeach(intent)
+        // 如意登录回跳可能冷启动带进来;DeepLinks 已在 inside 排队,RemoteHome 订阅时补发。
+        DeepLinks.takeLaunch(intent, DeepLinks.isConsumed(intent))
         shareInCurrent = savedInstanceState?.getBoolean(STATE_SHARE_IN_CURRENT, false) ?: false
         shareHandled = savedInstanceState?.getBoolean(STATE_SHARE_HANDLED, false) ?: false
         // 已处理完的分享在旋转/重建时不重复触发;真正的冷启动分享或尚未完成的后台分享继续收下。
@@ -139,6 +145,8 @@ class MainActivity : ComponentActivity() {
                         },
                         openTeach = openTeach,
                         onTeachOpened = { openTeach = false },
+                        remoteCallback = pendingRemoteCallback,
+                        onRemoteCallbackConsumed = { pendingRemoteCallback = null },
                     )
                 }
             }
@@ -158,6 +166,9 @@ class MainActivity : ComponentActivity() {
         takeTeach(intent)
         requestedSharedDraft?.let { app.sharedDrafts.discard(it.draft.image) }
         requestedSharedDraft = null
+        // 如意登录回跳:两条路都投一遍(NewIntentListener + 兜底),DeepLinks 内部按 intent 去重。
+        DeepLinks.take(intent)
+        DeepLinks.deliverFromHost(intent)
         // 界面已在后台存活时收到分享:放入当前打开的会话,而不是新建会话。
         shareInCurrent = true
         shareHandled = false
@@ -365,6 +376,9 @@ private fun MikaRoot(
     onSharedDraftOpened: (Boolean, SharedDraft) -> Unit,
     openTeach: Boolean,
     onTeachOpened: () -> Unit,
+    /** 如意远程 SSO 回跳 URI:右侧 RemoteHome 订阅后消费。 */
+    remoteCallback: String?,
+    onRemoteCallbackConsumed: () -> Unit,
 ) {
     val nav = rememberNavStack()
     var filesFromDrawer by rememberSaveable { mutableStateOf(false) }
@@ -495,6 +509,7 @@ private fun MikaRoot(
                 onBrowser = { nav.pushFromDrawer(Route.Browser) },
                 onFiles = { filesFromDrawer = true; filesConversation = app.chat.ui.value.conversationId; nav.pushFromDrawer(Route.Files) },
                 onScreens = { nav.pushFromDrawer(Route.Screens) },
+                onRemote = { nav.pushFromDrawer(Route.Remote) },
                 onAbout = { nav.pushFromDrawer(Route.About) },
                 updateAvailable = AboutCopy.drawerDot(updateState),
                 reopen = nav.reopenDrawer,
@@ -668,6 +683,10 @@ private fun MikaRoot(
             app.chat.openConversation(it)
             nav.reset()
         })
+        Route.Remote -> RemoteScreen(
+            callback = remoteCallback,
+            onCallbackConsumed = onRemoteCallbackConsumed,
+        )
         Route.Calls -> CallSettingsScreen(app.calls, onBack = back, standalone = true)
     }
 }

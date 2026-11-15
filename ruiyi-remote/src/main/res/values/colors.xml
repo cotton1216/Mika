@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      启动窗口的底色，必须和 Compose 侧 LightPalette.bg 一致。
+      不一致的话系统在首帧之前先铺一块默认白（深色模式下尤其刺眼），
+      用户会看到「白屏 → 深色界面」的闪跳。
+    -->
+    <color name="ruiyi_window_bg">#FFF5F5F8</color>
+</resources>

@@ -249,6 +249,8 @@ fun ChatDrawer(
     onBrowser: () -> Unit,
     onFiles: () -> Unit = {},
     onScreens: () -> Unit = {},
+    /** 如意远程控制(右侧页面):连上桌面/电脑用它;功能在 ruiyi-remote-ui,这里只做入口。 */
+    onRemote: () -> Unit = {},
     onSettings: () -> Unit,
     onOpen: (DrawerConversation) -> Unit,
     onAbout: () -> Unit = {},
@@ -313,6 +315,7 @@ fun ChatDrawer(
             NavEntry(MikaIcons.Heart, stringResource(R.string.memory_and_skills), onClick = onMemory)
             NavEntry(MikaIcons.Globe, stringResource(R.string.drawer_browser), onClick = onBrowser)
             NavEntry(MikaIcons.Paperclip, stringResource(R.string.file_library_title), onClick = onFiles)
+            NavEntry(MikaIcons.Desktop, stringResource(R.string.remote_control), onClick = onRemote)
             // 和上面几项隔开一点:这是把 Mika 整个停下来,不是换一页
             Box(Modifier.padding(top = 4.dp)) {
                 NavEntry(MikaIcons.Power, stringResource(R.string.quit_title), onClick = onQuit)
@@ -723,6 +726,8 @@ fun ChatWithDrawer(
     onBrowser: () -> Unit,
     onFiles: () -> Unit = {},
     onScreens: () -> Unit = {},
+    /** 如意远程控制入口。 */
+    onRemote: () -> Unit = {},
     onSettings: () -> Unit,
     onAbout: () -> Unit = {},
     /** 有新版本:侧栏「关于 Mika」带小红点。 */
@@ -924,6 +929,7 @@ fun ChatWithDrawer(
                     onBrowser = { leave(onBrowser) },
                     onFiles = { leave(onFiles) },
                     onScreens = { leave(onScreens) },
+                    onRemote = { leave(onRemote) },
                     onAbout = { leave(onAbout) },
                     onQuit = { leave { confirmingQuit = true } },
                     aboutDot = updateAvailable,

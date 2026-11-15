@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  应用图标前景：显示器轮廓，与界面里的 GlyphMonitor 同一套比例（24 单位视框
+  放大 2 倍、居中到 108 视框），保证「桌面上的图标」和「首屏品牌块」是同一个记号。
+  安全区 36–72，图形落在 36.4–71.6，自适应图标裁切时不会被切到。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:pathData="M41.2,39.2 L66.8,39.2 A4.8,4.8 0 0 1 71.6,44 L71.6,59.2 A4.8,4.8 0 0 1 66.8,64 L41.2,64 A4.8,4.8 0 0 1 36.4,59.2 L36.4,44 A4.8,4.8 0 0 1 41.2,39.2 Z"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.8"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent" />
+
+    <path
+        android:pathData="M54,63.6 L54,70"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.8"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent" />
+
+    <path
+        android:pathData="M46.8,70 L61.2,70"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3.8"
+        android:strokeLineCap="round"
+        android:fillColor="@android:color/transparent" />
+</vector>

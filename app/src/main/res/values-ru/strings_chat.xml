@@ -88,6 +88,7 @@
     <string name="drawer_plans">Задачи по расписанию</string>
     <string name="memory_and_skills">Память и навыки</string>
     <string name="drawer_browser">Браузер</string>
+    <string name="remote_control">Удалённое управление</string>
     <string name="drawer_recent">Недавние</string>
     <string name="drawer_busy">Идёт задача. Переключать чаты можно после её завершения.</string>
     <string name="drawer_delete_title">Удалить этот чат?</string>

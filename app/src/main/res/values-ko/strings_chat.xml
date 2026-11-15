@@ -85,6 +85,7 @@
     <string name="drawer_plans">예약 작업</string>
     <string name="memory_and_skills">메모리 및 스킬</string>
     <string name="drawer_browser">브라우저</string>
+    <string name="remote_control">원격 제어</string>
     <string name="drawer_recent">최근</string>
     <string name="drawer_busy">작업이 실행 중이에요. 끝나면 채팅을 바꿀 수 있어요.</string>
     <string name="drawer_delete_title">이 채팅을 삭제할까요?</string>

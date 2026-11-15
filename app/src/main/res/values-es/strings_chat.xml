@@ -87,6 +87,7 @@
     <string name="drawer_plans">Tareas programadas</string>
     <string name="memory_and_skills">Memoria y habilidades</string>
     <string name="drawer_browser">Navegador</string>
+    <string name="remote_control">Control remoto</string>
     <string name="drawer_recent">Recientes</string>
     <string name="drawer_busy">Hay una tarea en ejecución. Podrás cambiar de chat cuando termine.</string>
     <string name="drawer_delete_title">¿Eliminar este chat?</string>

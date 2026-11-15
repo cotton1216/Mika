@@ -87,6 +87,7 @@
     <string name="drawer_plans">Tarefas agendadas</string>
     <string name="memory_and_skills">Memória e habilidades</string>
     <string name="drawer_browser">Navegador</string>
+    <string name="remote_control">Controle remoto</string>
     <string name="drawer_recent">Recentes</string>
     <string name="drawer_busy">Há uma tarefa em andamento. Você poderá trocar de conversa quando ela terminar.</string>
     <string name="drawer_delete_title">Excluir esta conversa?</string>

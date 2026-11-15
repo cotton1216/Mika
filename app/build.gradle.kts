@@ -88,6 +88,8 @@ kotlin {
 
 dependencies {
     implementation(project(":core"))
+    // 如意远程(ruiyi-remote-native)拆出的界面库:右侧套进 RemoteHome,靠独立包名与上游 core/remote 隔离
+    implementation(project(":ruiyi-remote-ui"))
     implementation(libs.protobuf.lite)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
