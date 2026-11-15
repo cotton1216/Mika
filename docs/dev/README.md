@@ -29,6 +29,7 @@
 | [personal-agent.md](personal-agent.md) | 长期个人主会话、独立任务委派与结果回流 |
 | [remote-mcp.md](remote-mcp.md) | 自托管远程 CLI / MCP 的部署、手机鉴权和断线语义 |
 | [teach-mika.md](teach-mika.md) | 人工示范怎样收成待确认的知识型技能 |
+| [git-remotes.md](git-remotes.md) | origin、me、xxt 三条远程线的映射、同步状态与推送规范 |
 
 ## 仓库里别处的开发文档
 
