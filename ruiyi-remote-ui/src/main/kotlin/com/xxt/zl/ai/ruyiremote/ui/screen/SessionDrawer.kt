@@ -61,6 +61,7 @@ import com.xxt.zl.ai.ruyiremote.session.SessionSummary
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphChevron
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphPlus
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphRefresh
+import com.xxt.zl.ai.ruyiremote.ui.components.GlyphTune
 import com.xxt.zl.ai.ruyiremote.ui.components.InlineError
 import com.xxt.zl.ai.ruyiremote.ui.components.Pill
 import com.xxt.zl.ai.ruyiremote.ui.components.RemoteJobsPanel
@@ -104,6 +105,8 @@ fun SessionDrawer(
     onRetryHost: (() -> Unit)?,
     onRefreshHosts: () -> Unit,
     onSelectHost: (RemoteHost) -> Unit,
+    onOpenSettings: () -> Unit,
+    onOpenHostDetail: (RemoteHost) -> Unit,
     sessions: List<SessionSummary>,
     sessionsLoading: Boolean,
     sessionsError: String?,
@@ -209,6 +212,8 @@ fun SessionDrawer(
                 onRefresh = onRefreshHosts,
                 onSelect = onSelectHost,
                 onRetry = onRetryHost,
+                onOpenSettings = onOpenSettings,
+                onOpenDetail = onOpenHostDetail,
                 onClose = onClose,
             )
             Spacer(Modifier.height(14.dp))
@@ -321,6 +326,8 @@ private fun HostSection(
     onRefresh: () -> Unit,
     onSelect: (RemoteHost) -> Unit,
     onRetry: (() -> Unit)?,
+    onOpenSettings: () -> Unit,
+    onOpenDetail: (RemoteHost) -> Unit,
     onClose: () -> Unit,
 ) {
     val p = LocalRuyiPalette.current
@@ -342,6 +349,10 @@ private fun HostSection(
                 TypingDots(color = p.textTertiary)
                 Spacer(Modifier.width(Space.xs))
             }
+            CircleButton(size = 30.dp, onClick = onOpenSettings, label = "设置") {
+                GlyphTune(size = 16.dp, tint = p.textSecondary)
+            }
+            Spacer(Modifier.width(Space.xs))
             CircleButton(size = 30.dp, onClick = onRefresh, label = "刷新电脑列表") {
                 GlyphRefresh(size = 16.dp, tint = if (hostsLoading) p.textTertiary else p.textSecondary)
             }
@@ -416,6 +427,7 @@ private fun HostSection(
                             connecting = host.id == connectingHostId,
                             enabled = !busy && host.online && host.id != connectedHostId,
                             onClick = { onSelect(host) },
+                            onOpenDetail = { onOpenDetail(host) },
                         )
                     }
                 }
@@ -440,6 +452,7 @@ private fun HostRow(
     connecting: Boolean,
     enabled: Boolean,
     onClick: () -> Unit,
+    onOpenDetail: (() -> Unit)?,
 ) {
     val p = LocalRuyiPalette.current
     val active = current || connecting
@@ -447,47 +460,65 @@ private fun HostRow(
         Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .background(if (active) p.accentSoft else Color.Transparent)
-            .clickable(enabled = enabled, onClick = onClick)
-            .semantics {
-                contentDescription = when {
-                    connecting -> "正在连接 ${host.name}"
-                    current -> "${host.name}，当前连接"
-                    else -> "切换到 ${host.name}"
-                }
-                role = Role.Button
-            }
-            .padding(horizontal = 11.dp, vertical = 9.dp),
+            .padding(horizontal = 11.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        StatusDot(online = host.online || active, size = 7.dp)
-        Spacer(Modifier.width(Space.s))
-        Text(
-            host.name,
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
-            color = when {
-                active -> p.onAccentSoft
-                host.online -> p.text
-                else -> p.textTertiary
-            },
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-        Text(
-            when {
-                connecting -> "连接中…"
-                current -> "当前"
-                host.online -> "在线"
-                else -> "离线"
-            },
-            style = MaterialTheme.typography.labelSmall,
-            color = when {
-                connecting || current -> p.success
-                host.online -> p.success
-                else -> p.textTertiary
-            },
-        )
+        Row(
+            Modifier.weight(1f)
+                .clickable(enabled = enabled, onClick = onClick)
+                .semantics {
+                    contentDescription = when {
+                        connecting -> "正在连接 ${host.name}"
+                        current -> "${host.name}，当前连接"
+                        else -> "切换到 ${host.name}"
+                    }
+                    role = Role.Button
+                }
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            StatusDot(online = host.online || active, size = 7.dp)
+            Spacer(Modifier.width(Space.s))
+            Text(
+                host.name,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
+                color = when {
+                    active -> p.onAccentSoft
+                    host.online -> p.text
+                    else -> p.textTertiary
+                },
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                when {
+                    connecting -> "连接中…"
+                    current -> "当前"
+                    host.online -> "在线"
+                    else -> "离线"
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = when {
+                    connecting || current -> p.success
+                    host.online -> p.success
+                    else -> p.textTertiary
+                },
+            )
+        }
+        if (onOpenDetail != null) {
+            Spacer(Modifier.width(Space.xs))
+            Box(
+                Modifier
+                    .clip(CircleShape)
+                    .clickable { onOpenDetail() }
+                    .semantics { contentDescription = "查看 ${host.name} 详情"; role = Role.Button }
+                    .padding(Space.xs),
+            ) {
+                GlyphChevron(size = 14.dp, tint = p.textTertiary)
+            }
+        }
     }
 }
 

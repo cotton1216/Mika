@@ -171,7 +171,7 @@
     <string name="signin_row_ruyi">用如意账号登录，模型列表自动同步</string>
     <string name="signin_ruyi_title">用如意账号登录</string>
     <string name="ruyi_login_subtitle">使用如意账号登录，登录后自动获取你账号可用的大模型并完成配置。</string>
-    <string name="ruyi_login_cta">使用如意账号登录</string>
+    <string name="ruyi_login_cta">账号登录</string>
     <string name="ruyi_login_waiting">等待授权中…</string>
     <string name="ruyi_login_skip">暂不登录</string>
     <string name="signin_ruyi_body">会打开如意的授权页。你登录后，如意给如愿一把属于你的推理 Key，用量从你的如意账号里扣，一次就能用上账号下的模型。</string>

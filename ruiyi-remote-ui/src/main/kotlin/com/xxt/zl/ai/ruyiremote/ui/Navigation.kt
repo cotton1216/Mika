@@ -16,6 +16,14 @@ sealed interface Screen {
     /** 次级登录方式：账号密码 / 如意 SSO。 */
     data object AltSignIn : Screen
 
+    /**
+     * 登录后的首页：会话列表。
+     *
+     * 不再是「我的电脑」选主机——会话（远程任务）才是要落脚的地方。顶部放一个
+     * 「主机列表」入口，切换电脑与设置都从那里进。
+     */
+    data object Home : Screen
+
     /** 我的电脑列表。 */
     data object Hosts : Screen
 

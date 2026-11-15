@@ -173,7 +173,7 @@
     <string name="signin_openrouter_name">%1$s (signed in)</string>
     <string name="signin_row_ruyi">Sign in with your Ruyi account to sync its models</string>
     <string name="ruyi_login_subtitle">Sign in with your Ruyi account. Your available AI models are fetched and set up automatically.</string>
-    <string name="ruyi_login_cta">Sign in with Ruyi</string>
+    <string name="ruyi_login_cta">Sign in</string>
     <string name="ruyi_login_waiting">Waiting for authorization…</string>
     <string name="ruyi_login_skip">Not now</string>
     <string name="signin_ruyi_title">Sign in with Ruyi</string>

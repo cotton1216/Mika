@@ -193,7 +193,7 @@
     <string name="models_daily_token_budget_sub">按本地日曆日統計這家所有模型和用途的已回報輸入與輸出 Token。達到預算後不再發起下一次請求；進行中的請求可能超量，未回報用量按 0 計。本地日期變更後自動恢復。</string>
     <string name="models_daily_token_budget_save_failed">預算儲存失敗，原設定未變。</string>
     <string name="ruyi_login_subtitle">使用如意帳號登入，登入後自動取得你帳號可用的大模型並完成設定。</string>
-    <string name="ruyi_login_cta">使用如意帳號登入</string>
+    <string name="ruyi_login_cta">帳號登入</string>
     <string name="ruyi_login_waiting">等待授權中…</string>
     <string name="ruyi_login_skip">暫不登入</string>
     <string name="signin_row_ruyi">用如意帳號登入，模型列表自動同步</string>

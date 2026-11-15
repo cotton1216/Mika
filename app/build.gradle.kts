@@ -13,8 +13,8 @@ val gitHash: String = runCatching {
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
 // 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
-val ruyiVersionName = "0.1.47"
-val ruyiVersionCode = 48
+val ruyiVersionName = "0.1.48"
+val ruyiVersionCode = 49
 
 // 发布签名：读 app/release-signing.properties（不入库）。缺失时 release 回退到调试签名，避免构建失败。
 val releaseSigning = file("release-signing.properties")

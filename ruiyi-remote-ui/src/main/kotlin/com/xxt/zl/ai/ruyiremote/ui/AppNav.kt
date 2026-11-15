@@ -56,6 +56,7 @@ import com.xxt.zl.ai.ruyiremote.ui.components.GlyphMonitor
 import com.xxt.zl.ai.ruyiremote.ui.screen.AlternateSignInScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.ChatScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.ConnectScreen
+import com.xxt.zl.ai.ruyiremote.ui.screen.HomeScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HostDetailScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HostWorkspaceScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HostsScreen
@@ -186,7 +187,7 @@ fun DshApp(
         }
     }
 
-    val root: Screen = if (signedIn) Screen.Hosts else Screen.Connect
+    val root: Screen = if (signedIn) Screen.Home else Screen.Connect
     val current = stack.lastOrNull() ?: root
 
     BackHandler(enabled = active && stack.isNotEmpty()) { pop() }
@@ -228,6 +229,15 @@ fun DshApp(
                     signIn = signIn,
                     onBack = pop,
                     showSso = showSso,
+                )
+
+                Screen.Home -> HomeScreen(
+                    session = session,
+                    chat = if (connection != null) chat else null,
+                    onOpenHostList = { drawerOpen = true },
+                    onOpenSettings = { push(Screen.Settings) },
+                    onSelectSession = openChat,
+                    onExit = onExit,
                 )
 
                 Screen.Hosts -> HostsScreen(
@@ -322,6 +332,8 @@ fun DshApp(
                 ),
                 onRefreshHosts = session::refreshHosts,
                 onSelectHost = switchHost,
+                onOpenSettings = { push(Screen.Settings) },
+                onOpenHostDetail = { host -> push(Screen.HostDetail(host.id)) },
                 sessions = sessions,
                 sessionsLoading = switching || chatState?.sessionsLoading == true,
                 sessionsError = if (switching) null else chatState?.sessionsError,
