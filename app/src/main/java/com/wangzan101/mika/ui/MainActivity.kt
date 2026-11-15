@@ -590,8 +590,9 @@ private fun MikaRoot(
             }
             // 内容区:顶部胶囊显示时消费状态栏 inset(胶囊已避让状态栏),隐藏时让各页面自己留白。
             Box(Modifier.weight(1f).then(if (showTopNav) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier)) {
-            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接/导航栈,
-            // 进入某台主机的对话后切去如愿再切回,仍停在那条对话,而不是退回「我的电脑」。
+            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接。
+            // 导航栈则由 RemoteScreen 内部在 active 由 false 变 true 时清空 —— 切回如意
+            // 一律落在会话列表首页,不恢复上次停留的会话详情/设置页。
             Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
                 RemoteScreen(
                     callback = remoteCallback,

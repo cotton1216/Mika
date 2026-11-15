@@ -83,8 +83,9 @@ fun DshApp(
      */
     onExit: (() -> Unit)? = null,
     /**
-     * 宿主用底部 Tab 切换时，本页常驻组合以保留连接/导航栈；Tab 未选中时传 false，
+     * 宿主用底部 Tab 切换时，本页常驻组合以保留连接；Tab 未选中时传 false，
      * 禁用这里的返回键处理，把返回键交回宿主。独立 App 或常显时保持默认 true。
+     * 由 false 变 true（切回本 Tab）时会把导航栈清回根页，见下方 wasActive。
      */
     active: Boolean = true,
 ) {
@@ -99,6 +100,18 @@ fun DshApp(
     var drawerOpen by remember { mutableStateOf(false) }
     // 失败重试要连的是「上一次尝试的那台」；连接状态本身不记 hostId。
     var lastSwitchTarget by remember { mutableStateOf<RemoteHost?>(null) }
+
+    // 切回如意 Tab（active 由 false 变 true）时回到根页（会话列表），不恢复上次停留的
+    // 会话详情/设置。Tab 切换是「回到这个 Tab 的首页」；连接不断，只重置导航栈。
+    var wasActive by remember { mutableStateOf(active) }
+    LaunchedEffect(active) {
+        if (active && !wasActive) {
+            forward = false
+            stack.clear()
+            drawerOpen = false
+        }
+        wasActive = active
+    }
 
     val push: (Screen) -> Unit = { forward = true; stack.add(it) }
     val pop: () -> Unit = {
