@@ -846,7 +846,11 @@ private fun MikaRoot(
             }
         }
     }
-        FloatingDock(selectedTab, onSelect = { selectedTab = it })
+        // 悬浮球只在主界面(如愿对话/如意远程两个顶层 Tab 已就绪)显示;
+        // 登录页、上手引导(欢迎/配置模型/手机操作)等页面还没有这两个 Tab,不显示。
+        if (nav.current == Route.Chat || nav.current == Route.Personal) {
+            FloatingDock(selectedTab, onSelect = { selectedTab = it })
+        }
     }
 }
 
