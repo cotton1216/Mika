@@ -31,6 +31,7 @@
     <string name="chat_cannot_start">هنوز نمی‌توان کارها را شروع کرد</string>
     <string name="chat_missing">موارد لازم: %1$s</string>
     <string name="chat_go_settings">باز کردن تنظیمات</string>
+    <string name="chat_open_models">باز کردن تنظیمات مدل</string>
     <string name="chat_menu">منو</string>
     <string name="drawer_personal">دستیار شخصی</string>
     <string name="chat_new">گفتگوی جدید</string>

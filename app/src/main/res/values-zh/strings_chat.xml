@@ -55,6 +55,7 @@
     <string name="chat_cannot_start">还不能开始任务</string>
     <string name="chat_missing">还缺:%1$s</string>
     <string name="chat_go_settings">去设置</string>
+    <string name="chat_open_models">去模型设置</string>
     <string name="chat_menu">菜单</string>
     <string name="drawer_personal">个人助手</string>
     <string name="chat_new">新对话</string>

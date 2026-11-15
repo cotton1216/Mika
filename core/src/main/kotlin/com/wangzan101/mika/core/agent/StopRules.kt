@@ -42,9 +42,25 @@ internal object StopRules {
     fun modelFailed(e: Throwable): TaskState.Failed = when (e) {
         is ModelError.TaskBudgetExceeded -> TaskState.Failed(userReason(e), FailKind.TokenLimit)
         is ModelError.DailyBudgetExceeded -> TaskState.Failed(userReason(e), FailKind.TokenLimit)
-        is ModelError.RateLimited -> TaskState.Failed(userReason(e), FailKind.Model, FailureCode.ModelRateLimited)
-        is ModelError -> TaskState.Failed(userReason(e), FailKind.Model)
+        is ModelError.RateLimited ->
+            TaskState.Failed(userReason(e), FailKind.Model, FailureCode.ModelRateLimited, modelFix(e))
+        is ModelError -> TaskState.Failed(userReason(e), FailKind.Model, fix = modelFix(e))
         else -> TaskState.Failed("模型调用异常:${e.message ?: e::class.simpleName}", FailKind.Model)
+    }
+
+    /**
+     * 这个错用户在哪能自己改掉。这些错都能在「设置 › 模型」里自救:换一个模型、改 API Key、
+     * 改 Base URL、调思考强度、重新登录;改完不用重装也不用找客服。额度用完要去服务商后台充值,
+     * 内容被拒要改说法,都不在这一页,不给入口。
+     */
+    private fun modelFix(e: ModelError): FailureFix? = when (e) {
+        is ModelError.Auth, is ModelError.ModelNotFound, is ModelError.ModelNotAvailable,
+        is ModelError.ToolsUnsupported, is ModelError.ContextTooLong, is ModelError.RateLimited,
+        is ModelError.Server, is ModelError.ReasoningEffortRejected, is ModelError.BadResponse,
+        is ModelError.ChatGptLimitReached, is ModelError.ChatGptNotEligible, is ModelError.SignInExpired,
+        is ModelError.AccountPlanNotAllowed,
+        -> FailureFix.ModelSettings
+        else -> null
     }
 
     fun guard(v: GuardVerdict): TaskState.Failed {
@@ -95,7 +111,14 @@ internal fun userReason(e: ModelError): String = when (e) {
             "连不上网络代理,或代理没有转发这个请求,重试后仍然不通。请检查代理是否开着、设置 › 网络代理 里的地址和端口是否正确;不需要代理时把它清空。"
         ProxyFailure.AuthFailed -> "网络代理拒绝了账号或密码(HTTP 407)。请在设置 › 网络代理 里检查代理地址中的用户名和密码。"
     }
-    is ModelError.Server -> "模型服务出错(HTTP ${e.status}),请稍后再试。"
+    // 5xx 是服务端那边出的错,用户改不了,只能等或换一条路;502/503/504 常常是中途的网关连不上模型服务,
+    // 光说「请稍后再试」会让人一直原地重试,所以把「换一个模型」这条出路也写明。
+    is ModelError.Server -> if (e.status == 502 || e.status == 503 || e.status == 504)
+        "模型服务暂时连不上(HTTP ${e.status}):请求等了很久没有回应,多半是模型服务商或中途的网关出了故障,也可能只是网络一时不通。" +
+            "过一两分钟点下面的「重新开始」再试;如果反复这样,去「模型设置」换一个模型。"
+    else
+        "模型服务出错(HTTP ${e.status}):这是模型服务商那边的错误,不是你哪里填错了。" +
+            "可以稍后再试;如果反复出现,去「模型设置」换一个模型。"
     is ModelError.StreamCut ->
         "模型的回复还没传完,连接就在上游被断开了,重试后仍然如此。常见原因是网络不稳,或中转服务、网关的空闲超时太短(模型长时间思考时容易碰上)。请稍后再试。"
     is ModelError.BadResponse -> "${e.message}。请检查 Base URL 和接口类型是否匹配。"

@@ -676,6 +676,7 @@ private fun MikaRoot(
                                         onOpenDrawer = openDrawer,
                                         onOpenFiles = { filesFromDrawer = false; filesConversation = app.chat.ui.value.conversationId; nav.push(Route.Files) },
                                         openSettings = { nav.push(Route.Settings) },
+                                        openModels = { nav.push(Route.Models) },
                                         openRun = { runId = it; nav.push(Route.Run) },
                                         phoneSetupNeeded = phoneSetupNeeded && status.builtinShell != BuiltinShellStatus.Running,
                                         openPhoneSetup = { onFix(Fix.OpenPhoneSetup) },

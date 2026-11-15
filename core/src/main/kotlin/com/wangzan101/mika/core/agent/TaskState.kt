@@ -70,8 +70,11 @@ sealed interface TaskState {
         /** 核对过却没能核实(界面标出、评测记成 unverified)。 */
         val doubtful: Boolean get() = reviewed && !verified
     }
-    /** [kind] 由产生失败的代码自己给出,不从 [reason] 文字里猜。 */
-    data class Failed(val reason: String, val kind: FailKind, val code: FailureCode? = null) : Terminal
+    /**
+     * [kind] 由产生失败的代码自己给出,不从 [reason] 文字里猜。
+     * [fix] 是这个失败用户自己能做的一步,界面据此在失败卡片上给一个直达入口;不能用界面解决问题时为 null。
+     */
+    data class Failed(val reason: String, val kind: FailKind, val code: FailureCode? = null, val fix: FailureFix? = null) : Terminal
     data object Cancelled : Terminal
 }
 
@@ -94,6 +97,15 @@ data class GateReason(val code: String, val why: String = "", val resumable: Boo
 
 /** 程序生成的失败原因，供界面选择对应的本地化文案。 */
 enum class FailureCode { ModelRateLimited }
+
+/**
+ * 失败之后用户自己做一步就能接着干活的方向,界面据此在失败卡片上放一个直达入口。
+ * 只收「点进去真能改」的:额度用完要去服务商后台充值,不在 App 里,所以不给。
+ */
+enum class FailureFix {
+    /** 去「设置 › 模型」:换模型、改 API Key、改 Base URL、改思考强度、重新登录都在这一页。 */
+    ModelSettings,
+}
 
 /** 任务失败的来源。 */
 enum class FailKind {

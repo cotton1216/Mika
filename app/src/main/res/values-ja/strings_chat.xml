@@ -55,6 +55,7 @@
     <string name="chat_cannot_start">まだタスクを開始できません</string>
     <string name="chat_missing">不足: %1$s</string>
     <string name="chat_go_settings">設定を開く</string>
+    <string name="chat_open_models">モデル設定を開く</string>
     <string name="chat_menu">メニュー</string>
     <string name="drawer_personal">パーソナルアシスタント</string>
     <string name="chat_new">新しいチャット</string>

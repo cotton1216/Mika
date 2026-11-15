@@ -3,7 +3,9 @@ package com.wangzan101.mika.ui
 import androidx.compose.foundation.gestures.scrollBy
 import com.wangzan101.mika.cap.sandbox.AttachmentFailure
 import com.wangzan101.mika.cap.sandbox.AttachmentFailureReason
+import com.wangzan101.mika.core.agent.FailureFix
 import com.wangzan101.mika.core.agent.QuoteMessage
+import com.wangzan101.mika.core.model.ModelRole
 import com.wangzan101.mika.core.record.ConversationTokens
 import com.wangzan101.mika.core.cap.web.AttachedPage
 import com.wangzan101.mika.ui.components.DirectionalIcon
@@ -188,6 +190,8 @@ fun ChatScreen(
     onOpenFiles: () -> Unit = {},
     /** 被拦下的提示里的「去设置」。 */
     openSettings: () -> Unit,
+    /** 失败卡片上的「去模型设置」:换模型、改 Key、改地址都在那一页。 */
+    openModels: () -> Unit = {},
     openRun: (String) -> Unit = {},
     /** 任务要用手机而手机操作没准备好:最后一轮下面放一行去设置。 */
     phoneSetupNeeded: Boolean = false,
@@ -391,6 +395,7 @@ fun ChatScreen(
                         i, ex, ui.conversationId, ui.takeoverStage, vm, reduceMotion, backgroundNote, openRun, loadSource, openSource, kept,
                         highlightKey = highlightKey,
                         tokens = ConversationTokens.turn(ex.runId?.let(runMetrics::get)),
+                        openModels = openModels,
                         recover = { resume ->
                             val label = if (resume) R.string.chat_resume_request else R.string.chat_restart_request
                             vm.send(context.getString(label, ex.goal), check)
@@ -711,6 +716,8 @@ private fun LazyListScope.exchange(
     tokens: Long? = null,
     /** 终态后的两个新运行入口:true 从摘要断点继续,false 按原目标重新开始。 */
     recover: (Boolean) -> Unit = {},
+    /** 失败卡片上的「去模型设置」。 */
+    openModels: () -> Unit = {},
 ) {
     if (ex.goal.isNotEmpty()) item("u$index") {
         JumpHighlight(highlightKey == "u$index", reduceMotion) { UserBubble(ex.goal, conversationId, key = "u$index") }
@@ -751,7 +758,7 @@ private fun LazyListScope.exchange(
     waiting.forEach(::steer)
     item("r$index") {
         JumpHighlight(highlightKey == "r$index", reduceMotion) {
-            StatusCard(ex.status, stage, vm, ex.runId, loadSource, openSource, "r$index", recover)
+            StatusCard(ex.status, stage, vm, ex.runId, loadSource, openSource, "r$index", recover, openModels)
         }
     }
     // 这一轮结束后留在后台运行的那一页:还开着是绿色一行(能关),关了是一句原因
@@ -919,6 +926,13 @@ private fun WorkBlock(ex: Exchange, reduceMotion: Boolean, backgroundNote: Boole
             )
             if (elapsed != null) Text(ChatCopy.clock(elapsed), style = ClockText, color = c.ink3)
         }
+        // 在哪个服务商的哪个模型上跑:等的时候一眼能看出是谁在干活,出错时也知道该换哪一个
+        rememberModelLabel()?.let { label ->
+            Text(
+                label, Modifier.padding(start = 26.dp, top = 2.dp), style = NoteText, color = c.ink3,
+                maxLines = 1, overflow = TextOverflow.Ellipsis,
+            )
+        }
         if (ex.steps.isNotEmpty()) StepLine(ex.steps, ex.stepActions, live = true, paused = paused)
         // 跑的时候就能进运行过程(页面按秒接着长);结束后收进「做了 N 步 · 查看过程」那一行
         ex.runId?.let { id ->
@@ -941,8 +955,29 @@ private fun WorkBlock(ex: Exchange, reduceMotion: Boolean, backgroundNote: Boole
     }
 }
 
-/** 从 [startedAt] 起的用时,每秒更新;不知道开始时刻(为 0)时为 null。 */
+/**
+ * 此刻跑任务用的是哪家服务商的哪个模型(「如意（账号登录） · gpt-6-astra」)。只看设置里的主模型,不额外发请求;
+ * 还没配模型时为 null,那行小字就不出现。放在「正在处理」下面,等的时候知道是谁在干活,出错时也知道该换哪一个。
+ */
 @Composable
+private fun rememberModelLabel(): String? {
+    val store = (LocalContext.current.applicationContext as? MikaApp)?.providers ?: return null
+    val configs by store.configs.collectAsState()
+    val roles by store.roles.collectAsState()
+    val providers by store.providers.collectAsState()
+    return remember(configs, roles, providers) {
+        val cfg = roles.resolve(ModelRole.Main)?.let { id -> configs.firstOrNull { it.id == id } }
+        if (cfg == null) {
+            null
+        } else {
+            val owner = providers.firstOrNull { it.id == cfg.providerId }?.name?.takeIf { it.isNotBlank() }
+                ?: cfg.name.takeIf { it.isNotBlank() }
+            listOfNotNull(owner, cfg.model.takeIf { it.isNotBlank() }).joinToString(" · ")
+        }
+    }
+}
+
+/** 从 [startedAt] 起的用时,每秒更新;不知道开始时刻(为 0)时为 null。 */@Composable
 private fun rememberElapsed(startedAt: Long): Long? {
     if (startedAt <= 0L) return null
     val now by produceState(System.currentTimeMillis(), startedAt) {
@@ -1151,6 +1186,7 @@ private fun StatusCard(
     /** 回答的长按菜单认这一条用的(见 [MessageArea])。 */
     key: String,
     recover: (Boolean) -> Unit = {},
+    openModels: () -> Unit = {},
 ) {
     when (status) {
         ExchangeStatus.Working -> Unit
@@ -1221,6 +1257,11 @@ private fun StatusCard(
                 Text(stringResource(R.string.chat_not_done), style = MikaType.BodyStrong, color = MikaTheme.colors.ink)
             }
             Text(status.reason, Modifier.padding(top = 4.dp), style = CardBody, color = MikaTheme.colors.ink2)
+            // 原因里说了「换一个模型」就给出这一页的入口:让人看完原因有地方可去,不用自己翻三层菜单
+            if (status.fix == FailureFix.ModelSettings) MikaButton(
+                stringResource(R.string.chat_open_models), openModels, Modifier.fillMaxWidth().padding(top = 12.dp),
+                kind = ButtonKind.Tonal, size = ButtonSize.Medium,
+            )
             RecoveryActions(runId, recover)
         }
         // 停止后补上的交代当作这一轮的回答,排在「已停止」下面;还在写时一行小字

@@ -55,6 +55,7 @@
     <string name="chat_cannot_start">Belum bisa memulai tugas</string>
     <string name="chat_missing">Kurang: %1$s</string>
     <string name="chat_go_settings">Buka Pengaturan</string>
+    <string name="chat_open_models">Buka pengaturan model</string>
     <string name="chat_menu">Menu</string>
     <string name="drawer_personal">Asisten pribadi</string>
     <string name="chat_new">Obrolan baru</string>

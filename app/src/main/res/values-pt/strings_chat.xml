@@ -57,6 +57,7 @@
     <string name="chat_cannot_start">Ainda não é possível iniciar tarefas</string>
     <string name="chat_missing">Falta: %1$s</string>
     <string name="chat_go_settings">Abrir Configurações</string>
+    <string name="chat_open_models">Abrir ajustes do modelo</string>
     <string name="chat_menu">Menu</string>
     <string name="drawer_personal">Assistente pessoal</string>
     <string name="chat_new">Nova conversa</string>

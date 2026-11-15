@@ -26,6 +26,7 @@ import com.wangzan101.mika.confirm.ConfirmationCopy
 import com.wangzan101.mika.confirm.ConfirmationNotifier
 import com.wangzan101.mika.core.agent.AttachmentLines
 import com.wangzan101.mika.core.agent.Conversation
+import com.wangzan101.mika.core.agent.FailureFix
 import com.wangzan101.mika.core.agent.QuoteMessage
 import com.wangzan101.mika.core.agent.TaskState
 import com.wangzan101.mika.task.TaskGate
@@ -157,7 +158,11 @@ sealed interface ExchangeStatus {
             else -> note?.let { tr(R.string.chat_unverified_because, it) } ?: tr(R.string.chat_unverified)
         }
     }
-    data class Failed(val reason: String) : ExchangeStatus
+    /**
+     * 没办成,[reason] 是给用户看的原因;[fix] 非空时卡片上多一个直达入口(例如去「设置 › 模型」换一个模型),
+     * 让用户看完原因就有地方可去,不必自己翻菜单。
+     */
+    data class Failed(val reason: String, val fix: FailureFix? = null) : ExchangeStatus
     /**
      * 用户停止了。[summary] 是停止后补上的交代(做过什么、哪些没做完),当作这一轮的回答;还没写好、没什么可交代时为 null。
      * [summarizing] 时交代还在写(「正在整理已做的事…」)。
@@ -2140,7 +2145,7 @@ class ChatViewModel(
             // 回答原样显示(不再有模型写的依据段);来源由运行记录里代码记下的那份给出
             is TaskState.Succeeded -> ex.copy(status = ExchangeStatus.Done(s.answer.trim(), null, s.verified, s.note, s.unconfirmed, s.reviewed),
                 waitingForModel = false, draft = null, line = "")
-            is TaskState.Failed -> ex.copy(status = ExchangeStatus.Failed(s.reason), waitingForModel = false, draft = null, line = "")
+            is TaskState.Failed -> ex.copy(status = ExchangeStatus.Failed(s.reason, s.fix), waitingForModel = false, draft = null, line = "")
             TaskState.Cancelled -> ex.copy(status = ExchangeStatus.Cancelled(), waitingForModel = false, draft = null, line = "")
         }
 

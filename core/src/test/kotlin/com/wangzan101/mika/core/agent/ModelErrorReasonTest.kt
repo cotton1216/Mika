@@ -84,4 +84,31 @@ class ModelErrorReasonTest {
         assertFalse(cut.contains("接口类型"))
         assertTrue(StopRules.modelFailed(ModelError.BadResponse("流式响应不是合法 JSON")).reason.contains("请检查 Base URL 和接口类型是否匹配"))
     }
+
+    /**
+     * 5xx 不是用户填错了,光说「请稍后再试」会让人一直原地重试:网关连不上模型服务时要说清可能是谁的问题,
+     * 并把「换一个模型」这条出路写明;同时给出「设置 › 模型」的入口,让原因和去处对得上。
+     */
+    @Test fun serverErrorOffersAnotherModel() {
+        val gateway = StopRules.modelFailed(ModelError.Server(504))
+        assertTrue(gateway.reason.contains("HTTP 504"))
+        assertTrue(gateway.reason.contains("网关"))
+        assertTrue(gateway.reason.contains("换一个模型"))
+        assertFalse(gateway.reason.contains("请稍后再试"))
+        assertEquals(FailureFix.ModelSettings, gateway.fix)
+
+        val internal = StopRules.modelFailed(ModelError.Server(500))
+        assertTrue(internal.reason.contains("HTTP 500"))
+        assertTrue(internal.reason.contains("换一个模型"))
+        assertEquals(FailureFix.ModelSettings, internal.fix)
+    }
+
+    /** 额度用完要去服务商后台充值、内容被拒要改说法:给「设置 › 模型」的入口只会让人白点,不给。 */
+    @Test fun onlyFailuresWithASettingToChangeCarryAFix() {
+        assertEquals(null, StopRules.modelFailed(ModelError.QuotaExceeded()).fix)
+        assertEquals(null, StopRules.modelFailed(ModelError.ContentRefused()).fix)
+        assertEquals(null, StopRules.modelFailed(ModelError.TaskBudgetExceeded(100, 100)).fix)
+        assertEquals(FailureFix.ModelSettings, StopRules.modelFailed(ModelError.Auth()).fix)
+        assertEquals(FailureFix.ModelSettings, StopRules.modelFailed(ModelError.RateLimited(null)).fix)
+    }
 }

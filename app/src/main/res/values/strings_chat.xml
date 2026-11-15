@@ -56,6 +56,7 @@
     <string name="chat_cannot_start">Can’t start tasks yet</string>
     <string name="chat_missing">Missing: %1$s</string>
     <string name="chat_go_settings">Open Settings</string>
+    <string name="chat_open_models">Open model settings</string>
     <string name="chat_menu">Menu</string>
     <string name="drawer_personal">Personal Assistant</string>
     <string name="chat_new">New chat</string>
