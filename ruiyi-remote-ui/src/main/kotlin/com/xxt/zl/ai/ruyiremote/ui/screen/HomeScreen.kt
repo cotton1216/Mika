@@ -30,15 +30,12 @@ import com.xxt.zl.ai.ruyiremote.session.ChatState
 import com.xxt.zl.ai.ruyiremote.session.SessionChatController
 import com.xxt.zl.ai.ruyiremote.session.SessionSummary
 import com.xxt.zl.ai.ruyiremote.ui.RemoteSessionController
-import com.xxt.zl.ai.ruyiremote.ui.components.DshTopBar
 import com.xxt.zl.ai.ruyiremote.ui.components.EmptyState
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphChevron
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphPlus
-import com.xxt.zl.ai.ruyiremote.ui.components.GlyphTune
 import com.xxt.zl.ai.ruyiremote.ui.components.InlineError
 import com.xxt.zl.ai.ruyiremote.ui.components.NoticeBar
 import com.xxt.zl.ai.ruyiremote.ui.components.Pill
-import com.xxt.zl.ai.ruyiremote.ui.components.PressableCircle
 import com.xxt.zl.ai.ruyiremote.ui.components.SkeletonRow
 import com.xxt.zl.ai.ruyiremote.ui.components.StatusDot
 import com.xxt.zl.ai.ruyiremote.ui.components.TypingDots
@@ -53,18 +50,19 @@ import com.xxt.zl.ai.ruyiremote.ui.theme.Space
  *
  * 不再把「我的电脑」选主机当首页——用户打开如意 Tab 想看的是这台电脑上正在做的事，
  * 而不是先被问「连哪台」。所以首页直接落会话列表；顶部的「主机列表」入口负责切电脑，
- * 设置（右上角齿轮）也从这条路上进。没连电脑时给一句引导，让用户去点主机列表。
+ * 设置也从这条路上进（点主机列表 → 抽屉顶栏的齿轮）。
+ *
+ * 不设顶栏：如意与愿是平级 Tab，用「← 返回」箭头表达「切回如愿」有歧义（看着像返回上一页）。
+ * Tab 切换交给悬浮球，退出到如愿交给系统返回键；会话详情、设置等二级页仍有自己的返回箭头。
+ * 没连电脑时给一句引导，让用户去点主机列表。
  */
 @Composable
 fun HomeScreen(
     session: RemoteSessionController,
     chat: SessionChatController?,
     onOpenHostList: () -> Unit,
-    onOpenSettings: () -> Unit,
     onSelectSession: (SessionSummary) -> Unit,
-    onExit: (() -> Unit)? = null,
 ) {
-    val p = LocalRuyiPalette.current
     val state: ChatState? = chat?.state?.collectAsState()?.value
 
     val connectedHost = session.connectedHost
@@ -77,17 +75,10 @@ fun HomeScreen(
         ?: "选择电脑"
 
     Column(Modifier.screenFrame()) {
-        DshTopBar(
-            title = "会话列表",
-            onBack = onExit,
-            backLabel = "返回如愿",
-            subtitle = if (connectedHost != null) "已连接 ${connectedHost.name}" else "远程会话",
-            actions = {
-                PressableCircle(onClick = onOpenSettings, label = "设置") { GlyphTune(tint = p.textSecondary) }
-            },
-        )
-
-        Column(Modifier.padding(horizontal = Space.page), verticalArrangement = Arrangement.spacedBy(Space.l)) {
+        Column(
+            Modifier.padding(start = Space.page, end = Space.page, top = Space.l),
+            verticalArrangement = Arrangement.spacedBy(Space.l),
+        ) {
             HostListEntry(
                 hostName = hostName,
                 subtitle = hostEntrySubtitle(session, connected, connecting),

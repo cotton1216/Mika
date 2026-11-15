@@ -235,9 +235,7 @@ fun DshApp(
                     session = session,
                     chat = if (connection != null) chat else null,
                     onOpenHostList = { drawerOpen = true },
-                    onOpenSettings = { push(Screen.Settings) },
                     onSelectSession = openChat,
-                    onExit = onExit,
                 )
 
                 Screen.Hosts -> HostsScreen(
