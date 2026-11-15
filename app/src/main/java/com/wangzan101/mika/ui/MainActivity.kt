@@ -92,6 +92,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -921,24 +922,32 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
     // 悬浮球圆心的像素坐标;-1 表示还没落位,首次布局贴右下角。
     var centerX by rememberSaveable { mutableStateOf(-1) }
     var centerY by rememberSaveable { mutableStateOf(-1) }
-    // 点开时球轻微放大回弹,更跟手。
+    // 点开时球明显放大回弹,更跟手。
     val ballScale by animateFloatAsState(
-        targetValue = if (expanded) 1.08f else 1f,
-        animationSpec = spring(dampingRatio = 0.55f, stiffness = 480f),
+        targetValue = if (expanded) 1.12f else 1f,
+        animationSpec = spring(dampingRatio = 0.5f, stiffness = 480f),
         label = "dockBall",
+    )
+    // 展开时球上的图标随球转 90°,Apps → Close 的切换更有动感。
+    val ballRotation by animateFloatAsState(
+        targetValue = if (expanded) 90f else 0f,
+        animationSpec = spring(dampingRatio = 0.55f, stiffness = 420f),
+        label = "dockBallRot",
     )
 
     val buttonPx = with(density) { 52.dp.roundToPx() }
     val halfButtonPx = buttonPx / 2
     val itemW = with(density) { 84.dp.roundToPx() }
     val itemH = with(density) { 40.dp.roundToPx() }
-    val radiusPxF = with(density) { 84.dp.toPx() }
+    val radiusPxF = with(density) { 100.dp.toPx() }
     val marginPx = with(density) { 8.dp.roundToPx() }
     val topSafePx = with(density) { 20.dp.roundToPx() }
-    val bottomMarginPx = with(density) { 12.dp.roundToPx() }
-    // 两项沿朝内一侧的弧线散开:外侧项偏离竖直轴 outerAngle、内侧项只偏 innerAngle。
-    val outerAngle = 48.0 * (Math.PI / 180.0)
-    val innerAngle = 16.0 * (Math.PI / 180.0)
+    // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
+    val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }
+    // 两项沿朝内一侧的弧线散开:外侧项更朝水平(outerAngle)、内侧项更朝竖直(innerAngle),
+    // 两者竖直方向错开超过 item 高(40dp),展开后不再互相遮挡。
+    val outerAngle = 58.0 * (Math.PI / 180.0)
+    val innerAngle = 8.0 * (Math.PI / 180.0)
     // 扇形横向最远(外侧项)、纵向最远(内侧项),再加 item 半宽/半高和边距。
     val fanReachX = (radiusPxF * Math.sin(outerAngle).toFloat() + itemW / 2f).roundToInt() + marginPx
     val fanReachY = (radiusPxF * Math.cos(innerAngle).toFloat() + itemH / 2f).roundToInt() + marginPx
@@ -946,15 +955,15 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val maxW = constraints.maxWidth
         val maxH = constraints.maxHeight
-        // 默认贴右下角(扇形朝左上展开)。
+        // 默认贴右下、但在输入框上方(扇形朝左上展开)。
         val cur = if (centerX >= 0) IntOffset(centerX, centerY)
-                  else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomMarginPx)
+                  else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomReservePx)
         // 按钮在右半屏就朝左开、左半屏朝右开;贴边那一侧只留半颗球 + 边距,扇形朝内不越界。
         val openLeft = cur.x > maxW / 2
         val minCx = if (openLeft) fanReachX else halfButtonPx + marginPx
         val maxCx = if (openLeft) maxW - halfButtonPx - marginPx else maxW - fanReachX
         val minCy = topSafePx + fanReachY
-        val maxCy = maxH - halfButtonPx - bottomMarginPx
+        val maxCy = maxH - halfButtonPx - bottomReservePx
 
         // 展开时铺一层透明遮罩,点空白处收起。
         if (expanded) {
@@ -976,13 +985,14 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
             if (expanded) {
                 anims.forEachIndexed { i, a ->
                     launch {
-                        delay(i * 55L)
-                        a.animateTo(1f, spring(dampingRatio = 0.68f, stiffness = 360f))
+                        delay(i * 70L)
+                        // 低阻尼 spring 产生明显过冲:项先飞出过头、再弹回弧线,动态感更强。
+                        a.animateTo(1f, spring(dampingRatio = 0.42f, stiffness = 360f))
                     }
                 }
             } else {
                 anims.forEachIndexed { i, a ->
-                    launch { a.animateTo(0f, tween(120, easing = FastOutSlowInEasing)) }
+                    launch { a.animateTo(0f, tween(110, easing = FastOutSlowInEasing)) }
                 }
             }
         }
@@ -998,9 +1008,9 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
                 modifier = Modifier
                     .offset { IntOffset(cur.x + dx - itemW / 2, cur.y + dy - itemH / 2) }
                     .graphicsLayer {
-                        alpha = p
-                        scaleX = 0.6f + 0.4f * p
-                        scaleY = 0.6f + 0.4f * p
+                        alpha = p.coerceIn(0f, 1f)
+                        scaleX = 0.2f + 0.8f * p
+                        scaleY = 0.2f + 0.8f * p
                     },
             )
         }
@@ -1013,6 +1023,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
                 .graphicsLayer {
                     scaleX = ballScale
                     scaleY = ballScale
+                    rotationZ = ballRotation
                 }
                 .floatShadow(c, MikaShapes.Pill)
                 .clip(MikaShapes.Pill)
