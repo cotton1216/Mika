@@ -35,6 +35,8 @@
     <string name="models_status">Состояние</string>
     <string name="models_list_failed">Не удалось получить список моделей</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">Использованные ранее</string>
+    <string name="models_url_note">Смена адреса не затрагивает API-ключ и вход.</string>
     <string name="models_key_saved">Сохранён</string>
     <string name="models_key_none">Не введён</string>
     <string name="models_change">Изменить</string>

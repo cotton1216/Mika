@@ -35,6 +35,8 @@
     <string name="models_status">狀態</string>
     <string name="models_list_failed">列模型失敗</string>
     <string name="models_url">網址</string>
+    <string name="models_url_saved">用過的位址</string>
+    <string name="models_url_note">換位址不影響 API Key 和登入狀態。</string>
     <string name="models_key_saved">已儲存</string>
     <string name="models_key_none">沒有填</string>
     <string name="models_change">更換</string>

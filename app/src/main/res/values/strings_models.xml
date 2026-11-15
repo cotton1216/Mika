@@ -35,6 +35,8 @@
     <string name="models_status">Status</string>
     <string name="models_list_failed">Couldn’t list models</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">Used before</string>
+    <string name="models_url_note">Changing the address keeps your API key and sign-in.</string>
     <string name="models_key_saved">Saved</string>
     <string name="models_key_none">Not entered</string>
     <string name="models_change">Change</string>

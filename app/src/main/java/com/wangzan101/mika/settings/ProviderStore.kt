@@ -151,6 +151,12 @@ data class Provider(
     val visionOverrides: Map<String, Boolean> = emptyMap(),
     /** 这家每天所有模型、用途合计的已报告 Token 预算；null 不限制。 */
     val dailyTokenBudget: Long? = null,
+    /**
+     * 这台机器上除了 [baseUrl] 之外用过的地址(最近的在前,最多 [MAX_SAVED_BASE_URLS] 条):公网入口走不通时
+     * 能一键切到内网或备用入口,不用重新输。切地址只改地址,Key、登录态、模型和用途都按 [id] 存,不受影响。
+     * 放在最后,别插到中间:老代码有按位置传参的写法。
+     */
+    val savedBaseUrls: List<String> = emptyList(),
 ) {
     val key: String get() = ProviderConnection.keyOf(kind, baseUrl, name)
 
@@ -164,6 +170,9 @@ data class Provider(
 
 /** OkHttp 把超时换算为 Int 毫秒，秒数必须在换算后仍能存下。 */
 internal val MODEL_READ_TIMEOUT_SECONDS = 1..(Int.MAX_VALUE / 1_000)
+
+/** 一个服务商记住几个用过的地址:够在公网、内网、备用入口之间来回切,又不会把详情页撑长。 */
+internal const val MAX_SAVED_BASE_URLS = 5
 
 /** 留空的窗口沿用所选模型配置，留空的触发点交给核心自动计算，留空的读超时用全局默认(120 秒)。 */
 data class ModelContextSettings(val windowTokens: Int? = null, val triggerTokens: Int? = null, val readTimeoutSeconds: Int? = null) {
@@ -458,6 +467,33 @@ class ProviderStore(
     @Synchronized
     fun updateProviderKey(providerId: String, apiKey: String) {
         if (provider(providerId) != null) setKey(providerId, apiKey)
+    }
+
+    /**
+     * 换地址:同一个服务商的另一个入口(公网入口连不上时切到内网,或换回公网)。
+     * Key、登录态、模型、用途全都不动——它们按 [Provider.id] 存,和地址无关;
+     * 旧地址进 [Provider.savedBaseUrls],想切回来点一下就行。
+     * 地址必须是带 http/https 的完整 URL,格式不对返回 false。
+     */
+    @Synchronized
+    fun changeBaseUrl(providerId: String, url: String): Boolean {
+        val p = provider(providerId) ?: return false
+        val next = ProviderConnection.normalizeUrl(url)
+        if (!ProviderConnection.isUsableUrl(next)) return false
+        if (next == ProviderConnection.normalizeUrl(p.baseUrl)) return true
+        val history = (listOf(p.baseUrl) + p.savedBaseUrls)
+            .map(ProviderConnection::normalizeUrl)
+            // 只留能当接口地址用的:以前手动改地址可能留下拼坏的串,收进历史只会一直占着位置还点不了
+            .filter { it.isNotEmpty() && it != next && ProviderConnection.isUsableUrl(it) }
+            .distinct()
+            .take(MAX_SAVED_BASE_URLS)
+        _providers.value = _providers.value.map {
+            if (it.id == providerId) it.copy(baseUrl = next, savedBaseUrls = history) else it
+        }
+        // 配置里也存着地址:不改的话换地址后调用还发往旧入口
+        _configs.value = _configs.value.map { if (it.providerId == providerId) it.copy(baseUrl = next) else it }
+        writeConfig()
+        return true
     }
 
     /**
@@ -1017,6 +1053,7 @@ class ProviderStore(
         name = o.str("name"),
         kind = ProviderConfig.Kind.valueOf(o.str("kind")),
         baseUrl = o.str("baseUrl"),
+        savedBaseUrls = o["savedBaseUrls"]?.jsonArray?.map { it.jsonPrimitive.content }.orEmpty(),
         // 旧版本存下的没有这一项:按地址对得上的预设补上(读入后写回文件时记进去)
         sessionHeader = o["sessionHeader"]?.jsonPrimitive?.content ?: ProviderPresets.forBaseUrl(o.str("baseUrl"))?.sessionHeader,
         signIn = o["signIn"]?.jsonPrimitive?.content,
@@ -1105,6 +1142,7 @@ class ProviderStore(
                 providers.forEach { p ->
                     addJsonObject {
                         put("id", p.id); put("name", p.name); put("kind", p.kind.name); put("baseUrl", p.baseUrl)
+                        if (p.savedBaseUrls.isNotEmpty()) putJsonArray("savedBaseUrls") { p.savedBaseUrls.forEach { add(it) } }
                         p.sessionHeader?.let { put("sessionHeader", it) }
                         p.signIn?.let { put("signIn", it) }
                         p.dailyTokenBudget?.let { put("dailyTokenBudget", it) }

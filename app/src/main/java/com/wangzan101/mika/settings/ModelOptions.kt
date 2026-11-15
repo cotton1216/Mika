@@ -220,4 +220,17 @@ object ProviderConnection {
         ProviderPresets.forBaseUrl(baseUrl)?.label ?: baseUrl.trim().toHttpUrlOrNull()?.host ?: baseUrl.trim()
 
     fun normalizeUrl(url: String) = url.trim().trimEnd('/')
+
+    /**
+     * 能不能当接口地址用:必须是 http(s):// 开头,且整串里只有一个 "://"。
+     * 光判 [toHttpUrlOrNull] 不够 —— 多个地址粘在一起的串它也会给出结果(以前手动改地址留下过这种);
+     * 只判前缀也不够,那种串常常是 http:// 开头、中间又粘了一个。
+     */
+    fun isUsableUrl(url: String): Boolean {
+        val u = normalizeUrl(url)
+        if (!u.startsWith("http://") && !u.startsWith("https://")) return false
+        val scheme = u.indexOf("://")
+        if (u.indexOf("://", scheme + 1) >= 0) return false
+        return u.toHttpUrlOrNull()?.host?.isNotEmpty() == true
+    }
 }

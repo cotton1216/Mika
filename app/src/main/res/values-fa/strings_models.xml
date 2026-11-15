@@ -35,6 +35,8 @@
     <string name="models_status">وضعیت</string>
     <string name="models_list_failed">دریافت فهرست مدل‌ها ممکن نشد</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">نشانی‌های قبلی</string>
+    <string name="models_url_note">تغییر نشانی به کلید API و ورود شما کاری ندارد.</string>
     <string name="models_key_saved">ذخیره شده</string>
     <string name="models_key_none">وارد نشده</string>
     <string name="models_change">تغییر</string>

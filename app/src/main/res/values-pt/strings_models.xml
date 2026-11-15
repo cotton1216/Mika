@@ -35,6 +35,8 @@
     <string name="models_status">Status</string>
     <string name="models_list_failed">Não foi possível listar os modelos</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">Usadas antes</string>
+    <string name="models_url_note">Trocar o endereço não afeta sua chave nem a sessão.</string>
     <string name="models_key_saved">Salva</string>
     <string name="models_key_none">Não informada</string>
     <string name="models_change">Alterar</string>

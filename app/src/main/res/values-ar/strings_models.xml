@@ -35,6 +35,8 @@
     <string name="models_status">الحالة</string>
     <string name="models_list_failed">تعذّر سرد النماذج</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">عناوين مستخدمة سابقًا</string>
+    <string name="models_url_note">تغيير العنوان لا يؤثر على مفتاح API أو تسجيل الدخول.</string>
     <string name="models_key_saved">محفوظ</string>
     <string name="models_key_none">لم يُدخَل</string>
     <string name="models_change">تغيير</string>

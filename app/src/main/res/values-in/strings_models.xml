@@ -35,6 +35,8 @@
     <string name="models_status">Status</string>
     <string name="models_list_failed">Gagal memuat daftar model</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">Pernah dipakai</string>
+    <string name="models_url_note">Mengganti alamat tidak memengaruhi API key dan status masuk.</string>
     <string name="models_key_saved">Tersimpan</string>
     <string name="models_key_none">Belum diisi</string>
     <string name="models_change">Ubah</string>

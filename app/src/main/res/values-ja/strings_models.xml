@@ -35,6 +35,8 @@
     <string name="models_status">状態</string>
     <string name="models_list_failed">モデルを一覧にできませんでした</string>
     <string name="models_url">URL</string>
+    <string name="models_url_saved">以前の URL</string>
+    <string name="models_url_note">URL を変えても API キーとログインはそのままです。</string>
     <string name="models_key_saved">保存済み</string>
     <string name="models_key_none">未入力</string>
     <string name="models_change">変更</string>

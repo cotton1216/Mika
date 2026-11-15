@@ -19,7 +19,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -62,6 +65,7 @@ import com.wangzan101.mika.settings.ModelOption
 import com.wangzan101.mika.settings.ModelOptions
 import com.wangzan101.mika.settings.Provider
 import com.wangzan101.mika.settings.ProviderConfig
+import com.wangzan101.mika.settings.ProviderConnection
 import com.wangzan101.mika.settings.ProviderPresets
 import com.wangzan101.mika.settings.ProviderStore
 import com.wangzan101.mika.settings.RoleChoice
@@ -92,6 +96,8 @@ import com.wangzan101.mika.ui.theme.MikaShapes
 import com.wangzan101.mika.ui.theme.MikaSize
 import com.wangzan101.mika.ui.theme.MikaTheme
 import com.wangzan101.mika.ui.theme.MikaType
+import androidx.compose.ui.window.DialogProperties
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import com.wangzan101.mika.voice.SpeechChoice
 import com.wangzan101.mika.voice.SpeechOptions
 
@@ -283,6 +289,8 @@ internal const val MODEL_PREVIEW = 3
 class ProviderDetailActions(
     val refresh: () -> Unit = {},
     val changeKey: (String) -> Unit = {},
+    /** 换地址(公网入口连不上时切到内网,或换回来);Key 和登录态不动。 */
+    val changeBaseUrl: (String) -> Unit = {},
     val remove: () -> Unit = {},
     /** 把这家的一个模型用作某个用途(「用作」面板里点的)。 */
     val use: (ModelRole, String) -> Unit = { _, _ -> },
@@ -309,6 +317,7 @@ class ProviderDetailActions(
 fun ProviderDetailContent(ui: ModelSetupUi, p: Provider, actions: ProviderDetailActions, onBack: () -> Unit) {
     val c = MikaTheme.colors
     var changingKey by remember { mutableStateOf(false) }
+    var editingBase by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
     var editingBudget by remember { mutableStateOf(false) }
     var customBudget by remember { mutableStateOf("") }
@@ -332,7 +341,11 @@ fun ProviderDetailContent(ui: ModelSetupUi, p: Provider, actions: ProviderDetail
                     }
                 }
                 ListRow(null, ModelsCopy.KIND) { RowValue(ModelsCopy.kindLabel(p.kind)) }
-                ListRow(null, ModelsCopy.BASE_URL) { RowValue(ModelsCopy.shortUrl(p.baseUrl)) }
+                // 地址可以换:公网入口走不通时切到内网入口,Key 和登录态都不动(见 changeBaseUrl)
+                ListRow(null, ModelsCopy.BASE_URL, onClick = { editingBase = true }) {
+                    RowValue(ModelsCopy.shortUrl(p.baseUrl))
+                    RowValue(ModelsCopy.CHANGE, ValueTone.Link)
+                }
                 ListRow(null, ModelsCopy.API_KEY, onClick = { changingKey = true }) {
                     RowValue(if (p.id in ui.keyed) ModelsCopy.KEY_SAVED else ModelsCopy.KEY_NONE)
                     RowValue(ModelsCopy.CHANGE, ValueTone.Link)
@@ -409,14 +422,84 @@ fun ProviderDetailContent(ui: ModelSetupUi, p: Provider, actions: ProviderDetail
         saveError = if (budgetSaveFailed) stringResource(R.string.models_daily_token_budget_save_failed) else null,
     )
     using?.let { o -> UseAsSheet(ui, p, o.id, onUse = { role -> actions.use(role, o.id) }, onVision = { actions.setVision(o.id, it) }, onDismiss = { using = null }) }
+    if (editingBase) {
+        var url by remember { mutableStateOf(p.baseUrl) }
+        val trimmed = url.trim()
+        val valid = remember(trimmed) { trimmed.toHttpUrlOrNull() != null }
+        // 用过的其它地址:点一下填进输入框,不用一个字一个字敲(公网/内网之间来回切时省事)。
+        // 只列带 http(s):// 且能解析的地址 —— 以前手动改地址可能留下拼坏的串,列出来既占地方又点不了。
+        // 注意不能只判 toHttpUrlOrNull():它对这些拼坏的串也会给出结果。
+        val saved = remember(p.savedBaseUrls) {
+            p.savedBaseUrls.map(ProviderConnection::normalizeUrl)
+                .filter { ProviderConnection.isUsableUrl(it) }
+                .distinct()
+        }
+        val others = saved.filter { it != trimmed }
+        MikaDialog(
+            onDismissRequest = { editingBase = false },
+            // 键盘弹起时窗口不跟着缩,改用 imePadding 让弹窗始终贴在键盘上方:
+            // 缩窗口的写法会把弹窗顶到屏幕上缘,和键盘之间空出一大块(见 CallInstructionsScreen 同样处理)。
+            modifier = Modifier.imePadding(),
+            properties = DialogProperties(decorFitsSystemWindows = false),
+            title = { Text(ModelsCopy.BASE_URL) },
+            text = {
+                KeyboardDismissArea {
+                    // 整块可滚:键盘占掉半屏后,历史地址再多也滚得到按钮,不会被裁掉
+                    Column(Modifier.verticalScroll(rememberScrollState())) {
+                        Box(
+                            Modifier.fillMaxWidth().heightIn(min = 52.dp).keepsKeyboard()
+                                .background(c.fill, MikaShapes.Button).padding(horizontal = 14.dp, vertical = 10.dp),
+                            contentAlignment = Alignment.CenterStart,
+                        ) {
+                            BasicTextField(
+                                url, { url = it }, Modifier.fillMaxWidth().testTag("base-url"), singleLine = true,
+                                textStyle = MikaType.Body.copy(color = c.ink), cursorBrush = SolidColor(c.accent),
+                            )
+                        }
+                        if (others.isNotEmpty()) {
+                            Text(
+                                ModelsCopy.SAVED_URLS, Modifier.padding(top = 16.dp, bottom = 6.dp),
+                                style = MikaType.Hint, color = c.ink3,
+                            )
+                            // 一条一行、行间有分隔线:地址长了容易看成一片,分开才点得准
+                            others.forEachIndexed { index, savedUrl ->
+                                if (index > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(c.hair))
+                                Text(
+                                    ModelsCopy.shortUrl(savedUrl),
+                                    Modifier.fillMaxWidth().clip(MikaShapes.Button).clickable { url = savedUrl }
+                                        .padding(vertical = 12.dp),
+                                    style = MikaType.Caption, color = c.accent, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+                        }
+                        Text(ModelsCopy.BASE_URL_NOTE, Modifier.padding(top = 14.dp), style = MikaType.Hint, color = c.ink3)
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton({
+                    editingBase = false
+                    actions.changeBaseUrl(trimmed)
+                }, enabled = valid) { Text(ModelsCopy.SAVE) }
+            },
+            dismissButton = { TextButton({ editingBase = false }) { Text(ModelSetupCopy.CANCEL) } },
+        )
+    }
     if (changingKey) {
         var key by remember { mutableStateOf("") }
         MikaDialog(
             onDismissRequest = { changingKey = false },
+            // 和地址弹窗保持一致:贴键盘上方,输入框留够高度,光标不出框
+            modifier = Modifier.imePadding(),
+            properties = DialogProperties(decorFitsSystemWindows = false),
             title = { Text(ModelsCopy.CHANGE_KEY) },
             text = {
                 KeyboardDismissArea {
-                    Box(Modifier.fillMaxWidth().keepsKeyboard().background(c.fill, MikaShapes.Button).padding(12.dp)) {
+                    Box(
+                        Modifier.fillMaxWidth().heightIn(min = 52.dp).keepsKeyboard()
+                            .background(c.fill, MikaShapes.Button).padding(horizontal = 14.dp, vertical = 10.dp),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
                         if (key.isEmpty()) Text(ModelsCopy.NEW_KEY_HINT, style = MikaType.Body, color = c.ink3)
                         BasicTextField(
                             key, { key = it }, Modifier.fillMaxWidth().testTag("new-key"), singleLine = true,
@@ -666,6 +749,8 @@ object ModelsCopy {
     val LIST_FAILED: String get() = tr(R.string.models_list_failed)
     val KIND: String get() = tr(R.string.model_kind)
     val BASE_URL: String get() = tr(R.string.models_url)
+    val SAVED_URLS: String get() = tr(R.string.models_url_saved)
+    val BASE_URL_NOTE: String get() = tr(R.string.models_url_note)
     const val API_KEY = "API Key"
     val KEY_SAVED: String get() = tr(R.string.models_key_saved)
     val KEY_NONE: String get() = tr(R.string.models_key_none)

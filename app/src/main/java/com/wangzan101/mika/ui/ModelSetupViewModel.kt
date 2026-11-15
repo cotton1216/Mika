@@ -1144,6 +1144,20 @@ class ModelSetupViewModel(
         }
     }
 
+    /**
+     * 换地址(公网入口走不通时切到内网,或换回来),然后用新地址重新列一次模型:
+     * 连不上就在状态行标红,地址已经存下,再改回来就行;Key 和登录态不受影响。
+     */
+    fun changeBaseUrl(providerId: String, url: String) {
+        val target = url.trim()
+        if (target.isEmpty()) return
+        scope.launch {
+            if (!withContext(io) { store.changeBaseUrl(providerId, target) }) return@launch
+            refreshJobs.remove(providerId)?.cancel()
+            refresh(providerId)
+        }
+    }
+
     /** 删掉服务商和它的 Key;用着它的用途退回默认。 */
     fun removeProvider(providerId: String) {
         scope.launch {

@@ -162,6 +162,7 @@ fun ModelSetupScreen(
             }
             val actions = ProviderDetailActions(
                 refresh = { vm.refresh(provider.id) }, changeKey = { vm.changeKey(provider.id, it) },
+                changeBaseUrl = { vm.changeBaseUrl(provider.id, it) },
                 remove = { vm.removeProvider(provider.id); openProvider = null; allModels = false },
                 use = { r, model -> vm.pick(r, provider.id, model) },
                 setVision = { model, sees -> vm.setModelVision(provider.id, model, sees) },
