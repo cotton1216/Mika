@@ -55,6 +55,11 @@ fun RemoteHome(
      * 独立 App 时为 null，它自己就是根。
      */
     onExit: (() -> Unit)? = null,
+    /**
+     * 宿主用底部 Tab 切换时，本页常驻组合以保留连接/导航栈；Tab 未选中时传 false，
+     * 禁用返回键处理。独立 App 或常显时保持默认 true。
+     */
+    active: Boolean = true,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -144,6 +149,6 @@ fun RemoteHome(
     }
 
     RuyiTheme {
-        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit)
+        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit, active = active)
     }
 }

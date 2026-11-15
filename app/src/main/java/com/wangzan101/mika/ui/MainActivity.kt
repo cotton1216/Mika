@@ -2,8 +2,11 @@ package com.wangzan101.mika.ui
 
 import com.wangzan101.mika.i18n.AppLanguage
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
@@ -99,6 +102,9 @@ import androidx.compose.ui.text.font.FontWeight
 import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaSize
 import com.wangzan101.mika.ui.theme.MikaType
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.zIndex
 
 class MainActivity : ComponentActivity() {
     private lateinit var monitor: SystemStatusMonitor
@@ -394,7 +400,7 @@ private data class SharedDraftRequest(val draft: SharedDraft, val serial: Long, 
  * 如愿 App 的两个顶级模块。
  *
  * [Ruyuan] 是 AI 对话(如愿), [Ruyi] 是远程电脑(如意)。远程控制不再是左侧抽屉里
- * 的一页,而是和对话平级的入口:底部两个 Tab 切换,「进太深回不去」直接变成点 Tab
+ * 的一页,而是和对话平级的入口:顶部两个 Tab 切换,「进太深回不去」直接变成点 Tab
  * 切回来,不再依赖返回键或「返回如愿」箭头。
  */
 private enum class RootTab { Ruyuan, Ruyi }
@@ -425,7 +431,7 @@ private fun MikaRoot(
     var focusedCallHistoryId by remember { mutableStateOf<String?>(null) }
     val personalStart = remember { FeatureFlags.get(context).personalStart() }
     val nav = rememberNavStack(if (personalStart && requestedConversation == null) Route.Personal else Route.Chat)
-    // 底部双 Tab:如愿(对话)｜如意(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
+    // 顶部双 Tab:如愿(对话)｜如意(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
     var selectedTab by rememberSaveable { mutableStateOf(RootTab.Ruyuan) }
     var filesFromDrawer by rememberSaveable { mutableStateOf(false) }
     var filesConversation by rememberSaveable { mutableStateOf<String?>(null) }
@@ -557,8 +563,22 @@ private fun MikaRoot(
     // 聊天页离开组合树时保留列表位置和输入内容，返回设置页等子页面后原样恢复。
     val screenStates = rememberSaveableStateHolder()
     Column(Modifier.fillMaxSize()) {
-        Box(Modifier.weight(1f)) {
-            if (selectedTab == RootTab.Ruyuan) {
+        RootTabBar(selectedTab, onSelect = { selectedTab = it })
+        // 内容区消费掉状态栏 inset:顶部 Tab 已经避让了状态栏,聊天页/远程页内部的
+        // statusBarsPadding 若再读一次会重复留白,这里让它们读到 0。
+        Box(Modifier.weight(1f).consumeWindowInsets(WindowInsets.statusBars)) {
+            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接/导航栈,
+            // 进入某台主机的对话后切去如愿再切回,仍停在那条对话,而不是退回「我的电脑」。
+            Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
+                RemoteScreen(
+                    callback = remoteCallback,
+                    onCallbackConsumed = onRemoteCallbackConsumed,
+                    onBack = { selectedTab = RootTab.Ruyuan },
+                    active = selectedTab == RootTab.Ruyi,
+                )
+            }
+            // 如愿(对话)
+            Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyuan)) {
                 when (nav.current) {
                     Route.PhoneSetup -> PhoneSetupScreen(status, setupRepair, onFix, onboarding = onboarding == OnboardingStep.Phone) {
                         phoneSetup.markGuideSeen()
@@ -800,23 +820,35 @@ private fun MikaRoot(
                     })
                     Route.Calls -> CallSettingsScreen(app.calls, onBack = back, standalone = true, initialHistoryCallId = focusedCallHistoryId)
                 }
-            } else {
-                RemoteScreen(
-                    callback = remoteCallback,
-                    onCallbackConsumed = onRemoteCallbackConsumed,
-                    onBack = { selectedTab = RootTab.Ruyuan },
-                )
             }
         }
-        RootTabBar(selectedTab, onSelect = { selectedTab = it })
     }
 }
 
-/** 底部双 Tab:如愿(对话)｜如意(远程电脑)。选中项用强调色,未选中用辅助色。 */
+/**
+ * 底部 Tab 内容的显示控制:常驻组合以保留状态,但未选中时隐藏 + 吞掉触摸事件,
+ * 否则透明层仍会拦截可见 Tab 的点击,并让隐藏的滚动/按钮「隔空」响应。
+ */
+private fun Modifier.tabContent(visible: Boolean): Modifier =
+    this
+        .zIndex(if (visible) 1f else 0f)
+        .alpha(if (visible) 1f else 0f)
+        .then(
+            if (visible) Modifier
+            else Modifier.pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        awaitPointerEvent().changes.forEach { it.consume() }
+                    }
+                }
+            }
+        )
+
+/** 顶部双 Tab:如愿(对话)｜如意(远程电脑)。选中项用强调色,未选中用辅助色。 */
 @Composable
 private fun RootTabBar(selected: RootTab, onSelect: (RootTab) -> Unit) {
     val c = MikaTheme.colors
-    Column(Modifier.fillMaxWidth().background(c.glass).navigationBarsPadding()) {
+    Column(Modifier.fillMaxWidth().background(c.glass).statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().height(56.dp), verticalAlignment = Alignment.CenterVertically) {
             RootTabItem(MikaIcons.Message, "如愿", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
             RootTabItem(MikaIcons.Desktop, "如意", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }

@@ -26,6 +26,8 @@ internal fun RemoteScreen(
     onCallbackConsumed: () -> Unit,
     /** 退出远程控制、回到如愿。远程根页（我的电脑）会给一个显式「返回如愿」箭头。 */
     onBack: () -> Unit,
+    /** 宿主底部 Tab 未选中时为 false：禁用返回键处理，让返回键交回宿主。 */
+    active: Boolean = true,
 ) {
     val context = LocalContext.current
     RemoteHome(
@@ -37,6 +39,7 @@ internal fun RemoteScreen(
         showSso = false,
         // 远程控制是如愿里的一页，得能明确退回去，而不是靠系统返回键猜。
         onExit = onBack,
+        active = active,
     )
 }
 

@@ -81,6 +81,11 @@ fun DshApp(
      * 独立 App 时为 null —— 它自己就是根，返回键交给系统退出。
      */
     onExit: (() -> Unit)? = null,
+    /**
+     * 宿主用底部 Tab 切换时，本页常驻组合以保留连接/导航栈；Tab 未选中时传 false，
+     * 禁用这里的返回键处理，把返回键交回宿主。独立 App 或常显时保持默认 true。
+     */
+    active: Boolean = true,
 ) {
     val p = LocalRuyiPalette.current
     val signedIn = session.phase is AccountPhase.SignedIn
@@ -184,11 +189,11 @@ fun DshApp(
     val root: Screen = if (signedIn) Screen.Hosts else Screen.Connect
     val current = stack.lastOrNull() ?: root
 
-    BackHandler(enabled = stack.isNotEmpty()) { pop() }
+    BackHandler(enabled = active && stack.isNotEmpty()) { pop() }
     // 根页（我的电脑 / 连接电脑）没有内部可退的页面：嵌入在宿主里时，退回去的是宿主。
-    BackHandler(enabled = stack.isEmpty() && onExit != null) { onExit?.invoke() }
+    BackHandler(enabled = active && stack.isEmpty() && onExit != null) { onExit?.invoke() }
     // 抽屉在最上层：返回键先关它，而不是把下面的页面也一起弹走。
-    BackHandler(enabled = drawerOpen) { drawerOpen = false }
+    BackHandler(enabled = active && drawerOpen) { drawerOpen = false }
 
     // 整个应用共用一张「浅蓝纸」：设备列表、会话列表、对话页底色一致，
     // 进出页面时不会觉得换了另一个 App。
