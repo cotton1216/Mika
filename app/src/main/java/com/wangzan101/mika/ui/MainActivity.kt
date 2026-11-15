@@ -1020,10 +1020,11 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
             Modifier
                 .offset { IntOffset(cur.x - halfButtonPx, cur.y - halfButtonPx) }
                 .size(52.dp)
+                // 球体只做缩放(各向同性,自抵消,不干扰拖拽);旋转放到图标上,避免
+                // graphicsLayer 的 rotationZ 把触摸坐标也旋 90°,导致拖拽 x/y 分量交换、手感发飘。
                 .graphicsLayer {
                     scaleX = ballScale
                     scaleY = ballScale
-                    rotationZ = ballRotation
                 }
                 .floatShadow(c, MikaShapes.Pill)
                 .clip(MikaShapes.Pill)
@@ -1052,7 +1053,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
             Icon(
                 if (expanded) MikaIcons.Close else MikaIcons.Apps,
                 null,
-                Modifier.size(22.dp),
+                Modifier.size(22.dp).graphicsLayer { rotationZ = ballRotation },
                 tint = c.onAccent,
             )
         }
