@@ -39,6 +39,8 @@
     <string name="about_update_download_in_app">Unduh pembaruan</string>
     <string name="about_update_downloading">Mengunduh…</string>
     <string name="about_update_progress">Mengunduh %1$d%%</string>
+    <string name="about_update_waiting">Menunggu jaringan…</string>
+    <string name="notif_channel_update">Pembaruan aplikasi</string>
     <string name="about_update_paused">Unduhan dijeda; akan dilanjutkan otomatis…</string>
     <string name="about_update_install">Instal pembaruan</string>
     <string name="about_update_retry">Unduh lagi</string>

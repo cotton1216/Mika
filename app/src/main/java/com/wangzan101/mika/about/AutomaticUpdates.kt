@@ -55,7 +55,7 @@ internal class AutomaticUpdates(context: Context, private val updater: ApkUpdate
                             if (enabled.value && release.apkUrl != dismissedUrl) _ready.value = release
                             break
                         }
-                        DownloadPhase.Downloading, DownloadPhase.Paused -> delay(1000)
+                        DownloadPhase.Pending, DownloadPhase.Downloading, DownloadPhase.Paused -> delay(1000)
                         DownloadPhase.Idle, DownloadPhase.Failed -> break
                     }
                 }

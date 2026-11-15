@@ -1,12 +1,21 @@
 package com.wangzan101.mika.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
-import androidx.activity.compose.rememberLauncherForActivityResult
+import android.text.format.Formatter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -81,11 +91,21 @@ internal fun UpdateDownloadControls(release: ReleaseInfo) {
         if (context.packageManager.canRequestPackageInstalls()) install()
     }
 
+    // Android 13+ 通知权限被拒时,后台下载/前台服务的进度通知都看不到;下载前先申请,便于用户打开通知栏跟踪进度。
+    val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
+    fun ensureNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     LaunchedEffect(release.apkUrl, refresh) {
         try {
             do {
                 state = withContext(Dispatchers.IO) { updater.state(release) }
-                if (state.phase !in listOf(DownloadPhase.Downloading, DownloadPhase.Paused)) break
+                if (state.phase !in listOf(DownloadPhase.Pending, DownloadPhase.Downloading, DownloadPhase.Paused)) break
                 delay(1000)
             } while (true)
         } catch (e: CancellationException) {
@@ -96,7 +116,10 @@ internal fun UpdateDownloadControls(release: ReleaseInfo) {
     }
 
     UpdateDownloadActions(state, busy, error,
-        onDownload = { run { withContext(Dispatchers.IO) { updater.download(release) } } },
+        onDownload = {
+            ensureNotification()
+            run { withContext(Dispatchers.IO) { updater.download(release) } }
+        },
         onCancel = {
             run {
                 withContext(Dispatchers.IO) { updater.cancel() }
@@ -122,10 +145,11 @@ internal fun UpdateDownloadActions(
     onInstall: () -> Unit,
     onCancel: () -> Unit,
 ) {
-    val active = state.phase == DownloadPhase.Downloading || state.phase == DownloadPhase.Paused
+    val active = state.phase in listOf(DownloadPhase.Pending, DownloadPhase.Downloading, DownloadPhase.Paused)
     val text = when {
         busy -> stringResource(R.string.about_update_working)
         state.phase == DownloadPhase.Paused -> stringResource(R.string.about_update_paused)
+        state.phase == DownloadPhase.Pending -> stringResource(R.string.about_update_waiting)
         active -> state.percent?.let { stringResource(R.string.about_update_progress, it) }
             ?: stringResource(R.string.about_update_downloading)
         state.phase == DownloadPhase.Ready -> stringResource(R.string.about_update_install)
@@ -137,6 +161,19 @@ internal fun UpdateDownloadActions(
     if (active || state.phase == DownloadPhase.Ready) {
         MikaButton(stringResource(R.string.about_update_cancel), onCancel,
             Modifier.fillMaxWidth().padding(top = 10.dp), kind = ButtonKind.Tonal, enabled = !busy)
+    }
+    // 系统还在排队(Pending)时拿不到总大小,只有进度条会很可疑,所以只等有真实字节数再画。
+    val percent = state.percent
+    if (active && percent != null) {
+        val context = LocalContext.current
+        Box(Modifier.fillMaxWidth().padding(top = 12.dp).height(4.dp)
+            .clip(RoundedCornerShape(2.dp)).background(MikaTheme.colors.ink3.copy(alpha = 0.22f))) {
+            Box(Modifier.fillMaxWidth((percent / 100f).coerceIn(0f, 1f)).fillMaxHeight()
+                .background(MikaTheme.colors.accent))
+        }
+        Text("$percent% · ${Formatter.formatShortFileSize(context, state.bytes)} / " +
+            Formatter.formatShortFileSize(context, state.total),
+            Modifier.padding(top = 6.dp), style = MikaType.Caption, color = MikaTheme.colors.ink3)
     }
     val note = error ?: if (state.phase == DownloadPhase.Failed) R.string.about_update_error else R.string.about_update_install_hint
     Text(stringResource(note),

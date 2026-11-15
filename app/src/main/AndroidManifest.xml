@@ -340,6 +340,21 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <!-- 应用内下载更新(绑定 Wi-Fi 或走代理)时保活并显示进度,下完即撤 -->
+        <service
+            android:name=".about.ApkDownloadForeground"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- 系统下载完成后补一条「已下载」通知,点了回应用而不是直接开安装包 -->
+        <receiver
+            android:name=".about.ApkDownloadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
         <!-- 网页上传:把暂存的上传文件以只读 content:// 地址交给内置浏览器的文件选择框,不对外导出。
              FileProvider 要求 grantUriPermissions=true,否则进程启动时就抛异常;
              这里从不把地址授权给别的 App,读取方只有本进程里的 WebView。 -->

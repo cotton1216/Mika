@@ -39,6 +39,8 @@
     <string name="about_update_download_in_app">Baixar atualização</string>
     <string name="about_update_downloading">Baixando…</string>
     <string name="about_update_progress">Baixando %1$d%%</string>
+    <string name="about_update_waiting">Aguardando a rede…</string>
+    <string name="notif_channel_update">Atualizações do aplicativo</string>
     <string name="about_update_paused">Download pausado; ele continuará automaticamente…</string>
     <string name="about_update_install">Instalar atualização</string>
     <string name="about_update_retry">Baixar de novo</string>

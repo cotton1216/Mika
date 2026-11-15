@@ -39,6 +39,8 @@
     <string name="about_update_download_in_app">下载更新</string>
     <string name="about_update_downloading">正在下载…</string>
     <string name="about_update_progress">正在下载 %1$d%%</string>
+    <string name="about_update_waiting">等待网络连接…</string>
+    <string name="notif_channel_update">应用更新</string>
     <string name="about_update_paused">下载暂停，稍后自动继续…</string>
     <string name="about_update_install">安装更新</string>
     <string name="about_update_retry">重新下载</string>

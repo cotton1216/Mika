@@ -16,7 +16,8 @@ import java.net.Proxy
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-enum class DownloadPhase { Idle, Downloading, Paused, Ready, Failed }
+/** Pending 是系统还压着任务、一个字节都没开始(例如网络没通过校验)。 */
+enum class DownloadPhase { Idle, Pending, Downloading, Paused, Ready, Failed }
 
 data class ApkDownloadState(
     val phase: DownloadPhase = DownloadPhase.Idle,
@@ -52,7 +53,8 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
             if (cursor.moveToFirst()) {
                 fun number(column: String) = cursor.getLong(cursor.getColumnIndexOrThrow(column))
                 val phase = when (number(DownloadManager.COLUMN_STATUS).toInt()) {
-                    DownloadManager.STATUS_PENDING, DownloadManager.STATUS_RUNNING -> DownloadPhase.Downloading
+                    DownloadManager.STATUS_PENDING -> DownloadPhase.Pending
+                    DownloadManager.STATUS_RUNNING -> DownloadPhase.Downloading
                     DownloadManager.STATUS_PAUSED -> DownloadPhase.Paused
                     DownloadManager.STATUS_SUCCESSFUL -> if (file?.isFile == true) DownloadPhase.Ready else DownloadPhase.Failed
                     else -> DownloadPhase.Failed
@@ -81,8 +83,10 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
         // remove 的后台清理可能晚于下一次下载,不能复用旧任务的文件名。
         val target = File(folder, "update-${UUID.randomUUID()}.apk")
         if (wifi != null || proxy != null) {
-            check(prefs.edit().putBoolean("viaApp", true).putString("url", url).putString("file", target.name).commit()) { "could not save download" }
+            check(prefs.edit().putBoolean("viaApp", true).putString("url", url)
+                .putString("file", target.name).putString("version", release.version).commit()) { "could not save download" }
             proxied.start(url, target, wifi, proxy?.javaProxy() ?: Proxy.NO_PROXY)
+            ApkDownloadForeground.start(context)
             return
         }
         val request = DownloadManager.Request(Uri.parse(url))
@@ -92,7 +96,8 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
             .setDestinationUri(Uri.fromFile(target))
         val id = manager.enqueue(request)
-        if (!prefs.edit().putLong("id", id).putString("url", url).putString("file", target.name).commit()) {
+        if (!prefs.edit().putLong("id", id).putString("url", url).putString("file", target.name)
+                .putString("version", release.version).commit()) {
             manager.remove(id)
             error("could not save download")
         }
@@ -100,7 +105,10 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
 
     @Synchronized
     fun cancel() {
-        if (viaApp) proxied.cancel()
+        if (viaApp) {
+            proxied.cancel()
+            ApkDownloadForeground.stop(context)
+        }
         val id = prefs.getLong("id", -1)
         if (id != -1L) manager.remove(id)
         val target = file
@@ -164,10 +172,19 @@ class ApkUpdater(private val context: Context, private val net: NetProxy = NetPr
         return info.signingCertificateHistory.orEmpty().map { ApkIntegrity.sha256(it.toByteArray()) }.toSet()
     }
 
-    private companion object {
+    internal companion object {
         /** 进程内只下载一份更新。 */
         val proxied by lazy {
             ProxiedApkDownload(NetProxy.shared.client(OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)))
+        }
+
+        /** 前台服务轮询进程内下载进度;不是应用内下载时返回 Idle。 */
+        fun progress(context: Context): ApkDownloadState {
+            val prefs = context.getSharedPreferences("apk-update", Context.MODE_PRIVATE)
+            if (!prefs.getBoolean("viaApp", false)) return ApkDownloadState()
+            val name = prefs.getString("file", null) ?: return ApkDownloadState()
+            val folder = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) ?: return ApkDownloadState()
+            return proxied.state(File(File(folder, "updates"), name))
         }
 
         @Suppress("DEPRECATION")
