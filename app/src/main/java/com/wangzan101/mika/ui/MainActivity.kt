@@ -839,9 +839,8 @@ private fun MikaRoot(
                     Route.Calls -> CallSettingsScreen(app.calls, onBack = back, standalone = true, initialHistoryCallId = focusedCallHistoryId)
                 }
             }
-            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接。
-            // 导航栈由 RemoteScreen 内部在 active 由 false 变 true 时清空 —— 切回如意
-            // 一律落在会话列表首页,不恢复上次停留的会话详情/设置页。
+            // 如意(远程电脑)常驻组合:切走只隐藏不销毁,保住 session/连接与导航栈。
+            // 切回如意恢复切走前停留的页面(会话详情/设置等),不重置导航栈。
             Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyi)) {
                 RemoteScreen(
                     callback = remoteCallback,
@@ -955,7 +954,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
     val halfButtonPx = buttonPx / 2
     val itemW = with(density) { 84.dp.roundToPx() }
     val itemH = with(density) { 40.dp.roundToPx() }
-    val marginPx = with(density) { 8.dp.roundToPx() }
+    val marginPx = with(density) { 16.dp.roundToPx() }
     val topSafePx = with(density) { 20.dp.roundToPx() }
     // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
     val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }

@@ -193,7 +193,7 @@ private fun SessionList(
     val p = LocalRuyiPalette.current
     val sessions = state.sessions
     Column(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(horizontal = Space.page)) {
+        Column(Modifier.padding(start = Space.page, end = Space.page, top = Space.l)) {
             Row(
                 Modifier.fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
