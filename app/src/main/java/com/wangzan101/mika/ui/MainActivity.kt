@@ -105,6 +105,16 @@ import com.wangzan101.mika.ui.theme.MikaType
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.zIndex
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.foundation.layout.offset
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     private lateinit var monitor: SystemStatusMonitor
@@ -562,8 +572,9 @@ private fun MikaRoot(
     val back: () -> Unit = { nav.back() }
     // 聊天页离开组合树时保留列表位置和输入内容，返回设置页等子页面后原样恢复。
     val screenStates = rememberSaveableStateHolder()
-    Column(Modifier.fillMaxSize()) {
-        // 顶部居中悬浮导航胶囊:浮在状态栏下方,圆角玻璃底 + 阴影,不占满宽。
+    Box(Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
+            // 顶部居中悬浮导航胶囊:浮在状态栏下方,圆角玻璃底 + 阴影,不占满宽。
         Box(Modifier.fillMaxWidth().statusBarsPadding().padding(vertical = 6.dp), contentAlignment = Alignment.Center) {
             RootFloatingNav(selectedTab, onSelect = { selectedTab = it })
         }
@@ -826,6 +837,8 @@ private fun MikaRoot(
             }
         }
     }
+        FloatingDock(selectedTab, onSelect = { selectedTab = it })
+    }
 }
 
 /**
@@ -884,6 +897,130 @@ private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onC
             color = if (selected) c.onAccent else c.ink2,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
         )
+    }
+}
+
+/**
+ * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开弹出「如愿 / 如意」两个扇形菜单项,
+ * 点空白处收起;按住拖动可把它移到任意位置(自动夹在安全区内,保证扇形展开时不越界)。
+ * 顶部悬浮胶囊保留,和它并存,方便对比哪种更顺手。
+ */
+@Composable
+private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit) {
+    val c = MikaTheme.colors
+    val density = LocalDensity.current
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    // 悬浮球圆心的像素坐标;-1 表示还没落位,首次布局给个默认位置(靠右、纵向居中)。
+    var centerX by rememberSaveable { mutableStateOf(-1) }
+    var centerY by rememberSaveable { mutableStateOf(-1) }
+    val progress by animateFloatAsState(if (expanded) 1f else 0f, label = "dock")
+
+    val buttonPx = with(density) { 52.dp.roundToPx() }
+    val halfButtonPx = buttonPx / 2
+    val itemW = with(density) { 84.dp.roundToPx() }
+    val itemH = with(density) { 40.dp.roundToPx() }
+    val radiusPxF = with(density) { 76.dp.toPx() }
+    val marginPx = with(density) { 14.dp.roundToPx() }
+    // 扇形朝上展开:横向上最远到 sin48°,纵向上最远到 cos48°;两项拉开一点更有扇形的感觉。
+    val spread = 48.0 * (Math.PI / 180.0)
+    val fanReachX = (radiusPxF * Math.sin(spread).toFloat() + itemW / 2f).roundToInt() + marginPx
+    val fanReachY = (radiusPxF * Math.cos(spread).toFloat() + itemH / 2f).roundToInt() + marginPx
+    val topSafePx = with(density) { 28.dp.roundToPx() }
+    val bottomMarginPx = with(density) { 24.dp.roundToPx() }
+
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val maxW = constraints.maxWidth
+        val maxH = constraints.maxHeight
+        val minCx = fanReachX
+        val maxCx = maxW - fanReachX
+        val minCy = topSafePx + fanReachY
+        val maxCy = maxH - halfButtonPx - bottomMarginPx
+        val cur = if (centerX >= 0) IntOffset(centerX, centerY) else IntOffset(maxW - fanReachX, (minCy + maxCy) / 2)
+
+        // 展开时铺一层透明遮罩,点空白处收起。
+        if (expanded) {
+            Box(
+                Modifier.fillMaxSize().clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { expanded = false },
+            )
+        }
+
+        // 扇形菜单项:从圆心沿弧线弹出(如愿在左、如意在右)。
+        val items = listOf(
+            Triple(MikaIcons.Message, "如愿", RootTab.Ruyuan),
+            Triple(MikaIcons.Desktop, "如意", RootTab.Ruyi),
+        )
+        items.forEachIndexed { index, (icon, label, tab) ->
+            val angle = spread * (index - (items.size - 1) / 2.0)
+            val dx = (radiusPxF * Math.sin(angle).toFloat() * progress).roundToInt()
+            val dy = (-radiusPxF * Math.cos(angle).toFloat() * progress).roundToInt()
+            DockItem(
+                icon, label, selected == tab,
+                onClick = { onSelect(tab); expanded = false },
+                modifier = Modifier
+                    .offset { IntOffset(cur.x + dx - itemW / 2, cur.y + dy - itemH / 2) }
+                    .graphicsLayer { alpha = progress },
+            )
+        }
+
+        // 悬浮球本体。
+        Box(
+            Modifier
+                .offset { IntOffset(cur.x - halfButtonPx, cur.y - halfButtonPx) }
+                .size(52.dp)
+                .floatShadow(c, MikaShapes.Pill)
+                .clip(MikaShapes.Pill)
+                .background(c.accent)
+                .border(0.5.dp, c.glassEdge, MikaShapes.Pill)
+                .pointerInput(maxW, maxH) {
+                    detectDragGestures(
+                        onDrag = { change, amount ->
+                            change.consume()
+                            val baseX = if (centerX >= 0) centerX else cur.x
+                            val baseY = if (centerY >= 0) centerY else cur.y
+                            centerX = (baseX + amount.x).roundToInt().coerceIn(minCx, maxCx)
+                            centerY = (baseY + amount.y).roundToInt().coerceIn(minCy, maxCy)
+                        },
+                    )
+                }
+                .clickable { expanded = !expanded },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                if (expanded) MikaIcons.Close else MikaIcons.Apps,
+                null,
+                Modifier.size(22.dp),
+                tint = c.onAccent,
+            )
+        }
+    }
+}
+
+@Composable
+private fun DockItem(
+    icon: ImageVector,
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val c = MikaTheme.colors
+    Row(
+        modifier
+            .size(width = 84.dp, height = 40.dp)
+            .floatShadow(c, MikaShapes.Pill)
+            .clip(MikaShapes.Pill)
+            .background(if (selected) c.accent else c.surface)
+            .border(0.5.dp, c.glassEdge, MikaShapes.Pill)
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Icon(icon, null, Modifier.size(18.dp), tint = if (selected) c.onAccent else c.ink)
+        Spacer(Modifier.size(6.dp))
+        Text(label, style = MikaType.Label, color = if (selected) c.onAccent else c.ink)
     }
 }
 
