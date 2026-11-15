@@ -86,22 +86,17 @@ import com.wangzan101.mika.ui.theme.appearanceDark
 import com.wangzan101.mika.ui.theme.systemBarsFor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaSize
-import com.wangzan101.mika.ui.theme.MikaType
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.zIndex
@@ -844,12 +839,12 @@ private fun Modifier.tabContent(visible: Boolean): Modifier =
             }
         )
 
-/** 顶部双 Tab:如愿(对话)｜如意(远程电脑)。选中项用强调色,未选中用辅助色。 */
+/** 顶部双 Tab:如愿(对话)｜如意(远程电脑)。纯图标,选中项用强调色,未选中用辅助色。 */
 @Composable
 private fun RootTabBar(selected: RootTab, onSelect: (RootTab) -> Unit) {
     val c = MikaTheme.colors
     Column(Modifier.fillMaxWidth().background(c.glass).statusBarsPadding()) {
-        Row(Modifier.fillMaxWidth().height(56.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().height(48.dp), verticalAlignment = Alignment.CenterVertically) {
             RootTabItem(MikaIcons.Message, "如愿", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
             RootTabItem(MikaIcons.Desktop, "如意", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }
         }
@@ -859,18 +854,12 @@ private fun RootTabBar(selected: RootTab, onSelect: (RootTab) -> Unit) {
 @Composable
 private fun RowScope.RootTabItem(icon: ImageVector, label: String, selected: Boolean, onClick: () -> Unit) {
     val c = MikaTheme.colors
-    Column(
+    Box(
         Modifier.weight(1f).fillMaxHeight().clickable(onClick = onClick),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, null, Modifier.size(MikaSize.Icon), tint = if (selected) c.accent else c.ink3)
-        Text(
-            label,
-            style = MikaType.Hint,
-            color = if (selected) c.accent else c.ink2,
-            fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
-        )
+        // 纯图标 Tab:文字只留给无障碍描述,不在界面上渲染。
+        Icon(icon, label, Modifier.size(MikaSize.Icon), tint = if (selected) c.accent else c.ink3)
     }
 }
 
