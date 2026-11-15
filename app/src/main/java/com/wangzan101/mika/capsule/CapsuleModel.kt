@@ -10,6 +10,8 @@ import com.wangzan101.mika.core.agent.TaskState
 import com.wangzan101.mika.takeover.Takeover
 import com.wangzan101.mika.task.SteerNote
 import com.wangzan101.mika.ui.Exchange
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /** 设置里「悬浮胶囊」的三选一;存成名字,认不出(没设过、旧版本)时是默认的「一直显示」(随时能双击发这一屏)。 */
 enum class CapsuleMode {
@@ -33,6 +35,28 @@ enum class CapsuleIdleOpacity(val percent: Int) {
         fun parse(percent: Int): CapsuleIdleOpacity = entries.firstOrNull { it.percent == percent } ?: DEFAULT
     }
 }
+
+/** 展开的胶囊卡片整体缩放的档位;滑块只停在这四档,设置里存百分比(85 = 0.85×)。只缩放展开的卡片,
+ * 收起的一颗、胶囊条和按住说话面板不跟着变。 */
+enum class CapsuleCardScale(val percent: Int) {
+    Small(85), Normal(100), Large(115), XLarge(130);
+
+    val factor: Float get() = percent / 100f
+
+    /**
+     * 卡片在缩放前用的宽(标准 dp):卡片内容按 [factor] 放大渲染,所以上限除回 [factor],
+     * 任何档位渲染出来都不超过「屏宽 − 24dp」、不小于 240dp,和标准档同一个界。
+     */
+    fun width(screenWidthDp: Int): Dp = minOf(CardWidth, ((screenWidthDp - 24) / factor).coerceAtLeast(240f / factor).dp)
+
+    companion object {
+        val DEFAULT = Normal
+        fun parse(percent: Int): CapsuleCardScale = entries.firstOrNull { it.percent == percent } ?: DEFAULT
+    }
+}
+
+/** 标准档下卡片的宽;放大、缩小档见 [CapsuleCardScale.width]。 */
+val CardWidth = 322.dp
 
 /**
  * 一个任务此刻的样子:编号([TaskRun.key])、所在对话、状态、接管走到哪一步;
@@ -58,7 +82,7 @@ data class CapsuleRun(
 )
 
 /**
- * 决定胶囊显示什么的全部输入:各任务([runs],含刚结束、状态已是终态的)、开关、Mika 自己的界面在不在前台、
+ * 决定胶囊显示什么的全部输入:各任务([runs],含刚结束、状态已是终态的)、开关、如愿自己的界面在不在前台、
  * 屏幕亮着且没锁、无障碍服务在运行且浮层画得出来、卡片是不是展开着([cardOpen])、任务结束后留在后台运行的那一页([kept])。
  */
 data class CapsuleInputs(
@@ -69,6 +93,7 @@ data class CapsuleInputs(
     val serviceAvailable: Boolean,
     val cardOpen: Boolean = false,
     val kept: KeptPage? = null,
+    val fullscreen: Boolean = false,
 )
 
 /** 胶囊的状态,按优先级从高到低排([ordinal] 小的先显示);[Idle] 是「一直显示」时没任务的图标。 */
@@ -94,7 +119,7 @@ sealed interface CapsuleView {
     /**
      * 显示胶囊(或「你在处理」那一条):[text] 是那一行字(已拼好「共 N 件」),[detail] 只在 [CapsuleKind.HandedOver] 时有,
      * 是那条下面的小字。[count] 是进行中的任务数,[needCount] 是其中要你处理的件数。
-     * [runKey]/[conversationId] 是胶囊说的那件事。平时是一颗 Mika 图标(状态画在圈和角标上),
+     * [runKey]/[conversationId] 是胶囊说的那件事。平时是一颗如愿图标(状态画在圈和角标上),
      * [pill] 时展开成带这一行字的胶囊(有要你处理的、刚办完时)。[widthEpoch] 不变时胶囊只变宽不变窄,
      * 变了(换了状态或换了一件事)重新定宽。
      */
@@ -113,7 +138,7 @@ sealed interface CapsuleView {
 
 /**
  * 胶囊的纯逻辑:每次输入变了(或到了 [nextChangeAt])调 [update],得到此刻该显示什么。规则:
- * - 不显示:开关关着、无障碍服务不可用、Mika 自己的界面在前台、屏幕关着或锁着;
+ * - 不显示:开关关着、无障碍服务不可用、如愿自己的界面在前台、屏幕关着或锁着;
  * - 一次只显示最要紧的那件事,优先级见 [CapsuleKind];好几件事时拼上「共 N 件」,有要你处理的变橙:「1 件要你处理 · 共 2 件」;
  * - 平时是一颗图标:在跑、等条件时只在圈和角标上变,换了一步不展开;
  * - 有要你处理的、而用户还没在卡片里看过它时展开成胶囊,一直停着,直到打开卡片或那件事不再要你;
@@ -180,7 +205,7 @@ class CapsuleModel(private val reasonLabel: (String) -> String? = { null }) {
         seen.retainAll(marks)
         if (inputs.cardOpen) seen += marks
 
-        if (inputs.mode == CapsuleMode.Off || !inputs.serviceAvailable || inputs.mikaInForeground || !inputs.screenInteractive) {
+        if (inputs.mode == CapsuleMode.Off || !inputs.serviceAvailable || inputs.fullscreen || inputs.mikaInForeground || !inputs.screenInteractive) {
             // 再出现时直接显示最新的那句,不接着上次的节流
             shownIdentity = null
             shownText = null

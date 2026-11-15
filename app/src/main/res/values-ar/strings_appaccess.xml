@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">الوصول إلى التطبيقات</string>
     <string name="appaccess_row_sub">حظر التطبيقات ومشاركة الشاشة لكل تطبيق</string>
-    <string name="appaccess_intro">اختر التطبيقات التي يجوز لـ Mika قراءتها والتفاعل معها باستخدام أدوات الهاتف القياسية. لا يقيّد هذا الإعداد أوامر الصدفة أو البيئة المعزولة أو الوصول إلى الكمبيوتر (MCP).</string>
+    <string name="appaccess_intro">اختر التطبيقات التي يجوز لـ 如愿 قراءتها والتفاعل معها باستخدام أدوات الهاتف القياسية. لا يقيّد هذا الإعداد أوامر الصدفة أو البيئة المعزولة أو الوصول إلى الكمبيوتر (MCP).</string>
     <string name="appaccess_privacy">يرسل التصنيف أسماء التطبيقات وأسماء الحزم إلى نموذج الذكاء الاصطناعي؛ أما «تحديث قائمة التطبيقات» فيطلب موافقتك أولاً.</string>
     <string name="appaccess_unavailable">تعذر قراءة إعدادات الوصول إلى التطبيقات، لذا أُوقف الوصول القياسي إلى الهاتف. يؤدي إعادة الضبط إلى مسح الأذونات والتصنيفات المحفوظة.</string>
     <string name="appaccess_reset">إعادة ضبط الوصول إلى التطبيقات</string>
@@ -21,7 +21,7 @@
     <string name="appaccess_send_confirm">متابعة التصنيف</string>
     <string name="appaccess_cancel">إلغاء</string>
     <string name="appaccess_recommend_title">يوصى بحظره: تطبيقات مالية</string>
-    <string name="appaccess_recommend_body">صُنّفت هذه التطبيقات على أنها مالية أو خاصة بالمدفوعات، ولا يزال بإمكان Mika تشغيلها. احظرها واحداً تلو الآخر أو كلها دفعة واحدة.</string>
+    <string name="appaccess_recommend_body">صُنّفت هذه التطبيقات على أنها مالية أو خاصة بالمدفوعات، ولا يزال بإمكان 如愿 تشغيلها. احظرها واحداً تلو الآخر أو كلها دفعة واحدة.</string>
     <string name="appaccess_recommend_empty">لا شيء لحظره.</string>
     <string name="appaccess_block">حظر</string>
     <string name="appaccess_block_all">حظر الكل</string>

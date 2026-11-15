@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
-/** Mika 的无障碍服务:操作和事件转给当前已连接实例,任务持有旧实例时也能在重连后恢复。 */
+/** 如愿的无障碍服务:操作和事件转给当前已连接实例,任务持有旧实例时也能在重连后恢复。 */
 open class ScreenAccessibility : AccessibilityService() {
 
     private class DisplayEvent(val displayId: Int, val event: AccessibilityEvent)
@@ -135,7 +135,7 @@ open class ScreenAccessibility : AccessibilityService() {
             }
             if (!service.dispatchGesture(gesture, callback, null) && cont.isActive) cont.resume(false)
         }
-        // 注入是在用户屏幕上操作别的 App,不是操作 Mika 自己的浮层;所有单点、双击和拖动统一隔离
+        // 注入是在用户屏幕上操作别的 App,不是操作如愿自己的浮层;所有单点、双击和拖动统一隔离
         return service.overlayHost?.passInjectedGesturesThrough { send() } ?: send()
     }
 
@@ -147,7 +147,7 @@ open class ScreenAccessibility : AccessibilityService() {
     }
 
     /**
-     * 截一张主屏(用户看着的那块屏,包括 Mika 自己的浮层:要不要藏起来由调用方定)。系统限制两次截图至少隔一会儿,
+     * 截一张主屏(用户看着的那块屏,包括如愿自己的浮层:要不要藏起来由调用方定)。系统限制两次截图至少隔一会儿,
      * 太快时等一秒再截一次。画面是软件位图(可以读像素、编码)。
      */
     suspend fun takeMainScreenshot(): MainShot {

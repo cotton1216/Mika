@@ -70,6 +70,8 @@ object ProviderPresets {
         // Key 是控制台生成的 bce-v3/… 那一串,照 Bearer 发
         ProviderPreset("百度千帆", ProviderConfig.Kind.OpenAiCompat, "https://qianfan.baidubce.com/v2", caps(), familyTokens = listOf("ernie")),
         ProviderPreset("OpenRouter", ProviderConfig.Kind.OpenAiCompat, "https://openrouter.ai/api/v1", caps()),
+        // 如意:OpenAI 兼容接口,Base URL 是推理根(列模型、调用都在这下面);也支持用如意账号登录(见 SignInKind.Ruyi)。
+        ProviderPreset("如意", ProviderConfig.Kind.OpenAiCompat, "https://ai.thchengtay.com/aiserver/v1", caps()),
         ProviderPreset("Requesty", ProviderConfig.Kind.OpenAiCompat, "https://router.requesty.ai/v1", caps()),
         // 订阅制,一个 Key 用多家模型;各模型走哪种协议、哪个地址由模型列表逐个写明,这里的接口类型只是没写明时的退路。
         // 每个请求都要带对话的会话号,不带就拒绝(HTTP 400)

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Mika</string>
-    <string name="a11y_service_description">This system permission lets Mika read and operate what\'s on any screen. Mika uses it only on its own virtual screen to do the tasks you give it, and acts on your main screen only when you hand it a task there.</string>
+    <string name="calls_completed_notification_channel">AI call notifications</string>
+    <string name="calls_completed_notification_title">AI answered a call</string>
+    <string name="calls_completed_notification_title_outgoing">AI call completed</string>
+    <string name="calls_completed_notification_text">Tap to view call details</string>
+    <string name="calls_summary_enable">Generate AI call summaries and follow-ups</string>
+    <string name="calls_summary_cloud_consent">When enabled, the transcript is sent to your selected AI model service for summarization. The original transcript remains encrypted on this device. No transcript is sent while this is off.</string>
+    <string name="calls_summary_failed">Could not generate a summary. You can retry from this call\'s details.</string>
+    <string name="calls_summary_generating">Generating summary…</string>
+    <string name="calls_summary_retry">Retry summary</string>
+    <string name="calls_summary_purpose">Call purpose</string>
+    <string name="calls_summary_highlights">Highlights</string>
+    <string name="calls_summary_conclusion">Conclusion</string>
+    <string name="calls_summary_uncertainties">Unconfirmed details</string>
+    <string name="calls_summary_actions">Follow-ups and status</string>
+    <string name="calls_summary_pending">Pending</string>
+    <string name="calls_summary_done">Done</string>
+    <string name="calls_summary_unknown">Unknown</string>
+    <string name="app_name" translatable="false">如愿</string>
+    <string name="a11y_service_description">This system permission lets 如愿 read and operate what\'s on any screen. 如愿 uses it only on its own virtual screen to do the tasks you give it, and acts on your main screen only when you hand it a task there.</string>
     <string name="channel_attention">Needs you</string>
     <string name="takeover_title">Needs you</string>
     <string name="takeover_title_reason">Needs you: %1$s</string>
@@ -13,15 +30,15 @@
     <string name="takeover_handed_over_hint">The app is now on your main screen. Tap “Done” when you\'re finished; if you\'ve already done the whole thing yourself, tap “I did it myself”.</string>
     <string name="takeover_web_busy">A website sign-in is open in Settings. Tap “Done” there first, then tap “I’ll handle it”.</string>
     <string name="takeover_move_to_main_failed">Couldn’t move the app to the main screen. Tap “I’ll handle it” to try again.</string>
-    <string name="takeover_move_back_failed">Couldn’t move the app back to Mika’s screen. Try again.</string>
+    <string name="takeover_move_back_failed">Couldn’t move the app back to 如愿’s screen. Try again.</string>
     <string name="action_take_over">I’ll handle it</string>
     <string name="action_hand_back">Done</string>
     <string name="action_finished_myself">I did it myself</string>
     <string name="action_skip">Skip</string>
     <string name="action_cancel_task">Cancel task</string>
     <string name="input_title">Needs your answer</string>
-    <string name="no_answer_note">If there’s no answer within %1$d min, Mika will go on without one.</string>
-    <string name="input_too_late">Too late: after %1$d min Mika went on without an answer.</string>
+    <string name="no_answer_note">If there’s no answer within %1$d min, 如愿 will go on without one.</string>
+    <string name="input_too_late">Too late: after %1$d min 如愿 went on without an answer.</string>
     <string name="action_approve">Approve</string>
     <string name="action_decline">Decline</string>
     <string name="confirmation_locked_hint">Unlock to see the recipient and content</string>
@@ -128,7 +145,17 @@
     <string name="terminal_close_confirm">Close</string>
     <string name="terminal_retry">Open again</string>
     <string name="terminal_stop">Stop</string>
-    <string name="terminal_task_running">Mika is working in this workspace too; changes from both sides may interfere.</string>
+    <string name="terminal_task_running">如愿 is working in this workspace too; changes from both sides may interfere.</string>
     <string name="terminal_copy_all">Copy all</string>
     <string name="terminal_copied">Copied</string>
+    <string name="personal_replay_title">Phone screen</string>
+    <string name="personal_replay_close">Close</string>
+    <string name="personal_replay_live_screen">Live phone screen</string>
+    <string name="personal_replay_recorded_screen">Recorded task screen</string>
+    <string name="personal_replay_loading">Loading screen…</string>
+    <string name="personal_replay_empty">No recording available yet.</string>
+    <string name="personal_replay_live">Live</string>
+    <string name="personal_replay_pause">Pause</string>
+    <string name="personal_replay_play">Play</string>
+    <string name="personal_replay_return_live">Return to live</string>
 </resources>

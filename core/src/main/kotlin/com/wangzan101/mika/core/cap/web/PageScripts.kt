@@ -10,7 +10,7 @@ import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
 
 /**
- * 页面脚本(web_script)里 `mika.*` 的调用交给 Mika 的入口。端口只管传话:
+ * 页面脚本(web_script)里 `mika.*` 的调用交给如愿的入口。端口只管传话:
  * 每个调用原样交给 [call],返回值(`{ok, value}` 或 `{ok:false, error, message}`)原样交回脚本。
  * 读页面的调用(query、queryAll、text)返回 `{ok:true, read:{…}}`:参数已校验、已计数,由端口在读取世界里照它读。
  */
@@ -40,8 +40,8 @@ data class ScriptCall(val id: Int, val op: String, val args: JsonObject)
  * - 脚本世界:一个新的隔离世界,前置脚本只做两件事——用事先存下的 AsyncFunction 编译模型代码,把这个世界全局对象上
  *   (含原型链)所有名字都当成参数遮住、传 undefined,只放行 [ALLOWED_GLOBALS](纯 ECMAScript 内置,碰不到 DOM);
  *   再把能把字符串当代码跑、能拿到全局对象的路(Function 构造器家族、eval、调用栈 API)封掉。模型代码能用的只有 `mika`,
- *   `mika` 的每个调用都是发给 Mika 的 JSON 消息,回来的也只是 JSON。
- * - 读取世界:另一个隔离世界,只装固定的 [READER](Mika 自己写的),按校验过的参数读 DOM、返回纯数据(密码一类的值打码);
+ *   `mika` 的每个调用都是发给如愿的 JSON 消息,回来的也只是 JSON。
+ * - 读取世界:另一个隔离世界,只装固定的 [READER](如愿自己写的),按校验过的参数读 DOM、返回纯数据(密码一类的值打码);
  *   模型代码和它不在一个世界,拿不到它手里的任何对象。
  */
 object PageScriptProtocol {

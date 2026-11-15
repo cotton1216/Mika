@@ -11,8 +11,10 @@ import android.app.Application
 import android.net.Uri
 import android.util.Log
 import com.wangzan101.mika.chat.AndroidBranchWorkspace
+import com.wangzan101.mika.chat.AutoArchive
 import com.wangzan101.mika.chat.ConversationDeleter
 import com.wangzan101.mika.chat.ConversationStore
+import com.wangzan101.mika.chat.CurrentChat
 import com.wangzan101.mika.chat.SharedDraftStore
 import com.wangzan101.mika.core.cap.sandbox.SandboxStatus
 import com.wangzan101.mika.cap.sandbox.AndroidSandbox
@@ -163,7 +165,8 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
 
     /** 模型配置与 Key;建出的模型都套上计量,记到 [usage]。 */
     override val providers: ProviderStore by lazy {
-        ProviderStore.create(this, usage, "Mika/${BuildConfig.VERSION_NAME}", usage::providerTokensToday)
+        // User-Agent 只能是 ASCII(OkHttp 直接拒中文,见 ClientHeaders),品牌中文名只用在界面上。
+        ProviderStore.create(this, usage, "Yuan/${BuildConfig.VERSION_NAME}", usage::providerTokensToday)
     }
 
     /** 语音转文字的选择:整个进程一份,设置页改了输入框立刻看得到(两份实例互相看不到对方的 set)。 */
@@ -273,8 +276,14 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
     /** 各 Run 的队列与展示状态跟 App 进程走，Service 重建时继续使用同一份。 */
     val taskState = TaskCenterState()
 
-    /** Mika 自己的界面此刻看不看得见。 */
+    /** 长期个人主会话与其独立任务，由进程持有。 */
+    val personal by lazy { com.wangzan101.mika.personal.PersonalRuntime(this) }
+
+    /** 如愿自己的界面此刻看不看得见。 */
     val foreground = AppForeground()
+
+    /** 自身操作的进程内 UI 请求(开 Mika 的页/文件);任务服务发,MainActivity 处理。 */
+    val selfUi = com.wangzan101.mika.self.SelfUi()
 
     /** 检查更新:查到的新版本跟进程走,侧栏、设置首页、关于页的红点看同一份。 */
     val updates: com.wangzan101.mika.about.UpdateChecker by lazy {
@@ -331,7 +340,7 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
                 override fun answerIn(conversationId: String, text: String) { key(conversationId)?.let { TaskService.answer(app, text, it) } }
                 override fun approveIn(conversationId: String, key: Int) { key(conversationId)?.let { TaskService.approve(app, key, it) } }
                 override fun declineIn(conversationId: String, key: Int) { key(conversationId)?.let { TaskService.decline(app, key, it) } }
-                override fun unmuteIn(conversationId: String) { taskState.run(conversationId)?.unmute() }
+                override fun togglePipSoundIn(conversationId: String) { taskState.run(conversationId)?.togglePipSound() }
             },
             conversations,
             followUps = followUpQueue.changes,
@@ -397,19 +406,19 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
         registerActivityLifecycleCallbacks(foreground)
         val flags = FeatureFlags.get(this)
         // 用户点了「完全退出」:进程可能被无障碍服务重新拉起。胶囊照样接线(开关按退出算关着,见 CapsuleController),
-        // 但运行环境准备和没结束的运行的善后先不做,免得刚退出就冒出一条通知;用户下次打开 Mika 时补上(见 [resumeAfterQuit])。
+        // 但运行环境准备和没结束的运行的善后先不做,免得刚退出就冒出一条通知;用户下次打开如愿时补上(见 [resumeAfterQuit])。
         val quit = flags.quitRequested()
-        // 设置 › 网络代理:Mika 自己的连接从第一个请求起就按它走;SOCKS 代理的账号密码经全进程的认证器给
+        // 设置 › 网络代理:如愿自己的连接从第一个请求起就按它走;SOCKS 代理的账号密码经全进程的认证器给
         com.wangzan101.mika.settings.NetProxyStore.get(this)
         com.wangzan101.mika.core.net.NetProxy.shared.installSocksAuth()
         // 内置浏览器:设了代理才给 WebView 设上(读设置要解密,放到后台;没设代理不为此加载 WebView)
         scope.launch(Dispatchers.IO) { runCatching { com.wangzan101.mika.cap.web.WebProxy.apply(this@MikaApp) } }
         capsule.start()
-        // 内置助手的真实现,并开始看着助手(Mika 进程起来后,还活着的助手会自己交接 Binder)
+        // 内置助手的真实现,并开始看着助手(如愿进程起来后,还活着的助手会自己交接 Binder)
         phone.shellManager.start()
         // 连接一可用就补上默认打开的几项能力
         phone.recovery.start()
-        // 告诉内置助手:Mika 被杀后要不要把它拉起来(胶囊一直显示或有任务在跑时才要;退出期间都不要)
+        // 告诉内置助手:如愿被杀后要不要把它拉起来(胶囊一直显示或有任务在跑时才要;退出期间都不要)
         com.wangzan101.mika.cap.phone.setup.RestoreWishSync(
             phone.hub, flags.capsuleModeChanges(), taskState.busy, phone.recoverySettings.consent,
             phone.recovery.accessibility, flags.quitChanges(),
@@ -422,6 +431,8 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
         wechat.ensureRunning()
         // 先对一下设备时区;退出期间不排闹钟,重新打开时再补排
         if (!quit) scope.launch(Dispatchers.IO) { runCatching { TriggerRuntime.syncTimeZone(this@MikaApp); TriggerRuntime.rearm(this@MikaApp) } }
+        // 自动归档:太久没新消息的对话收进归档(设置里开着才跑);退出期间等下次打开再补
+        if (!quit) autoArchiveNow()
         // 给电脑跑的「经 USB 连接」脚本;顺带清掉上次开机留下的 USB 连接信息
         scope.launch(Dispatchers.IO) { runCatching { mcp.writeUsbScript() }.onFailure { Log.w("MikaMcp", "cannot write USB script", it) } }
         // 上次导出写到一半被杀留下的空壳条目
@@ -430,7 +441,7 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
         scope.launch { runCatching { WebFiles.clearStale(this@MikaApp, SandboxDirs(this@MikaApp).gate) } }
         // 更新已经装上后,关于页下好的安装包
         scope.launch(Dispatchers.IO) { runCatching { apkUpdater.dropInstalled() } }
-        // 运行环境没准备好(首次启动、Mika 升级后)就在后台准备,不联网、对用户不可见
+        // 运行环境没准备好(首次启动、如愿升级后)就在后台准备,不联网、对用户不可见
         if (!quit) RuntimePreparer.ensure(this)
         // 沙箱就绪(启动时已就绪,或刚装好)就把技能目录核对一次:App 更新带来的脚本马上能用
         scope.launch {
@@ -440,10 +451,30 @@ class MikaApp : Application(), WebOwner, SandboxOwner, TaskEnvironment.Owner, Ph
         }
     }
 
-    /** 用户重新打开 Mika:补上退出时略过的启动工作(见 [com.wangzan101.mika.quit.MikaQuit])。 */
+    /**
+     * 按设置把太久没有新消息的对话收进归档:启动时跑一次,设置里改了天数也跑一次。
+     * 正在跑任务的对话和用户此刻在看的对话不动;之后再有新的一轮写进来会自动取消归档。
+     */
+    fun autoArchiveNow() {
+        val days = FeatureFlags.get(this).autoArchiveDays()
+        if (days <= 0) return
+        scope.launch(Dispatchers.IO) {
+            runCatching {
+                AutoArchive.run(
+                    conversations, days,
+                    running = taskState.activeConversations.value,
+                    currentId = (conversations.currentChat() as? CurrentChat.Open)?.id,
+                    isRunning = { it in taskState.activeConversations.value },
+                )
+            }.onFailure { Log.w("MikaChat", "could not auto archive conversations", it) }
+        }
+    }
+
+    /** 用户重新打开如愿:补上退出时略过的启动工作(见 [com.wangzan101.mika.quit.MikaQuit])。 */
     fun resumeAfterQuit() {
         runRecovery.recover()
         RuntimePreparer.ensure(this)
+        autoArchiveNow()
         mcp.ensureRunning()
         wechat.ensureRunning()
         scope.launch(Dispatchers.IO) {

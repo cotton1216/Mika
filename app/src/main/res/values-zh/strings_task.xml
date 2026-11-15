@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notif_channel_prepare">后台准备</string>
-    <string name="notif_preparing">Mika 正在准备</string>
-    <string name="notif_result_title">Mika 任务结果</string>
+    <string name="notif_preparing">如愿正在准备</string>
+    <string name="notif_result_title">如愿任务结果</string>
     <string name="parallel_second_display_failed">第二块虚拟屏没能建起来,这次运行期间一次只进行一个任务</string>
     <string name="parallel_needs_14">安卓 14 以上才支持同时进行多个任务</string>
     <string name="parallel_low_ram">这台手机内存较小,一次只进行一个任务</string>
     <string name="skill_suspended">这项技能最近不灵,先停用了</string>
     <string name="skill_verified">这项技能用它办成了事，转为正式:%1$s</string>
-    <string name="skill_learned">Mika 学会了一项技能:%1$s</string>
-    <string name="skill_app_draft">Mika 记下了几条关于%1$s的知识，等你确认</string>
-    <string name="skill_app_revised">Mika 修订了%1$s的知识，等你确认</string>
+    <string name="skill_learned">如愿学会了一项技能:%1$s</string>
+    <string name="skill_app_draft">如愿记下了几条关于%1$s的知识，等你确认</string>
+    <string name="skill_app_revised">如愿修订了%1$s的知识，等你确认</string>
     <string name="recovered_result">恢复的任务结果</string>
     <string name="recover_delivery_failed">上次任务已完成，但结果通知送达失败；请在对话里查看</string>
     <string name="recover_maybe_delivered">上次结果可能已送达，请先在对话里查看，避免重复处理</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">「%1$s」要你在屏幕上处理，处理好了点继续</string>
     <string name="gate_finish_unknown">刚打开的 App 要你在屏幕上处理，处理好了点继续</string>
     <string name="gate_moved_away">你打开了这个 App,用完点继续</string>
-    <string name="gate_move_back_failed">没能把 App 挪回 Mika 的屏幕,点继续再试一次</string>
+    <string name="gate_move_back_failed">没能把 App 挪回如愿的屏幕,点继续再试一次</string>
     <string name="gate_shell_down">手机操作断开了,等它重新连上(或到设置里处理)后点继续</string>
     <plurals name="queue_ahead">
         <item quantity="other">排队中:前面还有 %1$d 个任务</item>
@@ -30,19 +30,19 @@
     <string name="fail_model_untested">主模型在 %1$s 还没测试通过。去设置 › 模型 › %1$s 点「重新测试」查一下它能不能用。</string>
     <string name="fail_no_web">设备没有可用的网页能力，条件检查无法运行</string>
     <string name="task_waiting_display">排队中:等另一个任务做完再开始</string>
-    <string name="task_no_phone_helper">手机操作还没准备好:请在 Mika 里完成「设置手机操作」。网页和文件类的事不受影响。</string>
-    <string name="task_no_a11y">Mika 的无障碍服务没有开启:请在系统设置的无障碍里打开 Mika。</string>
-    <string name="task_a11y_not_running">Mika 的无障碍服务已开启，但安卓还没有连接它。请在系统设置的无障碍里将 Mika 关闭后重新开启；如果安卓阻止开启，请先在 Mika 的应用信息里允许受限制的设置。</string>
+    <string name="task_no_phone_helper">手机操作还没准备好:请在如愿里完成「设置手机操作」。网页和文件类的事不受影响。</string>
+    <string name="task_no_a11y">如愿的无障碍服务没有开启:请在系统设置的无障碍里打开如愿。</string>
+    <string name="task_a11y_not_running">如愿的无障碍服务已开启，但安卓还没有连接它。请在系统设置的无障碍里将如愿关闭后重新开启；如果安卓阻止开启，请先在如愿的应用信息里允许受限制的设置。</string>
     <string name="task_error">任务出错:%1$s</string>
-    <string name="task_app_blocked">「%1$s」已被设为禁用，Mika 不能自动读取或操作它。到 设置 › 应用访问 里允许后再试。</string>
+    <string name="task_app_blocked">「%1$s」已被设为禁用，如愿不能自动读取或操作它。到 设置 › 应用访问 里允许后再试。</string>
     <string name="task_app_this_app">该应用</string>
     <string name="task_app_access_unavailable">应用访问设置无法读取。请到 设置 › 应用访问 里重置后再试。</string>
-    <string name="task_app_protected">这个界面需要你亲自操作，Mika 不能自动处理。</string>
+    <string name="task_app_protected">这个界面需要你亲自操作，如愿不能自动处理。</string>
     <string name="task_app_unverified">没能确认当前是哪个应用，这次没有继续操作。请重试，或先打开目标应用。</string>
     <string name="task_condition_interrupted">条件检查中断</string>
     <string name="task_check_unfinished">定时检查未完成：%1$s</string>
     <string name="task_may_make_sound">该 App 可能会出声</string>
-    <string name="task_notif_title">Mika:%1$s</string>
+    <string name="task_notif_title">如愿:%1$s</string>
     <plurals name="task_active">
         <item quantity="other">%1$d 个任务进行中</item>
     </plurals>
@@ -63,8 +63,8 @@
     <string name="task_not_done">任务没有完成</string>
     <string name="task_stopped">任务已停止</string>
     <string name="task_stopped_body">你停止了这个任务</string>
-    <string name="gate_user_on_page">你在操作，Mika 已暂停</string>
-    <string name="task_no_phone_helper_usb">手机助手已停止(多半是手机重启过):打开 Mika,再运行一次 USB 启动命令,命令在「设置手机操作」里可以复制。网页和文件类的事不受影响。</string>
+    <string name="gate_user_on_page">你在操作，如愿已暂停</string>
+    <string name="task_no_phone_helper_usb">手机助手已停止(多半是手机重启过):打开如愿,再运行一次 USB 启动命令,命令在「设置手机操作」里可以复制。网页和文件类的事不受影响。</string>
     <string name="drawer_screens">后台屏</string>
     <string name="screens_title">后台屏</string>
     <string name="screens_empty">现在没有任务在跑。</string>

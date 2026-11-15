@@ -19,8 +19,8 @@
     <string name="relay_unpair">Desvincular pasarela</string>
     <string name="relay_unpair_body">Desconecta este teléfono de la pasarela. Se necesita conexión a internet. El token de acceso del teléfono no cambia.</string>
     <string name="relay_failed">No se pudo completar. Revisa la dirección de la pasarela, la conexión a internet y el código de vinculación. Si falló la desvinculación, el acceso está desactivado; reinténtalo o revoca el teléfono en la pasarela.</string>
-    <string name="relay_notif_body">El acceso remoto está activado. Abre Mika para comprobar la conexión con la pasarela.</string>
-    <string name="relay_incompatible">Actualiza Mika y la pasarela a versiones que coincidan</string>
+    <string name="relay_notif_body">El acceso remoto está activado. Abre 如愿 para comprobar la conexión con la pasarela.</string>
+    <string name="relay_incompatible">Actualiza 如愿 y la pasarela a versiones que coincidan</string>
     <string name="relay_copy_gateway">Copiar dirección de la pasarela</string>
     <string name="relay_cli_help">Guarda el token de acceso en un archivo de tu ordenador y ejecuta el comando de conexión de arriba.</string>
     <string name="relay_intro">La pasarela reenvía a tu teléfono, para el acceso remoto, las solicitudes de CLI y MCP que normalmente van por Wi-Fi / red local. Despliégala en tu propio servidor público antes de vincular.</string>

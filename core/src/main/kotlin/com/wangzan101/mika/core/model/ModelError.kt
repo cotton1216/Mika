@@ -24,7 +24,7 @@ sealed class ModelError(message: String, cause: Throwable? = null) : Exception(m
      */
     class ModelNotAvailable(val model: String = "", val detail: String = "") :
         ModelError(if (model.isEmpty()) "这个账号用不了该模型(没开通或没权限)" else "这个账号用不了模型「$model」(没开通或没权限)")
-    /** 服务端明说这个模型不支持调用工具(带工具的请求被拒)。Mika 干活靠工具,它当不了主模型。 */
+    /** 服务端明说这个模型不支持调用工具(带工具的请求被拒)。如愿干活靠工具,它当不了主模型。 */
     class ToolsUnsupported(val model: String = "") :
         ModelError(if (model.isEmpty()) "该模型不支持调用工具" else "模型「$model」不支持调用工具")
     class Network(cause: Throwable? = null) : ModelError("网络连接失败", cause)

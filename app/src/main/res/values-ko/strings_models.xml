@@ -86,7 +86,7 @@
     <string name="models_used_by">%1$s로 사용 중</string>
 
     <string name="chatgpt_use_plan_title">ChatGPT 요금제 사용</string>
-    <string name="chatgpt_use_plan_body">이 앱의 해당 AI 요청을 ChatGPT 요금제에 포함된 사용량이나 크레딧 잔액으로 처리해요. ChatGPT Plus와 Pro에서 쓸 수 있어요. Mika 자체는 무료이며 Mika가 청구하는 비용은 없어요.</string>
+    <string name="chatgpt_use_plan_body">이 앱의 해당 AI 요청을 ChatGPT 요금제에 포함된 사용량이나 크레딧 잔액으로 처리해요. ChatGPT Plus와 Pro에서 쓸 수 있어요. 如愿 자체는 무료이며 Mika가 청구하는 비용은 없어요.</string>
     <string name="chatgpt_continue">ChatGPT로 계속</string>
     <string name="chatgpt_waiting">브라우저에서 로그인을 마친 다음 Mika로 돌아오세요.</string>
     <string name="chatgpt_welcome_title">ChatGPT 요금제를 사용 중이에요</string>
@@ -99,10 +99,10 @@
     <string name="chatgpt_manage_usage">사용량 관리</string>
     <string name="chatgpt_plan_note">ChatGPT 요금제를 사용 중이에요. Plus는 5시간 한도를 이 요금제를 쓰는 다른 앱과 공유하고, Pro는 5시간 한도가 없어요.</string>
     <string name="chatgpt_signed_out_note">이 휴대전화에서 로그아웃했어요. 요금제를 다시 쓰려면 ChatGPT로 계속을 누르세요. 모델 선택은 유지돼요.</string>
-    <string name="chatgpt_revoke_unconfirmed">이 휴대전화에서는 로그아웃했지만 ChatGPT가 확인해 주지 않았어요. ChatGPT 설정에서 Mika 연결을 해제할 수도 있어요.</string>
+    <string name="chatgpt_revoke_unconfirmed">이 휴대전화에서는 로그아웃했지만 ChatGPT가 확인해 주지 않았어요. ChatGPT 설정에서 如愿 연결을 해제할 수도 있어요.</string>
     <string name="chatgpt_fail_denied">로그인이 취소됐어요. 페이지에 필요한 권한을 쓸 수 없다고 나왔다면, 요금제 사용에는 ChatGPT Plus나 Pro가 필요해요. 무료 계정이라면 다른 제공업체의 API 키를 추가하세요.</string>
     <string name="chatgpt_fail_mismatch">로그인 응답이 이번 시도와 맞지 않아요. 다시 시도하세요.</string>
-    <string name="chatgpt_fail_no_client">ChatGPT가 Mika 등록을 마치지 못했어요. 다시 시도하세요.</string>
+    <string name="chatgpt_fail_no_client">ChatGPT가 如愿 등록을 마치지 못했어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_timed_out">로그인 시간이 초과됐어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_exchange">ChatGPT가 이 로그인을 거부했어요 (오류: %1$s). 다시 시도하세요.</string>
     <string name="chatgpt_fail_code_expired">로그인 코드가 만료됐거나 이미 사용됐어요. 다시 로그인하세요.</string>
@@ -111,7 +111,7 @@
     <string name="chatgpt_fail_id_token">ChatGPT 계정을 확인하지 못했어요. 다시 시도하세요.</string>
     <string name="chatgpt_fail_no_plan">Mika가 ChatGPT 요금제를 사용하도록 허용되지 않았어요. 다시 로그인하고 요금제 사용을 허용하세요 (Plus 또는 Pro 필요).</string>
     <string name="chatgpt_fail_network">ChatGPT에 연결하지 못했어요. 네트워크를 확인하고 다시 시도하세요.</string>
-    <string name="chatgpt_page_title">Mika</string>
+    <string name="chatgpt_page_title">如愿</string>
     <string name="chatgpt_page_done">로그인했어요. Mika로 돌아가세요.</string>
     <string name="chatgpt_signin_notif_title">ChatGPT에 로그인하는 중</string>
     <string name="chatgpt_signin_notif_body">브라우저에서 ChatGPT에 로그인하기를 기다리는 중</string>
@@ -159,7 +159,7 @@
     <string name="signin_openrouter_authorize">OpenRouter에서 인증</string>
     <string name="signin_openrouter_waiting">브라우저에서 승인한 다음 Mika로 돌아오세요.</string>
     <string name="signin_openrouter_manage">OpenRouter의 Keys 페이지 열기</string>
-    <string name="signin_openrouter_signed_in_note">사용량은 OpenRouter 잔액에서 차감돼요. 키는 이 휴대전화에 암호화되어 저장돼요. 더 이상 쓰지 않으려면 OpenRouter의 Keys 페이지에서 \"Mika\"라는 키를 삭제하세요.</string>
+    <string name="signin_openrouter_signed_in_note">사용량은 OpenRouter 잔액에서 차감돼요. 키는 이 휴대전화에 암호화되어 저장돼요. 더 이상 쓰지 않으려면 OpenRouter의 Keys 페이지에서 \"如愿\"라는 키를 삭제하세요.</string>
     <string name="signin_openrouter_signed_out_note">이 휴대전화에서 키를 삭제했어요. OpenRouter에는 아직 남아 있으니 Keys 페이지에서 삭제하세요. 모델 선택은 유지돼요.</string>
     <string name="signin_set_main">메인 모델로 설정</string>
     <string name="signin_set_main_note">Mika가 일을 처리할 때 사용해요</string>
@@ -190,4 +190,17 @@
     <string name="models_daily_token_budget">제공업체 일일 Token 예산</string>
     <string name="models_daily_token_budget_sub">현지 달력 날짜를 기준으로 이 제공업체의 모든 모델과 용도에서 보고된 입력 및 출력 Token을 집계합니다. 예산에 도달하면 다음 요청을 차단하며, 진행 중인 요청은 예산을 초과할 수 있습니다. 보고되지 않은 사용량은 0으로 계산하고 현지 날짜가 바뀌면 초기화됩니다.</string>
     <string name="models_daily_token_budget_save_failed">예산을 저장하지 못했습니다. 이전 설정이 그대로 유지됩니다.</string>
+    <string name="ruyi_login_subtitle">루이(Ruyi) 계정으로 로그인하면 사용 가능한 모델을 자동으로 가져와 설정합니다.</string>
+    <string name="ruyi_login_cta">루이 계정으로 로그인</string>
+    <string name="ruyi_login_waiting">승인 대기 중…</string>
+    <string name="ruyi_login_skip">나중에</string>
+    <string name="signin_row_ruyi">루이(Ruyi) 계정으로 로그인해 모델 목록을 동기화합니다</string>
+    <string name="signin_ruyi_title">루이 계정으로 로그인</string>
+    <string name="signin_ruyi_body">루이 인증 페이지를 엽니다. 로그인하면 루이가 전용 추론 키를 발급하고, 사용량은 루이 계정에서 차감되며 계정의 모델을 바로 사용할 수 있습니다.</string>
+    <string name="signin_ruyi_note">로그인 정보는 이 휴대폰에만 암호화되어 저장되며 로그에 기록되지 않습니다. 키는 루이 계정에서 발급되며, 더 이상 사용하지 않으려면 루이의 Keys 페이지에서 삭제하세요.</string>
+    <string name="signin_ruyi_waiting">브라우저에서 로그인을 완료한 뒤 Mika로 돌아오세요.</string>
+    <string name="signin_ruyi_manage">루이 Keys 페이지 열기</string>
+    <string name="signin_ruyi_signed_in_note">사용량은 루이 계정에서 차감됩니다. 키는 이 휴대폰에 암호화되어 저장됩니다. 사용을 중단하려면 루이의 Keys 페이지에서 삭제하세요.</string>
+    <string name="signin_ruyi_signed_out_note">이 휴대폰의 키는 삭제되었습니다. 키 자체는 루이에 남아 있으며 Keys 페이지에서 삭제할 수 있습니다. 선택한 모델 설정은 유지됩니다.</string>
+    <string name="signin_ruyi_name">%1$s(로그인됨)</string>
 </resources>

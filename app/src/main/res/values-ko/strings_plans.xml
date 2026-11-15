@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Mika 알림</string>
+    <string name="trigger_reminder">如愿 알림</string>
     <string name="trigger_not_started_body">예약 작업을 시작하지 못했어요. 예약 작업 페이지에서 확인하고 다시 실행하세요.</string>
     <string name="trigger_start_failed">시작하지 못했어요</string>
     <string name="trigger_not_started">예약 작업이 시작되지 않았어요</string>
@@ -65,6 +65,9 @@
     <string name="plans_condition">조건이 맞을 때만 실행: %1$s · %2$s</string>
     <string name="plans_last">마지막 %1$s · %2$s</string>
     <string name="plans_never_run">아직 실행된 적 없어요</string>
+    <string name="plans_source_user">수동</string>
+    <string name="plans_source_model">모델</string>
+    <string name="plans_source_external">스크립트</string>
     <string name="plans_delivered">전달됨</string>
     <string name="plans_unchanged">조건 변화 없음</string>
     <string name="plans_not_met">조건 미충족</string>
@@ -74,4 +77,5 @@
     <string name="plans_running_now">실행 중</string>
     <string name="trigger_deleted">예약 작업이 삭제되었어요</string>
     <string name="trigger_busy">이 작업이 아직 실행 중이에요</string>
+    <string name="plans_run_history">실행 기록</string>
 </resources>

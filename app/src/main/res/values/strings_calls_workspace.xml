@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">Device and permissions</string>
     <string name="calls_edit_rule">Edit</string>
     <string name="calls_nav_receive">Answer</string>
-    <string name="calls_nav_task">Call task</string>
+    <string name="calls_nav_task">Dial</string>
     <string name="calls_pause_enable_first">Turn on auto-answer to pause it temporarily.</string>
     <string name="calls_rule_delay_summary">Answer delay: %1$d s</string>
     <string name="calls_rule_pause">Temporary pause</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">No preferred SIM</string>
     <string name="calls_task_back_to_edit">Back to editing</string>
     <string name="calls_task_confirm_dial">Confirm and dial</string>
-    <string name="calls_task_confirm_note">Mika uses this brief for this call. Dialing uses the selected SIM and may incur carrier and realtime voice charges.</string>
+    <string name="calls_task_confirm_note">如愿 uses this brief for this call. Dialing uses the selected SIM and may incur carrier and realtime voice charges.</string>
     <string name="calls_task_constraints">What must not be promised</string>
     <string name="calls_task_context">Additional context</string>
     <string name="calls_task_filled">Added</string>

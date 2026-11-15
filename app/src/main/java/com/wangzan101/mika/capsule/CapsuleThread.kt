@@ -27,7 +27,7 @@ sealed interface ThreadItem {
     data class Note(override val key: String, val text: String, val kind: CapsuleKind) : ThreadItem
 
     /**
-     * Mika 的回答全文(原样的 Markdown,卡片里排版);[streaming] 时还在往下写。
+     * 如愿的回答全文(原样的 Markdown,卡片里排版);[streaming] 时还在往下写。
      * [cut] 时是被插话打断的那段(和对话页一样淡色,下面一行「被你的新消息打断」)。
      */
     data class Answer(override val key: String, val text: String, val streaming: Boolean = false, val cut: Boolean = false) : ThreadItem

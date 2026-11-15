@@ -48,13 +48,15 @@ import com.wangzan101.mika.ui.theme.MikaType
 enum class SignInKind(val account: AccountProvider?, val label: String, val tag: String) {
     ChatGpt(null, "ChatGPT", "chatgpt"),
     Xai(AccountProvider.Xai, "xAI / Grok", "xai"),
-    OpenRouter(AccountProvider.OpenRouter, "OpenRouter", "openrouter");
+    OpenRouter(AccountProvider.OpenRouter, "OpenRouter", "openrouter"),
+    Ruyi(AccountProvider.Ruyi, "如意", "ruyi");
 
     /** 「改用 API Key」时选的预设;ChatGPT 没有这一项。 */
     val keyPreset: String? get() = when (this) {
         ChatGpt -> null
         Xai -> "xAI"
         OpenRouter -> "OpenRouter"
+        Ruyi -> "如意"
     }
 
     companion object {
@@ -70,10 +72,17 @@ internal fun ModelSetupUi.signInState(kind: SignInKind): Triple<String?, Boolean
         (chatGptSignIn as? ListState.Failed)?.message,
     )
     else -> {
-        val signedIn = if (kind == SignInKind.Xai) xaiAccount?.signedIn == true else openRouterAccount?.signedIn == true
+        val signedIn = when (kind) {
+            SignInKind.Xai -> xaiAccount?.signedIn == true
+            SignInKind.Ruyi -> ruyiAccount?.signedIn == true
+            else -> openRouterAccount?.signedIn == true
+        }
         val id = providers.firstOrNull {
-            if (kind == SignInKind.Xai) it.kind == ProviderConfig.Kind.Xai
-            else it.signIn == ProviderStore.OPENROUTER_SIGN_IN
+            when (kind) {
+                SignInKind.Xai -> it.kind == ProviderConfig.Kind.Xai
+                SignInKind.Ruyi -> it.signIn == ProviderStore.RUYI_SIGN_IN
+                else -> it.signIn == ProviderStore.OPENROUTER_SIGN_IN
+            }
         }?.id
         val mine = accountSignIn.provider == kind.account
         Triple(id?.takeIf { signedIn }, mine && accountSignIn.running, accountSignIn.failure?.takeIf { mine })

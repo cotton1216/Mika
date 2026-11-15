@@ -20,7 +20,7 @@ private val APP_KINDS = listOf(
 
 /**
  * 内置知识 + 用户补充:[notes] 按条目名(App 名或站点域名),附在对应条目正文后面并标明是用户自己写的;
- * [learnedNotes] 是 Mika 自学的 App 知识补充,附在最后并标明试用中还是已核实。
+ * [learnedNotes] 是如愿自学的 App 知识补充,附在最后并标明试用中还是已核实。
  * 匹配是确定性的字符串匹配,不调用模型。
  */
 class KnowledgeStore(private val bundled: List<KnowledgeEntry>, notes: Map<String, String> = emptyMap(),
@@ -82,7 +82,8 @@ class KnowledgeStore(private val bundled: List<KnowledgeEntry>, notes: Map<Strin
         }
         for (d in e.domains) {
             val x = d.trim().lowercase()
-            if (x.length >= 3 && text.contains(x)) best = maxOf(best, x.length)
+            // 域名也是英文词,一样要边界:否则 x.com 会命中 xx.com、zhihu.com 会命中 nzhihu.com
+            if (x.length >= 3 && containsTerm(text, x)) best = maxOf(best, x.length)
         }
         return best.takeIf { it >= 0 }
     }

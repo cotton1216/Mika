@@ -19,8 +19,8 @@
     <string name="relay_unpair">解除閘道配對</string>
     <string name="relay_unpair_body">中斷此手機與閘道的配對，需要網路連線。手機存取權杖保持不變。</string>
     <string name="relay_failed">未能完成，請檢查閘道位址、網路和配對碼。解除配對失敗時，遠端存取已關閉；請重試或在閘道撤銷這台手機。</string>
-    <string name="relay_notif_body">遠端存取已開啟，開啟 Mika 可查看閘道連線狀態</string>
-    <string name="relay_incompatible">請將 Mika 與閘道更新到相符的版本</string>
+    <string name="relay_notif_body">遠端存取已開啟，開啟如愿可查看閘道連線狀態</string>
+    <string name="relay_incompatible">請將如愿與閘道更新到相符的版本</string>
     <string name="relay_copy_gateway">複製閘道位址</string>
     <string name="relay_cli_help">將存取權杖儲存到電腦檔案，再執行上方連線指令。</string>
     <string name="relay_intro">閘道將原本透過 Wi-Fi / 區域網路傳送的 CLI 和 MCP 請求轉送到手機，實現遠端存取。使用前，需在自有公網伺服器上部署閘道。</string>

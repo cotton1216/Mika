@@ -18,7 +18,7 @@ class BridgeProtocolTest {
     private val token = "secret-token"
     private val progressed = mutableListOf<String>()
     private val shared = mutableListOf<Pair<String, String?>>()
-    private var shareResult: () -> String = { "Download/Mika/a.png" }
+    private var shareResult: () -> String = { "Download/如愿/a.png" }
 
     private fun req(method: String, params: JsonObject = JsonObject(emptyMap()), tok: String = token) =
         buildJsonObject { put("token", tok); put("method", method); put("params", params) }.toString()
@@ -117,7 +117,7 @@ class BridgeProtocolTest {
 
     @Test fun shareGoesThroughCallbackAndMapsErrors() {
         val ok = handle(req("share", buildJsonObject { put("path", "/workspace/out/a.png"); put("name", "图.png") }))
-        assertEquals("Download/Mika/a.png", ok.s("savedAs"))
+        assertEquals("Download/如愿/a.png", ok.s("savedAs"))
         assertEquals(listOf("/workspace/out/a.png" to "图.png"), shared)
         shareResult = { throw SandboxError("share_unavailable", "not yet") }
         assertEquals("share_unavailable", handle(req("share", buildJsonObject { put("path", "/workspace/a") })).s("error"))

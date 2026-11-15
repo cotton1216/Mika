@@ -18,12 +18,12 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonArray
 
 /**
- * 模型改 Mika 自己设置的唯一入口(App 实现,核心只认这几个键)。
+ * 模型改如愿自己设置的唯一入口(App 实现,核心只认这几个键)。
  *
  * 能改什么由 App 定:**模型与 Key、删除数据一律不给**——前者等于让模型换掉自己的脑子、花用户的钱,
  * 后者不可逆。给的都是可逆的偏好项。
  *
- * 用户没开「允许 Mika 改自己的设置」时这个工具根本不提供,所以模型碰不到它。
+ * 用户没开「允许如愿改自己的设置」时这个工具根本不提供,所以模型碰不到它。
  */
 interface SelfConfig {
     /** 现在能改哪些项、各自是什么值。 */
@@ -42,7 +42,7 @@ const val SETTINGS_SET = "settings_set"
 private fun port(ctx: ToolContext): SelfConfig =
     ctx.config.selfConfig ?: error("settings tools are only offered when the user allows it")
 
-/** 列出 Mika 自己能改的设置:键、给人看的名字、现在的值、可选值。只读。 */
+/** 列出如愿自己能改的设置:键、给人看的名字、现在的值、可选值。只读。 */
 internal object SettingsList : AgentTool {
     override val verb = Verb.SettingsList
     override val label = "查看设置"
@@ -65,12 +65,12 @@ internal object SettingsList : AgentTool {
     }
 }
 
-/** 改 Mika 自己的一项设置;键和值都得来自 [SettingsList]。 */
+/** 改如愿自己的一项设置;键和值都得来自 [SettingsList]。 */
 internal object SettingsSet : AgentTool {
     override val verb = Verb.SettingsSet
     override val label = "改设置"
     override val risk = Risk.Write
-    /** 不动屏幕:改的是 Mika 自己的设置,和当前任务的屏无关。 */
+    /** 不动屏幕:改的是如愿自己的设置,和当前任务的屏无关。 */
     override val offScreen = true
 
     override fun available(ctx: ToolContext) = ctx.config.selfConfig != null

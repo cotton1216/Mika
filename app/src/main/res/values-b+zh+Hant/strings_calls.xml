@@ -23,11 +23,11 @@
     <string name="calls_prepare">檢查並準備</string>
     <string name="calls_enable">啟用 AI 電話</string>
     <string name="calls_disable">停用並恢復一般通話</string>
-    <string name="calls_provider">火山即時語音 3.0</string>
-    <string name="calls_credentials">即時語音憑證</string>
+    <string name="calls_provider">火山方舟 Doubao 即時語音互動 API</string>
+    <string name="calls_credentials">火山方舟 Doubao 即時語音互動 API 憑據</string>
     <string name="calls_key_saved">憑證已安全儲存，服務權限仍須實際測試</string>
     <string name="calls_key_missing">尚未設定</string>
-    <string name="calls_profile">開場白與通話目的</string>
+    <string name="calls_profile">通話配置</string>
     <string name="calls_model_label">模型 %1$s · 通話音訊路徑</string>
     <string name="calls_incoming">來電</string>
     <string name="calls_auto_answer">自動接聽來電</string>
@@ -46,7 +46,7 @@
     <string name="calls_connected">通話已接通</string>
     <string name="calls_holding">通話保留中</string>
     <string name="calls_disconnecting">正在掛斷</string>
-    <string name="calls_credentials_note">請使用具備即時語音權限的豆包語音 API 金鑰。方舟聊天金鑰或僅有語音辨識權限的金鑰皆無法使用。此處不顯示已儲存的憑證。</string>
+    <string name="calls_credentials_note">請填寫火山方舟 Doubao 即時語音互動 API 的 API Key；方舟聊天 API Key 或僅有語音辨識權限的憑據不能替代。此處不會顯示已儲存的憑據。</string>
     <string name="calls_legacy_credentials">使用舊版 App ID 與 Access Key</string>
     <string name="calls_save">儲存</string>
     <string name="calls_cancel">取消</string>
@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">撥打電話</string>
     <string name="calls_rules">自動接聽規則</string>
     <string name="calls_setup_credentials">請設定火山即時語音憑據。</string>
-    <string name="calls_setup_shell">請先連線 Mika 內建助理。</string>
+    <string name="calls_setup_shell">請先連線如愿內建助理。</string>
     <string name="calls_sim_clear_preferred">取消預設 SIM</string>
     <string name="calls_sim_preferred">預設撥號 SIM：%1$s</string>
     <string name="calls_sim_save_preferred">設為預設撥號 SIM</string>
@@ -108,6 +108,10 @@
     <string name="calls_bypass_note">這些號碼仍會正常響鈴，由您本人接聽。即使啟用「接聽所有來電」，AI 也不會自動接聽這些號碼。</string>
     <string name="calls_bypass_title">一律由本人接聽</string>
     <string name="calls_history_all">全部</string>
+    <string name="calls_history_clear">清空全部</string>
+    <string name="calls_history_clear_confirm">刪除本機儲存的全部通話記錄及其文字原文？刪除後無法復原。</string>
+    <string name="calls_history_cleared">通話記錄已清空</string>
+    <string name="calls_history_clear_failed">無法清空通話記錄，請重試。</string>
     <string name="calls_history_delete">刪除記錄</string>
     <string name="calls_history_delete_confirm">要從本機刪除這筆通話記錄及其文字原文嗎？刪除後無法復原。</string>
     <string name="calls_history_deleted">記錄已刪除</string>
@@ -125,4 +129,18 @@
     <string name="calls_notification_settings">開啟通知設定</string>
     <string name="calls_speaker_edit_note">請在「音色復刻」中選擇復刻音色。清空此欄可恢復預設音色。</string>
     <string name="calls_greeting_hint">按填寫的內容播報；留空則等對方先開口。</string>
+    <string name="calls_notification_handoff">AI 已退出通話，請在系統電話介面接管</string>
+    <string name="calls_standby_checking">正在檢查背景電話條件</string>
+    <string name="calls_standby_locked_dial_preparing">正在準備鎖定畫面撥出 · 剩餘 %1$d 秒</string>
+    <string name="calls_standby_unavailable">背景待命暫不可用，開啟查看</string>
+    <string name="calls_standby_ai_active">背景待命已開啟，AI 正在通話</string>
+    <string name="calls_standby_running">背景待命已開啟，可在電話設定中關閉</string>
+    <string name="calls_standby_start_blocked">Android 未允許啟動背景待命，請在應用程式中重試</string>
+    <string name="calls_standby_not_ready">背景待命尚未開啟，或手機重新啟動後尚未解鎖</string>
+    <string name="calls_standby_notifications_required">請允許背景待命通知</string>
+    <string name="calls_notification_preparing">正在準備 AI 電話</string>
+    <string name="calls_notification_answer_preparing">正在準備 AI 接聽</string>
+    <string name="calls_notification_connecting_audio">正在連接通話音訊</string>
+    <string name="calls_notification_connected_waiting">AI 已接通，正在等待對方說話，可隨時接管</string>
+    <string name="calls_notification_connected">AI 已接通，可隨時手動接管</string>
 </resources>

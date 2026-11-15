@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="card_approve_once">Aprobar solo esta vez</string>
-    <string name="card_see_process">Volver a Mika para ver todo el proceso</string>
-    <string name="card_back_to_mika">Volver a Mika</string>
+    <string name="card_see_process">Volver a 如愿 para ver todo el proceso</string>
+    <string name="card_back_to_mika">Volver a 如愿</string>
     <string name="card_continue_last">Continuar el último chat</string>
     <string name="card_screen">Pantalla en segundo plano, toca para ampliar</string>
     <string name="card_screen_label">Segundo plano</string>
     <string name="card_zoomed">Pantalla en segundo plano ampliada, toca para cerrar</string>
-    <string name="card_zoom_hint">Mika está trabajando en segundo plano · toca para cerrar</string>
+    <string name="card_zoom_hint">如愿 está trabajando en segundo plano · toca para cerrar</string>
     <string name="card_continuing">Continuar “%1$s”</string>
     <string name="card_queued_ahead">Termina primero la otra tarea que te necesita y luego esta</string>
-    <string name="card_hint_answer">Responde a Mika…</string>
+    <string name="card_hint_answer">Responde a 如愿…</string>
     <string name="card_hint_continue">Sigue hablando…</string>
     <plurals name="capsule_behind">
         <item quantity="one">Después de esta, te espera %1$d más</item>
@@ -25,11 +25,11 @@
     <string name="capsule_stopped">Detenido</string>
     <string name="capsule_stop">Dejar de hacerlo</string>
     <string name="capsule_expand">Ampliar esta tarea</string>
-    <string name="capsule_talk">Hablar con Mika</string>
+    <string name="capsule_talk">Hablar con 如愿</string>
     <string name="capsule_swap_side">Mover al otro lado</string>
     <string name="capsule_desc_needs">%1$s, toca para atenderlo</string>
-    <string name="capsule_desc_running">Mika está trabajando: %1$s, toca para ver detalles</string>
-    <string name="capsule_desc_other">Mika: %1$s, toca para ver detalles</string>
+    <string name="capsule_desc_running">如愿 está trabajando: %1$s, toca para ver detalles</string>
+    <string name="capsule_desc_other">如愿: %1$s, toca para ver detalles</string>
     <string name="capsule_then_tap_right">Toca el lado derecho cuando termines</string>
     <string name="capsule_need_of_total">%1$d te necesitan · %2$d en total</string>
     <string name="capsule_of_total">%1$s · %2$d en total</string>
@@ -38,7 +38,7 @@
     <string name="capsule_needs_you">Te necesita: %1$s</string>
     <string name="capsule_handle_it">échale un vistazo</string>
     <string name="capsule_needs_ok">Necesita tu visto bueno: %1$s</string>
-    <string name="capsule_asks">Mika pregunta: %1$s</string>
+    <string name="capsule_asks">如愿 pregunta: %1$s</string>
     <string name="capsule_hold_why">En espera: %1$s</string>
     <string name="capsule_you_handle">Te toca a ti</string>
     <string name="capsule_thinking">Pensando el siguiente paso</string>

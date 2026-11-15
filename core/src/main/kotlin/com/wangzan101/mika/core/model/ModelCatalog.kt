@@ -18,8 +18,8 @@ import okhttp3.Request
  * 服务商列出的一个模型。能力字段为 null 表示接口没给,由调用方沿用自己的初值,这里不猜。
  *
  * 有的服务商一个 Key 下的模型走不同的接口协议,列表里给每个模型写明协议和地址(`api` 表)。
- * [endpoint] 是其中 Mika 会说的那一种,调用这个模型时按它选适配器和地址;为 null 时按服务商的接口类型。
- * [unsupportedApis] 是写明了、但 Mika 一种也不会说的协议名:这样的模型调用必然失败,不给选(见 [usable])。
+ * [endpoint] 是其中如愿会说的那一种,调用这个模型时按它选适配器和地址;为 null 时按服务商的接口类型。
+ * [unsupportedApis] 是写明了、但如愿一种也不会说的协议名:这样的模型调用必然失败,不给选(见 [usable])。
  * [chat] 是接口说没说它是对话模型(`type` 是 chat / embedding / rerank…,或输出模态里有没有文字);没说为 null。
  */
 data class ListedModel(
@@ -210,7 +210,9 @@ class ModelCatalog(private val http: OkHttpClient) {
         val caps = o["capabilities"] as? JsonObject
         val modalIn = ((o.obj("modalities")?.get("input") ?: o["input_modalities"]) as? JsonArray)
             ?.mapNotNull { (it as? JsonPrimitive)?.contentOrNull }
-        val reasoningLevels = (o["supported_reasoning_levels"] ?: caps?.obj("reasoning")?.get("effort")) as? JsonArray
+        // DeepSeek 的列表写在 `effort.supported_levels`(另有 `default_level`,这里不用)
+        val reasoningLevels = (o["supported_reasoning_levels"] ?: caps?.obj("reasoning")?.get("effort")
+            ?: o.obj("effort")?.get("supported_levels")) as? JsonArray
         val efforts = reasoningLevels?.mapNotNull { level ->
             (((level as? JsonObject)?.get("effort") ?: level) as? JsonPrimitive)?.takeIf { it.isString }?.contentOrNull
                 ?.trim()?.takeIf { it.isNotEmpty() }

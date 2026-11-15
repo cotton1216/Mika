@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">Dispositivo y permisos</string>
     <string name="calls_edit_rule">Editar</string>
     <string name="calls_nav_receive">Atender</string>
-    <string name="calls_nav_task">Tarea</string>
+    <string name="calls_nav_task">Llamar</string>
     <string name="calls_pause_enable_first">Active la respuesta automática para pausarla temporalmente.</string>
     <string name="calls_rule_delay_summary">Demora de respuesta: %1$d s</string>
     <string name="calls_rule_pause">Pausa temporal</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Sin SIM preferida</string>
     <string name="calls_task_back_to_edit">Volver a editar</string>
     <string name="calls_task_confirm_dial">Confirmar y llamar</string>
-    <string name="calls_task_confirm_note">Mika usa este encargo para esta llamada. Se usa la SIM elegida y pueden aplicarse cargos del operador y de voz en tiempo real.</string>
+    <string name="calls_task_confirm_note">如愿 usa este encargo para esta llamada. Se usa la SIM elegida y pueden aplicarse cargos del operador y de voz en tiempo real.</string>
     <string name="calls_task_constraints">Qué no se puede prometer</string>
     <string name="calls_task_context">Contexto adicional</string>
     <string name="calls_task_filled">Añadido</string>

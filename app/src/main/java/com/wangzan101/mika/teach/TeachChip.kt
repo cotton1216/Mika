@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * 采集和暂停时贴在屏幕上方的一条。用的是无障碍浮层，和悬浮胶囊同一类窗口，不申请通知权限，也不申请「显示在其他应用上层」。
- * 加不上就返回 false。这条属于 Mika 自己的界面，轨迹里会丢掉。
+ * 加不上就返回 false。这条属于如愿自己的界面，轨迹里会丢掉。
  */
 class TeachChip(
     private val onPause: () -> Unit,

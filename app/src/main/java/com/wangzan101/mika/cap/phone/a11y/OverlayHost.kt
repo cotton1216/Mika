@@ -19,6 +19,13 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityWindowInfo
 import android.graphics.Rect
 import android.view.KeyEvent
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import android.view.Display
+import com.wangzan101.mika.capsule.CapsuleAppBounds
+import com.wangzan101.mika.capsule.CapsuleFullscreen
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -176,12 +183,30 @@ class OverlayHost internal constructor(private val service: ScreenAccessibility)
     }
 
     /**
-     * 用户屏幕上输入法的上边(屏幕坐标);没弹出时为 null。不论输入法是对着哪个 App 弹的(包括 Mika 自己的浮层),
+     * 用户屏幕上输入法的上边(屏幕坐标);没弹出时为 null。不论输入法是对着哪个 App 弹的(包括如愿自己的浮层),
      * 胶囊和卡片都据此让开。窗口一变就重读,读不到窗口时当作没弹出。
      */
     fun imeTop(): Flow<Int?> = service.windowChanges().onStart { emit(Unit) }
         .map { readImeTop() }
         .distinctUntilChanged()
+
+    /** Enabled only for the optional fullscreen preference. No screenshots, text or app content. */
+    fun fullscreenChanges(): Flow<Boolean> = flow {
+        while (currentCoroutineContext().isActive) {
+            emit(runCatching {
+                val metrics = wm().currentWindowMetrics
+                val windows = service.windowsOn(Display.DEFAULT_DISPLAY)
+                val app = windows.filter { it.type == AccessibilityWindowInfo.TYPE_APPLICATION }.maxByOrNull { it.layer }
+                val bounds = app?.let { Rect().also(it::getBoundsInScreen) }
+                val safe = metrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout())
+                CapsuleFullscreen.matches(metrics.bounds.width(), metrics.bounds.height(),
+                    metrics.windowInsets.isVisible(WindowInsets.Type.statusBars()),
+                    bounds?.let { CapsuleAppBounds(it.left, it.top, it.right, it.bottom) },
+                    safe.bottom, safe.left, safe.top, safe.right)
+            }.getOrDefault(false))
+            delay(500)
+        }
+    }.distinctUntilChanged()
 
     private fun readImeTop(): Int? = runCatching {
         service.windows.firstOrNull { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }

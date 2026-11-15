@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">端末と権限</string>
     <string name="calls_edit_rule">編集</string>
     <string name="calls_nav_receive">着信</string>
-    <string name="calls_nav_task">電話タスク</string>
+    <string name="calls_nav_task">発信</string>
     <string name="calls_pause_enable_first">自動応答を有効にすると一時停止できます。</string>
     <string name="calls_rule_delay_summary">応答までの待機時間：%1$d 秒</string>
     <string name="calls_rule_pause">一時停止</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">優先 SIM を指定しない</string>
     <string name="calls_task_back_to_edit">編集に戻る</string>
     <string name="calls_task_confirm_dial">確認して発信</string>
-    <string name="calls_task_confirm_note">Mika はこの通話に限りタスクを使用します。選んだ SIM から発信し、通信会社やリアルタイム音声の料金が発生する場合があります。</string>
+    <string name="calls_task_confirm_note">如愿 はこの通話に限りタスクを使用します。選んだ SIM から発信し、通信会社やリアルタイム音声の料金が発生する場合があります。</string>
     <string name="calls_task_constraints">約束してはいけないこと</string>
     <string name="calls_task_context">補足情報</string>
     <string name="calls_task_filled">入力済み</string>

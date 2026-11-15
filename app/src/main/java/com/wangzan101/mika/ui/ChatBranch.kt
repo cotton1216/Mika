@@ -20,7 +20,7 @@ private fun turnOf(key: String, prefix: String): Int? =
     if (key.startsWith(prefix)) key.removePrefix(prefix).toIntOrNull() else null
 
 /**
- * 长按的这条消息能不能作为分支点:只有 Mika 的回答(`r<轮次>`)且 [canBranchAt] 成立时返回轮次,否则 null。
+ * 长按的这条消息能不能作为分支点:只有如愿的回答(`r<轮次>`)且 [canBranchAt] 成立时返回轮次,否则 null。
  * 用户的话、插话、状态卡、过程行都不算。
  */
 internal fun branchableTurn(exchanges: List<Exchange>, key: String, blocked: Boolean): Int? =

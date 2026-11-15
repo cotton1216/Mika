@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="wechat_notif_title">WeChat에 연결됨</string>
-    <string name="wechat_notif_body">개인 메시지로 Mika 작업을 시작할 수 있어요</string>
+    <string name="wechat_notif_body">개인 메시지로 如愿 작업을 시작할 수 있어요</string>
     <string name="wechat_turn_off">끄기</string>
     <string name="wechat_title">WeChat</string>
     <string name="wechat_settings_sub">WeChat에서 Mika에게 작업 맡기기</string>

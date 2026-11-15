@@ -69,7 +69,7 @@
     <string name="selfcheck_advice_out_of_time">이 점검 전에 자가 점검 시간이 다 됐어요.</string>
     <string name="selfcheck_advice_cancelled">취소됨.</string>
 
-    <string name="selfcheck_target_title">Mika 자가 점검 페이지</string>
+    <string name="selfcheck_target_title">如愿 자가 점검 페이지</string>
     <string name="selfcheck_target_note">Mika의 자체 테스트 페이지예요. 호환성 자가 점검은 여기서만 탭하고 입력하며, 다른 앱은 건드리지 않아요.</string>
     <string name="selfcheck_target_taps">탭 횟수: %1$d</string>
     <string name="selfcheck_target_button">눌러 보세요</string>

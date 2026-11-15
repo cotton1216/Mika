@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">裝置與權限</string>
     <string name="calls_edit_rule">編輯</string>
     <string name="calls_nav_receive">接聽</string>
-    <string name="calls_nav_task">電話任務</string>
+    <string name="calls_nav_task">撥打</string>
     <string name="calls_pause_enable_first">啟用自動接聽後可暫時暫停。</string>
     <string name="calls_rule_delay_summary">接聽等待：%1$d 秒</string>
     <string name="calls_rule_pause">暫時停止</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">不指定預設 SIM</string>
     <string name="calls_task_back_to_edit">返回修改</string>
     <string name="calls_task_confirm_dial">確認並撥打</string>
-    <string name="calls_task_confirm_note">Mika 只為這通電話使用任務單。確認後使用所選 SIM 撥號，可能產生電信業者和即時語音費用。</string>
+    <string name="calls_task_confirm_note">如愿只為這通電話使用任務單。確認後使用所選 SIM 撥號，可能產生電信業者和即時語音費用。</string>
     <string name="calls_task_constraints">不能承諾什麼</string>
     <string name="calls_task_context">補充情況</string>
     <string name="calls_task_filled">已填寫</string>

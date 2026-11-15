@@ -53,7 +53,7 @@ internal val InstallStep.label: String get() = when (this) {
 /**
  * 准备运行环境:检查 → 解出自带的根文件系统 → 配置 → 同步技能 → 完成。不联网。
  * 每步完成记进 [SandboxState],下次从记录那一步的下一步开始;失败时状态为 Broken(原因)并抛出。
- * 自带的版本变了(Mika 升级)就重新解包:解到新目录,校验通过后换上,工作区不动。
+ * 自带的版本变了(如愿升级)就重新解包:解到新目录,校验通过后换上,工作区不动。
  *
  * 参数除 [dirs]、[state]、[bundle] 外是测试用的接缝,默认值即真机行为。
  */
@@ -85,7 +85,7 @@ class RootfsInstaller(
                 return@withContext
             }
             var step = state.completedStep()?.let { done -> STEPS.getOrNull(STEPS.indexOf(done) + 1) } ?: InstallStep.Check
-            // 装好的是旧版本(Mika 升级了):从解包重来,旧的在新的解好之前照常留着
+            // 装好的是旧版本(如愿升级了):从解包重来,旧的在新的解好之前照常留着
             if (state.completedStep() == InstallStep.Done && !upToDate) step = InstallStep.Check
             try {
                 for (s in STEPS.drop(STEPS.indexOf(step))) {
@@ -195,7 +195,7 @@ class RootfsInstaller(
         }
     }
 
-    /** 删掉 [dir] 整棵树(它的上一层是 Mika 自己的目录);经关口按句柄逐层走。 */
+    /** 删掉 [dir] 整棵树(它的上一层是如愿自己的目录);经关口按句柄逐层走。 */
     private fun deleteReachable(dir: File) {
         val parent = dir.parentFile ?: return
         dirs.gate.deleteTree(parent, dir.name)

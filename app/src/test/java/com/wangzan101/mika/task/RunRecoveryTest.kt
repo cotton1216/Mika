@@ -66,7 +66,7 @@ class RunRecoveryTest {
         val result = Delivery.Result("result:a", peer.threadId, "截图")
         rig.store.save(run("a", RunPhase.Finishing).copy(reply = result.text, deliveryId = result.id, channelPeer = peer))
         ResultDelivery.prepare(rig.outbox, rig.channel, peer, result,
-            listOf(SharedFile("screen.png", 3L, "Download/Mika/screen.png", "content://downloads/1")))
+            listOf(SharedFile("screen.png", 3L, "Download/如愿/screen.png", "content://downloads/1")))
         rig.outbox.deliver(rig.channel, peer, result)
         rig.channel.sent.clear()
         rig.recovery.recover()
@@ -95,7 +95,7 @@ class RunRecoveryTest {
         rig.store.save(run("a").copy(channelPeer = peer))
         val result = Delivery.Result("result:a", peer.threadId, "截图")
         ResultDelivery.prepare(rig.outbox, rig.channel, peer, result,
-            listOf(SharedFile("screen.png", 3L, "Download/Mika/screen.png", "content://downloads/1")))
+            listOf(SharedFile("screen.png", 3L, "Download/如愿/screen.png", "content://downloads/1")))
         rig.recovery.recover()
         assertEquals(listOf("result:a", "result:a:image:0"), rig.channel.sent.map { it.id })
         assertEquals(RunPhase.Ended, rig.store.get(RunId("a"))?.phase)

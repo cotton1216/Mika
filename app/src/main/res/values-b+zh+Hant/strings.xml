@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">這項系統權限能讓 Mika 讀取和操作螢幕上的任何內容。Mika 只會在自己的虛擬螢幕上使用這項權限來完成你交給它的任務；只有你把主螢幕上的任務交給它時，它才會在主螢幕上操作。</string>
+    <string name="a11y_service_description">這項系統權限能讓如愿讀取和操作螢幕上的任何內容。如愿只會在自己的虛擬螢幕上使用這項權限來完成你交給它的任務；只有你把主螢幕上的任務交給它時，它才會在主螢幕上操作。</string>
     <string name="channel_attention">請你處理</string>
     <string name="takeover_title">請你處理</string>
     <string name="takeover_title_reason">請你處理：%1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">這個 App 已移至主螢幕。處理完畢後，點選「處理好了」；如果你已自行完成，點選「我自己做完了」。</string>
     <string name="takeover_web_busy">設定中有網站登入畫面。請先在該畫面點選「完成」，再點選「我來處理」。</string>
     <string name="takeover_move_to_main_failed">無法將 App 移至主螢幕。請再次點選「我來處理」重試。</string>
-    <string name="takeover_move_back_failed">無法將 App 移回 Mika 的螢幕。請重試。</string>
+    <string name="takeover_move_back_failed">無法將 App 移回如愿的螢幕。請重試。</string>
     <string name="action_take_over">我來處理</string>
     <string name="action_hand_back">處理好了</string>
     <string name="action_finished_myself">我自己做完了</string>
     <string name="action_skip">跳過</string>
     <string name="action_cancel_task">取消任務</string>
     <string name="input_title">請你回答</string>
-    <string name="no_answer_note">如果 %1$d 分鐘內沒有收到回答，Mika 將繼續執行。</string>
-    <string name="input_too_late">回答已逾時：已過 %1$d 分鐘，Mika 已在沒有收到回答的情況下繼續執行。</string>
+    <string name="no_answer_note">如果 %1$d 分鐘內沒有收到回答，如愿將繼續執行。</string>
+    <string name="input_too_late">回答已逾時：已過 %1$d 分鐘，如愿已在沒有收到回答的情況下繼續執行。</string>
     <string name="action_approve">同意</string>
     <string name="action_decline">不同意</string>
     <string name="confirmation_locked_hint">解鎖後查看收件人和內容</string>
@@ -127,7 +127,17 @@
     <string name="terminal_close_confirm">關閉</string>
     <string name="terminal_retry">重新開啟</string>
     <string name="terminal_stop">停止</string>
-    <string name="terminal_task_running">Mika 也在這個工作區裡工作，兩邊同時改可能互相影響。</string>
+    <string name="terminal_task_running">如愿也在這個工作區裡工作，兩邊同時改可能互相影響。</string>
     <string name="terminal_copy_all">複製全部</string>
     <string name="terminal_copied">已複製</string>
+    <string name="personal_replay_title">手機畫面</string>
+    <string name="personal_replay_close">關閉</string>
+    <string name="personal_replay_live_screen">即時手機畫面</string>
+    <string name="personal_replay_recorded_screen">錄製的任務畫面</string>
+    <string name="personal_replay_loading">正在載入畫面…</string>
+    <string name="personal_replay_empty">還沒有可播放的畫面。</string>
+    <string name="personal_replay_live">即時</string>
+    <string name="personal_replay_pause">暫停</string>
+    <string name="personal_replay_play">播放</string>
+    <string name="personal_replay_return_live">回到即時</string>
 </resources>

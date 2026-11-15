@@ -13,8 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 内置助手里盯着主屏的那一份:Agent 的动作前后一小段时间里,主屏最上面换了哪些任务([MainScreenLog])。
- * App 不是从自己在 Mika 屏上的页面、而是从后台(服务、通知的跳转、系统的选择器)打开另一个 App 时,系统把它放到主屏;
- * Mika 一侧据这份记录认出来、挪回去。
+ * App 不是从自己在如愿屏上的页面、而是从后台(服务、通知的跳转、系统的选择器)打开另一个 App 时,系统把它放到主屏;
+ * 如愿一侧据这份记录认出来、挪回去。
  *
  * 任务一变就看一次:向系统登记任务栈的监听(ITaskStackListener,shell 有管理任务的权限),
  * 监听只当「变了」的信号用,不解析参数(各版本的方法顺序不同),收到就重看一遍任务列表;
@@ -126,7 +126,7 @@ internal class MainScreenWatch(
         private const val DESCRIPTOR = "android.app.ITaskStackListener"
         const val POLL_MS = 100L
         private const val COALESCE_MS = 30L
-        /** 窗口过了之后再查,仍当场看一次:Mika 那边判完要一点时间。 */
+        /** 窗口过了之后再查,仍当场看一次:如愿那边判完要一点时间。 */
         private const val GRACE_MS = 2_000L
         private const val MAX_WINDOW_MS = 30_000
 

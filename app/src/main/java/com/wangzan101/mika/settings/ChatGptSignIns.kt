@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 data class ChatGptSignInFailureRecord(val atMs: Long, val kind: String, val code: String?, val detail: String)
 
 /** 这次登录是哪一家。前台服务和界面重建时靠它认,避免把别家的登录显示成 ChatGPT。 */
-enum class SignInTarget { None, ChatGpt, Xai, OpenRouter }
+enum class SignInTarget { None, ChatGpt, Xai, OpenRouter, Ruyi }
 
 /** 设备码登录给用户看的用户码、验证页和到什么时候失效。设备码本身不在这里。 */
 data class DevicePrompt(val userCode: String, val openUrl: String, val expiresAtMs: Long = 0)
@@ -26,7 +26,7 @@ data class DevicePrompt(val userCode: String, val openUrl: String, val expiresAt
 data class AccountOutcome(val target: SignInTarget, val providerId: String? = null, val failure: String? = null)
 
 /**
- * 用账号登录(ChatGPT、xAI、OpenRouter)在进程里的那一份。登录要等用户在外部浏览器里输密码、过两步验证,期间 Mika 在后台:
+ * 用账号登录(ChatGPT、xAI、OpenRouter)在进程里的那一份。登录要等用户在外部浏览器里输密码、过两步验证,期间如愿在后台:
  * 跑在 App 的作用域 [scope] 里(界面重建、退到后台都不断),开始时调 [keepAlive] 撑住进程(前台服务,
  * 免得进程被冻住、本机回调没人接);它起不来只记一句,登录照常。前台服务看着 [running],变回假就自己停,
  * 所以成功、失败、取消、超时都会停。同一时刻只有一次登录;[cancel] 放弃(通知上的「取消」也走这里)。

@@ -61,7 +61,7 @@
     <string name="role_vision_what">Looks at screenshots</string>
     <string name="role_light_what">Small jobs like checks and notes</string>
     <string name="role_main_hint">Does all the thinking and acting. Pick a model with tool calling so tasks go reliably.</string>
-    <string name="role_vision_hint">Gets screenshots when reading the screen; more accurate on complex screens. Optional: without it Mika reads the screen as text.</string>
+    <string name="role_vision_hint">Gets screenshots when reading the screen; more accurate on complex screens. Optional: without it 如愿 reads the screen as text.</string>
     <string name="role_light_hint">Handles small jobs like checking whether a task is done and tidying memory. Cheap and fast is best.</string>
     <string name="models_delete_title">Delete “%1$s”?</string>
     <string name="models_delete_body">"Its API key will be deleted too. "</string>
@@ -91,9 +91,9 @@
 
     <!-- 用 ChatGPT 登录 -->
     <string name="chatgpt_use_plan_title">Use your ChatGPT plan</string>
-    <string name="chatgpt_use_plan_body">Complete eligible AI requests in this app with usage included in your ChatGPT plan or credits balance. Works with ChatGPT Plus and Pro. Mika itself is free; nothing is charged by Mika.</string>
+    <string name="chatgpt_use_plan_body">Complete eligible AI requests in this app with usage included in your ChatGPT plan or credits balance. Works with ChatGPT Plus and Pro. 如愿 itself is free; nothing is charged by 如愿.</string>
     <string name="chatgpt_continue">Continue with ChatGPT</string>
-    <string name="chatgpt_waiting">Finish signing in in your browser, then come back to Mika.</string>
+    <string name="chatgpt_waiting">Finish signing in in your browser, then come back to 如愿.</string>
     <string name="chatgpt_welcome_title">You’re using your ChatGPT plan</string>
     <string name="chatgpt_welcome_body">Eligible usage in this app uses your ChatGPT plan. Manage usage in your ChatGPT settings.</string>
     <string name="chatgpt_got_it">Got it</string>
@@ -104,23 +104,23 @@
     <string name="chatgpt_manage_usage">Manage usage</string>
     <string name="chatgpt_plan_note">Using ChatGPT plan. On Plus, the 5-hour limit is shared with other apps that use your plan; Pro has no 5-hour limit.</string>
     <string name="chatgpt_signed_out_note">Signed out on this phone. Continue with ChatGPT to use your plan again; your model choices are kept.</string>
-    <string name="chatgpt_revoke_unconfirmed">Signed out on this phone, but ChatGPT didn’t confirm it. You can also disconnect Mika in your ChatGPT settings.</string>
+    <string name="chatgpt_revoke_unconfirmed">Signed out on this phone, but ChatGPT didn’t confirm it. You can also disconnect 如愿 in your ChatGPT settings.</string>
     <string name="chatgpt_fail_denied">Sign-in was cancelled. If the page said the required permission isn’t available: using your plan needs ChatGPT Plus or Pro. With a free account, add another provider’s API key instead.</string>
     <string name="chatgpt_fail_mismatch">The sign-in reply didn’t match this attempt. Please try again.</string>
-    <string name="chatgpt_fail_no_client">ChatGPT didn’t finish registering Mika. Please try again.</string>
+    <string name="chatgpt_fail_no_client">ChatGPT didn’t finish registering 如愿. Please try again.</string>
     <string name="chatgpt_fail_timed_out">Sign-in timed out. Please try again.</string>
     <string name="chatgpt_fail_exchange">ChatGPT rejected this sign-in (error: %1$s). Please try again.</string>
     <string name="chatgpt_fail_code_expired">The sign-in code expired or was already used. Please sign in again.</string>
     <string name="chatgpt_fail_region">OpenAI doesn’t support the region your network is in. Try another network.</string>
     <string name="chatgpt_fail_blocked">OpenAI’s protection blocked the request. Try another network or try again later.</string>
     <string name="chatgpt_fail_id_token">Couldn’t verify your ChatGPT account. Please try again.</string>
-    <string name="chatgpt_fail_no_plan">Mika wasn’t allowed to use your ChatGPT plan. Sign in again and allow plan usage (needs Plus or Pro).</string>
+    <string name="chatgpt_fail_no_plan">如愿 wasn’t allowed to use your ChatGPT plan. Sign in again and allow plan usage (needs Plus or Pro).</string>
     <string name="chatgpt_fail_network">Couldn’t reach ChatGPT. Check your network and try again.</string>
-    <string name="chatgpt_page_title">Mika</string>
-    <string name="chatgpt_page_done">Signed in. Return to Mika.</string>
+    <string name="chatgpt_page_title">如愿</string>
+    <string name="chatgpt_page_done">Signed in. Return to 如愿.</string>
     <string name="chatgpt_signin_notif_title">Signing in to ChatGPT</string>
     <string name="chatgpt_signin_notif_body">Waiting for you to sign in to ChatGPT in the browser</string>
-    <string name="chatgpt_page_back">Return to Mika</string>
+    <string name="chatgpt_page_back">Return to 如愿</string>
     <string name="chatgpt_no_browser">No browser found to sign in with.</string>
     <string name="models_unverified">Not tested; tasks may fail</string>
     <string name="models_unverified_note">This provider has no model list, and %1$s (in use) hasn’t passed a test, so tasks may fail. Tap “Test again” to make one test call with it.</string>
@@ -149,8 +149,8 @@
     <string name="signin_use_key">Use an API key instead</string>
     <string name="signin_stored_note">Sign-in details are stored encrypted on this phone only and are never written to logs.</string>
     <string name="signin_xai_title">Sign in with xAI</string>
-    <string name="signin_xai_body">Use Grok in Mika with your SuperGrok or X Premium+ subscription, with no separate API credit to buy. Requests go straight to xAI.</string>
-    <string name="signin_xai_risk">This sign-in borrows the public sign-in entry of xAI\'s official command-line tool; xAI did not set it up for Mika. xAI may restrict this use, and some subscription tiers still can\'t make calls after signing in (you\'ll see 403). If that happens, use an xAI API key instead.</string>
+    <string name="signin_xai_body">Use Grok in 如愿 with your SuperGrok or X Premium+ subscription, with no separate API credit to buy. Requests go straight to xAI.</string>
+    <string name="signin_xai_risk">This sign-in borrows the public sign-in entry of xAI\'s official command-line tool; xAI did not set it up for 如愿. xAI may restrict this use, and some subscription tiers still can\'t make calls after signing in (you\'ll see 403). If that happens, use an xAI API key instead.</string>
     <string name="signin_xai_starting">Opening the xAI confirmation page…</string>
     <string name="signin_xai_code_title">Confirm in your browser</string>
     <string name="signin_xai_code_body">The xAI confirmation page is open. Check that the code there matches the one below, then approve.</string>
@@ -159,18 +159,31 @@
     <string name="signin_xai_code_waiting">Waiting for you to confirm in the browser…</string>
     <string name="signin_xai_403_note">If calls fail with 403, your subscription tier can\'t use this API. Use an xAI API key instead.</string>
     <string name="signin_openrouter_title">Sign in with OpenRouter</string>
-    <string name="signin_openrouter_body">Opens OpenRouter\'s authorization page. Once you approve, OpenRouter gives Mika a key of your own; usage comes out of your OpenRouter balance, and hundreds of models are ready at once.</string>
+    <string name="signin_openrouter_body">Opens OpenRouter\'s authorization page. Once you approve, OpenRouter gives 如愿 a key of your own; usage comes out of your OpenRouter balance, and hundreds of models are ready at once.</string>
     <string name="signin_openrouter_note">This is OpenRouter\'s official sign-in for third-party apps. The key is stored encrypted on this phone; if you no longer want it, delete it on OpenRouter\'s Keys page.</string>
     <string name="signin_openrouter_authorize">Authorize on OpenRouter</string>
-    <string name="signin_openrouter_waiting">Approve in the browser, then come back to Mika.</string>
+    <string name="signin_openrouter_waiting">Approve in the browser, then come back to 如愿.</string>
     <string name="signin_openrouter_manage">Open OpenRouter\'s Keys page</string>
-    <string name="signin_openrouter_signed_in_note">Usage comes out of your OpenRouter balance. The key is stored encrypted on this phone; to stop using it, delete the key named \"Mika\" on OpenRouter\'s Keys page.</string>
+    <string name="signin_openrouter_signed_in_note">Usage comes out of your OpenRouter balance. The key is stored encrypted on this phone; to stop using it, delete the key named \"如愿\" on OpenRouter\'s Keys page.</string>
     <string name="signin_openrouter_signed_out_note">The key was deleted from this phone. It still exists on OpenRouter; delete it on the Keys page. Model choices are kept.</string>
     <string name="signin_set_main">Set as main model</string>
-    <string name="signin_set_main_note">Mika uses it to get things done</string>
+    <string name="signin_set_main_note">如愿 uses it to get things done</string>
     <string name="signin_sign_out_note">Only clears the sign-in on this phone</string>
     <string name="signin_busy">Another sign-in is in progress. Finish or cancel it first.</string>
     <string name="signin_openrouter_name">%1$s (signed in)</string>
+    <string name="signin_row_ruyi">Sign in with your Ruyi account to sync its models</string>
+    <string name="ruyi_login_subtitle">Sign in with your Ruyi account. Your available AI models are fetched and set up automatically.</string>
+    <string name="ruyi_login_cta">Sign in with Ruyi</string>
+    <string name="ruyi_login_waiting">Waiting for authorization…</string>
+    <string name="ruyi_login_skip">Not now</string>
+    <string name="signin_ruyi_title">Sign in with Ruyi</string>
+    <string name="signin_ruyi_body">Opens Ruyi\'s authorization page. Once you sign in, Ruyi gives 如愿 an inference key of your own; usage comes out of your Ruyi account, and its models are ready at once.</string>
+    <string name="signin_ruyi_note">Sign-in details are stored encrypted on this phone only and are never written to logs. The key is issued by your Ruyi account; delete it on Ruyi\'s Keys page if you no longer want it.</string>
+    <string name="signin_ruyi_waiting">Finish signing in in the browser, then come back to 如愿.</string>
+    <string name="signin_ruyi_manage">Open Ruyi\'s Keys page</string>
+    <string name="signin_ruyi_signed_in_note">Usage comes out of your Ruyi account. The key is stored encrypted on this phone; delete it on Ruyi\'s Keys page to stop using it.</string>
+    <string name="signin_ruyi_signed_out_note">The key was deleted from this phone. It still exists on Ruyi; delete it on the Keys page. Model choices are kept.</string>
+    <string name="signin_ruyi_name">%1$s (signed in)</string>
 
     <!-- Settings > Models: speech-to-text usage and its picker page -->
     <string name="role_speech">Speech to text</string>

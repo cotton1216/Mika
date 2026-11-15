@@ -134,7 +134,7 @@ internal class ScreenSession(
     var stale = false
         private set
 
-    /** Mika 自己动过这块屏(停留里轻轻滚了几下):模型手里那一屏的位置已不准,标成过时。 */
+    /** 如愿自己动过这块屏(停留里轻轻滚了几下):模型手里那一屏的位置已不准,标成过时。 */
     fun movedByMika() { stale = true }
 
     /**
@@ -213,6 +213,16 @@ internal class ScreenSession(
      * 主模型能看图时此刻屏幕的一帧(原图)和它的 screenshotId,登记进回看。和读屏同样的规则:
      * 受保护页面不截；屏上还没有 App、截不到时为 null。
      */
+    /** 本地回放帧：不依赖看图模型，不登记模型截图编号，也不更新读屏状态。 */
+    suspend fun playbackFrame(): ByteArray? = kotlinx.coroutines.withTimeoutOrNull(1_000L) {
+        if (!recordFrames || textOnlyDepth != 0) return@withTimeoutOrNull null
+        screenAttempt {
+            screen.checkAppAccess()
+            val s = screen.peek()
+            if (s.protected || !s.hasWindow || screen.isProtected()) null else screen.screenshotPng()
+        }
+    }
+
     suspend fun currentFrame(): Pair<ByteArray, Int>? {
         if (!visionEnabled) return null
         val s = screenAttempt { screen.peek() } ?: return null
@@ -338,14 +348,14 @@ internal class ScreenSession(
             internal set
     }
 
-    /** 这次动作前看的那一眼,动作判完效果前留着:动作开始之前 Mika 自己又动过界面时由 [reprobe] 重看。 */
+    /** 这次动作前看的那一眼,动作判完效果前留着:动作开始之前如愿自己又动过界面时由 [reprobe] 重看。 */
     private var pendingProbe: EffectProbe? = null
 
     /** 这次动作的效果判完了(或不判了)。 */
     fun probeDone() { pendingProbe = null }
 
     /**
-     * 动作开始之前 Mika 自己动过界面(网页停留里轻轻滚了页面):重看一眼当作动作前的样子,免得把这点滚动算成动作的效果;
+     * 动作开始之前如愿自己动过界面(网页停留里轻轻滚了页面):重看一眼当作动作前的样子,免得把这点滚动算成动作的效果;
      * 模型手里那一屏的位置也已不准,标成过时。没有在等判效果的动作时什么也不做。
      */
     suspend fun reprobe() {

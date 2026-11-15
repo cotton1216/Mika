@@ -66,7 +66,7 @@ interface SandboxPort {
     /** 规范化后的沙箱路径 → (宿主根目录, 根下相对路径),交给 [files];技能目录只读,越界为 null。工作区目录不存在时建上。 */
     fun hostRoot(workspace: String, normalized: String, forWrite: Boolean): Pair<File, String>?
 
-    /** 存到手机的「下载/Mika」,返回 "Download/Mika/<名字>"。 */
+    /** 存到手机的「下载/如愿」,返回 "Download/如愿/<名字>"。 */
     suspend fun share(file: File, name: String): String
 
     fun freeBytes(): Long

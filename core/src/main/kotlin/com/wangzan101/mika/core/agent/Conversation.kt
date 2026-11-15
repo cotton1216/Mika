@@ -39,6 +39,8 @@ data class Turn(
     val verified: Boolean? = null,
     /** 电脑派发时的任务编号，在运行记录创建前也可用。 */
     val remoteTaskId: String? = null,
+    /** Source of runtime-owned outcome text; absent for summaries and legacy turns. */
+    val outcomeSystemType: String? = null,
 )
 
 object Conversation {
@@ -85,8 +87,8 @@ object Conversation {
         }
         // 任务结束后留下的那一页:下一轮被问到「还在播吗」时知道它还开着还是已经关了
         val kept = t.keptPage?.let { host ->
-            if (t.keptPageClosed == null) "; after it Mika kept the page on $host running in the background"
-            else "; Mika kept the page on $host running after it, and that page has since been closed"
+            if (t.keptPageClosed == null) "; after it 如愿 kept the page on $host running in the background"
+            else "; 如愿 kept the page on $host running after it, and that page has since been closed"
         }.orEmpty()
         return "$n. The user said: ${t.userText.clip(clip)}; $result$kept"
     }

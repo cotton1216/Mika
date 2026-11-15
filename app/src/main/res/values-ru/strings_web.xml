@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">Некоторые входы могут сохраниться; чтобы очистить всё, нажмите «Выйти везде».</string>
-    <string name="web_challenged_note">Недавно Mika столкнулась на этом сайте с капчей или блокировкой доступа. Если это повторяется, очистите данные этого сайта (cookie и веб-хранилище) и войдите снова.</string>
-    <string name="web_data_note">Данные входа на сайты хранятся только в закрытой папке Mika на этом телефоне, без дополнительного шифрования, с той же защитой, что и в системном браузере.</string>
+    <string name="web_challenged_note">Недавно 如愿 столкнулась на этом сайте с капчей или блокировкой доступа. Если это повторяется, очистите данные этого сайта (cookie и веб-хранилище) и войдите снова.</string>
+    <string name="web_data_note">Данные входа на сайты хранятся только в закрытой папке 如愿 на этом телефоне, без дополнительного шифрования, с той же защитой, что и в системном браузере.</string>
     <string name="web_none">Сайты пока не посещались</string>
-    <string name="web_none_sub">Сайты появятся здесь после того, как Mika поработает с ними или вы войдёте на них здесь</string>
-    <string name="web_signed_in_by_you">Вход выполнен в Mika</string>
+    <string name="web_none_sub">Сайты появятся здесь после того, как 如愿 поработает с ними или вы войдёте на них здесь</string>
+    <string name="web_signed_in_by_you">Вход выполнен в 如愿</string>
     <string name="web_challenged">Встретилась проверка или блокировка</string>
     <string name="web_last_visit">Последний визит: %1$s</string>
     <string name="web_manage">Управление</string>
     <string name="web_logout_all_title">Выйти везде и очистить веб-данные</string>
-    <string name="web_you_signed_in">Вы вошли на этот сайт в Mika.</string>
-    <string name="web_mika_visited">Mika заходила на этот сайт.</string>
+    <string name="web_you_signed_in">Вы вошли на этот сайт в 如愿.</string>
+    <string name="web_mika_visited">如愿 заходила на этот сайт.</string>
     <string name="web_open_login">Открыть страницу входа</string>
     <string name="web_cleared">Cookie и веб-хранилище для %1$s очищены; потребуется войти снова. Некоторые данные могут остаться; чтобы очистить всё, нажмите «Выйти везде».</string>
     <string name="web_signed_out">Выход из %1$s выполнен. %2$s</string>
     <string name="web_clear_site">Очистить данные этого сайта</string>
     <string name="web_sign_out_site">Выйти с этого сайта</string>
     <string name="web_logout_all_q">Выйти везде и очистить веб-данные?</string>
-    <string name="web_logout_all_body">Выход со всех сайтов во встроенном браузере и очистка их веб-данных, хранящихся в Mika. Когда Mika будет работать с этими сайтами, ей придётся входить снова.</string>
+    <string name="web_logout_all_body">Выход со всех сайтов во встроенном браузере и очистка их веб-данных, хранящихся в 如愿. Когда 如愿 будет работать с этими сайтами, ей придётся входить снова.</string>
     <string name="web_logged_out_all">Выход везде выполнен, веб-данные очищены.</string>
     <string name="web_logout_all">Выйти везде</string>
     <string name="date_pattern_md_compact">d MMM</string>
-    <string name="web_takeover_login">Войдите в браузере Mika и нажмите «Готово»</string>
-    <string name="web_takeover_waiting">Mika ждёт вас: %1$s</string>
+    <string name="web_takeover_login">Войдите в браузере 如愿 и нажмите «Готово»</string>
+    <string name="web_takeover_waiting">如愿 ждёт вас: %1$s</string>
     <string name="web_reason_security">Проверка безопасности</string>
     <!-- 任务结束后留在后台运行的那一页 -->
     <string name="kept_notif_title">Веб-страница работает в фоне</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">страница аварийно завершилась</string>
     <string name="kept_reason_user">вы закрыли её</string>
     <string name="kept_reason_replaced">оставлена другая страница</string>
-    <string name="kept_reason_app_exit">Mika закрыта</string>
+    <string name="kept_reason_app_exit">如愿 закрыта</string>
     <string name="kept_chat_sub">1 веб-страница работает в фоне</string>
     <string name="kept_capsule">Работает фоновая страница</string>
     <string name="kept_card_title">Фоновая страница</string>

@@ -10,21 +10,21 @@ class ApkIntegrityTest {
     @get:Rule val temp = TemporaryFolder()
 
     @Test fun acceptsOfficialApk() {
-        ApkIntegrity.requireOfficialUrl("https://github.com/wangzan101/Mika/releases/download/v0.2.0/Mika.apk")
+        ApkIntegrity.requireOfficialUrl("https://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk")
     }
 
     @Test fun rejectsUntrustedDownloads() {
         for (url in listOf(
-            "http://github.com/wangzan101/Mika/releases/download/v0.2.0/Mika.apk",
-            "https://github.com.evil.test/wangzan101/Mika/releases/download/v0.2.0/Mika.apk",
-            "https://github.com/other/Mika/releases/download/v0.2.0/Mika.apk",
+            "http://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "https://github.com.evil.test/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "https://github.com/other/如愿/releases/download/v0.2.0/如愿.apk",
             "https://github.com/wangzan101/Mika/releases/download/../../other.apk",
             "https://github.com/wangzan101/Mika/releases/download/%2e%2e/%2E%2e/%2e%2e/%2e%2e/other/x.apk",
-            "https://objects.githubusercontent.com/wangzan101/Mika/releases/download/v0.2.0/Mika.apk",
-            "https://github.com/wangzan101/Mika/releases/download/v0.2.0/Mika.zip",
+            "https://objects.githubusercontent.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "https://github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.zip",
             "https://github.com/wangzan101/Mika/releases/tag/v0.2.0",
-            "https://user:pass@github.com/wangzan101/Mika/releases/download/v0.2.0/Mika.apk",
-            "https://github.com:8443/wangzan101/Mika/releases/download/v0.2.0/Mika.apk",
+            "https://user:pass@github.com/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
+            "https://github.com:8443/wangzan101/Mika/releases/download/v0.2.0/如愿.apk",
         )) rejects { ApkIntegrity.requireOfficialUrl(url) }
     }
 

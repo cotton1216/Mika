@@ -3,6 +3,7 @@ package com.wangzan101.mika.about
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -28,27 +29,51 @@ data class ReleaseInfo(
 }
 
 /**
- * 读 GitHub 发布页接口(releases/latest)的版本信息:tag_name、name、body、published_at、html_url,
+ * 读 GitHub 发布接口的版本信息:tag_name、name、body、published_at、html_url,
  * 以及 assets 里适合本机的 APK 的 browser_download_url(见 [pickApk])。
  */
 object Releases {
     private val json = Json { ignoreUnknownKeys = true }
 
     /**
-     * 发布里除了全架构的 `Mika-v<版本>.apk`,还可能有只带某个架构原生库的包,名字以 `-<后缀>.apk` 结尾。
+     * 发布列表(接口返回的 JSON 数组)里挑出 tag 带 [tagPrefix] 前缀的——那些才是如愿的发布,
+     * 其余是原来的 Mika 包,互不打扰——再按版本号挑最新的一个;预发布与草稿不参与。
+     * 没有如愿的发布时报错(这次没查到)。
+     */
+    fun latest(
+        text: String,
+        deviceAbis: List<String> = emptyList(),
+        tagPrefix: String = MikaLinks.RELEASE_TAG_PREFIX,
+    ): ReleaseInfo {
+        val candidates = json.parseToJsonElement(text).jsonArray
+            .mapNotNull { e -> runCatching { e.jsonObject }.getOrNull() }
+            .filter { o ->
+                (o["draft"] as? JsonPrimitive)?.booleanOrNull != true &&
+                    (o["prerelease"] as? JsonPrimitive)?.booleanOrNull != true
+            }
+            .mapNotNull { o ->
+                o.str("tag_name")?.takeIf { it.startsWith(tagPrefix) }?.let { o to AppVersion.normalize(it.removePrefix(tagPrefix)) }
+            }
+        val best = candidates.maxWithOrNull { (_, v1), (_, v2) -> AppVersion.compare(v1, v2) }
+            ?: error("no $tagPrefix* release")
+        return fromGitHub(best.first.toString(), deviceAbis, tagPrefix)
+    }
+
+    /**
+     * 发布里除了全架构的 `如愿-v<版本>.apk`,还可能有只带某个架构原生库的包,名字以 `-<后缀>.apk` 结尾。
      * 键是 Android 的 ABI 名,值是附件名后缀。
      */
     private val ABI_APK_SUFFIX = mapOf("arm64-v8a" to "arm64")
 
     /** [deviceAbis] 是本机支持的 ABI,按偏好排序(Build.SUPPORTED_ABIS);为空时只取全架构包。 */
-    fun fromGitHub(text: String, deviceAbis: List<String> = emptyList()): ReleaseInfo {
+    fun fromGitHub(text: String, deviceAbis: List<String> = emptyList(), tagPrefix: String? = null): ReleaseInfo {
         val o = json.parseToJsonElement(text).jsonObject
         val tag = o.str("tag_name") ?: error("no tag_name")
         val body = o.str("body").orEmpty()
         val apk = o["assets"]?.let { a ->
             runCatching { a.jsonArray }.getOrNull()?.map { it.jsonObject }?.let { pickApk(it, deviceAbis) }
         }
-        val version = AppVersion.normalize(tag)
+        val version = AppVersion.normalize(if (tagPrefix == null) tag else tag.removePrefix(tagPrefix))
         return ReleaseInfo(
             version = version,
             name = o.str("name")?.takeIf { it.isNotBlank() } ?: version,

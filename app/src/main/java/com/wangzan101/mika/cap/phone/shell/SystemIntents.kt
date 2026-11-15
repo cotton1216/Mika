@@ -8,14 +8,14 @@ import com.wangzan101.mika.core.uistate.SystemAction
 
 /**
  * 系统动作用的安卓标准 intent:设闹钟、计时器、打开闹钟列表(AlarmClock),打开预填好的新日程(CalendarContract 的插入页)。
- * 先写成与安卓无关的 [Spec](单测直接比),再换成 [Intent]。内置助手只放行这几种([allowed]),不替 Mika 启动任意的 intent。
+ * 先写成与安卓无关的 [Spec](单测直接比),再换成 [Intent]。内置助手只放行这几种([allowed]),不替如愿启动任意的 intent。
  */
 object SystemIntents {
     /** 日程插入页按类型匹配:直接写明类型,不靠日历提供方去查(查它要日历的可见性)。 */
     const val EVENTS_TYPE = "vnd.android.cursor.dir/event"
     const val EVENTS_URI = "content://${CalendarContract.AUTHORITY}/events"
 
-    /** Mika 的兼容性自检页:内置助手认出这个组件后以 shell 身份直接开到 Mika 的屏上,不按 [allowed] 走。 */
+    /** 如愿的兼容性自检页:内置助手认出这个组件后以 shell 身份直接开到如愿的屏上,不按 [allowed] 走。 */
     const val OWN_PAGE_CLASS = "com.wangzan101.mika.selfcheck.SelfCheckTargetActivity"
 
     /** 能接这个 intent 的一个页面;[system] 是系统自带的 App。 */
@@ -23,7 +23,7 @@ object SystemIntents {
 
     /**
      * 交给哪一个:只有一个就是它;用户设过默认的([defaultPackage],系统按默认解析出来的包,不是选择器)用默认的;
-     * 否则先挑系统自带的,再按先后。直接指定到那个页面:悄悄设好的动作不该在 Mika 的屏上留一个「用哪一个」的选择框。
+     * 否则先挑系统自带的,再按先后。直接指定到那个页面:悄悄设好的动作不该在如愿的屏上留一个「用哪一个」的选择框。
      * 没有为 null(不支持,模型退回去操作界面)。
      */
     fun choose(handlers: List<Handler>, defaultPackage: String?): Handler? =
@@ -61,7 +61,7 @@ object SystemIntents {
         })
     }
 
-    /** 内置助手只替 Mika 启动这几种:动作在表里,插入的只能是日程。 */
+    /** 内置助手只替如愿启动这几种:动作在表里,插入的只能是日程。 */
     fun allowed(action: String?, data: String?): Boolean = when (action) {
         AlarmClock.ACTION_SET_ALARM, AlarmClock.ACTION_SET_TIMER, AlarmClock.ACTION_SHOW_ALARMS -> data == null
         Intent.ACTION_INSERT -> data == EVENTS_URI

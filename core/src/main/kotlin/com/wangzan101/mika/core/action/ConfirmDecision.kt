@@ -32,7 +32,7 @@ sealed interface Decision {
     data class Mismatch(val hit: Irreversible, val reason: String) : Decision
     /** 要花钱,本次运行却问不到手机旁的用户,直接拒绝。 */
     data class Denied(val hit: Irreversible) : Decision
-    /** 作用在 Mika 自己身上,不做。 */
+    /** 作用在如愿自己身上,不做。 */
     data object OwnApp : Decision
 }
 
@@ -49,7 +49,7 @@ class ConfirmDecision(
     private val provenance: RunProvenance = RunProvenance(),
     /** 开工就是自主执行(没有确认关卡):付款也不问,界面目标猜测也不阻断动作;中途换成自主看 [ApprovalSettings.autonomous]。 */
     private val autonomous: Boolean = false,
-    /** Mika 自己的包名:作用在它上面的写操作一律不做(不自己给自己点同意、改设置)。 */
+    /** 如愿自己的包名:作用在它上面的写操作一律不做(不自己给自己点同意、改设置)。 */
     private val selfPackage: String? = null,
 ) {
     /**
@@ -101,7 +101,7 @@ class ConfirmDecision(
     private fun outward(hit: Irreversible?, screen: ScreenSnapshot?): String? =
         if (hit?.action == IrrevAction.send || hit?.action == IrrevAction.submit) OutwardPacing.siteOf(screen?.packageName, screen?.web != null) else null
 
-    /** 写操作作用在 Mika 自己身上:屏上是 Mika,或要打开 Mika(含它的应用详情页)。 */
+    /** 写操作作用在如愿自己身上:屏上是如愿,或要打开如愿(含它的应用详情页)。 */
     private fun ownApp(tool: String, args: JsonObject, screen: ScreenSnapshot?): Boolean {
         val self = selfPackage ?: return false
         if (!tools.writesScreen(tool)) return false

@@ -112,6 +112,6 @@ class BundledScriptsManifestTest {
     }
 
     private companion object {
-        const val AUTH_REASON = "需要账号授权,Mika 暂不支持"
+        const val AUTH_REASON = "需要账号授权,如愿暂不支持"
     }
 }

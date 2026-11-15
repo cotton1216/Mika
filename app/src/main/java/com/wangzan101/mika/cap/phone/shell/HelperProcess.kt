@@ -25,13 +25,13 @@ import java.lang.reflect.Proxy
 import kotlin.system.exitProcess
 
 /**
- * 内置助手进程的入口。Mika 经本机无线调试(adbd 的 exec: 服务)以 shell 身份启动它:
- * `CLASSPATH=<base.apk> app_process /system/bin --nice-name=<包名>:helper com.wangzan101.mika.shell.HelperMain <包名> <Mika 的 uid> <签名指纹>`,
+ * 内置助手进程的入口。如愿经本机无线调试(adbd 的 exec: 服务)以 shell 身份启动它:
+ * `CLASSPATH=<base.apk> app_process /system/bin --nice-name=<包名>:helper com.wangzan101.mika.shell.HelperMain <包名> <如愿的 uid> <签名指纹>`,
  * 一次性口令从标准输入读一行(见 [HelperHandoff.command])。电脑经 USB 调试跑「用电脑启动」脚本时起的也是它,命令和参数相同
  * (见 [HelperHandoff.usbScript]);已 root 的手机上经 `su 2000 -c` 以 shell 身份起的也是它(见 [HelperHandoff.rootCommand])。
  *
- * 特权逻辑全在 [ShellService];这里只负责把它的 Binder 交给 Mika,并且在 Mika 进程结束后不退出:
- * 撤掉 Mika 留下的改动,等 Mika 再起来时重新交接。Mika 死后一会儿还没回来、而它交来的心愿([RestoreWish])要拉起来时,
+ * 特权逻辑全在 [ShellService];这里只负责把它的 Binder 交给如愿,并且在如愿进程结束后不退出:
+ * 撤掉如愿留下的改动,等如愿再起来时重新交接。如愿死后一会儿还没回来、而它交来的心愿([RestoreWish])要拉起来时,
  * 把它的无障碍服务写回系统列表,再经交接用的 provider 把它的进程拉起来(见 [HelperRestorePolicy])。
  */
 object HelperProcess {
@@ -72,17 +72,17 @@ object HelperProcess {
         private val context: Context = ShellContext.create()
         private val authority = HelperHandoff.authority(packageName)
         private val userId = appUid / PER_USER_RANGE
-        /** 交接、Mika 死亡处理都排在这一条线程上,彼此不交错,也不堵主线程。 */
+        /** 交接、如愿死亡处理都排在这一条线程上,彼此不交错,也不堵主线程。 */
         private val worker = Handler(HandlerThread("helper-handoff").apply { start() }.looper)
-        /** 下次交接用的口令(Mika 上次收下时换发的)。 */
+        /** 下次交接用的口令(如愿上次收下时换发的)。 */
         private var nonce: String? = null
-        /** Mika 进程交给我们的令牌;为 null 表示 Mika 现在不在。 */
+        /** 如愿进程交给我们的令牌;为 null 表示如愿现在不在。 */
         private var appToken: IBinder? = null
         private var retrying = false
-        /** Mika 最后交来的心愿;助手刚起来时什么都不做。 */
+        /** 如愿最后交来的心愿;助手刚起来时什么都不做。 */
         private var wish = RestoreWish.NONE
         private val restorePolicy = HelperRestorePolicy()
-        /** 每次 Mika 死去加一:等的这一会儿里 Mika 回来又死了,前一次的等待作废。 */
+        /** 每次如愿死去加一:等的这一会儿里如愿回来又死了,前一次的等待作废。 */
         private var deaths = 0
 
         init {
@@ -98,7 +98,7 @@ object HelperProcess {
         fun start(launchNonce: String) = worker.post {
             when (deliver(launchNonce)) {
                 Outcome.Accepted -> {
-                    // Mika 收下了这一个:之前起的(或残留的)助手实例都该走了
+                    // 如愿收下了这一个:之前起的(或残留的)助手实例都该走了
                     killOtherInstances()
                     watchUid()
                 }
@@ -109,7 +109,7 @@ object HelperProcess {
 
         private enum class Outcome { Accepted, Rejected, Failed }
 
-        /** 经 ActivityManager 拿 Mika 的 provider(同 `content call` 的做法),把 Binder 和自报的 uid/pid 交过去。 */
+        /** 经 ActivityManager 拿如愿的 provider(同 `content call` 的做法),把 Binder 和自报的 uid/pid 交过去。 */
         @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
         private fun deliver(n: String?): Outcome {
             if (n == null) return Outcome.Rejected
@@ -131,7 +131,7 @@ object HelperProcess {
                 return Outcome.Failed
             } ?: return Outcome.Failed
             try {
-                // 同名 authority 只可能属于一个包;还是核对一下,不把 Binder 交给 Mika 以外的 App
+                // 同名 authority 只可能属于一个包;还是核对一下,不把 Binder 交给如愿以外的 App
                 val info = holder.javaClass.getField("info").get(holder) as? ProviderInfo
                 if (info == null || info.packageName != packageName || info.applicationInfo?.uid != appUid) {
                     Log.e(TAG, "provider $authority does not belong to $packageName/$appUid")
@@ -181,7 +181,7 @@ object HelperProcess {
             }
         }
 
-        /** Mika 进程没了:它建的屏、静音、剪贴板改动跟着撤掉(和服务结束时一样),助手本身留着。 */
+        /** 如愿进程没了:它建的屏、静音、剪贴板改动跟着撤掉(和服务结束时一样),助手本身留着。 */
         private fun onAppDied(token: IBinder) {
             if (appToken !== token) return
             appToken = null
@@ -196,8 +196,8 @@ object HelperProcess {
         }
 
         /**
-         * Mika 死了一会儿还没回来:按它最后交来的心愿决定拉不拉。拉的话先写回无障碍服务(被强行停止时系统会把它拿掉),
-         * 再重新交接:拿 Mika 的 provider 时系统会把它的进程起来(provider 不受后台启动限制,也不显示界面),
+         * 如愿死了一会儿还没回来:按它最后交来的心愿决定拉不拉。拉的话先写回无障碍服务(被强行停止时系统会把它拿掉),
+         * 再重新交接:拿如愿的 provider 时系统会把它的进程起来(provider 不受后台启动限制,也不显示界面),
          * Application 照常创建,胶囊和别的服务跟着起来。shell 能拿任意 App 的 provider(`content` 命令用的同一条路)。
          */
         private fun maybeRestore() {
@@ -225,7 +225,7 @@ object HelperProcess {
             false
         }
 
-        /** 把 Mika 的无障碍服务追加回系统列表、打开总开关;别的服务不动。失败只记日志,照样去拉 Mika(它起来后自己还会修)。 */
+        /** 把如愿的无障碍服务追加回系统列表、打开总开关;别的服务不动。失败只记日志,照样去拉如愿(它起来后自己还会修)。 */
         private fun restoreAccessibility() {
             val me = PermissionCommands.accessibilityService(packageName)
             val current = service.runCommand(PermissionCommands.READ_ACCESSIBILITY).getString("output")
@@ -251,9 +251,9 @@ object HelperProcess {
         }
 
         /**
-         * 盯着 Mika 的 uid:进程重新起来时(从不存在变成任一状态)系统会报一次,这时把 Binder 再交过去。
+         * 盯着如愿的 uid:进程重新起来时(从不存在变成任一状态)系统会报一次,这时把 Binder 再交过去。
          * 用的是 ActivityManager 的 uid 重要性监听(要 PACKAGE_USAGE_STATS,shell 有),回调在 binder 线程。
-         * 注册不上时由 Mika 那边兜底:等不到交接就经 adbd 另起一个助手,新的收下后会结束这个。
+         * 注册不上时由如愿那边兜底:等不到交接就经 adbd 另起一个助手,新的收下后会结束这个。
          */
         @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
         private fun watchUid() {
@@ -281,12 +281,12 @@ object HelperProcess {
             worker.post { if (appToken == null && !retrying) redeliver(0) }
         }
 
-        /** 重新交接;provider 暂时不可用时隔一会儿再试几次,还不行就等下一次 Mika 起来。 */
+        /** 重新交接;provider 暂时不可用时隔一会儿再试几次,还不行就等下一次如愿起来。 */
         private fun redeliver(attempt: Int) {
             if (appToken != null) return
             when (deliver(nonce)) {
                 Outcome.Accepted -> retrying = false
-                // Mika 不认这个助手了(重装过、解除了配对、或者已经换了新的):退出
+                // 如愿不认这个助手了(重装过、解除了配对、或者已经换了新的):退出
                 Outcome.Rejected -> exitProcess(0)
                 Outcome.Failed -> {
                     retrying = attempt + 1 < RETRY_DELAYS_MS.size
@@ -295,7 +295,7 @@ object HelperProcess {
             }
         }
 
-        /** 现在装着的 [packageName] 仍是这个 uid、签名证书指纹与启动时 Mika 给的一致。看不清一律当不一致。 */
+        /** 现在装着的 [packageName] 仍是这个 uid、签名证书指纹与启动时如愿给的一致。看不清一律当不一致。 */
         @SuppressLint("DiscouragedPrivateApi")
         private fun signedAsPinned(): Boolean = runCatching {
             val pm = context.packageManager

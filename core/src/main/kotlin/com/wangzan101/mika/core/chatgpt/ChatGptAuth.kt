@@ -231,7 +231,7 @@ class ChatGptAuth(
     companion object {
         const val ISSUER = "https://auth.openai.com"
         const val REGISTER_CLIENT_ID = "dynamic_agent_client"
-        const val APP_NAME = "Mika"
+        const val APP_NAME = "如愿"
         const val PLAN_SCOPE = "chatgpt.tokens.use.direct"
         const val SCOPES = "openid profile email offline_access resource.invoke $PLAN_SCOPE"
         const val RESOURCE = "https://api.openai.com/v1"

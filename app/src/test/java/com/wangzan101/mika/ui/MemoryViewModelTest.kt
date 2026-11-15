@@ -42,6 +42,18 @@ class MemoryViewModelTest {
         return MemoryViewModel(store, MemorySettings(settingsFile), null, backgroundScope, broken, wipe = { wiped++ }).also { runCurrent() }
     }
 
+    // Mika 自己归纳出来的那条:来历写明是它归纳的,引的是用户提要求的那句,不写成「你说的」
+    @Test fun inferredMemoryShowsItWasMikasConclusion() = runTest {
+        store.add(MemoryKind.fact, "用户常在张江路一带活动", emptyList(), said.copy(type = com.wangzan101.mika.core.memory.MemoryContext.INFERRED, quote = "你自己总结几条写进记忆")).getOrThrow()
+        val vm = vm()
+        assertEquals("Mika 在 10 月 23 日按你的要求归纳:『你自己总结几条写进记忆』", vm.ui.value.rows.first { it.content == "用户常在张江路一带活动" }.source)
+        // 开关默认关,打开后存得住
+        assertFalse(vm.ui.value.switches.inferMemories)
+        vm.setSwitches { it.copy(inferMemories = true) }
+        runCurrent()
+        assertTrue(MemorySettings(settingsFile).switches.value.inferMemories)
+    }
+
     @Test fun memoriesListAllKindsWithKind() = runTest {
         val vm = vm()
         assertEquals(
@@ -149,7 +161,7 @@ class MemoryViewModelTest {
         assertEquals("这类信息我不会记", vm.ui.value.message)
         vm.dismissMessage()
         vm.approveSkill("d1", fullMd("meeting-notes", "用 `missing_tool` 打开")); runCurrent()
-        assertEquals("里面提到了 Mika 没有的工具", vm.ui.value.message)
+        assertEquals("里面提到了如愿没有的工具", vm.ui.value.message)
         assertEquals(1, vm.ui.value.skills.drafts.size)
         vm.approveSkill("d1", fullMd("renamed", "1. 用 `phone_tap` 点搜索框")); runCurrent()
         assertTrue(vm.ui.value.skills.drafts.isEmpty())
@@ -218,7 +230,7 @@ class MemoryViewModelTest {
         skills.putPending("d2", imported.copy(name = "learned", markdown = fullMd("learned", "用 `missing_tool` 打开"), learnedFrom = "r1", source = null))
         val vm = skillsVm(skills)
         vm.approveSkill("d1"); runCurrent()
-        assertEquals("里面提到了 Mika 没有的工具", vm.ui.value.message)
+        assertEquals("里面提到了如愿没有的工具", vm.ui.value.message)
         assertTrue(skills.get("meeting-notes") == null)
         // 自学的草稿起草时已经按那次运行的工具查过,没改过就照旧收下
         vm.approveSkill("d2"); runCurrent()

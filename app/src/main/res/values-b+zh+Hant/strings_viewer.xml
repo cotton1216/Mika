@@ -3,7 +3,7 @@
     <string name="viewer_no_open_app">沒有能開啟這個檔案的 App</string>
     <string name="viewer_no_share_app">沒有能分享這個檔案的 App</string>
     <string name="viewer_open_elsewhere">用其他應用程式開啟</string>
-    <string name="viewer_unsupported">這個檔案不能在 Mika 裡檢視。</string>
+    <string name="viewer_unsupported">這個檔案不能在如愿裡檢視。</string>
     <string name="viewer_read_error">讀取這個檔案時出錯了。</string>
     <string name="viewer_page">第 %1$d 頁</string>
     <string name="viewer_truncated">檔案較大，只顯示前面一部分。</string>

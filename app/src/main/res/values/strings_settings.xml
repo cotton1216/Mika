@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">Language</string>
     <string name="language_system">Follow system</string>
-    <string name="language_system_detail">Uses your system language when Mika has it, English otherwise</string>
+    <string name="language_system_detail">Uses your system language when 如愿 has it, English otherwise</string>
     <string name="language_simplified_chinese" translatable="false">简体中文</string>
     <string name="language_traditional_chinese" translatable="false">繁體中文</string>
     <string name="language_english" translatable="false">English</string>
@@ -16,6 +16,8 @@
     <string name="language_persian" translatable="false">فارسی</string>
     <string name="settings_basic">Common</string>
     <string name="settings_language_appearance">Language &amp; appearance</string>
+    <string name="settings_personal_start">Open Personal Assistant on launch</string>
+    <string name="settings_personal_start_sub">Use Personal Assistant as your first screen</string>
     <string name="settings_model">Model</string>
     <string name="settings_model_sub">Models, providers &amp; Token usage</string>
     <string name="settings_not_set">Not set</string>
@@ -46,7 +48,7 @@
     <string name="settings_recovery">Recovery &amp; repair</string>
     <string name="settings_developer_group">Developer</string>
     <string name="settings_developer">Developer options</string>
-    <string name="settings_about">About Mika</string>
+    <string name="settings_about">About 如愿</string>
     <string name="pill_unsupported">Not supported</string>
     <string name="pill_available">Ready</string>
     <string name="pill_needs_attention">Needs attention</string>
@@ -56,7 +58,7 @@
     <string name="settings_all_ready_detail">Model set up · Phone control ready</string>
     <string name="settings_status">Status</string>
     <string name="settings_a11y">Accessibility service</string>
-    <string name="settings_a11y_sub">Reads and controls Mika’s virtual screen</string>
+    <string name="settings_a11y_sub">Reads and controls 如愿’s virtual screen</string>
     <string name="settings_notif_progress_sub">Progress and “Needs you” alerts</string>
     <string name="settings_system_version">System version</string>
     <string name="settings_android_focus">Android %1$s · On Android 12–13 background work may steal focus from your screen; Android 14+ recommended</string>
@@ -68,7 +70,7 @@
     <string name="settings_keep_on">Keep screen on</string>
     <string name="settings_keep_on_sub">The screen stays on while a task runs (it can still dim when you’re not using it), then goes back to normal</string>
     <string name="settings_mute">Mute the app being used</string>
-    <string name="settings_mute_sub">Apps Mika is using stay silent; sound returns when you take over</string>
+    <string name="settings_mute_sub">Apps 如愿 is using stay silent; sound returns when you take over</string>
     <string name="settings_pace">Operating pace</string>
     <string name="settings_pace_fast">Fast</string>
     <string name="settings_pace_fast_detail">No pauses between steps; text is filled in at once</string>
@@ -85,16 +87,22 @@
     </plurals>
     <string name="capsule_settings_title">Floating capsule</string>
     <string name="capsule_settings_sub">See task progress on screen while using other apps</string>
-    <string name="capsule_settings_foot">The capsule is drawn using Mika’s accessibility service that’s already on, so no extra permission is needed. If that service is off or can’t draw, you’ll still get notifications.</string>
-    <string name="capsule_settings_background">Some phones close apps in the background. If the capsule disappears, allow Mika to run in the background and to start automatically in your phone’s system settings.</string>
+    <string name="capsule_settings_foot">The capsule is drawn using 如愿’s accessibility service that’s already on, so no extra permission is needed. If that service is off or can’t draw, you’ll still get notifications.</string>
+    <string name="capsule_settings_background">Some phones close apps in the background. If the capsule disappears, allow 如愿 to run in the background and to start automatically in your phone’s system settings.</string>
     <string name="capsule_mode_off">Off</string>
     <string name="capsule_mode_tasks">During tasks</string>
     <string name="capsule_mode_always">Always</string>
     <string name="capsule_mode_off_detail">Notifications only</string>
     <string name="capsule_mode_tasks_detail">Appears while a task runs or waits for you, and goes away a few seconds after</string>
-    <string name="capsule_mode_always_detail">Keeps a Mika icon on screen even with no tasks</string>
+    <string name="capsule_mode_always_detail">Keeps a 如愿 icon on screen even with no tasks</string>
     <string name="capsule_idle_opacity">Idle opacity</string>
     <string name="capsule_idle_opacity_detail">After a few seconds untouched; anything needing your attention stays fully visible</string>
+    <string name="capsule_card_size">Card size</string>
+    <string name="capsule_card_size_detail">The expanded capsule card and its text scale together; the collapsed capsule keeps its size</string>
+    <string name="capsule_card_size_small">Small</string>
+    <string name="capsule_card_size_normal">Standard</string>
+    <string name="capsule_card_size_large">Large</string>
+    <string name="capsule_card_size_xlarge">Extra large</string>
     <string name="routes_saved">Saved routes</string>
     <string name="loading">Loading</string>
     <plurals name="routes_count">
@@ -103,14 +111,14 @@
     </plurals>
     <string name="routes_clear_all">Clear all</string>
     <string name="routes_clear_title">Clear all saved routes?</string>
-    <string name="routes_clear_body">After clearing, Mika works things out step by step again next time. Other settings aren’t affected.</string>
+    <string name="routes_clear_body">After clearing, 如愿 works things out step by step again next time. Other settings aren’t affected.</string>
     <string name="clear">Clear</string>
     <string name="sandbox_proxy_off">%1$s · used once network access is on</string>
     <string name="net_proxy">Network proxy</string>
     <string name="net_proxy_row_sub">For model requests, updates, the in-app browser and commands</string>
-    <string name="net_proxy_hint">Used for Mika’s model requests (chat, model lists, account sign-in), in-app update downloads, the in-app browser, and commands in Files &amp; computing environment while network access is on there. Addresses on this phone or your local network (localhost, 192.168.x.x, 10.x.x.x, names ending in .local) always connect directly, so local models keep working. It may include user:password@, stored encrypted on this phone. Leave empty for a direct connection.</string>
+    <string name="net_proxy_hint">Used for 如愿’s model requests (chat, model lists, account sign-in), in-app update downloads, the in-app browser, and commands in Files &amp; computing environment while network access is on there. Addresses on this phone or your local network (localhost, 192.168.x.x, 10.x.x.x, names ending in .local) always connect directly, so local models keep working. It may include user:password@, stored encrypted on this phone. Leave empty for a direct connection.</string>
     <string name="net_proxy_invalid">Write it as http://host:port (socks5, socks5h and https work too), optionally with user:password@ before the host.</string>
-    <string name="net_proxy_container_only">https:// proxies are only used by commands in Files &amp; computing environment; Mika’s own connections stay direct. Use http:// or socks5:// to cover everything.</string>
+    <string name="net_proxy_container_only">https:// proxies are only used by commands in Files &amp; computing environment; 如愿’s own connections stay direct. Use http:// or socks5:// to cover everything.</string>
     <string name="net_proxy_browser_unsupported">This phone’s WebView can’t use a separate proxy, so the in-app browser connects directly.</string>
     <string name="net_proxy_browser_socks_auth">The in-app browser can’t use a SOCKS proxy that needs a user name and password, so it connects directly.</string>
     <string name="net_proxy_unreachable">Couldn’t reach the network proxy, or it didn’t pass the request on. Check that the proxy is running and that the address in Settings › Network proxy is right.</string>
@@ -137,8 +145,29 @@
     <string name="appearance_system_detail">Light or dark, whichever the phone is in</string>
     <string name="appearance_light">Always light</string>
     <string name="appearance_dark">Always dark</string>
-    <string name="settings_self_config">Let Mika change its own settings</string>
-    <string name="settings_self_config_sub">When on, tasks get one tool to read and change these preferences (pace, mute, capsule, appearance, screen-on). Models, API keys, container network and anything that deletes data are never included</string>
+    <string name="accent_group">Accent color</string>
+    <string name="accent_default">Default</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_purple">Purple</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_graphite">Graphite</string>
+    <string name="skin_group">Background image</string>
+    <string name="skin_pick">Choose from photos</string>
+    <string name="skin_clear">Use the plain background</string>
+    <string name="skin_failed">Couldn\'t read that image</string>
+    <string name="skin_change">Choose another image</string>
+    <string name="skin_scrim">Dim the image</string>
+    <string name="skin_position">Image position</string>
+    <string name="skin_blur">Blur</string>
+    <string name="skin_blur_off">None</string>
+    <string name="skin_blur_light">Light</string>
+    <string name="skin_blur_strong">Strong</string>
+    <string name="skin_accent_follow">Accent color from the image</string>
+    <string name="skin_accent_follow_sub">Uses the main color in the image instead of the accent color above, when it has one</string>
+    <string name="settings_self_config">Let 如愿 change its own settings</string>
+    <string name="settings_self_config_sub">When on, tasks get one tool to read and change these preferences (pace, mute, capsule, appearance, accent color, screen-on). Models, API keys, container network and anything that deletes data are never included</string>
     <string name="settings_step_limit">Step limit per task</string>
     <string name="settings_step_limit_sub">Off means no limit. When the limit is reached, the task stops and says where it stopped.</string>
     <string name="settings_step_limit_off">No limit</string>
@@ -147,7 +176,7 @@
     <string name="settings_step_limit_invalid">Enter a whole number from 1 to 500.</string>
     <string name="mcp_servers_title">MCP servers</string>
     <string name="mcp_servers_empty">No MCP server added</string>
-    <string name="mcp_servers_empty_sub">Add an external MCP server to expose its tools to Mika.</string>
+    <string name="mcp_servers_empty_sub">Add an external MCP server to expose its tools to 如愿.</string>
     <string name="mcp_servers_add">Add server</string>
     <string name="mcp_servers_import">Import from JSON</string>
     <string name="mcp_servers_import_sub">Paste an mcpServers config</string>
@@ -183,11 +212,15 @@
     <string name="mcp_servers_run_failed">MCP servers unavailable: %1$s</string>
     <string name="mcp_servers_status_ok">Available · %1$d tools</string>
     <string name="mcp_servers_status_fail">Connection failed: %1$s</string>
+    <string name="mcp_tools_open">View tools</string>
+    <string name="mcp_tools_count">Available · %1$d tools</string>
+    <string name="mcp_tools_empty">No tools reported</string>
+    <string name="mcp_tools_expand_hint">Tap a tool to see the full description</string>
     <string name="mcp_servers_refresh_all">Test all</string>
     <string name="mcp_servers_allowlist">Allowed tools (comma separated, empty = all)</string>
-    <string name="quit_title">Quit Mika completely</string>
+    <string name="quit_title">Quit 如愿 completely</string>
     <string name="quit_row_sub">Stops background tasks and hides the floating capsule</string>
-    <string name="quit_confirm_body">Tasks that are running will stop, and the floating capsule and notifications will go away. Open Mika again and everything comes back.</string>
+    <string name="quit_confirm_body">Tasks that are running will stop, and the floating capsule and notifications will go away. Open 如愿 again and everything comes back.</string>
     <string name="quit_confirm_action">Quit</string>
     <string name="settings_task_token_budget">Token budget per task</string>
     <string name="settings_task_token_budget_sub">Only provider-reported input and output tokens count. Once the budget is reached, no further requests are made. An in-flight request may take usage past the budget; calls without reported usage count as 0.</string>
@@ -195,4 +228,11 @@
     <string name="settings_token_budget_custom">Custom token budget</string>
     <string name="settings_token_budget_apply">Use</string>
     <string name="settings_token_budget_invalid">Enter a whole number from %1$s to %2$s.</string>
+    <string name="settings_auto_archive">Auto-archive chats</string>
+    <string name="settings_auto_archive_sub">Chats without new messages for a while move to the archive</string>
+    <string name="settings_auto_archive_hint">Chats without new messages for the chosen time are moved to the archive. Pinned chats and chats with a task running stay put. You can restore them from the archive in the chat list at any time.</string>
+    <plurals name="settings_auto_archive_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
 </resources>

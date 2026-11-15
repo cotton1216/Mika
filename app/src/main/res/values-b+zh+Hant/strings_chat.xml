@@ -5,10 +5,9 @@
     <string name="chat_greeting_afternoon">下午好</string>
     <string name="chat_greeting_evening">晚上好</string>
     <string name="chat_greeting_night">夜深了</string>
-    <string name="chat_empty_prompt">想讓 Mika 做什麼？</string>
-    <string name="chat_example_github_star">開啟網頁 https://github.com/wangzan101/mika，給這個專案點 star</string>
+    <string name="chat_empty_prompt">想讓如愿做什麼？</string>
+    <string name="chat_slogan">如您所願，您的私人助理</string>
     <string name="chat_example_follow">開啟小紅書，搜尋博主「王赞不赞」，點擊關注，然後加入群聊</string>
-    <string name="chat_example_group_summary">幫我總結微信群聊，Mika內測體驗群今天都聊了些啥</string>
     <string name="chat_example_alarms">幫我訂明天早上9:40、9:50、10:00 的鬧鐘</string>
     <string name="chat_example_replace_title">取代目前草稿？</string>
     <string name="chat_example_replace_body">推薦任務會取代你已輸入的內容。</string>
@@ -51,12 +50,13 @@
     </plurals>
     <string name="chat_background_note">在背景進行，可以繼續用手機。點小畫面可以放大看。</string>
     <string name="chat_placeholder_busy">補充或改要求…</string>
-    <string name="chat_placeholder_answer">回答 Mika 的問題</string>
+    <string name="chat_placeholder_answer">回答如愿的問題</string>
     <string name="chat_placeholder_more">繼續說點什麼…</string>
     <string name="chat_cannot_start">還不能開始任務</string>
     <string name="chat_missing">還缺:%1$s</string>
     <string name="chat_go_settings">去設定</string>
     <string name="chat_menu">選單</string>
+    <string name="drawer_personal">個人助理</string>
     <string name="chat_new">新對話</string>
     <string name="chat_expand_steps">展開步驟</string>
     <string name="chat_collapse_steps">收起步驟</string>
@@ -122,6 +122,22 @@
     <string name="drawer_rename_title">改名</string>
     <string name="drawer_pinned">置頂</string>
     <string name="drawer_pinned_mark">已置頂</string>
+    <string name="drawer_archive">歸檔</string>
+    <string name="drawer_unarchive">取消歸檔</string>
+    <string name="drawer_archived">已歸檔</string>
+    <string name="drawer_archived_count">%1$d 條已歸檔</string>
+    <string name="drawer_archive_empty">還沒有歸檔的對話</string>
+    <string name="drawer_archive_done">已歸檔「%1$s」</string>
+    <string name="drawer_archive_this_week">本週</string>
+    <string name="drawer_archive_this_month">本月</string>
+    <string name="drawer_archive_earlier">更早</string>
+    <string name="drawer_archived_today">今天歸檔</string>
+    <plurals name="drawer_archived_days_ago">
+        <item quantity="other">歸檔於 %1$d 天前</item>
+    </plurals>
+    <string name="drawer_search_filter_all">全部</string>
+    <string name="drawer_search_filter_active">未歸檔</string>
+    <string name="drawer_search_filter_archived">已歸檔</string>
     <string name="drawer_search_hint">搜尋對話</string>
     <string name="drawer_search_results">搜尋結果</string>
     <string name="drawer_search_empty">找不到「%1$s」</string>
@@ -146,6 +162,10 @@
     <string name="step_viewed">看了%1$s</string>
     <string name="step_viewed_part">看了%1$s的%2$s</string>
     <string name="step_failed">沒成功</string>
+    <string name="step_declined_not_said">不是你親口說的,沒有寫入</string>
+    <string name="step_declined_sensitive">含敏感資訊,沒有寫入</string>
+    <string name="step_declined_not_asked">你沒明確要改或刪,沒有改動</string>
+    <string name="step_declined_not_requested">這句話沒讓它記,沒有寫入</string>
     <string name="step_number">第 %1$d 步</string>
     <string name="source_label">來源</string>
     <plurals name="screenshots">
@@ -158,11 +178,11 @@
     <string name="attach_album">相簿</string>
     <string name="attach_files">檔案</string>
     <string name="attach_recent">最近的照片</string>
-    <string name="attach_recent_partial">你允許 Mika 存取的照片</string>
+    <string name="attach_recent_partial">你允許如愿存取的照片</string>
     <string name="attach_all">全部照片</string>
     <string name="attach_change">更改範圍</string>
     <string name="attach_no_photos">還沒有照片</string>
-    <string name="attach_need_access">在這裡直接選照片,需要允許 Mika 存取照片</string>
+    <string name="attach_need_access">在這裡直接選照片,需要允許如愿存取照片</string>
     <string name="attach_grant">允許存取照片</string>
     <string name="attach_grant_hint">不允許也可以點上面的「相簿」,用系統的照片選擇器</string>
     <string name="attach_full">一次最多 %1$d 個附件</string>
@@ -182,10 +202,10 @@
     <string name="attach_file_and_more">%1$s 等 %2$d 個檔案</string>
     <string name="screen_tag">你此刻的螢幕</string>
     <string name="screen_blocked">沒截到：這個頁面不允許截圖</string>
-    <string name="screen_camera">截目前螢幕發給 Mika</string>
+    <string name="screen_camera">截目前螢幕發給如愿</string>
     <string name="screen_remove">不要這張截圖</string>
-    <string name="screen_send">把此刻的螢幕發給 Mika</string>
-    <string name="pip_screen">Mika 的虛擬螢幕</string>
+    <string name="screen_send">把此刻的螢幕發給如愿</string>
+    <string name="pip_screen">如愿的虛擬螢幕</string>
     <string name="collapse">收起</string>
     <string name="no_app_for_link">沒有能開啟這個連結的 App</string>
     <string name="source_none">沒有儲存這次答覆的來源</string>
@@ -205,17 +225,23 @@
     <string name="chat_branch_retry">從這裡重新問</string>
     <string name="chat_branch_attachments_readd">附件需要重新加入</string>
     <string name="chat_attach_unavailable">沒能加入：%1$s。請確認檔案存在且未超過大小限制。</string>
+    <string name="chat_attach_too_large">%1$s：超過 200 MiB 限制</string>
+    <string name="chat_attach_low_device_space">%1$s：手機儲存空間不足，請清理空間後重試</string>
+    <string name="chat_attach_workspace_limit">%1$s：工作區儲存已達上限，請清理工作區檔案後重試</string>
+    <string name="chat_attach_io_error">%1$s：無法讀取或複製，請確認檔案可用後重試</string>
     <string name="chat_retry_missing">%1$s：檔案不存在</string>
     <string name="chat_retry_limit">%1$s：超過複製上限</string>
     <string name="chat_retry_failed">%1$s：複製失敗</string>
     <string name="chat_select_hint">長按文字就能選取</string>
     <string name="chat_quote_remove">移除引用</string>
-    <string name="chat_quoting_mika">引用 Mika:%1$s</string>
+    <string name="chat_quoting_mika">引用如愿:%1$s</string>
     <string name="chat_quoting_you">引用你的話:%1$s</string>
     <string name="chat_edit_message">編輯訊息</string>
     <string name="chat_withdraw_message">收回訊息</string>
     <string name="pip_close">這個任務不再顯示小畫面</string>
     <string name="pip_unmute">恢復聲音</string>
+    <string name="pip_mute">靜音</string>
+    <string name="pip_back">在虛擬螢幕上返回</string>
     <string name="pip_reopen">顯示畫面</string>
     <string name="pip_closed_needs_you">等你處理</string>
     <string name="pip_closed_hint">這個任務不再浮出小畫面。點右下角「顯示畫面」，或在側欄「背景螢幕」裡看。</string>
@@ -236,4 +262,10 @@
     <string name="chat_placeholder_queue">寫下下一件事…</string>
     <string name="voice_placeholder_queue">說下一件事…</string>
     <string name="steer_received_paused">已收到，任務繼續後處理</string>
+    <plurals name="drawer_archive_many_done">
+        <item quantity="other">已歸檔 %1$d 個對話</item>
+    </plurals>
+    <plurals name="drawer_archive_many_skipped">
+        <item quantity="other">%1$d 個未歸檔</item>
+    </plurals>
 </resources>

@@ -69,7 +69,7 @@ object PhoneSetupCopy {
     /** 系统拦着不让打开无障碍时(没从应用商店装的 App 常见)的去处。 */
     val APP_INFO: String get() = tr(R.string.phone_app_info)
 
-    /** 配对一步:无障碍开着时 Mika 自己读码。 */
+    /** 配对一步:无障碍开着时如愿自己读码。 */
     val AUTO_READ_HINT: String get() = tr(R.string.phone_auto_read)
     /** 读不到时的退路:填码通知一开始就静静放在通知栏里。 */
     val AUTO_READ_FALLBACK: String get() = tr(R.string.phone_auto_read_fallback, NOTIFY_ENTER_TITLE)
@@ -295,7 +295,7 @@ object PhoneSetupCopy {
         RootGrant.Granted -> tr(R.string.phone_root_start_sub)
     }
 
-    /** 「允许 Mika 执行 root 命令」那一行下面的说明。 */
+    /** 「允许如愿执行 root 命令」那一行下面的说明。 */
     fun rootCommandsLine(on: Boolean, grant: RootGrant): String = when {
         grant == RootGrant.Pending -> ROOT_PENDING
         !on && (grant == RootGrant.Denied || grant == RootGrant.NoAnswer) -> tr(R.string.phone_root_commands_denied)

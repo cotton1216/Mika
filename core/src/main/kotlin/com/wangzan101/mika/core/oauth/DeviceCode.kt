@@ -152,7 +152,7 @@ class DeviceCodeClient(
 
 /**
  * 等到用户在浏览器里点完,或超时、拒绝、取消。轮询间隔按服务端说的来;[slow_down] 再加 5 秒(RFC 8628)。
- * 用户在浏览器里时 Mika 在后台,网络可能一时不通:连着 [MAX_POLL_FAILURES] 次连不上才算失败,中间照常等下一轮。
+ * 用户在浏览器里时如愿在后台,网络可能一时不通:连着 [MAX_POLL_FAILURES] 次连不上才算失败,中间照常等下一轮。
  * [sleep] 测试里换成空等;真机用 [delay]。
  */
 suspend fun awaitDeviceGrant(
@@ -200,7 +200,7 @@ object OauthUrls {
 
     fun allowed(url: String, allowedHosts: Set<String>): Boolean {
         val u = url.toHttpUrlOrNull() ?: return false
-        if (u.username.isNotEmpty()) return false
+        if (u.username.isNotEmpty() || u.password.isNotEmpty()) return false
         val local = u.host == "127.0.0.1" || u.host == "localhost"
         if (!local && u.scheme != "https") return false
         return u.host in allowedHosts

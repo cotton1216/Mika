@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.wangzan101.mika.R
 import com.wangzan101.mika.core.chatgpt.ChatGptAuth
 import com.wangzan101.mika.core.oauth.OpenRouterAuth
+import com.wangzan101.mika.core.oauth.RuyiAuth
 import com.wangzan101.mika.MikaApp
 import com.wangzan101.mika.voice.SystemSpeech
 import com.wangzan101.mika.settings.ChatGptSignIns
@@ -95,17 +96,12 @@ import com.wangzan101.mika.ui.theme.MikaType
  * (服务商在前,底部有分页点和「下一步」);设置 › 模型([ModelsScreen])也是这一页,标题和引导语不同,没有底部按钮。
  * 选用途、服务商详情、服务商的全部模型是这一页里的子页面。上手时「下一步」选好主模型才可点,点了调 [onDone]。
  */
+/** 登录页和模型设置页共用的 VM 工厂:登录跑在 App 级的 signIns 上（退后台、界面重建都不断）。 */
 @Composable
-fun ModelSetupScreen(
-    store: ProviderStore, onboarding: Boolean, onBack: () -> Unit, onDone: () -> Unit,
-    /** 设置里点「语音转文字」卡片去选择页;上手流程不传,卡片就不出现。 */
-    onOpenSpeech: (() -> Unit)? = null,
-    /** 设置里查看 Token 用量;上手流程不传。 */
-    onOpenUsage: (() -> Unit)? = null,
-) {
+internal fun rememberModelSetupViewModel(store: ProviderStore): ModelSetupViewModel {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val vm = remember {
+    return remember {
         val signIns = (context.applicationContext as? MikaApp)?.chatGptSignIn ?: ChatGptSignIns(scope)
         ModelSetupViewModel(
             store, scope, browser = AndroidSignInBrowser(context.applicationContext), signIns = signIns,
@@ -116,6 +112,18 @@ fun ModelSetupScreen(
             },
         )
     }
+}
+
+@Composable
+fun ModelSetupScreen(
+    store: ProviderStore, onboarding: Boolean, onBack: () -> Unit, onDone: () -> Unit,
+    /** 设置里点「语音转文字」卡片去选择页;上手流程不传,卡片就不出现。 */
+    onOpenSpeech: (() -> Unit)? = null,
+    /** 设置里查看 Token 用量;上手流程不传。 */
+    onOpenUsage: (() -> Unit)? = null,
+) {
+    val vm = rememberModelSetupViewModel(store)
+    val context = LocalContext.current
     val ui by vm.state.collectAsState()
     var picking by rememberSaveable { mutableStateOf<ModelRole?>(null) }
     var openProvider by rememberSaveable { mutableStateOf<String?>(null) }
@@ -145,6 +153,7 @@ fun ModelSetupScreen(
             val accountKind = when {
                 provider.kind == ProviderConfig.Kind.Xai -> SignInKind.Xai
                 provider.signIn == ProviderStore.OPENROUTER_SIGN_IN -> SignInKind.OpenRouter
+                provider.signIn == ProviderStore.RUYI_SIGN_IN -> SignInKind.Ruyi
                 else -> null
             }
             val actions = ProviderDetailActions(
@@ -161,6 +170,7 @@ fun ModelSetupScreen(
                     openInBrowser(context, when (accountKind) {
                         SignInKind.Xai -> ModelsCopy.ACCOUNT_MANAGE_URL
                         SignInKind.OpenRouter -> OpenRouterAuth.KEYS_PAGE
+                        SignInKind.Ruyi -> RuyiAuth.KEYS_PAGE
                         else -> ChatGptAuth.USAGE_URL
                     })
                 },
@@ -478,7 +488,7 @@ private fun PresetSuggestion(f: AddForm, label: String, onUse: () -> Unit) {
     )
 }
 
-/** 第一次用 ChatGPT 登录成功后说明一次:Mika 里的用量走你的 ChatGPT 套餐。 */
+/** 第一次用 ChatGPT 登录成功后说明一次:如愿里的用量走你的 ChatGPT 套餐。 */
 @Composable
 private fun ChatGptWelcome(onDismiss: () -> Unit) {
     MikaDialog(
@@ -490,8 +500,8 @@ private fun ChatGptWelcome(onDismiss: () -> Unit) {
 }
 
 /**
- * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到 Mika 的链接(intent 链接,点了由浏览器打开 Mika);
- * 登录完(成功或失败)把 Mika 带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
+ * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到如愿的链接(intent 链接,点了由浏览器打开如愿);
+ * 登录完(成功或失败)把如愿带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
  */
 private class AndroidSignInBrowser(private val context: Context) : SignInBrowser {
     override fun open(url: String) {

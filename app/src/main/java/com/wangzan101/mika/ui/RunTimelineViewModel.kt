@@ -40,7 +40,8 @@ data class StepTiming(
 
 /**
  * 时间线的一行。[said] 是模型这一步说的话(截到 80 字),[tool] 是工具的中文说法,
- * [detail] 是参数里最能说明对象的那一个(记录里已脱敏,原样显示),[screenshotId] 是这一步存下的画面。
+ * [detail] 是参数里最能说明对象的那一个(记录里已脱敏,原样显示),[screenshotId] 是这一步存下的画面,
+ * [atMs] 是这一步最早那条事件的时刻(界面上显示成 07:50:39 这样的几点几分)。
  */
 data class TimelineStep(
     val step: Int,
@@ -52,6 +53,7 @@ data class TimelineStep(
     val screenshotId: Int?,
     val activities: List<TimelineActivity> = emptyList(),
     val timing: StepTiming = StepTiming(),
+    val atMs: Long? = null,
 )
 
 data class TimelineHeader(
@@ -143,12 +145,17 @@ class RunTimelineViewModel(
             val modelTimes = mutableMapOf<Int, Long>()
             val retryTimes = mutableMapOf<Int, Long>()
             val toolTimes = mutableMapOf<Int, MutableList<RunEvent.ToolResult>>()
+            // 每一步最早那条事件的时刻:第几步是几点几分开始的
+            val firstAt = mutableMapOf<Int, Long>()
+            fun seen(step: Int, atMs: Long) { firstAt[step] = minOf(firstAt[step] ?: Long.MAX_VALUE, atMs) }
             var current: Int? = null
             fun at(step: Int) = rows.getOrPut(step) { TimelineStep(step, "", null, null, null, emptyList(), null) }.also { current = step }
             fun tag(t: Tag) { current?.let { s -> rows[s] = rows.getValue(s).let { it.copy(tags = it.tags + t) } } }
             for (e in events) when (e) {
                 // 改派掉的轻量模型回复没执行,不进步骤;调用次数照算
                 is RunEvent.ModelReply -> {
+                    // 回复到手的时刻才是这一步真正开始的时刻(带调用的回复执行完才记,atMs 比它晚)
+                    seen(e.step, e.repliedAtMs ?: e.atMs)
                     val elapsed = e.latencyMs.coerceAtLeast(0) + e.retryWaitMs.coerceAtLeast(0)
                     if (elapsed > 0) modelTimes[e.step] = modelTimes.getOrDefault(e.step, 0) + elapsed
                     if (e.retryWaitMs > 0) retryTimes[e.step] = retryTimes.getOrDefault(e.step, 0) + e.retryWaitMs
@@ -163,6 +170,7 @@ class RunTimelineViewModel(
                     }
                 }
                 is RunEvent.ToolResult -> {
+                    seen(e.step, e.atMs)
                     toolTimes.getOrPut(e.step) { mutableListOf() } += e
                     val row = at(e.step)
                     rows[e.step] = row.copy(
@@ -171,8 +179,9 @@ class RunTimelineViewModel(
                         screenshotId = row.screenshotId ?: e.screenshotId,
                     )
                 }
-                is RunEvent.Media -> at(e.step).let { rows[e.step] = it.copy(screenshotId = it.screenshotId ?: e.mediaId) }
+                is RunEvent.Media -> at(e.step).let { seen(e.step, e.atMs); rows[e.step] = it.copy(screenshotId = it.screenshotId ?: e.mediaId) }
                 is RunEvent.Activity -> {
+                    seen(e.step, e.atMs)
                     val row = at(e.step)
                     val next = TimelineActivity(e.kind, toolLabel(e.label), e.target, e.effect, obsIds = e.obsIds)
                     val last = row.activities.lastOrNull()
@@ -201,9 +210,14 @@ class RunTimelineViewModel(
                 row.copy(
                     said = clipSaid(row.said),
                     timing = StepTiming(modelTimes[row.step], measured.takeIf { it > 0 }, retryTimes[row.step] ?: 0),
+                    atMs = firstAt[row.step],
                 )
             }
         }
+
+        /** 这一步是什么时候:年-月-日 加 24 小时制到秒,如 2026-11-13 07:50:39。 */
+        internal fun clockLabel(atMs: Long): String =
+            java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date(atMs))
 
         internal fun timingLabel(t: StepTiming): String {
             if (t.modelMs == null && t.toolMs == null) return tr(R.string.timing_unrecorded)
@@ -232,10 +246,16 @@ class RunTimelineViewModel(
 
         // 结果可能被截短成不合法的 JSON:ok / error 只按顶层键的写法找(元素文字里的引号是转义过的,不会误中)
         private val NOT_OK = Regex(""""ok"\s*:\s*false""")
+        private val NOT_COUNTED = Regex(""""counts_as_failure"\s*:\s*false""")
         private val ERROR = Regex(""""error"\s*:\s*"([a-z_]+)"""")
 
         private fun resultLabel(json: String, changed: Boolean?): String = when {
-            NOT_OK.containsMatchIn(json) -> ERROR.find(json)?.groupValues?.get(1)?.let { ERROR_LABELS[it] }?.let { tr(R.string.result_error_detail, it) } ?: tr(R.string.result_error)
+            // 按规矩没收、结果里写明不计入失败的(写记忆时)不是出错:只说没收和原因,不带「出错」,这一步也就不标成失败。
+            // 同样的错误码别的工具(存技能、改资料)照旧算失败,照旧说出错
+            NOT_OK.containsMatchIn(json) -> ERROR.find(json)?.groupValues?.get(1).let { code ->
+                ChatCopy.declinedLabel(code)?.takeIf { NOT_COUNTED.containsMatchIn(json) }
+                    ?: ERROR_LABELS[code]?.let { tr(R.string.result_error_detail, it) } ?: tr(R.string.result_error)
+            }
             changed == true -> tr(R.string.result_effective)
             changed == false -> tr(R.string.result_unchanged)
             else -> tr(R.string.result_completed)

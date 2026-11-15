@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicReference
 /**
  * 在一个标签的主框架里建隔离世界跑页面脚本(web_script)。
  * 发件箱只在这个隔离世界里,页面自己的脚本看不到;模型代码在里面拿不到任何页面对象(见 [PageScriptProtocol]),
- * 脚本的每个 `mika.*` 调用放进发件箱,由一直挂着的取件求值([PageScriptProtocol.TAKE])交回来,一次一个交给 [ScriptBridge](Mika 的动作路径),结果用 `Runtime.evaluate` 在同一个世界里回传。
+ * 脚本的每个 `mika.*` 调用放进发件箱,由一直挂着的取件求值([PageScriptProtocol.TAKE])交回来,一次一个交给 [ScriptBridge](如愿的动作路径),结果用 `Runtime.evaluate` 在同一个世界里回传。
  * 兜底:脚本发起的网络请求、没有 mika 动作在做时主框架的跳转(后者先 `Page.stopLoading`)都让脚本以错误结束。
  * 整页跳走会销毁隔离世界,脚本就停在那里(返回 [ScriptRun.Navigated])。
  * 时限只算脚本自己的时间:mika 动作在做(含等锁屏关卡)时不走表;到时限先等手上的动作做完再收尾。
@@ -209,7 +209,7 @@ class PageScriptRunner(
     }
 
     /**
-     * 建两个隔离世界:脚本世界(发件箱、`mika`、跑模型代码,拿不到页面对象)和读取世界(只有 Mika 固定的读取器)。
+     * 建两个隔离世界:脚本世界(发件箱、`mika`、跑模型代码,拿不到页面对象)和读取世界(只有如愿固定的读取器)。
      */
     private suspend fun setUp(world: String): Worlds {
         // 不开 Runtime:开着它时页面能察觉到调试器(有的网站因此一直重载);隔离世界和求值都不需要它

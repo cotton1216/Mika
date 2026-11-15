@@ -4,7 +4,7 @@ import com.wangzan101.mika.core.tool.ToolDispatcher
 
 /**
  * 用户一句话里他自己的话(开局、插话、回答追问一个口径)。语言提示和回答的语言检查只看他这次打的字([typed]);
- * 记忆、技能的引文还认他引的自己说过的话([said]),引的 Mika 的回答不算。
+ * 记忆、技能的引文还认他引的自己说过的话([said]),引的如愿的回答不算。
  */
 internal object UserWords {
     /**
@@ -13,7 +13,7 @@ internal object UserWords {
      */
     fun typed(text: String, tools: ToolDispatcher): String = AttachmentLines.words(QuoteMessage.words(tools.userWords(text)))
 
-    /** [typed] 之外,引的是用户自己说过的话时连引的那段一起算(对话页引的是他当时打的字),放在前面;引的是 Mika 的回答时只有 [typed]。 */
+    /** [typed] 之外,引的是用户自己说过的话时连引的那段一起算(对话页引的是他当时打的字),放在前面;引的是如愿的回答时只有 [typed]。 */
     fun said(text: String, tools: ToolDispatcher): String {
         val own = QuoteMessage.parse(tools.userWords(text)).quote?.takeIf { it.from == QuoteMessage.From.You }?.text
         return listOfNotNull(own, typed(text, tools)).filter { it.isNotBlank() }.joinToString("\n")

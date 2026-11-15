@@ -3,7 +3,7 @@ package com.wangzan101.mika.cap.phone.shell
 import java.lang.reflect.Method
 
 /**
- * 让 Mika 的虚拟屏一直亮着。带 OWN_DISPLAY_GROUP 建的屏(安卓 13 起的可信屏)自成一个显示组,有自己的息屏计时;
+ * 让如愿的虚拟屏一直亮着。带 OWN_DISPLAY_GROUP 建的屏(安卓 13 起的可信屏)自成一个显示组,有自己的息屏计时;
  * 注入的输入不算用户操作,放着不管,到了息屏时间这组屏就睡了:画面不再合成、截图不变、点按没反应。
  * 屏在的时候每 [PERIOD_MS] 替它报一次用户操作(比系统允许的最短息屏时间短得多),屏放掉就停。
  * [poke] 报不了(系统没有按屏报的接口)时不再试,屏照常用。

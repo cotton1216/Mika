@@ -15,7 +15,7 @@ class SelfCheckTextTest {
     @Test
     fun extraOrOddWhitespaceStillMatches() {
         assertTrue(SelfCheckText.same("  Tap  me\n", "Tap me"))
-        assertTrue(SelfCheckText.same("Mika  self-check\tpage", "Mika self-check page"))
+        assertTrue(SelfCheckText.same("如愿  self-check\tpage", "如愿 self-check page"))
     }
 
     @Test
@@ -32,7 +32,7 @@ class SelfCheckTextTest {
 
     @Test
     fun containsIgnoresCaseAndWhitespace() {
-        assertTrue(SelfCheckText.contains("MIKA 123", "Mika 123"))
+        assertTrue(SelfCheckText.contains("如愿  123", "如愿 123"))
         assertTrue(SelfCheckText.contains("text  CLICKED 1 here", "Clicked 1"))
         assertFalse(SelfCheckText.contains("Clicked 0", "Clicked 1"))
     }
@@ -52,5 +52,21 @@ class SelfCheckTextTest {
         val taps = SelfCheckText.Numbered("点了 987654321 次", "987654321")
         assertTrue(taps.matches("点了 3 次"))
         assertFalse(taps.matches("点了 3"))
+    }
+
+    @Test
+    fun numberedTextMatchesArabicIndicDigits() {
+        // 阿拉伯语等语言里 %d 会被渲染成阿拉伯-印度数字,读屏报回的也是它。
+        val taps = SelfCheckText.Numbered("النقرات: ٩٨٧٦٥٤٣٢١", "987654321")
+        assertTrue(taps.matches("النقرات: ٠"))
+        assertTrue(taps.matches("النقرات: ١٢"))
+        assertFalse(taps.matches("النبضة: ٠"))
+    }
+
+    @Test
+    fun digitsToAsciiNormalizesVariants() {
+        assertTrue(SelfCheckText.same("Taps: ٠", "Taps: 0"))
+        assertTrue(SelfCheckText.same("Taps: ٩٨٧", "Taps: 987"))
+        assertFalse(SelfCheckText.same("Taps: ٠", "Taps: 1"))
     }
 }

@@ -171,6 +171,23 @@ class RunTimelineViewModelTest {
         assertEquals("没有核查", h.verdict)
     }
 
+    /** 每一步都记着它是几点开始的(界面在「第 N 步」后面显示):取这一步最早的一条事件,回复按到手的时刻算。 */
+    @Test fun eachStepCarriesTheClockTimeItStarted() {
+        val id = run("看电量") {
+            event(RunEvent.ModelReply(clock, 1, "", "phone_launch_app", """{"package":"com.android.settings"}""", 10, 1, null, repliedAtMs = clock + 2_000))
+            event(RunEvent.ToolResult(clock + 3_000, 1, "phone_launch_app", """{"ok":true}""", true, null))
+            event(RunEvent.ModelReply(clock + 10_000, 2, "看看", "phone_observe", "{}", 10, 1, null, repliedAtMs = clock + 10_000))
+            event(RunEvent.TaskEnded(clock + 12_000, "succeeded", "85%"))
+        }
+        val (launch, look) = ready(id).steps
+        assertEquals("回复到手的时刻才是这一步的开始,不是执行完的时刻", clock + 2_000, launch.atMs)
+        assertEquals(clock + 10_000, look.atMs)
+        assertTrue(
+            "显示成 2026-11-13 07:50:39 这样带年月日的时刻",
+            RunTimelineViewModel.clockLabel(clock + 2_000).matches(Regex("""\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}""")),
+        )
+    }
+
     @Test fun rejectedLightReplyCountsAsCallButNotStep() {
         val id = run("看电量") {
             event(RunEvent.ModelReply(clock, 1, "", "phone_observe", "{}", 10, 1, null, model = "light", role = "light_rejected"))
@@ -255,6 +272,10 @@ class RunTimelineViewModelTest {
             event(RunEvent.ToolResult(clock, 4, "phone_tap", reordered, null, null))
             event(RunEvent.ModelReply(clock, 5, "", "phone_tap", "{}", null, null, null))
             event(RunEvent.ToolResult(clock, 5, "phone_tap", """{"ok":false,"error":"some_new_code"}""", null, null))
+            event(RunEvent.ModelReply(clock, 6, "", "memory_save", "{}", null, null, null))
+            event(RunEvent.ToolResult(clock, 6, "memory_save", """{"ok":false,"error":"content_not_from_user","message":"m","recoverable":false,"counts_as_failure":false}""", null, null))
+            event(RunEvent.ModelReply(clock, 7, "", "skill_save", "{}", null, null, null))
+            event(RunEvent.ToolResult(clock, 7, "skill_save", """{"ok":false,"error":"sensitive","message":"m","recoverable":false}""", null, null))
             event(RunEvent.ModelReply(clock, 3, "好了", "finish", """{"answer":"x"}""", null, null, null))
             event(RunEvent.Verifier(clock, "fail", "{}"))
             event(RunEvent.ToolResult(clock, 3, "finish", """{"ok":false,"error":"verification_failed"}""", null, null))
@@ -267,6 +288,12 @@ class RunTimelineViewModelTest {
         val four = ui.steps.single { it.step == 4 }
         assertEquals(listOf(Tag("守卫提醒:操作连续失败", TagTone.Warn), Tag("守卫提醒", TagTone.Warn)), four.tags)
         assertEquals("出错了", ui.steps.single { it.step == 5 }.result)
+        // 按规矩没收的不算出错:不带「出错」(界面按这个前缀把一步标成失败),说没收和原因;工具用界面上的名字
+        val declined = ui.steps.single { it.step == 6 }
+        assertEquals("不是你亲口说的,没有写入", declined.result)
+        assertEquals("写入记忆", declined.tool)
+        // 同一个错误码,结果里没写不计入失败的(存技能)照旧算出错
+        assertEquals("出错了", ui.steps.single { it.step == 7 }.result)
         assertFalse(ui.toString().contains("brand_new") || ui.toString().contains("some_new_code"))
         assertEquals("核查没通过", ui.header.verdict)
         assertEquals("没有完成", ui.header.outcome)

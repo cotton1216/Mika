@@ -8,10 +8,10 @@ import com.wangzan101.mika.task.TaskService.Companion.isActive
 enum class PageAskMode { Bar, Panel, Card }
 
 /**
- * 在浏览器页上问 Mika 那一块怎么显示(纯逻辑)。[state] 是这一页的对话里此刻那件事的状态(没有为 null),
- * [open] 是面板开着(用户问了、点开了小卡片、Mika 要你回话时打开;用户收起、你在页面上动手时收起)。
+ * 在浏览器页上问如愿那一块怎么显示(纯逻辑)。[state] 是这一页的对话里此刻那件事的状态(没有为 null),
+ * [open] 是面板开着(用户问了、点开了小卡片、如愿要你回话时打开;用户收起、你在页面上动手时收起)。
  * - 面板开着就是面板;
- * - 收着、那件事还没结束:底部一张小卡片(说它此刻在做什么);你在页面上动手而暂停时卡片写「已暂停」,顶上一条「你在操作，Mika 已暂停 · 继续」;
+ * - 收着、那件事还没结束:底部一张小卡片(说它此刻在做什么);你在页面上动手而暂停时卡片写「已暂停」,顶上一条「你在操作，如愿已暂停 · 继续」;
  * - 其余(没有任务、已经结束又收起来了):平时的输入条。
  */
 object PageAskModel {
@@ -21,14 +21,14 @@ object PageAskModel {
         else -> PageAskMode.Bar
     }
 
-    /** 你在页面上亲手操作,Mika 停着等你点「继续」。 */
+    /** 你在页面上亲手操作,如愿停着等你点「继续」。 */
     fun pausedForUser(state: TaskState?): Boolean =
         state is TaskState.Held && state.reason.code == "paused" && state.reason.why == TaskGate.USER_ON_PAGE
 
-    /** 页面四周亮一圈光边:Mika 正在干活(不是在等你、不是暂停)。 */
+    /** 页面四周亮一圈光边:如愿正在干活(不是在等你、不是暂停)。 */
     fun glow(state: TaskState?): Boolean = state is TaskState.Running
 
-    /** Mika 要你回话(回答、同意、接手、动一下手):从别的状态进到这里时面板自己打开。 */
+    /** 如愿要你回话(回答、同意、接手、动一下手):从别的状态进到这里时面板自己打开。 */
     fun needsYou(state: TaskState?): Boolean = when (state) {
         is TaskState.WaitingInput, is TaskState.WaitingConfirmation, is TaskState.WaitingTakeover -> true
         is TaskState.Held -> state.reason.needsYou
@@ -37,7 +37,7 @@ object PageAskModel {
 
     /**
      * 状态从 [before] 变成 [after] 时面板该怎么变:true 打开、false 收起、null 不动。
-     * 你在页面上动手而暂停时收起成小卡片(让开页面);Mika 新要你回话时打开。
+     * 你在页面上动手而暂停时收起成小卡片(让开页面);如愿新要你回话时打开。
      */
     fun follow(before: TaskState?, after: TaskState?): Boolean? = when {
         pausedForUser(after) && !pausedForUser(before) -> false

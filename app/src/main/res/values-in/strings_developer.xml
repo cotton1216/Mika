@@ -16,13 +16,15 @@
     <string name="dev_parallel_sub">Tugas dari obrolan berbeda masing-masing mendapat layar virtual dan berjalan bersamaan</string>
     <string name="dev_compaction">Ringkasan terstruktur untuk tugas panjang</string>
     <string name="dev_compaction_sub">Saat banyak langkah perlu dipadatkan, mencatat tujuan, fakta, kemajuan, dan langkah berikutnya</string>
-    <string name="dev_group">Cara Mika bekerja</string>
+    <string name="dev_group">Cara 如愿 bekerja</string>
     <string name="dev_autonomy">Mode otonom</string>
-    <string name="dev_autonomy_sub">Jika aktif, Mika tidak bertanya bahkan sebelum membayar dan langsung menyelesaikan; jika nonaktif, Mika hanya bertanya sebelum membayar</string>
-    <string name="dev_note">Pengaturan ini memengaruhi cara dan kecepatan kerja Mika. Biasanya biarkan di nilai default.</string>
+    <string name="dev_autonomy_sub">Jika aktif, 如愿 tidak bertanya bahkan sebelum membayar dan langsung menyelesaikan; jika nonaktif, 如愿 hanya bertanya sebelum membayar</string>
+    <string name="dev_note">Pengaturan ini memengaruhi cara dan kecepatan kerja 如愿. Biasanya biarkan di nilai default.</string>
     <string name="dev_grounding">Penentuan posisi visual terverifikasi</string>
-    <string name="dev_grounding_sub">Aktifkan setelah model visual %1$s teruji menemukan posisi dengan akurat; jika nonaktif, posisi yang ditandainya perlu bukti lain sebelum Mika mengetuk.</string>
+    <string name="dev_grounding_sub">Aktifkan setelah model visual %1$s teruji menemukan posisi dengan akurat; jika nonaktif, posisi yang ditandainya perlu bukti lain sebelum 如愿 mengetuk.</string>
     <string name="dev_speed">Kecepatan</string>
     <string name="dev_experiments">Eksperimen</string>
     <string name="dev_run_log">Catatan eksekusi</string>
+    <string name="dev_screen_tables">Ringkas elemen layar baru</string>
+    <string name="dev_screen_tables_sub">Saat layar pertama kali dibaca, kirim kolom untuk bidang berulang. Referensi elemen dan pohon lengkap tetap tersedia.</string>
 </resources>

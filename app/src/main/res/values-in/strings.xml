@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">Izin sistem ini memungkinkan Mika membaca dan mengoperasikan isi layar apa pun. Mika hanya memakainya di layar virtualnya sendiri untuk mengerjakan tugas dari Anda, dan baru bertindak di layar utama saat Anda memberinya tugas di sana.</string>
+    <string name="a11y_service_description">Izin sistem ini memungkinkan 如愿 membaca dan mengoperasikan isi layar apa pun. 如愿 hanya memakainya di layar virtualnya sendiri untuk mengerjakan tugas dari Anda, dan baru bertindak di layar utama saat Anda memberinya tugas di sana.</string>
     <string name="channel_attention">Perlu Anda</string>
     <string name="takeover_title">Perlu Anda</string>
     <string name="takeover_title_reason">Perlu Anda: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">Aplikasi kini ada di layar utama Anda. Ketuk “Selesai” setelah Anda selesai; kalau Anda sudah menyelesaikan semuanya sendiri, ketuk “Sudah saya kerjakan sendiri”.</string>
     <string name="takeover_web_busy">Halaman masuk situs web sedang terbuka di Pengaturan. Ketuk “Selesai” di sana dulu, lalu ketuk “Saya yang tangani”.</string>
     <string name="takeover_move_to_main_failed">Gagal memindahkan aplikasi ke layar utama. Ketuk “Saya yang tangani” untuk mencoba lagi.</string>
-    <string name="takeover_move_back_failed">Gagal memindahkan aplikasi kembali ke layar Mika. Coba lagi.</string>
+    <string name="takeover_move_back_failed">Gagal memindahkan aplikasi kembali ke layar 如愿. Coba lagi.</string>
     <string name="action_take_over">Saya yang tangani</string>
     <string name="action_hand_back">Selesai</string>
     <string name="action_finished_myself">Sudah saya kerjakan sendiri</string>
     <string name="action_skip">Lewati</string>
     <string name="action_cancel_task">Batalkan tugas</string>
     <string name="input_title">Perlu jawaban Anda</string>
-    <string name="no_answer_note">Kalau tidak ada jawaban dalam %1$d menit, Mika akan lanjut tanpa jawaban.</string>
-    <string name="input_too_late">Terlambat: setelah %1$d menit Mika sudah lanjut tanpa jawaban.</string>
+    <string name="no_answer_note">Kalau tidak ada jawaban dalam %1$d menit, 如愿 akan lanjut tanpa jawaban.</string>
+    <string name="input_too_late">Terlambat: setelah %1$d menit 如愿 sudah lanjut tanpa jawaban.</string>
     <string name="action_approve">Setujui</string>
     <string name="action_decline">Tolak</string>
     <string name="confirmation_locked_hint">Buka kunci untuk melihat penerima dan isinya</string>
@@ -127,7 +127,17 @@
     <string name="terminal_close_confirm">Tutup</string>
     <string name="terminal_retry">Buka lagi</string>
     <string name="terminal_stop">Hentikan</string>
-    <string name="terminal_task_running">Mika juga sedang bekerja di ruang kerja ini; perubahan dari kedua sisi bisa saling mengganggu.</string>
+    <string name="terminal_task_running">如愿 juga sedang bekerja di ruang kerja ini; perubahan dari kedua sisi bisa saling mengganggu.</string>
     <string name="terminal_copy_all">Salin semua</string>
     <string name="terminal_copied">Disalin</string>
+    <string name="personal_replay_title">Layar ponsel</string>
+    <string name="personal_replay_close">Tutup</string>
+    <string name="personal_replay_live_screen">Layar ponsel langsung</string>
+    <string name="personal_replay_recorded_screen">Rekaman layar tugas</string>
+    <string name="personal_replay_loading">Memuat layar…</string>
+    <string name="personal_replay_empty">Belum ada rekaman untuk diputar.</string>
+    <string name="personal_replay_live">Langsung</string>
+    <string name="personal_replay_pause">Jeda</string>
+    <string name="personal_replay_play">Putar</string>
+    <string name="personal_replay_return_live">Kembali ke siaran langsung</string>
 </resources>

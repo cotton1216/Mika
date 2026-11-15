@@ -262,6 +262,12 @@ class ActionExecutor(
             Frames.None -> null
         }
         recorder.result(n, call.name, s.verb, content, exec.record, exec.changed, shotId, durationMs, policy.source, call.id, exec.waitMs)
+        if (recorder.savesScreens) exec.playback?.let { capture ->
+            val beforeId = capture.before?.let(recorder::saveFrame)
+            val afterId = capture.after?.let(recorder::saveFrame)
+            recorder.event(RunEvent.TaskPlayback(recorder.now(), n, call.name, call.id, beforeId, afterId,
+                capture.mark, exec.content["ok"] == JsonPrimitive(true), policy.source))
+        }
         ActivityRecord.of(tools, call.name, s.args, exec, n, policy.source, call.id, recorder.now(), s.outward)?.let(recorder::event)
         if (policy.frames == Frames.WhenChanged && shotId != null) recorder.event(RunEvent.Media(recorder.now(), shotId, n, RunEvent.placeLabel(exec.place)))
         val seen = if (policy.routeTargets) routeTarget(call, s.verb, s.origin, exec) else null
@@ -304,7 +310,7 @@ class ActionExecutor(
         return seen
     }
 
-    /** 作用在 Mika 自己身上:不做;模型单步照常拿到说明、记进运行记录。 */
+    /** 作用在如愿自己身上:不做;模型单步照常拿到说明、记进运行记录。 */
     private fun ownApp(call: Part.ToolCall, args: JsonObject, origin: Origin, before: List<GuardVerdict>, followUp: FollowUp): ActionOutcome {
         val content = Refusals.content(Refusals.OWN_APP, origin.policy.refusals, before, null, null)
         if (origin.policy.recordsRefusal) {

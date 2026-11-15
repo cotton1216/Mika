@@ -22,7 +22,7 @@ internal object SearchHttp {
     /** 一条摘要最多这么长:端点不可信,不能把整页正文塞进模型上下文。 */
     private const val MAX_SNIPPET_CHARS = 600
     private val JSON_TYPE = "application/json".toMediaType()
-    private const val USER_AGENT = "Mika (+https://github.com/wangzan101/Mika)"
+    private const val USER_AGENT = "Yuan (+https://github.com/wangzan101/Mika)"
 
     fun json(body: JsonObject): RequestBody = body.toString().toRequestBody(JSON_TYPE)
 
@@ -75,5 +75,10 @@ internal object SearchHttp {
 
     /** 没有网址的结果不要;摘要截短。 */
     fun hit(title: String, url: String, snippet: String): WebSearchHit? =
-        if (url.isBlank()) null else WebSearchHit(title, url, snippet.trim().let { if (it.length > MAX_SNIPPET_CHARS) it.take(MAX_SNIPPET_CHARS) + "…" else it })
+        if (url.isBlank()) null else WebSearchHit(title, url, snippet.trim().let(::clip))
+
+    /** 按码点截短:摘要来自不可信端点,emoji 等代理对不能被切成半个字符。 */
+    private fun clip(s: String): String =
+        if (s.codePointCount(0, s.length) <= MAX_SNIPPET_CHARS) s
+        else s.substring(0, s.offsetByCodePoints(0, MAX_SNIPPET_CHARS)) + "…"
 }

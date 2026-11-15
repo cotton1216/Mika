@@ -19,8 +19,8 @@
     <string name="relay_unpair">ゲートウェイのペア設定を解除</string>
     <string name="relay_unpair_body">このスマホをゲートウェイから切断します。インターネット接続が必要です。スマホのアクセストークンは変わりません。</string>
     <string name="relay_failed">完了できませんでした。ゲートウェイのアドレス、インターネット接続、ペア設定コードを確認してください。ペア設定の解除に失敗した場合、アクセスはオフになっています。もう一度試すか、ゲートウェイでこのスマホを取り消してください。</string>
-    <string name="relay_notif_body">リモートアクセスは有効です。Mika を開いて、ゲートウェイの接続を確認できます。</string>
-    <string name="relay_incompatible">Mika とゲートウェイを、対応するバージョンにアップデートしてください</string>
+    <string name="relay_notif_body">リモートアクセスは有効です。如愿 を開いて、ゲートウェイの接続を確認できます。</string>
+    <string name="relay_incompatible">如愿 とゲートウェイを、対応するバージョンにアップデートしてください</string>
     <string name="relay_copy_gateway">ゲートウェイのアドレスをコピー</string>
     <string name="relay_cli_help">アクセストークンをパソコン上のファイルに保存してから、上の接続コマンドを実行してください。</string>
     <string name="relay_intro">ゲートウェイは、通常 Wi-Fi / LAN で送られる CLI と MCP のリクエストを、リモートアクセス用にスマホへ転送します。ペア設定の前に、ご自身の公開サーバーに設置してください。</string>

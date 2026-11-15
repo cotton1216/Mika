@@ -70,7 +70,7 @@ class UsbStartScript(context: Context, private val hub: HelperHub) {
     }
 }
 
-/** Mika 签名证书的指纹:助手每次交接前都拿它核对 Mika(两种启动方式共用),取自本 App 自己的安装信息。 */
+/** 如愿签名证书的指纹:助手每次交接前都拿它核对如愿(两种启动方式共用),取自本 App 自己的安装信息。 */
 internal fun ownCertPin(context: Context): String {
     val signers = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNING_CERTIFICATES)
         .signingInfo?.apkContentsSigners?.map { it.toByteArray() }

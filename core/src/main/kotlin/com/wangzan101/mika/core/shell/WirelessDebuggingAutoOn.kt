@@ -24,9 +24,9 @@ sealed interface AutoOnGate {
 }
 
 enum class AutoOnSkip {
-    /** 用户在 Mika 里关掉了「自动打开无线调试」。 */
+    /** 用户在如愿里关掉了「自动打开无线调试」。 */
     Declined,
-    /** Mika 没有修改系统设置的授权。 */
+    /** 如愿没有修改系统设置的授权。 */
     NoPermission,
     /** 没连 Wi-Fi:系统不会在没有 Wi-Fi 时打开无线调试(写了也会被拨回)。 */
     NoWifi,
@@ -36,9 +36,9 @@ enum class AutoOnSkip {
 
 /**
  * 内置助手要启动、无线调试却关着时,替用户把它打开(只开不关)。助手一旦起来就不再需要无线调试,
- * 但重新启动它(重启手机后、Mika 更新后、助手没了)要靠无线调试;而安卓原版在 Wi-Fi 断开时、重启后都会把它关掉。
+ * 但重新启动它(重启手机后、如愿更新后、助手没了)要靠无线调试;而安卓原版在 Wi-Fi 断开时、重启后都会把它关掉。
  *
- * 只在用户没关掉「自动打开无线调试」、Mika 自己拿着修改系统设置的授权、连着 Wi-Fi 时写。
+ * 只在用户没关掉「自动打开无线调试」、如愿自己拿着修改系统设置的授权、连着 Wi-Fi 时写。
  * 要助手启动时助手当然不在,经已配对连接跑命令又要先有无线调试,所以只有 App 直接写这一条路;做不到就不动,界面照旧给手动打开的办法。
  *
  * 依赖的安卓原版行为(AdbDebuggingManager 对 `adb_wifi_enabled` 的处理):
@@ -52,9 +52,9 @@ enum class AutoOnSkip {
  * 写之间按 [gapAfter] 拉开间隔;连着写了 [MAX_WRITES] 次助手都没起来也停下。
  */
 class WirelessDebuggingAutoOn(
-    /** 用户要不要这一项(没在 Mika 里关掉「自动打开无线调试」)。 */
+    /** 用户要不要这一项(没在如愿里关掉「自动打开无线调试」)。 */
     private val wants: () -> Boolean,
-    /** Mika 自己拿着修改系统设置的授权。 */
+    /** 如愿自己拿着修改系统设置的授权。 */
     private val canWrite: () -> Boolean,
     /** 系统的无线调试开关;读不到为 null。 */
     private val read: () -> Boolean?,

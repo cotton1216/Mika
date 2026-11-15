@@ -37,7 +37,7 @@ class ChatGptProviderTest {
 
     private fun store() = ProviderStore(
         tmp.root, AesGcmKeyCipher { key },
-        userAgent = "Mika/1.2.3",
+        userAgent = "Yuan/1.2.3",
         modelLister = { kind, url, token, headers -> listCalls += Triple(kind, url, token); listHeaders += headers; ModelListResult.Ok(listOf(ListedModel("gpt-x"))) },
         chatGptAuth = ChatGptAuth(OkHttpClient(), auth.url("/").toString().trimEnd('/')),
     )
@@ -69,7 +69,7 @@ class ChatGptProviderTest {
         store().listModels(p)
         assertEquals(Triple(ProviderConfig.Kind.ChatGpt, ChatGptAuth.API_BASE, "secret-access"), listCalls.single())
         // 客户端标识照带;ChatGPT 没声明会话头,不发会话号
-        assertEquals(mapOf("User-Agent" to "Mika/1.2.3"), listHeaders.single())
+        assertEquals(mapOf("User-Agent" to "Yuan/1.2.3"), listHeaders.single())
         assertNull(p.sessionHeader)
         // 再登录一次是更新同一家,不新添
         s.connectChatGpt(session().copy(accessToken = "secret-2"), emptyList())

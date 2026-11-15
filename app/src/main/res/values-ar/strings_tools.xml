@@ -46,6 +46,9 @@
     <string name="tool_list_settings">قراءة الإعدادات</string>
     <string name="tool_set_setting">تغيير إعداد</string>
     <string name="tool_save_skill">حفظ مهارة</string>
+    <string name="tool_memory_search">البحث في الذاكرة</string>
+    <string name="tool_memory_save">الكتابة في الذاكرة</string>
+    <string name="tool_memory_edit">تعديل الذاكرة</string>
     <string name="tool_explain_failure">شرح سبب عدم نجاح العملية</string>
     <string name="tool_ask_user">طرح سؤال عليك</string>
     <string name="tool_takeover">مطالبتك بتولّي التحكم</string>
@@ -62,4 +65,16 @@
     <string name="tool_tap">نقر</string>
     <string name="tool_type">كتابة نص</string>
     <string name="tool_clear">مسح الحقل</string>
+    <string name="tool_mika_status">عرض حالة Mika</string>
+    <string name="tool_mika_open_screen">فتح صفحة Mika</string>
+    <string name="tool_mika_open_file">فتح ملف</string>
+    <string name="tool_mika_notify">إرسال إشعار</string>
+    <string name="tool_mika_copy">نسخ النص</string>
+    <string name="tool_mika_open_in_browser">فتح في متصفحك</string>
+    <string name="tool_mika_search_in_browser">البحث في متصفحك</string>
+    <string name="tool_mika_sites">التحقق من تسجيل الدخول</string>
+    <string name="tool_mika_user_page">التحقق من الصفحة المعروضة</string>
+    <string name="tool_mika_login_site">تسجيل الدخول إلى موقع</string>
+    <string name="tool_mika_confirm_login">تأكيد تسجيل الدخول</string>
+    <string name="tool_mika_favorites">المواقع المتكررة</string>
 </resources>

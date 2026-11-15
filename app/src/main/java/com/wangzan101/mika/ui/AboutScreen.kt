@@ -36,19 +36,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.wangzan101.mika.R
 import com.wangzan101.mika.about.CheckStatus
-import com.wangzan101.mika.about.MikaLinks
 import com.wangzan101.mika.about.ReleaseInfo
 import com.wangzan101.mika.about.UpdateState
 import com.wangzan101.mika.ui.components.ButtonKind
@@ -65,13 +60,11 @@ import com.wangzan101.mika.ui.theme.MikaTheme
 import com.wangzan101.mika.ui.theme.MikaType
 
 /** 关于页上点开的底部面板。 */
-private enum class AboutSheet { Update, Changelog, Feedback, Diagnostics }
+private enum class AboutSheet { Update }
 
 /**
- * 关于 Mika:顶上图标、名字、一句话介绍、版本(Beta 标记、构建编号);下面是检查更新与更新记录、
- * 反馈问题、开源仓库与使用说明;一段数据说明;最底下许可证与作者。
- * 外部链接都交给 [onOpenUrl](系统浏览器);手动检查的结果到了([UpdateState.manualRounds] 变了)才提示。
- * [diagnostics] 写出诊断信息(反馈面板里「复制诊断信息」点开预览时在后台线程调)。
+ * 关于「如愿」:顶上图标、名字、一句话介绍、版本(Beta 标记、构建编号);下面是检查更新与自动更新;一段数据说明。
+ * 手动检查的结果到了([UpdateState.manualRounds] 变了)才提示。
  */
 @Composable
 fun AboutScreen(
@@ -129,14 +122,6 @@ fun AboutScreen(
             ) {
                 MikaSwitch(autoUpdate, onAutoUpdate, Modifier.testTag("auto-update-switch"))
             }
-            ListRow(MikaIcons.Lines, AboutCopy.CHANGELOG, AboutCopy.CHANGELOG_SUB, onClick = { sheet = AboutSheet.Changelog }) { RowChevron() }
-        }
-        GroupCard {
-            ListRow(MikaIcons.Bug, AboutCopy.FEEDBACK, AboutCopy.FEEDBACK_SUB, first = true, onClick = { sheet = AboutSheet.Feedback }) { RowChevron() }
-        }
-        GroupCard {
-            ListRow(MikaIcons.Code, AboutCopy.REPO, AboutCopy.REPO_SUB, first = true, onClick = { onOpenUrl(MikaLinks.REPO) }) { ExternalMark() }
-            ListRow(MikaIcons.Book, AboutCopy.GUIDE, AboutCopy.GUIDE_SUB, onClick = { onOpenUrl(MikaLinks.README) }) { ExternalMark() }
         }
 
         Row(
@@ -146,21 +131,6 @@ fun AboutScreen(
             Icon(MikaIcons.Shield, null, Modifier.padding(top = 1.dp).size(18.dp), tint = c.ok)
             Text(AboutCopy.DATA_NOTE, style = MikaType.Caption, color = c.ink2)
         }
-
-        Column(Modifier.fillMaxWidth().padding(top = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                buildAnnotatedString {
-                    val (before, after) = stringResource(R.string.about_released_under).split("%1\$s").let { it[0] to it.getOrElse(1) { "" } }
-                    append(before)
-                    withStyle(SpanStyle(color = c.accent)) { append(AboutCopy.LICENSE_LINK) }
-                    append(after)
-                },
-                Modifier.clip(RoundedCornerShape(6.dp)).clickable(onClick = onOpenLicense).padding(horizontal = 6.dp, vertical = 2.dp)
-                    .testTag("about-license"),
-                style = MikaType.Hint, color = c.ink3, textAlign = TextAlign.Center,
-            )
-            Text(AboutCopy.AUTHOR, Modifier.padding(top = 2.dp), style = MikaType.Hint, color = c.ink3)
-        }
     }
 
     val close = { sheet = null }
@@ -168,13 +138,6 @@ fun AboutScreen(
         AboutSheet.Update -> update.update?.let { r ->
             UpdateSheet(r, versionName, beta, onOpenUrl = { close(); onOpenUrl(it) }, onDismiss = close)
         }
-        AboutSheet.Changelog -> ChangelogSheet(update.latest, onOpenAll = { close(); onOpenUrl(MikaLinks.RELEASES) }, onDismiss = close)
-        AboutSheet.Feedback -> FeedbackSheet(
-            onGitHub = { close(); onOpenUrl(issueUrl) },
-            onDiagnostics = { sheet = AboutSheet.Diagnostics },
-            onDismiss = close,
-        )
-        AboutSheet.Diagnostics -> DiagnosticsSheet(diagnostics, onDismiss = close)
         null -> Unit
     }
 }
@@ -190,7 +153,7 @@ private fun Hero(versionName: String, build: String, beta: Boolean) {
             painterResource(R.drawable.mika_launcher_art), contentDescription = null,
             Modifier.size(72.dp).clip(RoundedCornerShape(20.dp)),
         )
-        Text("Mika", Modifier.padding(top = 12.dp), style = MikaType.Title, fontWeight = FontWeight.Bold, color = c.ink)
+        Text(stringResource(R.string.app_name), Modifier.padding(top = 12.dp), style = MikaType.Title, fontWeight = FontWeight.Bold, color = c.ink)
         Text(AboutCopy.TAGLINE, Modifier.padding(top = 4.dp), style = MikaType.Caption, color = c.ink2, textAlign = TextAlign.Center)
         Row(Modifier.padding(top = 10.dp).testTag("about-version"), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(AboutCopy.version(versionName), style = MikaType.Hint, color = c.ink3)
@@ -221,13 +184,6 @@ internal fun TrailingValue(v: AboutCopy.CheckValue) {
 internal fun UpdateDot(modifier: Modifier = Modifier) {
     Box(modifier.size(8.dp).background(MikaTheme.colors.bad, CircleShape).testTag("update-dot"))
 }
-
-@Composable
-private fun ExternalMark() {
-    Icon(MikaIcons.External, null, Modifier.size(15.dp), tint = MikaTheme.colors.ink3)
-}
-
-// ---------- 底部面板 ----------
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -277,36 +233,3 @@ internal fun UpdateSheet(r: ReleaseInfo, current: String, beta: Boolean, onOpenU
     }
 }
 
-@Composable
-private fun ChangelogSheet(latest: ReleaseInfo?, onOpenAll: () -> Unit, onDismiss: () -> Unit) {
-    val c = MikaTheme.colors
-    AboutSheetFrame(AboutCopy.CHANGELOG, null, "changelog-sheet", onDismiss) {
-        if (latest == null) {
-            Text(AboutCopy.CHANGELOG_EMPTY, Modifier.padding(top = 10.dp), style = MikaType.Caption, color = c.ink3)
-        } else {
-            Text(
-                latest.version + (latest.date?.let { " · $it" } ?: ""), Modifier.padding(top = 10.dp),
-                style = MikaType.Label, color = c.ink,
-            )
-            if (latest.notes.isNotBlank()) NotesBox(latest.notes)
-        }
-        MikaButton(AboutCopy.CHANGELOG_ALL, onOpenAll, Modifier.fillMaxWidth().padding(top = 14.dp), kind = ButtonKind.Tonal)
-    }
-}
-
-@Composable
-private fun FeedbackSheet(onGitHub: () -> Unit, onDiagnostics: () -> Unit, onDismiss: () -> Unit) {
-    AboutSheetFrame(AboutCopy.FEEDBACK, AboutCopy.FEEDBACK_SHEET_SUB, "feedback-sheet", onDismiss) {
-        Column(Modifier.padding(top = 6.dp)) {
-            FeedbackOption(MikaIcons.Code, AboutCopy.FEEDBACK_GITHUB, AboutCopy.FEEDBACK_GITHUB_SUB, first = true, onGitHub)
-            FeedbackOption(MikaIcons.Copy, AboutCopy.DIAGNOSTICS, AboutCopy.DIAGNOSTICS_SUB, first = false, onDiagnostics)
-        }
-    }
-}
-
-@Composable
-private fun FeedbackOption(icon: ImageVector, title: String, sub: String, first: Boolean, onClick: () -> Unit) {
-    Box(Modifier.testTag("feedback-option")) {
-        ListRow(icon, title, sub, first = first, onClick = onClick)
-    }
-}

@@ -80,7 +80,7 @@ class SedimentationWiringTest {
         val on = MapSkills()
         val notes = runBlocking { learning(on, learn = true).learn(after(events())) }
         assertEquals(listOf("draft-1"), on.drafts.keys.toList())
-        assertEquals("Mika 学会了一项技能:给指定联系人发一条微信消息", notes.skillNotes.single().text)
+        assertEquals("如愿学会了一项技能:给指定联系人发一条微信消息", notes.skillNotes.single().text)
         assertEquals("draft-1", notes.skillNotes.single().draftId)
     }
 

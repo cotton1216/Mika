@@ -83,7 +83,7 @@ class RemoteTaskHub(
         throw e
     } catch (e: Exception) {
         Log.w(TAG, "could not start remote task", e)
-        StartOutcome.Refused("Mika could not start the task on the phone. Check its status before trying again.")
+        StartOutcome.Refused("如愿 could not start the task on the phone. Check its status before trying again.")
     }
 
     private fun startWithFiles(owner: String?, id: String, goal: String, conversation: String?, attachments: List<String>): RemoteTask {
@@ -109,7 +109,7 @@ class RemoteTaskHub(
         receipts.insert(task, newChat = conversation == null, fileRequest = fileRequest)
         try { TaskService.startMcp(context, goal, task.conversation, id, attendance) }
         catch (e: Exception) {
-            receipts.finish(id, TaskState.Failed("Mika could not start the task on the phone.", FailKind.Environment), emptyList())
+            receipts.finish(id, TaskState.Failed("如愿 could not start the task on the phone.", FailKind.Environment), emptyList())
             throw e
         }
         return task
@@ -119,7 +119,7 @@ class RemoteTaskHub(
         receipts.claimStart(id)
     } catch (e: SQLiteException) {
         Log.e(TAG, "Could not claim remote task", e)
-        ended(id, TaskState.Failed("Mika could not record this task's start. Check phone storage.", FailKind.Environment), emptyList())
+        ended(id, TaskState.Failed("如愿 could not record this task's start. Check phone storage.", FailKind.Environment), emptyList())
         false
     }
 

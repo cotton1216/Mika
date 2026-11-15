@@ -32,6 +32,23 @@ class RecommendedTaskStoreTest {
         assertFalse(File(tmp.root, "recommended-tasks.json.tmp").exists())
     }
 
+    /** 下线掉的内置任务还留在老用户的文件里:读列表时按特征清掉并写回,用户自己写的不动。 */
+    @Test fun retiredBuiltInTasksAreDroppedFromAnExistingFile() {
+        val file = File(tmp.root, "recommended-tasks.json")
+        val star = "打开网页 https://github.com/wangzan101/mika，给这个项目点 star"
+        file.writeText(
+            """[{"id":"a","title":"star","prompt":"$star"},{"id":"b","title":"闹钟","prompt":"帮我订明天早上9:40 的闹钟"}]""",
+        )
+        val store = RecommendedTaskStore(file) { "new" }
+        store.ensureLoaded(retired = { it.contains("github.com/wangzan101/mika") }) { emptyList() }
+        assertEquals(listOf("闹钟"), store.tasks.value.map { it.title })
+        assertFalse("清掉的要写回文件,下次不再出现", file.readText().contains("github.com/wangzan101/mika"))
+
+        val reloaded = RecommendedTaskStore(file) { "other" }
+        reloaded.ensureLoaded(retired = { it.contains("github.com/wangzan101/mika") }) { emptyList() }
+        assertEquals(listOf("闹钟"), reloaded.tasks.value.map { it.title })
+    }
+
     @Test fun reorderedTasksPersistAndStaleOrdersCannotLoseTasks() {
         val tasks = store()
         tasks.ensureLoaded { listOf("一" to "提示一", "二" to "提示二", "三" to "提示三") }

@@ -11,6 +11,7 @@ import com.wangzan101.mika.core.cap.mcp.StdioMcpEndpoint
 import com.wangzan101.mika.core.cap.mcp.parseStdioCommand
 import com.wangzan101.mika.core.cap.mcp.McpClientException
 import com.wangzan101.mika.core.cap.mcp.McpConnection
+import com.wangzan101.mika.core.cap.mcp.McpToolDescriptor
 import com.wangzan101.mika.core.cap.mcp.McpTrust
 import com.wangzan101.mika.core.net.NetProxy
 import com.wangzan101.mika.core.oauth.LoopbackCallback
@@ -70,7 +71,15 @@ data class McpServerConfig(
     val headers: Map<String, String> = emptyMap(),
 )
 
-data class McpHealth(val ok: Boolean, val message: String?, val tools: List<String>, val atMs: Long)
+/** 连接成功后记下的一个工具:名字和说明。说明在列表页展开查看,用来分辨同名前缀的工具。 */
+data class McpToolInfo(val name: String, val description: String) {
+    companion object {
+        /** 只留展示要用的两项,输入 schema 与注解不进内存里的健康状态。 */
+        fun of(descriptor: McpToolDescriptor) = McpToolInfo(descriptor.name, descriptor.description.trim())
+    }
+}
+
+data class McpHealth(val ok: Boolean, val message: String?, val tools: List<McpToolInfo>, val atMs: Long)
 
 data class McpConnections(
     val connections: List<McpConnection>,
@@ -229,8 +238,9 @@ class McpServerStore(
                 is StdioMcpEndpoint -> endpoint.instructions
                 else -> null
             }
-            val result = McpTestResult(name, instructions, endpoint.tools().map { it.name })
-            _health.update { it + (config.id to McpHealth(true, null, result.tools, System.currentTimeMillis())) }
+            val descriptors = endpoint.tools()
+            val result = McpTestResult(name, instructions, descriptors.map { it.name })
+            _health.update { it + (config.id to McpHealth(true, null, descriptors.map(McpToolInfo::of), System.currentTimeMillis())) }
             Result.success(result)
         } finally {
             (endpoint as? Closeable)?.close()
@@ -318,7 +328,7 @@ class McpServerStore(
         }
         _health.update {
             it + (config.id to connection.fold(
-                onSuccess = { c -> McpHealth(true, null, c.endpoint.tools().map { t -> t.name }, System.currentTimeMillis()) },
+                onSuccess = { c -> McpHealth(true, null, c.endpoint.tools().map(McpToolInfo::of), System.currentTimeMillis()) },
                 onFailure = { e -> McpHealth(false, e.message ?: e.javaClass.simpleName, emptyList(), System.currentTimeMillis()) },
             ))
         }
@@ -337,18 +347,18 @@ class McpServerStore(
                 StdioMcpEndpoint.connect(
                     serverId = config.id, command = argv, launcher = launcher, workspace = workspace,
                     timeoutSec = config.timeoutSec,
-                    clientName = "Mika", clientVersion = BuildConfig.VERSION_NAME,
+                    clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
                 ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
             }
             "http-sse" -> LegacySseMcpEndpoint.connect(
                 serverId = config.id, url = config.url, http = http,
                 headers = headers, timeoutSec = config.timeoutSec,
-                clientName = "Mika", clientVersion = BuildConfig.VERSION_NAME,
+                clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
             ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
             else -> HttpMcpEndpoint.connect(
                 serverId = config.id, url = config.url, http = http,
                 headers = headers, timeoutSec = config.timeoutSec,
-                clientName = "Mika", clientVersion = BuildConfig.VERSION_NAME,
+                clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
             ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
         }
     } catch (e: CancellationException) {
@@ -439,9 +449,9 @@ class McpServerStore(
         McpHealth(false, e.message ?: e.javaClass.simpleName, emptyList(), System.currentTimeMillis())
 
     private fun oauthPage(ok: Boolean): String = if (ok) {
-        "<html><body><h3>Mika: 登录成功</h3><p>Sign-in complete. You can return to Mika.</p></body></html>"
+        "<html><body><h3>如愿: 登录成功</h3><p>Sign-in complete. You can return to 如愿.</p></body></html>"
     } else {
-        "<html><body><h3>Mika: 登录失败</h3><p>Sign-in failed. Return to Mika and try again.</p></body></html>"
+        "<html><body><h3>如愿: 登录失败</h3><p>Sign-in failed. Return to 如愿 and try again.</p></body></html>"
     }
 
     private fun loadServers(): List<McpServerConfig> = runCatching {

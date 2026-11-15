@@ -36,7 +36,7 @@ class RunFactsTest {
     @Test fun ledgerTakesReadResultsWithoutHints() {
         fun result(step: Int, tool: String, json: String) = RunEvent.ToolResult(step.toLong(), step, tool, json, null, null)
         val ev = listOf(
-            result(1, "web_read_page", """{"ok":true,"url":"https://a.example.com/","text":"长江全长 6300 公里","hint":"Mika 提示 9999 公里"}"""),
+            result(1, "web_read_page", """{"ok":true,"url":"https://a.example.com/","text":"长江全长 6300 公里","hint":"如愿 提示 9999 公里"}"""),
             result(2, "web_read_page", """{"ok":false,"error":"timeout","message":"超时 8888 公里"}"""),
         )
         val l = RunFacts.ledger(ev, TOOLS).all.filter { it.kind == com.wangzan101.mika.core.observation.ObsKind.Read }

@@ -16,7 +16,7 @@ import kotlinx.serialization.json.put
 import java.io.File
 
 /**
- * 站点登记表里的一项:主机名、最近访问时间、是否在 Mika 里处于登录状态(登录核实过、或页面上看出已登录时打上,
+ * 站点登记表里的一项:主机名、最近访问时间、是否在如愿里处于登录状态(登录核实过、或页面上看出已登录时打上,
  * 看出已退出时去掉)。[challengedAtMs] / [challenge]:最近一次在这个网站上碰到人机验证或访问拦截的时间与种类
  * (captcha / access_blocked),这个网站的会话可能已被网站盯上;过了 [SiteRegistry.CHALLENGE_TTL_MS] 或清除该站数据后不再算。
  */

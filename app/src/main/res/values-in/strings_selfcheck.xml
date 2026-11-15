@@ -44,17 +44,17 @@
     <string name="selfcheck_advice_too_old">Sistem ini lebih lama dari Android 12, jadi kontrol ponsel tidak tersedia. Obrolan, web, dan sandbox tetap berfungsi.</string>
     <string name="selfcheck_advice_no_wireless">Sistem ini tidak punya Proses debug nirkabel. Anda bisa memulai kontrol ponsel dari komputer lewat USB.</string>
     <string name="selfcheck_advice_phone_unavailable">Lingkungan ini tidak bisa mengoperasikan aplikasi di ponsel Anda (tidak ada Opsi developer maupun Proses debug nirkabel); obrolan, web, berkas, dan perhitungan tetap bisa dipakai seperti biasa.</string>
-    <string name="selfcheck_advice_a11y_off">Aksesibilitas nonaktif. Aktifkan aksesibilitas Mika di Pengaturan › Kontrol ponsel.</string>
-    <string name="selfcheck_advice_a11y_restart">Aksesibilitas aktif tetapi tidak berjalan. Matikan lalu aktifkan lagi aksesibilitas Mika di setelan sistem.</string>
+    <string name="selfcheck_advice_a11y_off">Aksesibilitas nonaktif. Aktifkan aksesibilitas 如愿 di Pengaturan › Kontrol ponsel.</string>
+    <string name="selfcheck_advice_a11y_restart">Aksesibilitas aktif tetapi tidak berjalan. Matikan lalu aktifkan lagi aksesibilitas 如愿 di setelan sistem.</string>
     <string name="selfcheck_advice_notifications">Notifikasi diblokir, jadi Anda tidak akan melihat kemajuan tugas atau peringatan “perlu Anda”.</string>
-    <string name="selfcheck_advice_battery">Penggunaan baterai dibatasi, jadi Mika mungkin dihentikan di latar belakang. Anda bisa melonggarkannya di Pemulihan &amp; perbaikan.</string>
+    <string name="selfcheck_advice_battery">Penggunaan baterai dibatasi, jadi 如愿 mungkin dihentikan di latar belakang. Anda bisa melonggarkannya di Pemulihan &amp; perbaikan.</string>
     <string name="selfcheck_advice_setup">Pembantu bawaan tidak berjalan. Selesaikan penyiapan di Pengaturan › Kontrol ponsel, lalu jalankan ini lagi.</string>
-    <string name="selfcheck_advice_display">Layar virtual Mika gagal dibuat. Sambungkan ulang pembantu dan coba lagi; jika masih gagal, mohon laporkan.</string>
-    <string name="selfcheck_advice_focus">Layar virtual Mika tidak punya fokus sendiri, jadi layar Anda mungkin sesaat kehilangan fokus input saat Mika bekerja. Semuanya tetap berfungsi.</string>
-    <string name="selfcheck_advice_launch">Sebuah halaman tidak terbuka di layar virtual Mika. Mohon laporkan.</string>
-    <string name="selfcheck_advice_on_main">Pengaturan sistem terbuka di layar Anda, bukan di layar virtual Mika. Mohon laporkan.</string>
+    <string name="selfcheck_advice_display">Layar virtual 如愿 gagal dibuat. Sambungkan ulang pembantu dan coba lagi; jika masih gagal, mohon laporkan.</string>
+    <string name="selfcheck_advice_focus">Layar virtual 如愿 tidak punya fokus sendiri, jadi layar Anda mungkin sesaat kehilangan fokus input saat 如愿 bekerja. Semuanya tetap berfungsi.</string>
+    <string name="selfcheck_advice_launch">Sebuah halaman tidak terbuka di layar virtual 如愿. Mohon laporkan.</string>
+    <string name="selfcheck_advice_on_main">Pengaturan sistem terbuka di layar Anda, bukan di layar virtual 如愿. Mohon laporkan.</string>
     <string name="selfcheck_advice_settings_in_use">Pengaturan sistem terbuka di layar Anda, jadi langkah ini tidak membukanya. Tutup lalu jalankan lagi.</string>
-    <string name="selfcheck_advice_read">Kontrol di halaman tidak bisa dibaca. Matikan lalu aktifkan lagi aksesibilitas Mika, kemudian jalankan lagi.</string>
+    <string name="selfcheck_advice_read">Kontrol di halaman tidak bisa dibaca. Matikan lalu aktifkan lagi aksesibilitas 如愿, kemudian jalankan lagi.</string>
     <string name="selfcheck_advice_blank">Gambar layar virtual hitam seluruhnya atau kosong. Mohon laporkan.</string>
     <string name="selfcheck_advice_action">Beberapa tindakan tidak berefek (lihat laporan). Mohon laporkan.</string>
     <string name="selfcheck_advice_frames">Layar virtual berhenti diperbarui setelah beberapa saat, jadi tugas bisa tersangkut. Mohon laporkan.</string>
@@ -69,8 +69,8 @@
     <string name="selfcheck_advice_out_of_time">Waktu pemeriksaan habis sebelum pemeriksaan ini.</string>
     <string name="selfcheck_advice_cancelled">Dibatalkan.</string>
 
-    <string name="selfcheck_target_title">Halaman pemeriksaan Mika</string>
-    <string name="selfcheck_target_note">Ini halaman uji milik Mika sendiri. Pemeriksaan kompatibilitas mengetuk dan mengetik di sini; tidak menyentuh aplikasi lain Anda.</string>
+    <string name="selfcheck_target_title">Halaman pemeriksaan 如愿</string>
+    <string name="selfcheck_target_note">Ini halaman uji milik 如愿 sendiri. Pemeriksaan kompatibilitas mengetuk dan mengetik di sini; tidak menyentuh aplikasi lain Anda.</string>
     <string name="selfcheck_target_taps">Ketukan: %1$d</string>
     <string name="selfcheck_target_button">Ketuk saya</string>
     <string name="selfcheck_target_input">Ketik di sini</string>

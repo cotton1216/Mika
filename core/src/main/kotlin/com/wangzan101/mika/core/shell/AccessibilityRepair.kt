@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withTimeoutOrNull
 
-/** App 看到的 Mika 无障碍服务:系统列表里有没有它([enabled]),服务实例是否连着([connected])。 */
+/** App 看到的如愿无障碍服务:系统列表里有没有它([enabled]),服务实例是否连着([connected])。 */
 data class A11yObservation(val enabled: Boolean, val connected: Boolean) {
     /**
      * 服务没在运行,就要修:不管是系统里开着却没绑定(进程被杀后系统当它崩溃了),
@@ -23,7 +23,7 @@ data class A11yObservation(val enabled: Boolean, val connected: Boolean) {
 
 /** 自动重启无障碍服务进行到哪一步:要用服务的一方据此决定多等一会儿还是马上放弃。 */
 enum class RepairPhase {
-    /** 没有要修的(服务连着、用户在 Mika 里关掉了替我打开、助手不在、试过两次放弃了)。 */
+    /** 没有要修的(服务连着、用户在如愿里关掉了替我打开、助手不在、试过两次放弃了)。 */
     Idle,
     /** 卡住了,先等一会儿看系统自己会不会连上。 */
     Pending,
@@ -35,12 +35,12 @@ enum class RepairPhase {
 data class RepairOutcome(val restarted: Boolean, val atMillis: Long, val attempts: Int)
 
 /**
- * Mika 的无障碍服务没在运行时自动打开:内置助手在运行时,用它把 Mika 的服务写回系统列表
+ * 如愿的无障碍服务没在运行时自动打开:内置助手在运行时,用它把如愿的服务写回系统列表
  * ([RecoveryPermissions.restartAccessibility]:列表里有就去掉再加回让系统重新绑定,没有就直接加上)。
  * App 自己有修改系统设置的授权时([direct])直接写,不用等助手(无线调试关着也能修)。
  * 只看三路状态:服务([A11yObservation])、内置助手和用户是否已解锁;任一变化都重新判断,不轮询。
  *
- * - 只要没在运行就修;只有用户在 Mika 里关掉了「替我打开无障碍」才不管。
+ * - 只要没在运行就修;只有用户在如愿里关掉了「替我打开无障碍」才不管。
  * - 开机后用户还没解锁过一次时(凭据加密的存储还没解开),不支持直接启动的服务本来就绑不上:这时不修,
  *   等用户解锁([watch] 的 unlocked 变为 true)后再判断一次,该修照样修。
  * - 刚卡住时先等 [GRACE_MS]:进程刚起来时系统通常马上会连上,不必动手。

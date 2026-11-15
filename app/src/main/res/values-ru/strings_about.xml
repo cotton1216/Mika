@@ -17,11 +17,21 @@
     <string name="about_feedback_sheet_sub">Нашли ошибку или есть идея? Напишите автору так, как вам удобно.</string>
     <string name="about_feedback_github">Создать issue на GitHub</string>
     <string name="about_feedback_github_sub">Сообщайте об ошибках, предлагайте функции и следите за ходом работ</string>
+    <string name="about_group">Связаться с автором</string>
+    <string name="about_group_sub">WeChat</string>
+    <string name="about_group_sheet_title">Связаться с автором</string>
+    <string name="about_group_sheet_sub">Обсудите, как пользоваться приложением, или поделитесь идеями. Добавляясь в WeChat, упомяните Mika в заявке</string>
+    <string name="about_group_hint">Нажмите и удерживайте, чтобы сохранить · или отсканируйте в WeChat</string>
+    <string name="about_save_qr">Сохранить QR-код</string>
+    <string name="about_qr_saved">QR-код сохранён в галерею</string>
+    <string name="about_qr_save_failed">Не удалось сохранить. Сделайте снимок экрана.</string>
+    <string name="about_follow">Следить за автором</string>
+    <string name="about_follow_sub">X %1$s: первыми узнавайте о новых функциях</string>
     <string name="about_repo">Исходный код</string>
     <string name="about_repo_sub">%1$s · звёзды приветствуются</string>
     <string name="about_guide">Руководство и как помочь проекту</string>
     <string name="about_guide_sub">С чего начать; можно добавлять знания о приложениях и без программирования</string>
-    <string name="about_data_note">Всё, что вы отправляете Mika (сообщения, содержимое экрана и снимки экрана), уходит только провайдеру модели, которого вы настроили. У Mika нет собственных серверов, и она не собирает ваши данные; при проверке обновлений обращение идёт только к GitHub.</string>
+    <string name="about_data_note">Всё, что вы отправляете 如愿 (сообщения, содержимое экрана и снимки экрана), уходит только провайдеру модели, которого вы настроили. У 如愿 нет собственных серверов, и она не собирает ваши данные; при проверке обновлений обращение идёт только к GitHub.</string>
     <string name="about_license_link">Лицензия Apache-2.0</string>
     <string name="about_author">Автор: Wang Zan · © 2026</string>
     <string name="about_license_title">Лицензия Apache-2.0</string>
@@ -34,11 +44,11 @@
     <string name="about_update_retry">Скачать заново</string>
     <string name="about_update_cancel">Удалить загрузку</string>
     <string name="about_update_working">Подождите…</string>
-    <string name="about_update_install_hint">Когда загрузка завершится, нажмите «Установить обновление» и подтвердите в системном установщике. Возможно, сначала придётся разрешить Mika установку неизвестных приложений.</string>
+    <string name="about_update_install_hint">Когда загрузка завершится, нажмите «Установить обновление» и подтвердите в системном установщике. Возможно, сначала придётся разрешить 如愿 установку неизвестных приложений.</string>
     <string name="about_update_error">Загрузка или установка не завершена. Попробуйте позже.</string>
     <string name="about_update_bad_file">Скачанный пакет неполный или не совпадает с релизом. Он удалён, скачайте его заново.</string>
-    <string name="about_update_not_newer">Скачанный пакет не новее установленной Mika. Он удалён.</string>
-    <string name="about_update_bad_signer">Подпись этого пакета отличается от подписи установленной Mika, поэтому обновить её им нельзя. Пакет удалён. Если вы собирали Mika сами, сначала удалите её, а затем установите официальную версию.</string>
+    <string name="about_update_not_newer">Скачанный пакет не новее установленной 如愿. Он удалён.</string>
+    <string name="about_update_bad_signer">Подпись этого пакета отличается от подписи установленной 如愿, поэтому обновить её им нельзя. Пакет удалён. Если вы собирали 如愿 сами, сначала удалите её, а затем установите официальную версию.</string>
     <string name="about_update_later">Позже</string>
     <string name="about_no_browser">Нет браузера, чтобы открыть ссылку</string>
     <string name="about_version">Версия %1$s</string>
@@ -48,7 +58,7 @@
     <string name="about_current">Сейчас %1$s</string>
     <string name="about_released_on">" · выпущена %1$s"</string>
     <string name="about_released_under">Лицензия: %1$s</string>
-    <string name="issue_body">- Устройство: %1$s\n- Версия Android: %2$s (SDK %3$d)\n- Версия Mika: %4$s (сборка %5$s)\n\n### Что пошло не так\n\n\n### Что вы делали\n\n\n### Что ожидали\n\n\n### Диагностика\n(По желанию) В Mika откройте «О приложении» › «Отправить отзыв» › «Скопировать диагностику» и вставьте её сюда\n\n</string>
+    <string name="issue_body">- Устройство: %1$s\n- Версия Android: %2$s (SDK %3$d)\n- Версия 如愿: %4$s (сборка %5$s)\n\n### Что пошло не так\n\n\n### Что вы делали\n\n\n### Что ожидали\n\n\n### Диагностика\n(По желанию) В 如愿 откройте «О приложении» › «Отправить отзыв» › «Скопировать диагностику» и вставьте её сюда\n\n</string>
     <string name="licenses_third_party">Сторонние компоненты · %1$d</string>
     <string name="licenses_footer">Полные тексты лицензий и уведомления об авторских правах находятся в файле LICENSE и папке licenses/ (включая THIRD_PARTY_NOTICES.md) в репозитории с исходным кодом.</string>
     <string name="diagnostics_copy">Скопировать диагностику</string>
@@ -62,8 +72,8 @@
     <string name="about_auto_update">Автообновление</string>
     <string name="about_auto_update_detail">Скачивать новые версии в фоне только по Wi-Fi и запрашивать подтверждение перед установкой</string>
     <string name="about_auto_update_disable">Выключить автообновление</string>
-    <string name="about_auto_update_ready">Mika %1$s загружен</string>
-    <string name="about_auto_update_confirm_title">Новая версия Mika готова</string>
+    <string name="about_auto_update_ready">如愿 %1$s загружен</string>
+    <string name="about_auto_update_confirm_title">Новая версия 如愿 готова</string>
     <string name="about_auto_update_confirm_detail">Установите %1$s сейчас или отключите автообновление и проверяйте обновления в настройках.</string>
     <string name="about_auto_update_now">Обновить сейчас</string>
 </resources>

@@ -16,7 +16,7 @@ import java.security.MessageDigest
 class BridgeReply(val json: String, val close: Boolean = false)
 
 /**
- * 沙箱里 `mika` 命令与 Mika 之间的协议:一行一个 JSON 请求 `{"token","method","params"}`,一行一个 JSON 回复。
+ * 沙箱里 `mika` 命令与如愿之间的协议:一行一个 JSON 请求 `{"token","method","params"}`,一行一个 JSON 回复。
  * 手机方法只转给当前任务的动作入口;命令进程不能直接接触虚拟屏。
  */
 object BridgeProtocol {
@@ -43,7 +43,7 @@ object BridgeProtocol {
 
     /**
      * [progress] 返回 false 表示这次被限流丢掉了;[share] 收到沙箱路径与可选的保存名,失败抛 [SandboxError];
-     * [info] 给出 Mika 版本、是否联网等。令牌不对、请求不是 JSON 对象或太大:回一个错误并断开。
+     * [info] 给出如愿版本、是否联网等。令牌不对、请求不是 JSON 对象或太大:回一个错误并断开。
      */
     suspend fun handle(
         line: String, token: String,
@@ -51,7 +51,7 @@ object BridgeProtocol {
         share: suspend (String, String?) -> String,
         info: () -> JsonObject,
         phone: (suspend (String, JsonObject) -> JsonObject)? = null,
-        /** 意外的失败交给 Mika 自己记日志;回给沙箱的只有错误码。 */
+        /** 意外的失败交给如愿自己记日志;回给沙箱的只有错误码。 */
         onError: (Throwable) -> Unit = {},
     ): BridgeReply {
         if (line.toByteArray(Charsets.UTF_8).size > MAX_REQUEST) return error("too_large", close = true)

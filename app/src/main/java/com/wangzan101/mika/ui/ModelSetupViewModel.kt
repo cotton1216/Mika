@@ -39,8 +39,10 @@ import com.wangzan101.mika.core.oauth.AccountSignInException
 import com.wangzan101.mika.core.oauth.AccountSignInFailure
 import com.wangzan101.mika.core.oauth.DeviceChallenge
 import com.wangzan101.mika.core.oauth.OpenRouterAuth
+import com.wangzan101.mika.core.oauth.RuyiAuth
 import com.wangzan101.mika.core.oauth.XaiAuth
 import com.wangzan101.mika.core.oauth.signInWithOpenRouter
+import com.wangzan101.mika.core.oauth.signInWithRuyi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -71,7 +73,7 @@ data class ChatGptAccount(val email: String, val signedIn: Boolean)
  * ChatGPT 的登录另有一套(见 [ModelSetupViewModel.signInWithChatGpt]),界面上和它们并排。
  */
 enum class AccountProvider(val target: SignInTarget) {
-    Xai(SignInTarget.Xai), OpenRouter(SignInTarget.OpenRouter);
+    Xai(SignInTarget.Xai), OpenRouter(SignInTarget.OpenRouter), Ruyi(SignInTarget.Ruyi);
 
     companion object {
         fun of(target: SignInTarget): AccountProvider? = entries.firstOrNull { it.target == target }
@@ -95,7 +97,7 @@ data class AccountSignInUi(
 )
 
 /**
- * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到 Mika、本机回调收到后浏览器里显示的网页。
+ * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到如愿、本机回调收到后浏览器里显示的网页。
  * 界面给出(要 Context);测试里不给,就不能登录。
  */
 interface SignInBrowser {
@@ -211,7 +213,9 @@ data class ModelSetupUi(
     val xaiAccount: SubscriptionAccount? = null,
     /** 用 OpenRouter 账号授权连上的那一家;没有时为 null。 */
     val openRouterAccount: SubscriptionAccount? = null,
-    /** xAI、OpenRouter 的登录进度。 */
+    /** 用如意账号授权连上的那一家;没有时为 null。 */
+    val ruyiAccount: SubscriptionAccount? = null,
+    /** xAI、OpenRouter、如意的登录进度。 */
     val accountSignIn: AccountSignInUi = AccountSignInUi(),
     /** 刚用账号登录成功的服务商 id:界面打开它的详情页(看账号和模型、设主模型),打开后清掉。 */
     val signedInProvider: String? = null,
@@ -395,6 +399,7 @@ class ModelSetupViewModel(
                 store.accountSession(p.id).let { SubscriptionAccount(it?.label.orEmpty(), it?.signedIn == true) }
             },
             openRouterAccount = store.openRouterAccount()?.let { p -> SubscriptionAccount("", store.hasKey(p.id)) },
+            ruyiAccount = store.ruyiAccount()?.let { p -> SubscriptionAccount("", store.hasKey(p.id)) },
             speech = speech?.choice?.value ?: SpeechChoice.Auto,
             systemSpeech = systemSpeech(),
         )
@@ -735,9 +740,9 @@ class ModelSetupViewModel(
     // ---------- 用 ChatGPT 登录 ----------
 
     /**
-     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到 Mika。
+     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到如愿。
      * 还没有主模型时选它的一个模型为主模型。第一次注册成功后说明一次在用套餐额度。失败说原因(并记下给诊断信息)。
-     * 跑在 [signIns] 里:用户在浏览器里登录时 Mika 在后台,不能跟着界面走。
+     * 跑在 [signIns] 里:用户在浏览器里登录时如愿在后台,不能跟着界面走。
      */
     fun signInWithChatGpt() {
         val browser = browser ?: return
@@ -793,7 +798,7 @@ class ModelSetupViewModel(
      * 用账号登录 xAI 或 OpenRouter:xAI 在浏览器里打开核对过的验证页、界面留下短码,等用户确认;
      * OpenRouter 打开授权页,同意后回到本机回调、换到一把属于用户的 Key。
      * 成功后列出模型、存下这一家,还没有主模型时选一个,再打开它的详情页([ModelSetupUi.signedInProvider])。
-     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时 Mika 在后台。
+     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时如愿在后台。
      */
     fun signInWithAccount(provider: AccountProvider) {
         val browser = browser ?: return
@@ -809,6 +814,7 @@ class ModelSetupViewModel(
                     val (p, listed) = when (provider) {
                         AccountProvider.Xai -> connectXai(browser)
                         AccountProvider.OpenRouter -> connectOpenRouter(browser)
+                        AccountProvider.Ruyi -> connectRuyi(browser)
                     }
                     if (store.roles.value.main == null) {
                         val options = ModelOptions.ofProvider(p, store.list())
@@ -849,6 +855,17 @@ class ModelSetupViewModel(
         return store.connectOpenRouter(key, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty()) to listed
     }
 
+    /** 如意授权换 Key,列出模型,按如意预设存下(或更新)那一家。回调走 mika:// scheme,由 MainActivity 交给 [RuyiSignIn]。 */
+    private suspend fun connectRuyi(browser: SignInBrowser): Pair<Provider, ModelListResult> {
+        val key = signInWithRuyi(
+            store.ruyiAuth, browser::open,
+            awaitCode = { attempt, timeoutMs -> RuyiSignIn.awaitCode(attempt.state, timeoutMs) },
+        )
+        val existing = store.ruyiAccount()
+        val listed = store.listModels(ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, key.value)
+        return store.connectRuyi(key.value, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty()) to listed
+    }
+
     /** 把短码留在界面上。打开浏览器由登录流程自己做,这里不再开一次。 */
     private fun publishDevice(c: DeviceChallenge) {
         val openUrl = c.verificationUriComplete ?: c.verificationUri
@@ -872,7 +889,11 @@ class ModelSetupViewModel(
         scope.launch {
             withContext(io) {
                 val p = store.provider(providerId) ?: return@withContext
-                if (p.kind == ProviderConfig.Kind.Xai) store.signOutAccount(providerId) else store.signOutOpenRouter(providerId)
+                when {
+                    p.kind == ProviderConfig.Kind.Xai -> store.signOutAccount(providerId)
+                    p.signIn == ProviderStore.RUYI_SIGN_IN -> store.signOutRuyi(providerId)
+                    else -> store.signOutOpenRouter(providerId)
+                }
             }
             _state.update { snapshot(it.copy(listing = it.listing - providerId)) }
         }

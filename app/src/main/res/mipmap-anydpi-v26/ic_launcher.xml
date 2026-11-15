@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 如意 AI 品牌图标：与桌面版客户端的标志一致（绿色屋顶 + 蓝色几何 W），
+     底色用近白渐变，前景是透明画布上的标志；monochrome 供 Android 13+ 主题图标自动着色。
+     前景尺寸约定：自适应图标只显示画布中间 72/108，所以标志按「可见区」的 75% 绘制才算
+     与桌面图标同比例（来源：如意AI.app/Contents/Resources/icon.icns 的 1024 图，
+     标志包围盒占卡片 0.75）。改比例时别再按整张画布算，否则桌面上会顶满、绿屋顶被裁。 -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@android:color/black" />
-    <foreground android:drawable="@drawable/mika_launcher_art" />
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
 </adaptive-icon>

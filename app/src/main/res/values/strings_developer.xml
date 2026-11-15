@@ -16,13 +16,15 @@
     <string name="dev_parallel_sub">Tasks from different chats each get a virtual screen and run together</string>
     <string name="dev_compaction">Structured summaries for long tasks</string>
     <string name="dev_compaction_sub">When many steps need compressing, notes goal, facts, progress and next step</string>
-    <string name="dev_group">How Mika works</string>
+    <string name="dev_group">How 如愿 works</string>
     <string name="dev_autonomy">Autonomous mode</string>
-    <string name="dev_autonomy_sub">When on, Mika doesn’t ask even before paying and just finishes; when off, it asks only before paying</string>
-    <string name="dev_note">These switches affect how and how fast Mika works. Usually leave them at the defaults.</string>
+    <string name="dev_autonomy_sub">When on, 如愿 doesn’t ask even before paying and just finishes; when off, it asks only before paying</string>
+    <string name="dev_note">These switches affect how and how fast 如愿 works. Usually leave them at the defaults.</string>
     <string name="dev_grounding">Vision grounding verified</string>
-    <string name="dev_grounding_sub">Turn on once vision model %1$s has been tested to locate things accurately; when off, the positions it marks need other evidence before Mika taps them.</string>
+    <string name="dev_grounding_sub">Turn on once vision model %1$s has been tested to locate things accurately; when off, the positions it marks need other evidence before 如愿 taps them.</string>
     <string name="dev_speed">Speed</string>
     <string name="dev_experiments">Experiments</string>
     <string name="dev_run_log">Run records</string>
+    <string name="dev_screen_tables">Compact new screen elements</string>
+    <string name="dev_screen_tables_sub">Send repeated fields as table columns the first time a screen is read. Element refs and the full tree are kept.</string>
 </resources>

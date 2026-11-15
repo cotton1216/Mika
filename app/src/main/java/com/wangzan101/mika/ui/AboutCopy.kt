@@ -6,7 +6,7 @@ import com.wangzan101.mika.about.CheckStatus
 import com.wangzan101.mika.about.MikaLinks
 import com.wangzan101.mika.about.UpdateState
 
-/** 关于页的文字,以及「检查更新」一行、设置首页「关于 Mika」一行、侧栏入口上的提示怎么显示。 */
+/** 关于页的文字,以及「检查更新」一行、设置首页「关于如愿」一行、侧栏入口上的提示怎么显示。 */
 object AboutCopy {
     val TITLE: String get() = tr(R.string.settings_about)
     val TAGLINE: String get() = tr(R.string.about_tagline)
@@ -29,6 +29,18 @@ object AboutCopy {
     val FEEDBACK_SHEET_SUB: String get() = tr(R.string.about_feedback_sheet_sub)
     val FEEDBACK_GITHUB: String get() = tr(R.string.about_feedback_github)
     val FEEDBACK_GITHUB_SUB: String get() = tr(R.string.about_feedback_github_sub)
+
+    val GROUP: String get() = tr(R.string.about_group)
+    val GROUP_SUB: String get() = tr(R.string.about_group_sub)
+    val GROUP_SHEET_TITLE: String get() = tr(R.string.about_group_sheet_title)
+    val GROUP_SHEET_SUB: String get() = tr(R.string.about_group_sheet_sub)
+    val GROUP_HINT: String get() = tr(R.string.about_group_hint)
+    val SAVE_QR: String get() = tr(R.string.about_save_qr)
+    val QR_SAVED: String get() = tr(R.string.about_qr_saved)
+    val QR_SAVE_FAILED: String get() = tr(R.string.about_qr_save_failed)
+
+    val FOLLOW: String get() = tr(R.string.about_follow)
+    val FOLLOW_SUB: String get() = tr(R.string.about_follow_sub, MikaLinks.X_HANDLE)
 
     val DIAGNOSTICS: String get() = tr(R.string.diagnostics_copy)
     val DIAGNOSTICS_SUB: String get() = tr(R.string.diagnostics_copy_sub)
@@ -75,11 +87,11 @@ object AboutCopy {
         else -> CheckValue(null)
     }
 
-    /** 设置首页「关于 Mika」一行右边:有新版写「x 可更新」带红点,不然写当前版本号。 */
+    /** 设置首页「关于如愿」一行右边:有新版写「x 可更新」带红点,不然写当前版本号。 */
     fun settingsValue(updateVersion: String?, versionName: String): CheckValue =
         if (updateVersion != null) CheckValue(available(updateVersion), dot = true, highlight = true)
         else CheckValue(versionName.takeIf { it.isNotEmpty() })
 
-    /** 侧栏「关于 Mika」上的红点。 */
+    /** 侧栏「关于如愿」上的红点。 */
     fun drawerDot(s: UpdateState): Boolean = s.hasUpdate
 }

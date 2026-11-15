@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">你好,我是 Mika</string>
+    <string name="welcome_title">你好,我是如愿</string>
     <string name="welcome_lead">你手机上的私人助理。\n说要做什么,我在后台替你办完。</string>
     <string name="welcome_note">开始前需要配一个模型、打开手机操作,约 3 分钟</string>
     <string name="welcome_start">开始设置</string>
@@ -16,7 +16,7 @@
     <string name="hide">隐藏</string>
     <string name="show">显示</string>
     <string name="model_setup_title">配置模型</string>
-    <string name="model_setup_lead">Mika 用你自己的模型服务来思考。先连一家服务商，再给每件事选模型。</string>
+    <string name="model_setup_lead">如愿用你自己的模型服务来思考。先连一家服务商，再给每件事选模型。</string>
     <string name="model_setup_onboarding_note">只有主模型必须选，另外两个可以以后再说。</string>
     <string name="model_kind">接口</string>
     <string name="model_base_url">接口地址</string>
@@ -40,7 +40,7 @@
     <string name="model_url_unencrypted">这个地址不加密，API Key 和对话内容可能被同一网络里的人看到。</string>
     <string name="model_probe_failed">试着让 %1$s 调用一个工具没成功：%2$s</string>
     <string name="model_probe_timeout">试着让 %1$s 调用一个工具，%2$d 秒没有回应</string>
-    <string name="model_probe_no_tools">%1$s 没有调用工具，Mika 干活需要会调用工具的模型。服务商已保存，但没有拿这个模型当主模型。</string>
+    <string name="model_probe_no_tools">%1$s 没有调用工具，如愿干活需要会调用工具的模型。服务商已保存，但没有拿这个模型当主模型。</string>
     <string name="model_self_hosted_note">127.0.0.1 是这台手机自己。服务跑在电脑上时，把它换成电脑的局域网地址，并让服务接受局域网的连接（不只本机）。</string>
     <string name="preset_custom">自定义</string>
     <string name="model_manual_name">模型名</string>
@@ -51,7 +51,7 @@
     <string name="model_manual_note">填了模型名，「测试并保存」就只用它试调用：这家不提供模型列表、列表里没有它、列模型出错都不影响，试调用通了才保存。</string>
     <string name="model_save_untested">不测试，直接保存</string>
     <string name="model_save_untested_title">不测试就保存？</string>
-    <string name="model_save_untested_body">Mika 会按你填的地址和 Key 存下这家服务商，不列模型、也不试调用。Mika 干活需要会调用工具的模型，没测过的这一家可能连不通，也可能不会调用工具。存下之后可以在服务商页「重新测试」。</string>
+    <string name="model_save_untested_body">如愿会按你填的地址和 Key 存下这家服务商，不列模型、也不试调用。如愿干活需要会调用工具的模型，没测过的这一家可能连不通，也可能不会调用工具。存下之后可以在服务商页「重新测试」。</string>
     <string name="model_save_untested_confirm">仍然保存</string>
     <string name="model_saved_untested">已存下 %1$s，没有测试过。它标着「没测试过」；选一个模型时会先试调用，也可以在服务商页「重新测试」。</string>
     <string name="cap_typed">手填</string>
@@ -62,14 +62,14 @@
     <string name="model_example_grok">例如 grok-4</string>
     <string name="model_probe_not_found">模型「%1$s」不存在。要填服务商文档里完整的模型 ID（%2$s）。</string>
     <string name="model_probe_not_found_no_list">列不出模型，用「%1$s」试调用也说找不到：地址或接口类型可能填错了，也可能没有这个模型（模型名%2$s）。</string>
-    <string name="model_probe_no_tools_pick">%1$s 没有调用工具，Mika 干活需要会调用工具的模型，换一个当主模型。</string>
+    <string name="model_probe_no_tools_pick">%1$s 没有调用工具，如愿干活需要会调用工具的模型，换一个当主模型。</string>
     <string name="model_preset_match">这是「%1$s」的官方地址，用它的预设更省事：地址和接口类型都已填好。</string>
     <string name="model_preset_kind_mismatch">接口类型也对不上：「%1$s」用的是 %2$s 接口，这里选的是 %3$s。</string>
     <string name="model_use_preset">改用「%1$s」预设</string>
     <string name="model_probe_not_available">这个账号没开通「%1$s」或没权限用（服务商说：%2$s）。换一个模型，或到服务商后台开通。</string>
     <string name="model_reason_not_available">这个账号没开通或没权限用这个模型（服务商说：%1$s）</string>
     <string name="model_reason_not_found">服务商那里没有这个模型</string>
-    <string name="model_reason_no_tools">它不会调用工具，Mika 干活需要会调用工具的模型</string>
+    <string name="model_reason_no_tools">它不会调用工具，如愿干活需要会调用工具的模型</string>
     <string name="model_reason_wrong_protocol">它不走你选的接口类型，请求到不了它</string>
     <string name="model_reason_server">服务端出错（%1$s）</string>
     <string name="model_probe_none_usable">服务商已连上，但「%1$s」没测试通过：%2$s。从列表里选一个你开通了的模型。</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="web_logout_partial">일부 로그인 정보가 남아 있을 수 있어요. 모두 지우려면 “모두 로그아웃”을 사용하세요.</string>
     <string name="web_challenged_note">Mika가 최근 이 사이트에서 CAPTCHA나 접근 차단을 만났어요. 계속 그렇다면 이 사이트의 데이터(쿠키와 웹 저장소)를 지우고 다시 로그인하세요.</string>
-    <string name="web_data_note">웹사이트 로그인 정보는 이 휴대전화의 Mika 전용 폴더에만 저장되며 별도 암호화는 하지 않아요. 시스템 브라우저와 같은 수준의 보호예요.</string>
+    <string name="web_data_note">웹사이트 로그인 정보는 이 휴대전화의 如愿 전용 폴더에만 저장되며 별도 암호화는 하지 않아요. 시스템 브라우저와 같은 수준의 보호예요.</string>
     <string name="web_none">방문한 사이트가 없어요</string>
     <string name="web_none_sub">Mika가 작업했거나 여기서 로그인한 사이트가 이곳에 표시돼요</string>
     <string name="web_signed_in_by_you">Mika에서 로그인함</string>
@@ -22,7 +22,7 @@
     <string name="web_logged_out_all">모두 로그아웃하고 웹 데이터를 지웠어요.</string>
     <string name="web_logout_all">모두 로그아웃</string>
     <string name="date_pattern_md_compact">M월 d일</string>
-    <string name="web_takeover_login">Mika 브라우저에서 로그인한 다음 “완료”를 누르세요</string>
+    <string name="web_takeover_login">如愿 브라우저에서 로그인한 다음 “완료”를 누르세요</string>
     <string name="web_takeover_waiting">Mika가 기다리고 있어요: %1$s</string>
     <string name="web_reason_security">보안 확인</string>
     <string name="kept_notif_title">웹페이지가 백그라운드에서 실행 중</string>

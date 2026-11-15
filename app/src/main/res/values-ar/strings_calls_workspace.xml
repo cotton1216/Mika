@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">الجهاز والأذونات</string>
     <string name="calls_edit_rule">تعديل</string>
     <string name="calls_nav_receive">الرد</string>
-    <string name="calls_nav_task">مهمة</string>
+    <string name="calls_nav_task">اتصال</string>
     <string name="calls_pause_enable_first">فعّل الرد التلقائي لتتمكن من إيقافه مؤقتًا.</string>
     <string name="calls_rule_delay_summary">مهلة الرد: %1$d ث</string>
     <string name="calls_rule_pause">إيقاف مؤقت</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">بلا بطاقة SIM مفضلة</string>
     <string name="calls_task_back_to_edit">العودة إلى التحرير</string>
     <string name="calls_task_confirm_dial">تأكيد والاتصال</string>
-    <string name="calls_task_confirm_note">يستخدم Mika هذه المهمة لهذه المكالمة. يتم الاتصال ببطاقة SIM المختارة وقد تُطبق رسوم شركة الاتصالات والصوت الفوري.</string>
+    <string name="calls_task_confirm_note">يستخدم 如愿 هذه المهمة لهذه المكالمة. يتم الاتصال ببطاقة SIM المختارة وقد تُطبق رسوم شركة الاتصالات والصوت الفوري.</string>
     <string name="calls_task_constraints">ما لا يجوز الوعد به</string>
     <string name="calls_task_context">سياق إضافي</string>
     <string name="calls_task_filled">تمت الإضافة</string>

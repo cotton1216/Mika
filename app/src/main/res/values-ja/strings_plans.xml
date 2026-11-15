@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Mika からのリマインダー</string>
+    <string name="trigger_reminder">如愿 からのリマインダー</string>
     <string name="trigger_not_started_body">スケジュールされたタスクを開始できませんでした。「スケジュールされたタスク」のページで確認して、もう一度実行してください。</string>
     <string name="trigger_start_failed">開始に失敗しました</string>
     <string name="trigger_not_started">スケジュールされたタスクが開始されませんでした</string>
-    <string name="trigger_interrupted_body">スケジュールされたタスクが中断され、結果を確認できません。まず実際に何が起きたかを確認してください。Mika が自動でやり直すことはありません。</string>
+    <string name="trigger_interrupted_body">スケジュールされたタスクが中断され、結果を確認できません。まず実際に何が起きたかを確認してください。如愿 が自動でやり直すことはありません。</string>
     <string name="trigger_unconfirmed">スケジュールされたタスクの結果を確認してください</string>
     <string name="trigger_unlock_failed">スケジュールされたタスクでスマートフォンのスリープ解除またはロック解除ができませんでした。次回の実行前に手動でロックを解除するか、「設定 › パソコンと接続」で「リモートでのスリープ解除とロック解除を許可」と保存済みの画面ロックの認証情報を確認してください。</string>
     <string name="trigger_alarm_title">スケジュールされたタスクには「アラームとリマインダー」の権限が必要です</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">この権限がないと、スケジュールされたタスクが遅れたり、実行されなかったりすることがあります。オンにするのは一度だけです。</string>
     <string name="plans_running_n">有効 %1$d</string>
     <string name="plans_stopped_n">オフ %1$d</string>
-    <string name="plans_empty">スケジュールされたタスクはまだありません\n+ をタップして作成するか、チャットで、いつリマインドするか、いつ代わりに何かをするかを Mika に伝えてください。</string>
+    <string name="plans_empty">スケジュールされたタスクはまだありません\n+ をタップして作成するか、チャットで、いつリマインドするか、いつ代わりに何かをするかを 如愿 に伝えてください。</string>
     <string name="plans_none_running">有効なスケジュールされたタスクはありません</string>
     <string name="plans_none_stopped">オフにしたスケジュールされたタスクはありません</string>
     <string name="plans_footer">+ から自分で作成できます。チャットで「毎日 8 時に…」や「値段が下がったら教えて」と話しかけることもできます。結果はそのチャットに戻ります。時間指定の実行は、バッテリーの節約機能の影響を受けることがあります。オフにしたり削除したりすると、今後の実行にだけ影響します。</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">新しいスケジュールされたタスク</string>
     <string name="plans_task_mode">タスクを実行</string>
     <string name="plans_reminder_mode">リマインダーのみ</string>
-    <string name="plans_content_task">Mika に何をしますか？</string>
+    <string name="plans_content_task">如愿 に何をしますか？</string>
     <string name="plans_content_reminder">リマインダーの本文</string>
     <string name="plans_repeat_interval">間隔</string>
     <string name="plans_repeat_weekly">毎週</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">条件が変化した時</string>
     <string name="plans_notify_each">毎回</string>
     <string name="plans_cooldown_minutes">実行間隔の最小分数（任意）</string>
-    <string name="plans_when_idle">Mika がアイドル状態の時だけ実行</string>
+    <string name="plans_when_idle">如愿 がアイドル状態の時だけ実行</string>
     <string name="plans_enabled">有効</string>
     <string name="plans_error_content">タスクまたはリマインダーを入力してください</string>
     <string name="plans_error_content_long">タスクは 4,000 文字、リマインダーは 2,000 文字以内で入力してください</string>
@@ -65,6 +65,9 @@
     <string name="plans_condition">次の場合のみ実行: %1$s · %2$s</string>
     <string name="plans_last">前回 %1$s · %2$s</string>
     <string name="plans_never_run">まだ実行されていません</string>
+    <string name="plans_source_user">手動</string>
+    <string name="plans_source_model">モデル</string>
+    <string name="plans_source_external">スクリプト</string>
     <string name="plans_delivered">通知済み</string>
     <string name="plans_unchanged">条件は変わっていません</string>
     <string name="plans_not_met">条件を満たしていません</string>
@@ -74,4 +77,5 @@
     <string name="plans_running_now">実行中</string>
     <string name="trigger_deleted">スケジュールされたタスクを削除しました</string>
     <string name="trigger_busy">このタスクはまだ実行中です</string>
+    <string name="plans_run_history">実行履歴</string>
 </resources>

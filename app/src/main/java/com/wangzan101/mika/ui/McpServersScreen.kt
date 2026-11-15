@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.activity.compose.BackHandler
 import com.wangzan101.mika.ui.components.MikaDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
@@ -26,6 +27,7 @@ import com.wangzan101.mika.R
 import com.wangzan101.mika.settings.McpImportResult
 import com.wangzan101.mika.settings.McpServerConfig
 import com.wangzan101.mika.settings.McpServerStore
+import com.wangzan101.mika.settings.McpToolInfo
 import com.wangzan101.mika.ui.components.GroupCard
 import com.wangzan101.mika.ui.components.GroupLabel
 import com.wangzan101.mika.ui.components.ListRow
@@ -36,6 +38,8 @@ import com.wangzan101.mika.ui.components.RowChevron
 import com.wangzan101.mika.ui.components.MikaButton
 import com.wangzan101.mika.ui.components.ButtonSize
 import com.wangzan101.mika.ui.theme.MikaIcons
+import com.wangzan101.mika.ui.theme.MikaTheme
+import com.wangzan101.mika.ui.theme.MikaType
 import android.content.Intent
 import android.net.Uri
 import kotlinx.coroutines.launch
@@ -49,7 +53,15 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
     var adding by remember { mutableStateOf(false) }
     var importing by remember { mutableStateOf(false) }
     var refreshing by remember { mutableStateOf(false) }
+    /** 非空时显示这个 server 的工具列表;返回键与左上角都回到服务器列表。 */
+    var viewingTools by remember { mutableStateOf<McpServerConfig?>(null) }
     val scope = rememberCoroutineScope()
+
+    val viewing = viewingTools
+    if (viewing != null) {
+        McpToolsScreen(viewing, health[viewing.id]?.tools.orEmpty()) { viewingTools = null }
+        return
+    }
 
     PageScaffold(stringResource(R.string.mcp_servers_title), onBack) {
         if (servers.isEmpty()) {
@@ -72,6 +84,17 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
                         onClick = { editing = server },
                     ) {
                         MikaSwitch(server.enabled, { on -> store.setEnabled(server.id, on) })
+                    }
+                    // 连上过的 server 才能看工具:未测试时没有数据,不占位置
+                    if (state?.ok == true && state.tools.isNotEmpty()) {
+                        ListRow(
+                            MikaIcons.Code,
+                            stringResource(R.string.mcp_tools_open),
+                            subtitle = state.tools.take(TOOL_PREVIEW).joinToString("、") { it.name } +
+                                if (state.tools.size > TOOL_PREVIEW) "……" else "",
+                            first = false,
+                            onClick = { viewingTools = server },
+                        ) { RowChevron() }
                     }
                 }
             }
@@ -117,6 +140,53 @@ fun McpServersScreen(store: McpServerStore, onBack: () -> Unit) {
     }
 
     if (importing) McpImportDialog(store) { importing = false }
+}
+
+/** 列表行上先露出几个工具名,点开看全部。 */
+private const val TOOL_PREVIEW = 3
+
+/** 说明超过这个字数先折起来,点一下展开全文。 */
+private const val TOOL_DESCRIPTION_CLIP = 140
+
+/** 一个 server 的全部工具:名字加说明,长说明可点开。 */
+@Composable
+private fun McpToolsScreen(server: McpServerConfig, tools: List<McpToolInfo>, onBack: () -> Unit) {
+    BackHandler(onBack = onBack)
+    PageScaffold(server.name, onBack) {
+        if (tools.isEmpty()) {
+            GroupCard { ListRow(MikaIcons.Code, stringResource(R.string.mcp_tools_empty), first = true) }
+            return@PageScaffold
+        }
+        GroupLabel(stringResource(R.string.mcp_tools_count, tools.size))
+        GroupCard {
+            tools.forEachIndexed { i, tool -> McpToolRow(tool, first = i == 0) }
+        }
+        if (tools.any { it.description.length > TOOL_DESCRIPTION_CLIP }) {
+            Text(
+                stringResource(R.string.mcp_tools_expand_hint),
+                Modifier.padding(top = 8.dp, start = 16.dp),
+                style = MikaType.Hint,
+                color = MikaTheme.colors.ink3,
+            )
+        }
+    }
+}
+
+@Composable
+private fun McpToolRow(tool: McpToolInfo, first: Boolean) {
+    val clip = tool.description.length > TOOL_DESCRIPTION_CLIP
+    var expanded by remember(tool.name, tool.description) { mutableStateOf(false) }
+    ListRow(
+        icon = null,
+        title = tool.name,
+        subtitle = when {
+            tool.description.isBlank() -> null
+            clip && !expanded -> tool.description.take(TOOL_DESCRIPTION_CLIP).trimEnd() + "…"
+            else -> tool.description
+        },
+        first = first,
+        onClick = if (clip) ({ expanded = !expanded }) else null,
+    )
 }
 
 /** 粘贴一段 `mcpServers` JSON 导入;有失败的条目时留在弹窗里显示原因。 */

@@ -24,7 +24,7 @@
     <string name="voice_mic_unavailable">Mikrofon tidak tersedia. Mungkin sedang dipakai aplikasi lain</string>
     <string name="voice_hold_to_talk">Tahan untuk bicara</string>
     <string name="voice_mic_blocked_title">Mikrofon masih belum tersedia</string>
-    <string name="voice_mic_blocked_body">Perekaman sudah diizinkan, tetapi Mika tetap tidak bisa merekam. Pastikan sakelar akses mikrofon di Pengaturan Cepat aktif (Android 12 dan lebih baru), dan mikrofon Mika tidak dimatikan di pengelola izin sistem. Aplikasi lain mungkin juga sedang memakai mikrofon.</string>
+    <string name="voice_mic_blocked_body">Perekaman sudah diizinkan, tetapi 如愿 tetap tidak bisa merekam. Pastikan sakelar akses mikrofon di Pengaturan Cepat aktif (Android 12 dan lebih baru), dan mikrofon 如愿 tidak dimatikan di pengelola izin sistem. Aplikasi lain mungkin juga sedang memakai mikrofon.</string>
     <string name="voice_provider_failed">Gagal mengubahnya menjadi teks: %1$s</string>
     <string name="voice_unavailable_title">Input suara belum siap</string>
     <string name="voice_unavailable_no_engine">Ponsel ini tidak punya pengenalan ucapan bawaan, dan belum ada model ucapan ke teks yang dipilih. Pilih model ucapan dari penyedia di Pengaturan › Model › Ucapan ke teks dan fitur ini akan berfungsi.</string>
@@ -33,12 +33,12 @@
     <string name="voice_unavailable_provider_gone">Penyedia model ucapan yang dipilih sudah dihapus. Pilih yang lain di Pengaturan › Model › Ucapan ke teks.</string>
     <string name="voice_unavailable_off">Ucapan ke teks dimatikan. Pilih salah satu di Pengaturan › Model › Ucapan ke teks.</string>
     <string name="voice_go_pick">Pilih</string>
-    <string name="voice_permission_title">Mika memerlukan mikrofon</string>
-    <string name="voice_permission_body">Untuk mendengar Anda saat menahan untuk bicara, Mika perlu merekam audio. Izin ini pernah ditolak, jadi ponsel tidak akan bertanya lagi. Aktifkan mikrofon di halaman izin Mika pada setelan sistem.</string>
+    <string name="voice_permission_title">如愿 memerlukan mikrofon</string>
+    <string name="voice_permission_body">Untuk mendengar Anda saat menahan untuk bicara, 如愿 perlu merekam audio. Izin ini pernah ditolak, jadi ponsel tidak akan bertanya lagi. Aktifkan mikrofon di halaman izin 如愿 pada setelan sistem.</string>
     <string name="voice_permission_open">Buka setelan</string>
     <string name="capsule_voice_talk">Bicara</string>
     <string name="capsule_voice_send">Kirim</string>
-    <string name="capsule_voice_answer_title">Menjawab Mika</string>
+    <string name="capsule_voice_answer_title">Menjawab 如愿</string>
     <string name="capsule_voice_continue_title">Melanjutkan “%1$s”</string>
     <string name="capsule_voice_cancel">Batal</string>
     <string name="capsule_voice_edit">Ubah</string>
@@ -52,7 +52,7 @@
     <string name="capsule_voice_steered">Memberi tahu tugas: %1$s</string>
     <string name="capsule_voice_answered">Dijawab: %1$s</string>
     <string name="capsule_voice_sent">Terkirim: %1$s</string>
-    <string name="capsule_voice_need_mic">Ketuk untuk mengizinkan mikrofon di Mika</string>
+    <string name="capsule_voice_need_mic">Ketuk untuk mengizinkan mikrofon di 如愿</string>
     <string name="capsule_voice_not_ready">Input suara belum siap · ketuk</string>
-    <string name="capsule_voice_open">Buka Mika</string>
+    <string name="capsule_voice_open">Buka 如愿</string>
 </resources>

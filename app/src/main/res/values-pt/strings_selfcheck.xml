@@ -44,17 +44,17 @@
     <string name="selfcheck_advice_too_old">Este sistema é anterior ao Android 12, então o controle do celular não está disponível. Conversa, web e sandbox continuam funcionando.</string>
     <string name="selfcheck_advice_no_wireless">Este sistema não tem Depuração wireless. Você pode iniciar o controle do celular por um computador via USB.</string>
     <string name="selfcheck_advice_phone_unavailable">Este ambiente não consegue usar os apps do seu celular (sem Opções do desenvolvedor nem Depuração wireless); conversa, web, arquivos e cálculos funcionam normalmente.</string>
-    <string name="selfcheck_advice_a11y_off">A acessibilidade está desativada. Ative a acessibilidade do Mika em Configurações › Controle do celular.</string>
-    <string name="selfcheck_advice_a11y_restart">A acessibilidade está ativada, mas não está em execução. Desative e ative de novo a acessibilidade do Mika nas configurações do sistema.</string>
+    <string name="selfcheck_advice_a11y_off">A acessibilidade está desativada. Ative a acessibilidade do 如愿 em Configurações › Controle do celular.</string>
+    <string name="selfcheck_advice_a11y_restart">A acessibilidade está ativada, mas não está em execução. Desative e ative de novo a acessibilidade do 如愿 nas configurações do sistema.</string>
     <string name="selfcheck_advice_notifications">As notificações estão bloqueadas, então você não verá o andamento das tarefas nem os alertas de “precisa de você”.</string>
-    <string name="selfcheck_advice_battery">O uso da bateria está restrito, então o Mika pode ser interrompido em segundo plano. Você pode remover essa restrição em Recuperação e reparo.</string>
+    <string name="selfcheck_advice_battery">O uso da bateria está restrito, então o 如愿 pode ser interrompido em segundo plano. Você pode remover essa restrição em Recuperação e reparo.</string>
     <string name="selfcheck_advice_setup">O assistente integrado não está em execução. Conclua a configuração em Configurações › Controle do celular e execute isto de novo.</string>
-    <string name="selfcheck_advice_display">Não foi possível criar a tela virtual do Mika. Reconecte o assistente e tente de novo; se ainda falhar, relate o problema.</string>
-    <string name="selfcheck_advice_focus">A tela virtual do Mika não tem foco próprio, então a sua tela pode perder o foco de entrada por instantes enquanto o Mika trabalha. Tudo continua funcionando.</string>
-    <string name="selfcheck_advice_launch">Uma página não abriu na tela virtual do Mika. Relate este problema.</string>
-    <string name="selfcheck_advice_on_main">As Configurações do sistema abriram na sua tela em vez de na tela virtual do Mika. Relate este problema.</string>
+    <string name="selfcheck_advice_display">Não foi possível criar a tela virtual do 如愿. Reconecte o assistente e tente de novo; se ainda falhar, relate o problema.</string>
+    <string name="selfcheck_advice_focus">A tela virtual do 如愿 não tem foco próprio, então a sua tela pode perder o foco de entrada por instantes enquanto o 如愿 trabalha. Tudo continua funcionando.</string>
+    <string name="selfcheck_advice_launch">Uma página não abriu na tela virtual do 如愿. Relate este problema.</string>
+    <string name="selfcheck_advice_on_main">As Configurações do sistema abriram na sua tela em vez de na tela virtual do 如愿. Relate este problema.</string>
     <string name="selfcheck_advice_settings_in_use">As Configurações do sistema estão abertas na sua tela, então este passo não as abriu. Feche-as e execute isto de novo.</string>
-    <string name="selfcheck_advice_read">Não foi possível ler os controles da página. Desative e ative de novo a acessibilidade do Mika e execute isto outra vez.</string>
+    <string name="selfcheck_advice_read">Não foi possível ler os controles da página. Desative e ative de novo a acessibilidade do 如愿 e execute isto outra vez.</string>
     <string name="selfcheck_advice_blank">A imagem da tela virtual está toda preta ou vazia. Relate este problema.</string>
     <string name="selfcheck_advice_action">Algumas ações não tiveram efeito (veja o relatório). Relate este problema.</string>
     <string name="selfcheck_advice_frames">A tela virtual para de atualizar depois de um tempo, então as tarefas podem travar. Relate este problema.</string>
@@ -69,8 +69,8 @@
     <string name="selfcheck_advice_out_of_time">A autoverificação ficou sem tempo antes desta verificação.</string>
     <string name="selfcheck_advice_cancelled">Cancelada.</string>
 
-    <string name="selfcheck_target_title">Página de autoverificação do Mika</string>
-    <string name="selfcheck_target_note">Esta é a página de teste do próprio Mika. A autoverificação de compatibilidade toca e digita aqui; ela não mexe nos seus outros apps.</string>
+    <string name="selfcheck_target_title">Página de autoverificação do 如愿</string>
+    <string name="selfcheck_target_note">Esta é a página de teste do próprio 如愿. A autoverificação de compatibilidade toca e digita aqui; ela não mexe nos seus outros apps.</string>
     <string name="selfcheck_target_taps">Toques: %1$d</string>
     <string name="selfcheck_target_button">Toque em mim</string>
     <string name="selfcheck_target_input">Digite aqui</string>

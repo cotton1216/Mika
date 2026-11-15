@@ -5,7 +5,7 @@ import com.wangzan101.mika.chat.PageOrigin
 import com.wangzan101.mika.core.cap.web.WebUrlPolicy
 
 /**
- * 在浏览器页上对着一页问 Mika 时,接着哪个对话(纯逻辑)。规则:
+ * 在浏览器页上对着一页问如愿时,接着哪个对话(纯逻辑)。规则:
  * 1. 同一页(网址相同,不计 `#` 后面)上问过的,接着最近那个对话,不论隔了多久;
  * 2. 否则同一个网站(主机名相同)上 [SAME_SITE_MS] 内问过的,接着最近那个——在一个网站里一路点下去(搜索结果 → 商品页 → 购物车)
  *    还是同一件事;

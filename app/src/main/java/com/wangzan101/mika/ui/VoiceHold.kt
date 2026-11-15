@@ -694,7 +694,7 @@ internal fun Modifier.voiceDim(on: Boolean, reduceMotion: Boolean): Modifier {
     }
 }
 
-/** 「还不能语音输入」(「去选」到设置里选转文字)和录音权限的说明(「去设置」到系统里 Mika 的权限页)。 */
+/** 「还不能语音输入」(「去选」到设置里选转文字)和录音权限的说明(「去设置」到系统里如愿的权限页)。 */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun VoiceSheetHost(vh: VoiceHold, onPickSpeech: () -> Unit) {

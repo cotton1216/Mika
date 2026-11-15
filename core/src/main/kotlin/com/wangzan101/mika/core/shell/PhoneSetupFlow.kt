@@ -23,7 +23,7 @@ enum class PairingChannelHealth { Ready, Lowered, Off }
 
 /** 配对码要填在通知里,通知这边没准备好的地方。 */
 enum class PairingNotifyIssue {
-    /** 没允许 Mika 发通知(权限或整个 App 的通知开关)。 */
+    /** 没允许如愿发通知(权限或整个 App 的通知开关)。 */
     NotificationsOff,
     /** 「配对」这一类通知被关掉了。 */
     ChannelOff,
@@ -38,7 +38,7 @@ enum class PairingNotifyIssue {
  * [confirmed] 是用户说已经做好的几步;[revisit] 是用户在清单里点了前面的某一步,要回去重做。
  * [repair] 是用户在设置页点了「重新配对」:即便已在运行,也回到配对那一步,直到新的配对开始。
  * [usbDebugging] 开着时,Wi-Fi 断开、无线调试被系统关掉后助手也不会停。
- * [accessibility] 是 Mika 的无障碍服务在运行:配对时由它读出配对码;用户可以跳过([accessibilitySkipped]),退回在通知里填。
+ * [accessibility] 是如愿的无障碍服务在运行:配对时由它读出配对码;用户可以跳过([accessibilitySkipped]),退回在通知里填。
  * [restrictedSettings] 是系统可能拦着不让打开无障碍(没从应用商店装的 App 要先在应用信息里允许受限制的设置)。
  * [notificationsAllowed]、[pairingChannel] 决定配对码能不能填在通知里。
  * 下面三项决定要不要给「改用电脑启动」(见 [SetupView.usbFallback]):
@@ -84,7 +84,7 @@ data class SetupView(
     val portFound: Boolean = false,
     /** 停在配对一步时通知这边的问题;[needsNotifications] 为真时要先修好才能在通知里填码。 */
     val notifyIssue: PairingNotifyIssue? = null,
-    /** 配对一步时无障碍开着:Mika 自己读配对码,不用去通知里填。 */
+    /** 配对一步时无障碍开着:如愿自己读配对码,不用去通知里填。 */
     val autoRead: Boolean = false,
     /** 无障碍一步时给出「去应用信息允许受限制的设置」的入口。 */
     val showAppInfo: Boolean = false,

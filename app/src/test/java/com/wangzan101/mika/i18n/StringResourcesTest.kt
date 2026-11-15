@@ -93,13 +93,13 @@ class StringResourcesTest {
         }
     }
 
-    /** 不用汉字的语言里不该留着没翻的中文;日语本来就用汉字,不查。 */
+    /** 不用汉字的语言里不该留着没翻的中文;日语本来就用汉字,不查。品牌名「如愿」不算没翻的中文。 */
     @Test
     fun otherLanguagesHaveNoChineseLeftOver() {
         val cjk = Regex("[\\u4e00-\\u9fff]")
         for (o in others.filter { it.folder != "values-ja" }) {
-            val left = o.texts.strings.filter { (_, v) -> cjk.containsMatchIn(v) }.keys +
-                o.texts.plurals.filter { (_, forms) -> forms.values.any(cjk::containsMatchIn) }.keys
+            val left = o.texts.strings.filter { (_, v) -> cjk.containsMatchIn(v.replace(BRAND, "")) }.keys +
+                o.texts.plurals.filter { (_, forms) -> forms.values.any { cjk.containsMatchIn(it.replace(BRAND, "")) } }.keys
             assertEquals(o.folder, emptySet<String>(), left)
         }
     }
@@ -120,9 +120,14 @@ class StringResourcesTest {
     @Test
     fun englishHasNoChineseLeftOver() {
         val cjk = Regex("[\\u4e00-\\u9fff]")
-        val left = en.strings.filter { (k, v) -> k !in fixed && cjk.containsMatchIn(v) }.keys +
-            en.plurals.filter { (_, forms) -> forms.values.any(cjk::containsMatchIn) }.keys
+        val left = en.strings.filter { (k, v) -> k !in fixed && cjk.containsMatchIn(v.replace(BRAND, "")) }.keys +
+            en.plurals.filter { (_, forms) -> forms.values.any { cjk.containsMatchIn(it.replace(BRAND, "")) } }.keys
         assertEquals(emptySet<String>(), left)
+    }
+
+    private companion object {
+        /** 品牌名:改成中文品牌后,它算正常文案,不算没翻的中文。 */
+        const val BRAND = "如愿"
     }
 
     @Test

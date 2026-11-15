@@ -46,6 +46,9 @@
     <string name="tool_list_settings">Ler configurações</string>
     <string name="tool_set_setting">Alterar uma configuração</string>
     <string name="tool_save_skill">Salvar habilidade</string>
+    <string name="tool_memory_search">Pesquisar na memória</string>
+    <string name="tool_memory_save">Gravar na memória</string>
+    <string name="tool_memory_edit">Editar a memória</string>
     <string name="tool_explain_failure">Explicar por que não deu certo</string>
     <string name="tool_ask_user">Fazer uma pergunta a você</string>
     <string name="tool_takeover">Pedir para você assumir</string>
@@ -62,4 +65,16 @@
     <string name="tool_tap">Tocar</string>
     <string name="tool_type">Digitar texto</string>
     <string name="tool_clear">Limpar campo</string>
+    <string name="tool_mika_status">Ver o estado do Mika</string>
+    <string name="tool_mika_open_screen">Abrir uma página do Mika</string>
+    <string name="tool_mika_open_file">Abrir um arquivo</string>
+    <string name="tool_mika_notify">Enviar uma notificação</string>
+    <string name="tool_mika_copy">Copiar texto</string>
+    <string name="tool_mika_open_in_browser">Abrir no seu navegador</string>
+    <string name="tool_mika_search_in_browser">Pesquisar no seu navegador</string>
+    <string name="tool_mika_sites">Ver logins de sites</string>
+    <string name="tool_mika_user_page">Ver a página que você está vendo</string>
+    <string name="tool_mika_login_site">Entrar em um site</string>
+    <string name="tool_mika_confirm_login">Confirmar login</string>
+    <string name="tool_mika_favorites">Sites frequentes</string>
 </resources>

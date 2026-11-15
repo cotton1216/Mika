@@ -231,7 +231,7 @@ class ToolDispatcherTest {
     }
 
     @Test fun launchAppForwardsPortHint() = runTest {
-        val s = FakeScreen().apply { result = ActionResult.Ok(hint = "coldIgnored: app has a task outside Mika's screen") }
+        val s = FakeScreen().apply { result = ActionResult.Ok(hint = "coldIgnored: app has a task outside 如愿's screen") }
         val r = toolDispatcher(s).execute(call("phone_launch_app", """{"package":"com.x","cold":true}"""))
         assertTrue(r.content.s("hint"), "coldIgnored" in r.content.s("hint"))
     }

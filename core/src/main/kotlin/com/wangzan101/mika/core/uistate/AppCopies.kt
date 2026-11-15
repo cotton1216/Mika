@@ -10,7 +10,7 @@ data class AppCopy(val packageName: String, val userId: Int, val userName: Strin
 }
 
 /**
- * 哪几份别的用户里的 App 能给 Mika 打开,以及列出来的那几项。纯逻辑,内置助手(判哪几份用户可用)和 Mika(列出、核对)共用。
+ * 哪几份别的用户里的 App 能给如愿打开,以及列出来的那几项。纯逻辑,内置助手(判哪几份用户可用)和如愿(列出、核对)共用。
  *
  * 判一份用户能不能用(按安卓的多用户概念,读 UserManager 给的 UserInfo、UserProperties 和系统自己给标记起的名字,不看用户名字):
  * 1. 先排除,不管别的怎样:用户类型带 private;系统的标记名里带 HIDDEN 或 PRIVATE;系统标明对别的 App 隐藏

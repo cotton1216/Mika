@@ -4,7 +4,7 @@
     <string name="calls_device_and_permissions">Устройство и разрешения</string>
     <string name="calls_edit_rule">Изменить</string>
     <string name="calls_nav_receive">Приём</string>
-    <string name="calls_nav_task">Задача</string>
+    <string name="calls_nav_task">Вызов</string>
     <string name="calls_pause_enable_first">Включите автоответ, чтобы временно его приостанавливать.</string>
     <string name="calls_rule_delay_summary">Задержка ответа: %1$d с</string>
     <string name="calls_rule_pause">Временная пауза</string>
@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Без предпочитаемой SIM</string>
     <string name="calls_task_back_to_edit">Вернуться к редактированию</string>
     <string name="calls_task_confirm_dial">Подтвердить и позвонить</string>
-    <string name="calls_task_confirm_note">Mika использует задание только для этого звонка. Вызов с выбранной SIM может повлечь плату оператора и голосового сервиса.</string>
+    <string name="calls_task_confirm_note">如愿 использует задание только для этого звонка. Вызов с выбранной SIM может повлечь плату оператора и голосового сервиса.</string>
     <string name="calls_task_constraints">Чего нельзя обещать</string>
     <string name="calls_task_context">Дополнительные сведения</string>
     <string name="calls_task_filled">Заполнено</string>

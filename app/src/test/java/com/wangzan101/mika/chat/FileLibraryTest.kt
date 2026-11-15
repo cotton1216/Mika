@@ -18,7 +18,7 @@ class FileLibraryTest {
         val store = ConversationStore(tmp.newFolder())
         val path = "/workspace/inbox/report.pdf"
         val message = AttachmentLines.compose("看一下", listOf(path to "2 KB", path to "2 KB"))
-        val output = SharedFile("report.pdf", 12, "Download/Mika/report.pdf", "content://files/1", "hash")
+        val output = SharedFile("report.pdf", 12, "Download/如愿/report.pdf", "content://files/1", "hash")
         store.append("a", Turn(message, "完成", "succeeded", runId = "run", atMs = 12,
             steers = listOf(AttachmentLines.compose("还有", listOf(path to "2 KB")))), listOf(output))
         store.append("a", Turn(AttachmentLines.compose("再看", listOf(path to "3 KB")), "完成", "succeeded", atMs = 30))
@@ -45,7 +45,7 @@ class FileLibraryTest {
 
     @Test fun readsLegacyRecordsAndSkipsUnreadableConversations() {
         val dir = tmp.newFolder()
-        File(dir, "old.json").writeText("""[{"userText":"附件:/workspace/inbox/a.txt(512 B)","status":"succeeded","files":[{"name":"a.txt","savedAs":"Download/Mika/a.txt","uri":""},{"name":"a.txt"}]}]""")
+        File(dir, "old.json").writeText("""[{"userText":"附件:/workspace/inbox/a.txt(512 B)","status":"succeeded","files":[{"name":"a.txt","savedAs":"Download/如愿/a.txt","uri":""},{"name":"a.txt"}]}]""")
         File(dir, "broken.json").writeText("{")
         File(dir, "unreadable.json").writeText("[]")
         val store = ConversationStore(dir, readConversation = { if (it.name == "unreadable.json") throw java.io.IOException() else it.readText() })

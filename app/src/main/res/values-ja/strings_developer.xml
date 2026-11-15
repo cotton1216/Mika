@@ -16,13 +16,15 @@
     <string name="dev_parallel_sub">別々のチャットのタスクに、それぞれ仮想画面を割り当てて同時に実行します</string>
     <string name="dev_compaction">長いタスクを構造化して要約</string>
     <string name="dev_compaction_sub">多くのステップを圧縮するとき、目標、事実、進捗、次のステップをメモします</string>
-    <string name="dev_group">Mika の動き方</string>
+    <string name="dev_group">如愿 の動き方</string>
     <string name="dev_autonomy">自律モード</string>
     <string name="dev_autonomy_sub">オンにすると、支払い前でも確認せずに最後までやり遂げます。オフのときは、支払い前だけ確認します</string>
-    <string name="dev_note">これらのスイッチは、Mika の動き方と速さに影響します。通常はデフォルトのままにしてください。</string>
+    <string name="dev_note">これらのスイッチは、如愿 の動き方と速さに影響します。通常はデフォルトのままにしてください。</string>
     <string name="dev_grounding">ビジョンの位置特定を検証済み</string>
-    <string name="dev_grounding_sub">ビジョンモデル %1$s で位置を正確に特定できると確認できたらオンにしてください。オフの間は、モデルが示した位置を Mika がタップする前に、別の根拠が必要です。</string>
+    <string name="dev_grounding_sub">ビジョンモデル %1$s で位置を正確に特定できると確認できたらオンにしてください。オフの間は、モデルが示した位置を 如愿 がタップする前に、別の根拠が必要です。</string>
     <string name="dev_speed">速度</string>
     <string name="dev_experiments">実験的機能</string>
     <string name="dev_run_log">実行ログ</string>
+    <string name="dev_screen_tables">新しい画面の要素を表にする</string>
+    <string name="dev_screen_tables_sub">画面の初回読み取りで重複する項目を表にします。要素の参照と画面ツリーは保持します。</string>
 </resources>

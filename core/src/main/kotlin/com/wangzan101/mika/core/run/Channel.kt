@@ -19,7 +19,7 @@ sealed interface Delivery {
 
     data class Result(
         override val id: String, override val threadId: String, val text: String,
-        val restored: Boolean = false, val title: String = "Mika 任务结果",
+        val restored: Boolean = false, val title: String = "如愿任务结果",
     ) : Delivery
     /** A file explicitly exported by this task; hosts resolve the opaque URI, never a model-supplied path. */
     data class Image(
@@ -32,7 +32,10 @@ sealed interface Delivery {
 
 sealed interface ChannelInput {
     val peer: ChannelPeer
-    data class Text(override val peer: ChannelPeer, val messageId: String, val text: String, val replyToAskId: String? = null) : ChannelInput
+    data class Text(
+        override val peer: ChannelPeer, val messageId: String, val text: String, val replyToAskId: String? = null,
+        val requireMatchingAsk: Boolean = false,
+    ) : ChannelInput
     data class Confirm(override val peer: ChannelPeer, val askId: String, val choice: ConfirmChoice) : ChannelInput
     data class Stop(override val peer: ChannelPeer, val runId: RunId) : ChannelInput
 }

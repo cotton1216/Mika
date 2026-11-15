@@ -199,7 +199,7 @@ class TraceArchive internal constructor(internal val dir: File, private val disk
     private fun payload(spans: List<Span>): ByteArray {
         val scope = ScopeSpans.newBuilder().setScope(InstrumentationScope.newBuilder().setName("mika.harness")).addAllSpans(spans)
         val resource = Resource.newBuilder().addAttributes(KeyValue.newBuilder().setKey("service.name")
-            .setValue(AnyValue.newBuilder().setStringValue("Mika")))
+            .setValue(AnyValue.newBuilder().setStringValue("如愿")))
         return ExportTraceServiceRequest.newBuilder().addResourceSpans(ResourceSpans.newBuilder().setResource(resource)
             .addScopeSpans(scope)).build().toByteArray()
     }

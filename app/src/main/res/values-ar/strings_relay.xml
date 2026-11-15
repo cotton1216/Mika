@@ -19,8 +19,8 @@
     <string name="relay_unpair">إلغاء إقران البوابة</string>
     <string name="relay_unpair_body">افصل هذا الهاتف عن البوابة. يلزم اتصال بالإنترنت. يظل رمز الوصول إلى الهاتف دون تغيير.</string>
     <string name="relay_failed">تعذّر الإكمال. تحقق من عنوان البوابة واتصال الإنترنت ورمز الإقران. إذا تعذّر إلغاء الإقران، فالوصول متوقف؛ أعد المحاولة أو ألغِ تفويض الهاتف من البوابة.</string>
-    <string name="relay_notif_body">الوصول عن بُعد مفعّل. افتح Mika للتحقق من اتصال البوابة.</string>
-    <string name="relay_incompatible">حدّث Mika والبوابة إلى إصدارين متوافقين</string>
+    <string name="relay_notif_body">الوصول عن بُعد مفعّل. افتح 如愿 للتحقق من اتصال البوابة.</string>
+    <string name="relay_incompatible">حدّث 如愿 والبوابة إلى إصدارين متوافقين</string>
     <string name="relay_copy_gateway">نسخ عنوان البوابة</string>
     <string name="relay_cli_help">احفظ رمز الوصول في ملف على الكمبيوتر، ثم شغّل أمر الاتصال أعلاه.</string>
     <string name="relay_intro">تحوّل البوابة إلى هاتفك طلبات CLI وMCP التي تُرسل عادةً عبر Wi-Fi / LAN لتمكين الوصول عن بُعد. انشرها على خادم عام تملكه قبل الإقران.</string>

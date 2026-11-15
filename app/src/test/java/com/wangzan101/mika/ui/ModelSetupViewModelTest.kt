@@ -53,7 +53,7 @@ class ModelSetupViewModelTest {
     private fun store() = ProviderStore(
         tmp.root, AesGcmKeyCipher { key },
         newId = { "id${++ids}" },
-        userAgent = "Mika/1.2.3",
+        userAgent = "Yuan/1.2.3",
         modelFactory = { cfg, _, _, setup -> built += cfg.model to setup; Fake(cfg.capabilities) { reply() } },
         modelLister = { kind, url, apiKey, _ -> listCalls += Triple(kind, url, apiKey); listing[url] ?: ModelListResult.Ok(emptyList()) },
     )
@@ -132,7 +132,7 @@ class ModelSetupViewModelTest {
         val (model, setup) = built.first()
         assertEquals("deepseek-chat", model)
         assertEquals(1024, setup.maxOutputTokens)
-        assertEquals("Mika/1.2.3", setup.headers["User-Agent"])
+        assertEquals("Yuan/1.2.3", setup.headers["User-Agent"])
         assertEquals("DeepSeek 没声明会话头", setOf("User-Agent"), setup.headers.keys)
         val (_, messages, tools) = probes.single()
         assertEquals(1, messages.size)
@@ -157,7 +157,7 @@ class ModelSetupViewModelTest {
         assertEquals(ListState.Idle, s.form.test)
         assertEquals(listOf("deepseek-chat", "deepseek-reasoner"), built.map { it.first })
         assertEquals(
-            "服务商已连上，但「deepseek-chat」没测试通过：它不会调用工具，Mika 干活需要会调用工具的模型。从列表里选一个你开通了的模型。\n" +
+            "服务商已连上，但「deepseek-chat」没测试通过：它不会调用工具，如愿干活需要会调用工具的模型。从列表里选一个你开通了的模型。\n" +
                 "试了 deepseek-chat、deepseek-reasoner，都没测试通过。",
             s.probeNote,
         )
@@ -619,7 +619,7 @@ class ModelSetupViewModelTest {
         // 只回话不调用工具的,当不了主模型
         reply = { ModelReply(listOf(Part.Text("noon")), StopReason.EndTurn, null) }
         vm.pickManual(ModelRole.Main, p.id, "chatty") { picked++ }; runCurrent()
-        assertEquals(ListState.Failed("chatty 没有调用工具，Mika 干活需要会调用工具的模型，换一个当主模型。"), vm.state.value.manualPick[p.id])
+        assertEquals(ListState.Failed("chatty 没有调用工具，如愿干活需要会调用工具的模型，换一个当主模型。"), vm.state.value.manualPick[p.id])
         assertNull(store.roles.value.main)
         reply = { ModelReply(listOf(Part.ToolCall("c1", "get_time", "{}")), StopReason.ToolUse, null) }
         vm.pickManual(ModelRole.Main, p.id, " qwen3 ") { picked++ }; runCurrent()

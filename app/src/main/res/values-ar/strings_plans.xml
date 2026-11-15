@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">تذكير Mika</string>
+    <string name="trigger_reminder">تذكير 如愿</string>
     <string name="trigger_not_started_body">تعذر بدء مهمة مجدولة. تحقق منها في صفحة «المهام المجدولة» وشغّلها مجددًا.</string>
     <string name="trigger_start_failed">تعذر البدء</string>
     <string name="trigger_not_started">لم تبدأ المهمة المجدولة</string>
-    <string name="trigger_interrupted_body">توقفت مهمة مجدولة، ولا يمكن تأكيد نتيجتها. تحقق أولًا مما حدث فعليًا؛ لن تكررها Mika تلقائيًا.</string>
+    <string name="trigger_interrupted_body">توقفت مهمة مجدولة، ولا يمكن تأكيد نتيجتها. تحقق أولًا مما حدث فعليًا؛ لن تكررها 如愿 تلقائيًا.</string>
     <string name="trigger_unconfirmed">يجب التحقق من نتيجة المهمة المجدولة</string>
     <string name="trigger_unlock_failed">تعذر على المهمة المجدولة إيقاظ الهاتف أو إلغاء قفله. ألغِ قفله قبل التشغيل التالي، أو تحقق من خيار «السماح بالإيقاظ وإلغاء القفل عن بُعد» وبيانات اعتماد قفل الشاشة المحفوظة ضمن «الإعدادات › توصيل كمبيوتر».</string>
     <string name="trigger_alarm_title">تحتاج المهام المجدولة إلى إذن «المنبهات والتذكيرات»</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">من دون هذا الإذن، قد تتأخر المهام المجدولة أو لا تعمل إطلاقًا. لا يلزم تفعيله إلا مرة واحدة.</string>
     <string name="plans_running_n">نشطة %1$d</string>
     <string name="plans_stopped_n">متوقفة %1$d</string>
-    <string name="plans_empty">لا توجد مهام مجدولة بعد\nانقر + لإنشاء مهمة، أو أخبر Mika في محادثة بموعد تذكيرك أو بعمل شيء من أجلك.</string>
+    <string name="plans_empty">لا توجد مهام مجدولة بعد\nانقر + لإنشاء مهمة، أو أخبر 如愿 في محادثة بموعد تذكيرك أو بعمل شيء من أجلك.</string>
     <string name="plans_none_running">لا توجد مهام مجدولة نشطة</string>
     <string name="plans_none_stopped">لا توجد مهام مجدولة متوقفة</string>
     <string name="plans_footer">استخدم + لإنشاء مهمة، أو قل «كل يوم عند الثامنة…» أو «أخبرني عندما ينخفض السعر» في محادثة؛ وستعود النتائج إلى تلك المحادثة. قد تتأثر المهام المحددة بوقت بتوفير البطارية؛ ولا يؤثر إيقاف المهمة أو حذفها إلا في عمليات التشغيل المستقبلية.</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">مهمة مجدولة جديدة</string>
     <string name="plans_task_mode">تشغيل مهمة</string>
     <string name="plans_reminder_mode">تذكير فقط</string>
-    <string name="plans_content_task">ماذا يجب أن تفعل Mika؟</string>
+    <string name="plans_content_task">ماذا يجب أن تفعل 如愿؟</string>
     <string name="plans_content_reminder">نص التذكير</string>
     <string name="plans_repeat_interval">فترة</string>
     <string name="plans_repeat_weekly">أسبوعيًا</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">عند التغيّر</string>
     <string name="plans_notify_each">في كل مرة</string>
     <string name="plans_cooldown_minutes">الحد الأدنى للدقائق بين عمليتي تشغيل (اختياري)</string>
-    <string name="plans_when_idle">التشغيل فقط عندما تكون Mika غير مشغولة</string>
+    <string name="plans_when_idle">التشغيل فقط عندما تكون 如愿 غير مشغولة</string>
     <string name="plans_enabled">مفعّلة</string>
     <string name="plans_error_content">أدخل مهمة أو تذكيرًا</string>
     <string name="plans_error_content_long">استخدم 4,000 حرف كحد أقصى، أو 2,000 للتذكير</string>
@@ -70,6 +70,9 @@
     <string name="plans_condition">يعمل فقط إذا: %1$s · %2$s</string>
     <string name="plans_last">الأخير %1$s · %2$s</string>
     <string name="plans_never_run">لم يُشغّل بعد</string>
+    <string name="plans_source_user">يدوي</string>
+    <string name="plans_source_model">النموذج</string>
+    <string name="plans_source_external">سكربت</string>
     <string name="plans_delivered">تم التسليم</string>
     <string name="plans_unchanged">لم يتغير الشرط</string>
     <string name="plans_not_met">الشرط غير متحقق</string>
@@ -79,4 +82,5 @@
     <string name="plans_running_now">قيد التشغيل</string>
     <string name="trigger_deleted">حُذفت المهمة المجدولة</string>
     <string name="trigger_busy">ما زالت هذه المهمة قيد التشغيل</string>
+    <string name="plans_run_history">سجل التنفيذ</string>
 </resources>

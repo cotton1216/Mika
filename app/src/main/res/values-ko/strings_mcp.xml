@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. 컴퓨터 설정</string>
     <string name="mcp_cli_install_sub">설치 안내를 컴퓨터의 AI에게 보내거나, 컴퓨터에서 직접 따라 하세요.</string>
     <string name="mcp_copy_install">설치 안내 복사</string>
-    <string name="mcp_cli_install_prompt">Follow https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md to install Mika CLI or the Skill for this agent. Use the connection method selected on the phone: USB uses authorized ADB; Wi-Fi/private VPN uses the HTTP address and a private token file. Run connect to verify the connection. With only the Skill, use its bundled script. Do not submit phone tasks or print tokens in the conversation.</string>
+    <string name="mcp_cli_install_prompt">Follow https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md to install 如愿 CLI or the Skill for this agent. Use the connection method selected on the phone: USB uses authorized ADB; Wi-Fi/private VPN uses the HTTP address and a private token file. Run connect to verify the connection. With only the Skill, use its bundled script. Do not submit phone tasks or print tokens in the conversation.</string>
     <string name="mcp_cli_connect">2. 휴대전화 연결</string>
     <string name="mcp_cli_connect_sub">컴퓨터에서 USB나 페어링된 무선 디버깅으로 실행하세요. connect가 연결을 확인해요. 스킬만 설치했다면 에이전트에게 함께 제공된 클라이언트를 실행하라고 하세요.</string>
     <string name="mcp_copy_command">명령 복사</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. MCP 클라이언트 설정</string>
     <string name="mcp_usb_client_sub">시작 명령이 컴퓨터에 주소와 토큰을 출력해요. 이를 클라이언트에 추가하고 위의 요청 시간이 갱신되는지 확인하세요.</string>
     <string name="mcp_copy_instructions">설정 안내 복사</string>
-    <string name="mcp_usb_client_instructions">Add a Streamable HTTP MCP server at http://127.0.0.1:%1$d/mcp on this computer. Set the Authorization header to Bearer followed by the token printed by the Mika start command. Do not print the token in the conversation. Connect or refresh the tool list and check that the request time on the phone updates. Guide: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">Add a Streamable HTTP MCP server at http://127.0.0.1:%1$d/mcp on this computer. Set the Authorization header to Bearer followed by the token printed by the 如愿 start command. Do not print the token in the conversation. Connect or refresh the tool list and check that the request time on the phone updates. Guide: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">이 네트워크 연결 허용</string>
     <string name="mcp_network_enable_action">네트워크 접속 켜기</string>
     <string name="mcp_network_address_step">1. 접속 가능한 주소 선택</string>

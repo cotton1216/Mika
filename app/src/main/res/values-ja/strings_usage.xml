@@ -8,7 +8,7 @@
     <string name="usage_title">トークン使用量</string>
     <string name="usage_none">まだありません</string>
     <string name="usage_empty_title">この期間の使用量はありません</string>
-    <string name="usage_empty_body">Mika に何かお願いすると、使ったトークンがここに記録されます。</string>
+    <string name="usage_empty_body">如愿 に何かお願いすると、使ったトークンがここに記録されます。</string>
     <string name="usage_note">数値はプロバイダーが報告したもので、このスマホの中だけに保存されます。</string>
     <string name="usage_total">合計</string>
     <string name="usage_trend">推移</string>

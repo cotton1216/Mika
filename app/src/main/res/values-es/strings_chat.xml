@@ -5,10 +5,9 @@
     <string name="chat_greeting_afternoon">Buenas tardes</string>
     <string name="chat_greeting_evening">Buenas noches</string>
     <string name="chat_greeting_night">Despierto hasta tarde</string>
-    <string name="chat_empty_prompt">¿Qué debería hacer Mika?</string>
-    <string name="chat_example_github_star">Abre https://github.com/wangzan101/mika y dale una estrella al proyecto.</string>
+    <string name="chat_empty_prompt">¿Qué debería hacer 如愿?</string>
+    <string name="chat_slogan">Como desees: tu asistente personal</string>
     <string name="chat_example_follow">Abre X, busca a Wang Zan (@wangzan101) y sigue la cuenta.</string>
-    <string name="chat_example_group_summary">Abre WhatsApp y resume los mensajes no leídos de hoy, destacando todo lo que necesite mi respuesta.</string>
     <string name="chat_example_alarms">Pon alarmas mañana por la mañana a las 9:40, 9:50 y 10:00.</string>
     <string name="chat_example_replace_title">¿Reemplazar el borrador actual?</string>
     <string name="chat_example_replace_body">La tarea recomendada reemplazará lo que ya escribiste.</string>
@@ -53,17 +52,18 @@
     </plurals>
     <string name="chat_background_note">Se ejecuta en segundo plano: sigue usando tu teléfono. Toca la vista pequeña para ampliarla.</string>
     <string name="chat_placeholder_busy">Añade o cambia detalles…</string>
-    <string name="chat_placeholder_answer">Responde a la pregunta de Mika</string>
+    <string name="chat_placeholder_answer">Responde a la pregunta de 如愿</string>
     <string name="chat_placeholder_more">Di algo más…</string>
     <string name="chat_cannot_start">Aún no se pueden iniciar tareas</string>
     <string name="chat_missing">Falta: %1$s</string>
     <string name="chat_go_settings">Abrir Ajustes</string>
     <string name="chat_menu">Menú</string>
+    <string name="drawer_personal">Asistente personal</string>
     <string name="chat_new">Chat nuevo</string>
     <string name="chat_expand_steps">Mostrar pasos</string>
     <string name="chat_collapse_steps">Ocultar pasos</string>
     <string name="chat_view_process">Ver cómo fue</string>
-    <string name="chat_unlock_body">Tu teléfono está bloqueado. Mika continuará cuando lo desbloquees.</string>
+    <string name="chat_unlock_body">Tu teléfono está bloqueado. 如愿 continuará cuando lo desbloquees.</string>
     <string name="chat_input_body">%1$s\nToca una opción o escribe abajo. %2$s</string>
     <string name="chat_refuse">Rechazar</string>
     <string name="chat_allow_once">Permitir solo esta vez</string>
@@ -138,6 +138,24 @@
     <string name="drawer_rename_title">Cambiar el nombre del chat</string>
     <string name="drawer_pinned">Fijados</string>
     <string name="drawer_pinned_mark">Fijado</string>
+    <string name="drawer_archive">Archivar</string>
+    <string name="drawer_unarchive">Desarchivar</string>
+    <string name="drawer_archived">Archivada</string>
+    <string name="drawer_archived_count">%1$d archivadas</string>
+    <string name="drawer_archive_empty">No hay conversaciones archivadas</string>
+    <string name="drawer_archive_done">Se archivó “%1$s”</string>
+    <string name="drawer_archive_this_week">Esta semana</string>
+    <string name="drawer_archive_this_month">Este mes</string>
+    <string name="drawer_archive_earlier">Anteriores</string>
+    <string name="drawer_archived_today">Archivada hoy</string>
+    <plurals name="drawer_archived_days_ago">
+        <item quantity="one">Archivada hace %1$d día</item>
+        <item quantity="many">Archivada hace %1$d días</item>
+        <item quantity="other">Archivada hace %1$d días</item>
+    </plurals>
+    <string name="drawer_search_filter_all">Todas</string>
+    <string name="drawer_search_filter_active">Sin archivar</string>
+    <string name="drawer_search_filter_archived">Archivadas</string>
     <string name="drawer_search_hint">Buscar chats</string>
     <string name="drawer_search_results">Resultados de la búsqueda</string>
     <string name="drawer_search_empty">Ningún chat coincide con «%1$s»</string>
@@ -164,6 +182,10 @@
     <string name="step_viewed">Se miró %1$s</string>
     <string name="step_viewed_part">Se miró %2$s en %1$s</string>
     <string name="step_failed">Falló</string>
+    <string name="step_declined_not_said">No se guardó: no son tus propias palabras</string>
+    <string name="step_declined_sensitive">No se guardó: información sensible</string>
+    <string name="step_declined_not_asked">Sin cambios: no lo pediste</string>
+    <string name="step_declined_not_requested">No se guardó: este mensaje no pedía recordarlo</string>
     <string name="step_number">Paso %1$d</string>
     <string name="source_label">Origen</string>
     <plurals name="screenshots">
@@ -178,11 +200,11 @@
     <string name="attach_album">Fotos</string>
     <string name="attach_files">Archivos</string>
     <string name="attach_recent">Fotos recientes</string>
-    <string name="attach_recent_partial">Fotos a las que dejaste acceder a Mika</string>
+    <string name="attach_recent_partial">Fotos a las que dejaste acceder a 如愿</string>
     <string name="attach_all">Todas las fotos</string>
     <string name="attach_change">Cambiar el acceso</string>
     <string name="attach_no_photos">Aún no hay fotos</string>
-    <string name="attach_need_access">Para elegir fotos aquí, permite que Mika acceda a tus fotos</string>
+    <string name="attach_need_access">Para elegir fotos aquí, permite que 如愿 acceda a tus fotos</string>
     <string name="attach_grant">Permitir el acceso a las fotos</string>
     <string name="attach_grant_hint">También puedes tocar “Fotos” arriba para usar el selector de fotos del sistema</string>
     <string name="attach_full">Hasta %1$d adjuntos a la vez</string>
@@ -204,10 +226,10 @@
     <string name="attach_file_and_more">%1$s y %2$d archivos más</string>
     <string name="screen_tag">Tu pantalla ahora mismo</string>
     <string name="screen_blocked">No se pudo capturar: esta página no permite capturas de pantalla</string>
-    <string name="screen_camera">Capturar esta pantalla para Mika</string>
+    <string name="screen_camera">Capturar esta pantalla para 如愿</string>
     <string name="screen_remove">Quitar esta captura de pantalla</string>
-    <string name="screen_send">Enviar a Mika tu pantalla actual</string>
-    <string name="pip_screen">Pantalla virtual de Mika</string>
+    <string name="screen_send">Enviar a 如愿 tu pantalla actual</string>
+    <string name="pip_screen">Pantalla virtual de 如愿</string>
     <string name="collapse">Contraer</string>
     <string name="no_app_for_link">Ninguna app puede abrir este enlace</string>
     <string name="source_none">No se guardó ningún origen de esta respuesta</string>
@@ -227,17 +249,23 @@
     <string name="chat_branch_retry">Volver a preguntar desde aquí</string>
     <string name="chat_branch_attachments_readd">Vuelve a adjuntar los archivos que quieras incluir</string>
     <string name="chat_attach_unavailable">No se pudo añadir: %1$s. Comprueba que los archivos estén disponibles y no superen el límite de tamaño.</string>
+    <string name="chat_attach_too_large">%1$s: supera el límite de 200 MiB</string>
+    <string name="chat_attach_low_device_space">%1$s: no hay suficiente espacio en el teléfono; libera espacio y vuelve a intentarlo</string>
+    <string name="chat_attach_workspace_limit">%1$s: se alcanzó el límite de almacenamiento del espacio de trabajo; elimina archivos del espacio de trabajo y vuelve a intentarlo</string>
+    <string name="chat_attach_io_error">%1$s: no se pudo leer ni copiar; comprueba que el archivo esté disponible y vuelve a intentarlo</string>
     <string name="chat_retry_missing">%1$s: el archivo no existe</string>
     <string name="chat_retry_limit">%1$s: se alcanzó el límite de copia</string>
     <string name="chat_retry_failed">%1$s: no se pudo copiar</string>
     <string name="chat_select_hint">Mantén pulsado el texto para seleccionarlo</string>
     <string name="chat_quote_remove">Quitar cita</string>
-    <string name="chat_quoting_mika">Citando a Mika: %1$s</string>
+    <string name="chat_quoting_mika">Citando a 如愿: %1$s</string>
     <string name="chat_quoting_you">Citándote a ti: %1$s</string>
     <string name="chat_edit_message">Editar mensaje</string>
     <string name="chat_withdraw_message">Retirar mensaje</string>
     <string name="pip_close">Cerrar la vista pequeña de esta tarea</string>
     <string name="pip_unmute">Volver al sonido</string>
+    <string name="pip_mute">Silenciar</string>
+    <string name="pip_back">Atrás en la pantalla virtual</string>
     <string name="pip_reopen">Mostrar pantalla</string>
     <string name="pip_closed_needs_you">Te necesita</string>
     <string name="pip_closed_hint">Cerrada para esta tarea. Toca “Mostrar pantalla” abajo a la derecha, o abre “Pantallas en segundo plano” en el menú lateral.</string>
@@ -258,4 +286,14 @@
     <string name="chat_placeholder_queue">Escribe la siguiente tarea…</string>
     <string name="voice_placeholder_queue">Di la siguiente tarea…</string>
     <string name="steer_received_paused">Entendido — se usará cuando continúe la tarea</string>
+    <plurals name="drawer_archive_many_done">
+        <item quantity="one">%1$d chat archivado</item>
+        <item quantity="many">%1$d chats archivados</item>
+        <item quantity="other">%1$d chats archivados</item>
+    </plurals>
+    <plurals name="drawer_archive_many_skipped">
+        <item quantity="one">%1$d sin archivar</item>
+        <item quantity="many">%1$d sin archivar</item>
+        <item quantity="other">%1$d sin archivar</item>
+    </plurals>
 </resources>

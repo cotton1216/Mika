@@ -264,7 +264,7 @@ fun BrowserToolbar(
     }
 }
 
-/** 「给 Mika 登录」的横幅:说明这次用的是 Mika 办事时的那一版,登录完点「登录好了」。 */
+/** 「给如愿登录」的横幅:说明这次用的是如愿办事时的那一版,登录完点「登录好了」。 */
 @Composable
 fun LoginBanner(desktop: Boolean, onDone: () -> Unit) {
     val c = MikaTheme.colors

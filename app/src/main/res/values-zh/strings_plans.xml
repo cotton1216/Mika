@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Mika 提醒</string>
+    <string name="trigger_reminder">如愿提醒</string>
     <string name="trigger_not_started_body">定时任务未能启动。请在定时任务页查看并重新执行。</string>
     <string name="trigger_start_failed">启动失败</string>
     <string name="trigger_not_started">定时任务未启动</string>
-    <string name="trigger_interrupted_body">定时任务运行中断，结果还不能确认。请先查看实际情况；Mika 不会自动重复操作。</string>
+    <string name="trigger_interrupted_body">定时任务运行中断，结果还不能确认。请先查看实际情况；如愿不会自动重复操作。</string>
     <string name="trigger_unconfirmed">定时任务结果待确认</string>
     <string name="trigger_unlock_failed">定时任务无法唤醒或解锁手机。请在下次执行前手动解锁，或在「设置 › 连接电脑」中检查「允许远程亮屏与解锁」及已保存的锁屏凭据。</string>
     <string name="trigger_alarm_title">定时任务需要「闹钟和提醒」权限</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">没有这个权限,定时任务到点可能不准时,甚至不会启动。开一次就行。</string>
     <string name="plans_running_n">进行中 %1$d</string>
     <string name="plans_stopped_n">已停用 %1$d</string>
-    <string name="plans_empty">还没有定时任务\n点右上角 + 新建，或在对话里告诉 Mika 什么时候提醒你、什么时候帮你做事。</string>
+    <string name="plans_empty">还没有定时任务\n点右上角 + 新建，或在对话里告诉如愿什么时候提醒你、什么时候帮你做事。</string>
     <string name="plans_none_running">没有进行中的定时任务</string>
     <string name="plans_none_stopped">没有已停用的定时任务</string>
     <string name="plans_footer">可以点右上角 + 自己新建，也可以在对话里说「每天 8 点…」「降价了告诉我」，结果会发回建它的那个对话。定时触发可能受系统省电影响；停用或删除只影响后续触发。</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">新建定时任务</string>
     <string name="plans_task_mode">执行任务</string>
     <string name="plans_reminder_mode">仅提醒</string>
-    <string name="plans_content_task">要让 Mika 做什么？</string>
+    <string name="plans_content_task">要让如愿做什么？</string>
     <string name="plans_content_reminder">提醒内容</string>
     <string name="plans_repeat_interval">间隔</string>
     <string name="plans_repeat_weekly">每周</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">条件刚满足时</string>
     <string name="plans_notify_each">每次满足时</string>
     <string name="plans_cooldown_minutes">两次执行至少间隔多少分钟（可选）</string>
-    <string name="plans_when_idle">仅在 Mika 空闲时执行</string>
+    <string name="plans_when_idle">仅在如愿空闲时执行</string>
     <string name="plans_enabled">启用</string>
     <string name="plans_error_content">请输入任务或提醒内容</string>
     <string name="plans_error_content_long">任务最多 4,000 个字符，提醒最多 2,000 个字符</string>
@@ -65,6 +65,9 @@
     <string name="plans_condition">满足条件才执行：%1$s · %2$s</string>
     <string name="plans_last">上次 %1$s · %2$s</string>
     <string name="plans_never_run">还没执行过</string>
+    <string name="plans_source_user">手动</string>
+    <string name="plans_source_model">模型</string>
+    <string name="plans_source_external">脚本</string>
     <string name="plans_delivered">已送达</string>
     <string name="plans_unchanged">条件未变化</string>
     <string name="plans_not_met">条件未满足</string>
@@ -74,4 +77,5 @@
     <string name="plans_running_now">执行中</string>
     <string name="trigger_deleted">定时任务已删除</string>
     <string name="trigger_busy">这条任务仍在执行</string>
+    <string name="plans_run_history">执行记录</string>
 </resources>

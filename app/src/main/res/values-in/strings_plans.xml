@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">Pengingat Mika</string>
+    <string name="trigger_reminder">Pengingat 如愿</string>
     <string name="trigger_not_started_body">Tugas terjadwal gagal dimulai. Periksa di halaman Tugas terjadwal dan jalankan lagi.</string>
     <string name="trigger_start_failed">Gagal dimulai</string>
     <string name="trigger_not_started">Tugas terjadwal tidak dimulai</string>
-    <string name="trigger_interrupted_body">Tugas terjadwal terhenti dan hasilnya tidak bisa dipastikan. Periksa dulu apa yang sebenarnya terjadi; Mika tidak akan mengulanginya otomatis.</string>
+    <string name="trigger_interrupted_body">Tugas terjadwal terhenti dan hasilnya tidak bisa dipastikan. Periksa dulu apa yang sebenarnya terjadi; 如愿 tidak akan mengulanginya otomatis.</string>
     <string name="trigger_unconfirmed">Hasil tugas terjadwal perlu diperiksa</string>
     <string name="trigger_unlock_failed">Tugas terjadwal tidak dapat membangunkan atau membuka kunci ponsel. Buka kunci sebelum eksekusi berikutnya, atau periksa “Izinkan bangun dan buka kunci jarak jauh” serta kredensial kunci layar tersimpan di Setelan › Hubungkan komputer.</string>
     <string name="trigger_alarm_title">Tugas terjadwal memerlukan izin “Alarm &amp; pengingat”</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">Tanpa izin ini, tugas terjadwal bisa terlambat atau tidak berjalan sama sekali. Anda hanya perlu mengaktifkannya sekali.</string>
     <string name="plans_running_n">Aktif %1$d</string>
     <string name="plans_stopped_n">Nonaktif %1$d</string>
-    <string name="plans_empty">Belum ada tugas terjadwal\nKetuk + untuk membuatnya, atau bilang ke Mika di obrolan kapan harus mengingatkan Anda atau mengerjakan sesuatu untuk Anda.</string>
+    <string name="plans_empty">Belum ada tugas terjadwal\nKetuk + untuk membuatnya, atau bilang ke 如愿 di obrolan kapan harus mengingatkan Anda atau mengerjakan sesuatu untuk Anda.</string>
     <string name="plans_none_running">Tidak ada tugas terjadwal yang aktif</string>
     <string name="plans_none_stopped">Tidak ada tugas terjadwal yang dinonaktifkan</string>
     <string name="plans_footer">Gunakan + untuk membuat tugas, atau katakan “setiap hari pukul 8…” atau “kabari saya kalau harganya turun” di obrolan; hasilnya kembali ke obrolan itu. Eksekusi terjadwal bisa terpengaruh penghemat baterai; menonaktifkan atau menghapus hanya memengaruhi eksekusi berikutnya.</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">Tugas terjadwal baru</string>
     <string name="plans_task_mode">Jalankan tugas</string>
     <string name="plans_reminder_mode">Hanya pengingat</string>
-    <string name="plans_content_task">Apa yang harus dilakukan Mika?</string>
+    <string name="plans_content_task">Apa yang harus dilakukan 如愿?</string>
     <string name="plans_content_reminder">Teks pengingat</string>
     <string name="plans_repeat_interval">Interval</string>
     <string name="plans_repeat_weekly">Mingguan</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">Saat berubah</string>
     <string name="plans_notify_each">Setiap kali</string>
     <string name="plans_cooldown_minutes">Menit minimum antar-eksekusi (opsional)</string>
-    <string name="plans_when_idle">Jalankan hanya saat Mika tidak sibuk</string>
+    <string name="plans_when_idle">Jalankan hanya saat 如愿 tidak sibuk</string>
     <string name="plans_enabled">Aktif</string>
     <string name="plans_error_content">Masukkan tugas atau pengingat</string>
     <string name="plans_error_content_long">Gunakan maksimal 4.000 karakter, atau 2.000 untuk pengingat</string>
@@ -65,6 +65,9 @@
     <string name="plans_condition">Hanya berjalan jika: %1$s · %2$s</string>
     <string name="plans_last">Terakhir %1$s · %2$s</string>
     <string name="plans_never_run">Belum pernah berjalan</string>
+    <string name="plans_source_user">Manual</string>
+    <string name="plans_source_model">Model</string>
+    <string name="plans_source_external">Skrip</string>
     <string name="plans_delivered">Terkirim</string>
     <string name="plans_unchanged">Kondisi tidak berubah</string>
     <string name="plans_not_met">Kondisi tidak terpenuhi</string>
@@ -74,4 +77,5 @@
     <string name="plans_running_now">Berjalan</string>
     <string name="trigger_deleted">Tugas terjadwal sudah dihapus</string>
     <string name="trigger_busy">Tugas ini masih berjalan</string>
+    <string name="plans_run_history">Riwayat eksekusi</string>
 </resources>

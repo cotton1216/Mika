@@ -17,11 +17,21 @@
     <string name="about_feedback_sheet_sub">問題やアイデアがあれば、お好きな方法で作者に伝えてください。</string>
     <string name="about_feedback_github">GitHub で Issue を作成</string>
     <string name="about_feedback_github_sub">不具合の報告や機能のリクエスト、進捗の確認ができます</string>
+    <string name="about_group">作者に連絡</string>
+    <string name="about_group_sub">WeChat</string>
+    <string name="about_group_sheet_title">作者に連絡</string>
+    <string name="about_group_sheet_sub">使い方の相談やアイデアの共有にどうぞ。WeChat で追加するときは、申請に Mika と書いてください</string>
+    <string name="about_group_hint">長押しで保存 · または WeChat でスキャン</string>
+    <string name="about_save_qr">QR コードを保存</string>
+    <string name="about_qr_saved">QR コードを写真に保存しました</string>
+    <string name="about_qr_save_failed">保存できませんでした。スクリーンショットを撮ってください。</string>
+    <string name="about_follow">作者をフォロー</string>
+    <string name="about_follow_sub">X %1$s · 新機能をいち早くチェック</string>
     <string name="about_repo">ソースコード</string>
     <string name="about_repo_sub">%1$s · スター歓迎</string>
     <string name="about_guide">ガイドと貢献のしかた</string>
     <string name="about_guide_sub">はじめ方。コードを書かなくてもアプリの知識を追加できます</string>
-    <string name="about_data_note">Mika に送った内容(メッセージ、画面の内容、スクリーンショット)は、設定したモデルプロバイダーにだけ送信されます。Mika 専用のサーバーはなく、データも収集しません。アップデートの確認では GitHub にだけ接続します。</string>
+    <string name="about_data_note">如愿 に送った内容(メッセージ、画面の内容、スクリーンショット)は、設定したモデルプロバイダーにだけ送信されます。如愿専用のサーバーはなく、データも収集しません。アップデートの確認では GitHub にだけ接続します。</string>
     <string name="about_license_link">Apache-2.0 ライセンス</string>
     <string name="about_author">制作: Wang Zan · © 2026</string>
     <string name="about_license_title">Apache-2.0 ライセンス</string>
@@ -34,11 +44,11 @@
     <string name="about_update_retry">もう一度ダウンロード</string>
     <string name="about_update_cancel">ダウンロードを削除</string>
     <string name="about_update_working">処理中…</string>
-    <string name="about_update_install_hint">ダウンロードが終わったら「アップデートをインストール」をタップし、システムのインストール画面で確認してください。先に Mika に不明なアプリのインストールを許可する必要がある場合があります。</string>
+    <string name="about_update_install_hint">ダウンロードが終わったら「アップデートをインストール」をタップし、システムのインストール画面で確認してください。先に 如愿 に不明なアプリのインストールを許可する必要がある場合があります。</string>
     <string name="about_update_error">ダウンロードまたはインストールが完了しませんでした。しばらくしてからもう一度お試しください。</string>
     <string name="about_update_bad_file">ダウンロードしたパッケージが不完全か、リリースと一致しません。削除しましたので、もう一度ダウンロードしてください。</string>
-    <string name="about_update_not_newer">ダウンロードしたパッケージは、インストール済みの Mika より新しくありません。削除しました。</string>
-    <string name="about_update_bad_signer">このパッケージはインストール済みの Mika と署名が異なるため、上書きできません。削除しました。自分でビルドした Mika の場合は、先にアンインストールしてから公式版をインストールしてください。</string>
+    <string name="about_update_not_newer">ダウンロードしたパッケージは、インストール済みの 如愿 より新しくありません。削除しました。</string>
+    <string name="about_update_bad_signer">このパッケージはインストール済みの 如愿 と署名が異なるため、上書きできません。削除しました。自分でビルドした 如愿 の場合は、先にアンインストールしてから公式版をインストールしてください。</string>
     <string name="about_update_later">あとで</string>
     <string name="about_no_browser">リンクを開けるブラウザがありません</string>
     <string name="about_version">バージョン %1$s</string>
@@ -48,7 +58,7 @@
     <string name="about_current">現在 %1$s</string>
     <string name="about_released_on">" · %1$s にリリース"</string>
     <string name="about_released_under">ライセンス: %1$s</string>
-    <string name="issue_body">- 端末: %1$s\n- Android バージョン: %2$s (SDK %3$d)\n- Mika バージョン: %4$s (ビルド %5$s)\n\n### 何が起きたか\n\n\n### 行った操作\n\n\n### 期待していた動作\n\n\n### 診断情報\n(任意) Mika で「概要」›「フィードバックを送信」›「診断情報をコピー」を開き、ここに貼り付けてください\n\n</string>
+    <string name="issue_body">- 端末: %1$s\n- Android バージョン: %2$s (SDK %3$d)\n- 如愿 バージョン: %4$s (ビルド %5$s)\n\n### 何が起きたか\n\n\n### 行った操作\n\n\n### 期待していた動作\n\n\n### 診断情報\n(任意) 如愿 で「概要」›「フィードバックを送信」›「診断情報をコピー」を開き、ここに貼り付けてください\n\n</string>
     <string name="licenses_third_party">サードパーティのコンポーネント · %1$d</string>
     <string name="licenses_footer">ライセンス全文と著作権表示は、ソースリポジトリの LICENSE と licenses/ フォルダ(THIRD_PARTY_NOTICES.md を含む)にあります。</string>
     <string name="diagnostics_copy">診断情報をコピー</string>
@@ -62,8 +72,8 @@
     <string name="about_auto_update">自動更新</string>
     <string name="about_auto_update_detail">Wi-Fi 接続時にのみ新版をバックグラウンドでダウンロードし、インストール前に確認します</string>
     <string name="about_auto_update_disable">自動更新をオフにする</string>
-    <string name="about_auto_update_ready">Mika %1$s ダウンロード済み</string>
-    <string name="about_auto_update_confirm_title">新版の Mika が利用できます</string>
+    <string name="about_auto_update_ready">如愿 %1$s ダウンロード済み</string>
+    <string name="about_auto_update_confirm_title">新版の 如愿 が利用できます</string>
     <string name="about_auto_update_confirm_detail">今すぐ %1$s をインストールするか、自動更新をオフにして設定から手動で確認できます。</string>
     <string name="about_auto_update_now">今すぐ更新</string>
 </resources>

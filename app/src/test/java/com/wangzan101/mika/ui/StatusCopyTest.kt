@@ -29,7 +29,7 @@ class StatusCopyTest {
 
     @Test
     fun unavailableAccessibilityDistinguishesEnabledFromOff() {
-        assertEquals("Mika 的无障碍服务没有开启:请在系统设置的无障碍里打开 Mika。", StatusCopy.accessibilityUnavailable(enabled = false))
+        assertEquals("如愿的无障碍服务没有开启:请在系统设置的无障碍里打开如愿。", StatusCopy.accessibilityUnavailable(enabled = false))
         val enabled = StatusCopy.accessibilityUnavailable(enabled = true)
         assertTrue(enabled.contains("已开启"))
         assertTrue(enabled.contains("关闭后重新开启"))
@@ -91,7 +91,7 @@ class StatusCopyTest {
         assertEquals("「需要你处理」的通知不会弹出", b.title)
         assertEquals(
             "要你接手或同意时，这类通知现在只安静地进通知栏，容易错过。「任务结果」的通知也一样。点「去打开」，打开「在屏幕上弹出」。\n" +
-                "系统设置 › 应用 › Mika › 通知 › 需要你处理 › 在屏幕上弹出（有的系统叫「横幅」「悬浮通知」）",
+                "系统设置 › 应用 › 如愿 › 通知 › 需要你处理 › 在屏幕上弹出（有的系统叫「横幅」「悬浮通知」）",
             b.detail,
         )
         assertEquals("去打开", b.link)

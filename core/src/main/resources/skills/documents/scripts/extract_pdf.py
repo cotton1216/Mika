@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Copyright (c) 2026 Mika authors
+# Copyright (c) 2026 如愿 authors
 """Get the text out of a text-based PDF (not scanned images: those need OCR, which this does not do).
 
 Usage:

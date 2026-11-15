@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">میکروفون در دسترس نیست. ممکن است برنامهٔ دیگری از آن استفاده کند</string>
     <string name="voice_hold_to_talk">برای صحبت نگه دارید</string>
     <string name="voice_mic_blocked_title">میکروفون همچنان در دسترس نیست</string>
-    <string name="voice_mic_blocked_body">اجازهٔ ضبط داده شده است، اما میکا هنوز نمی‌تواند ضبط کند. بررسی کنید گزینهٔ دسترسی به میکروفون در تنظیمات سریع روشن باشد (اندروید ۱۲ و جدیدتر) و میکروفون میکا در مدیریت مجوزهای سیستم خاموش نشده باشد. ممکن است برنامهٔ دیگری نیز از میکروفون استفاده کند.</string>
+    <string name="voice_mic_blocked_body">اجازهٔ ضبط داده شده است، اما 如愿 هنوز نمی‌تواند ضبط کند. بررسی کنید گزینهٔ دسترسی به میکروفون در تنظیمات سریع روشن باشد (اندروید ۱۲ و جدیدتر) و میکروفون 如愿 در مدیریت مجوزهای سیستم خاموش نشده باشد. ممکن است برنامهٔ دیگری نیز از میکروفون استفاده کند.</string>
     <string name="voice_provider_failed">تبدیل به متن ممکن نشد: %1$s</string>
     <string name="voice_unavailable_title">ورودی صوتی آماده نیست</string>
     <string name="voice_unavailable_no_engine">این گوشی تشخیص گفتار داخلی ندارد و مدل گفتار به متنی نیز انتخاب نشده است. یک مدل گفتار از ارائه‌دهنده را در تنظیمات › مدل‌ها › گفتار به متن انتخاب کنید.</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">ارائه‌دهندهٔ مدل گفتاری انتخاب‌شده حذف شده است. گزینهٔ دیگری در تنظیمات › مدل‌ها › گفتار به متن انتخاب کنید.</string>
     <string name="voice_unavailable_off">گفتار به متن خاموش است. یک گزینه در تنظیمات › مدل‌ها › گفتار به متن انتخاب کنید.</string>
     <string name="voice_go_pick">انتخاب</string>
-    <string name="voice_permission_title">میکا به میکروفون نیاز دارد</string>
-    <string name="voice_permission_body">برای شنیدن صدای شما هنگام نگه داشتن دکمهٔ صحبت، میکا باید صدا ضبط کند. این مجوز قبلاً رد شده و گوشی دیگر دوباره نمی‌پرسد. میکروفون را در صفحهٔ مجوزهای میکا در تنظیمات سیستم روشن کنید.</string>
+    <string name="voice_permission_title">如愿 به میکروفون نیاز دارد</string>
+    <string name="voice_permission_body">برای شنیدن صدای شما هنگام نگه داشتن دکمهٔ صحبت، 如愿 باید صدا ضبط کند. این مجوز قبلاً رد شده و گوشی دیگر دوباره نمی‌پرسد. میکروفون را در صفحهٔ مجوزهای 如愿 در تنظیمات سیستم روشن کنید.</string>
     <string name="voice_permission_open">باز کردن تنظیمات</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">صحبت</string>
     <string name="capsule_voice_send">ارسال</string>
-    <string name="capsule_voice_answer_title">پاسخ به میکا</string>
+    <string name="capsule_voice_answer_title">پاسخ به 如愿</string>
     <string name="capsule_voice_continue_title">ادامهٔ «%1$s»</string>
     <string name="capsule_voice_cancel">انصراف</string>
     <string name="capsule_voice_edit">ویرایش</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">به کار گفته شد: %1$s</string>
     <string name="capsule_voice_answered">پاسخ داده شد: %1$s</string>
     <string name="capsule_voice_sent">ارسال شد: %1$s</string>
-    <string name="capsule_voice_need_mic">برای اجازه به میکروفون در میکا بزنید</string>
+    <string name="capsule_voice_need_mic">برای اجازه به میکروفون در 如愿 بزنید</string>
     <string name="capsule_voice_not_ready">ورودی صوتی آماده نیست · بزنید</string>
-    <string name="capsule_voice_open">باز کردن میکا</string>
+    <string name="capsule_voice_open">باز کردن 如愿</string>
 </resources>

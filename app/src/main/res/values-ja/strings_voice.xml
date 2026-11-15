@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">マイクを使えません。ほかのアプリが使っている可能性があります</string>
     <string name="voice_hold_to_talk">長押しで話す</string>
     <string name="voice_mic_blocked_title">まだマイクを使えません</string>
-    <string name="voice_mic_blocked_body">録音はすでに許可されていますが、Mika はまだ録音できません。クイック設定のマイクアクセスのスイッチがオンになっているか(Android 12 以降)、システムの権限マネージャーで Mika のマイクがオフになっていないかを確認してください。ほかのアプリがマイクを使っている可能性もあります。</string>
+    <string name="voice_mic_blocked_body">録音はすでに許可されていますが、如愿 はまだ録音できません。クイック設定のマイクアクセスのスイッチがオンになっているか(Android 12 以降)、システムの権限マネージャーで 如愿 のマイクがオフになっていないかを確認してください。ほかのアプリがマイクを使っている可能性もあります。</string>
     <string name="voice_provider_failed">テキストに変換できませんでした: %1$s</string>
     <string name="voice_unavailable_title">音声入力の準備ができていません</string>
     <string name="voice_unavailable_no_engine">このスマホには内蔵の音声認識がなく、音声文字変換のモデルも選ばれていません。「設定 › モデル › 音声文字変換」でプロバイダーの音声モデルを選ぶと使えます。</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">選んだ音声モデルのプロバイダーは削除されました。「設定 › モデル › 音声文字変換」で別のものを選んでください。</string>
     <string name="voice_unavailable_off">音声文字変換がオフです。「設定 › モデル › 音声文字変換」で選んでください。</string>
     <string name="voice_go_pick">選ぶ</string>
-    <string name="voice_permission_title">Mika にマイクが必要です</string>
-    <string name="voice_permission_body">長押しして話している間あなたの声を聞くために、Mika は録音が必要です。以前に拒否されたため、スマホは再度確認しません。システム設定の Mika の権限ページで、マイクをオンにしてください。</string>
+    <string name="voice_permission_title">如愿 にマイクが必要です</string>
+    <string name="voice_permission_body">長押しして話している間あなたの声を聞くために、如愿 は録音が必要です。以前に拒否されたため、スマホは再度確認しません。システム設定の 如愿 の権限ページで、マイクをオンにしてください。</string>
     <string name="voice_permission_open">設定を開く</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">話す</string>
     <string name="capsule_voice_send">送信</string>
-    <string name="capsule_voice_answer_title">Mika に答える</string>
+    <string name="capsule_voice_answer_title">如愿 に答える</string>
     <string name="capsule_voice_continue_title">「%1$s」の続き</string>
     <string name="capsule_voice_cancel">キャンセル</string>
     <string name="capsule_voice_edit">編集</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">タスクに伝えました: %1$s</string>
     <string name="capsule_voice_answered">回答しました: %1$s</string>
     <string name="capsule_voice_sent">送信しました: %1$s</string>
-    <string name="capsule_voice_need_mic">タップして Mika のマイクを許可</string>
+    <string name="capsule_voice_need_mic">タップして 如愿 のマイクを許可</string>
     <string name="capsule_voice_not_ready">音声入力の準備ができていません · タップ</string>
-    <string name="capsule_voice_open">Mika を開く</string>
+    <string name="capsule_voice_open">如愿 を開く</string>
 </resources>

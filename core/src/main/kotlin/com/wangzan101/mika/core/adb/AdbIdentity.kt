@@ -24,7 +24,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 /**
- * Mika 自己的 adb 身份:一把 RSA-2048 钥匙 + 自签名证书。配对时把 [adbPublicKey] 交给设备,
+ * 如愿自己的 adb 身份:一把 RSA-2048 钥匙 + 自签名证书。配对时把 [adbPublicKey] 交给设备,
  * 之后每次 TLS 连接都出示 [certificate](设备只比对证书里的公钥)。
  */
 class AdbIdentity(val keyPair: KeyPair, val name: String) {
@@ -278,14 +278,14 @@ object AdbPublicKey {
     }
 }
 
-/** 最小的自签名 X.509 v3 证书(无扩展):CN=Mika,1970-01-01 到 2099-12-31,SHA256withRSA。 */
+/** 最小的自签名 X.509 v3 证书(无扩展):CN=如愿,1970-01-01 到 2099-12-31,SHA256withRSA。 */
 internal object SelfSignedCertificate {
     private val SHA256_WITH_RSA = byteArrayOf(0x2a, 0x86.toByte(), 0x48, 0x86.toByte(), 0xf7.toByte(), 0x0d, 0x01, 0x01, 0x0b)
     private val COMMON_NAME = byteArrayOf(0x55, 0x04, 0x03)
 
     fun create(keyPair: KeyPair): X509Certificate {
         val algId = seq(tlv(0x06, SHA256_WITH_RSA), tlv(0x05, ByteArray(0)))
-        val name = seq(tlv(0x31, seq(tlv(0x06, COMMON_NAME), tlv(0x0c, "Mika".toByteArray()))))
+        val name = seq(tlv(0x31, seq(tlv(0x06, COMMON_NAME), tlv(0x0c, "如愿".toByteArray()))))
         val validity = seq(tlv(0x17, "700101000000Z".toByteArray()), tlv(0x18, "20991231235959Z".toByteArray()))
         val tbs = seq(
             tlv(0xa0, tlv(0x02, byteArrayOf(2))),

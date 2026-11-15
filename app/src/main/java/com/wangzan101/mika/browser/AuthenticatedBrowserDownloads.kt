@@ -147,7 +147,7 @@ internal class AuthenticatedBrowserDownloads(context: Context) {
     }
 
     private companion object {
-        val DIRECTORY = "${Environment.DIRECTORY_DOWNLOADS}/Mika Browser/"
+        val DIRECTORY = "${Environment.DIRECTORY_DOWNLOADS}/如愿 Browser/"
         val COLUMNS = arrayOf(MediaColumns._ID, MediaColumns.DISPLAY_NAME, MediaColumns.SIZE, MediaColumns.MIME_TYPE, MediaColumns.DATE_ADDED)
     }
 }

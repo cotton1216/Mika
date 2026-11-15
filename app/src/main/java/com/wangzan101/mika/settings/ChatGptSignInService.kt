@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
- * 用 ChatGPT 登录期间的前台服务:Mika 退到后台、用户在浏览器里登录时撑住进程,系统不冻结它,
+ * 用 ChatGPT 登录期间的前台服务:如愿退到后台、用户在浏览器里登录时撑住进程,系统不冻结它,
  * 本机回调才有人接、换令牌不被耽误。只挂一条安静的通知,上面能「取消」这次登录。
  * 不自己做事:登录跑在 [ChatGptSignIns] 里,这里看着它的 running,登录一结束(成功、失败、取消、超时)就停。
  */
@@ -84,7 +84,7 @@ class ChatGptSignInService : Service() {
         /** 和任务、电脑连接的通知错开。 */
         private const val NOTIFICATION_ID = 30_002
 
-        /** 登录开始时调(用户刚点了登录,Mika 在前台,可以开前台服务);开不了抛出,由调用方记下。 */
+        /** 登录开始时调(用户刚点了登录,如愿在前台,可以开前台服务);开不了抛出,由调用方记下。 */
         fun start(context: Context) {
             if (FeatureFlags.get(context).quitRequested()) return
             context.startForegroundService(Intent(context, ChatGptSignInService::class.java))

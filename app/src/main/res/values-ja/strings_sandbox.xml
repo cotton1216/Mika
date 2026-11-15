@@ -6,7 +6,7 @@
     <string name="install_skills">スキルのスクリプトを同期中</string>
     <string name="install_interrupted">セットアップが中断されました。もう一度お試しください</string>
     <string name="install_checksum">ファイルのチェックサムが一致しません</string>
-    <string name="install_unpack_failed">環境を展開できませんでした。Mika をインストールし直してください: %1$s</string>
+    <string name="install_unpack_failed">環境を展開できませんでした。如愿 をインストールし直してください: %1$s</string>
     <string name="install_unsupported">この端末は対応していません(arm64 が必要です)</string>
     <string name="install_no_space">空き容量が足りません: %1$d MB が必要です(空き %2$d MB)</string>
     <string name="install_cannot_start">環境を起動できません: %1$s</string>
@@ -17,10 +17,10 @@
     <string name="sandbox_not_finished">セットアップが完了しませんでした。もう一度お試しください</string>
     <string name="sandbox_network">スクリプトのネットワーク接続を許可</string>
     <string name="sandbox_network_sub">デフォルトではオン</string>
-    <string name="sandbox_network_explain">デフォルトでは、Mika はファイルの操作とスクリプトの実行をオンラインで行います。これをオンにすると、スクリプトがネットワークを使えるようになり(論文や地図の検索など)、チャット内のファイルを外部に送信することもできてしまいます。</string>
-    <string name="sandbox_isolation_unavailable">この端末では、スクリプトをオフラインに保てません。Mika がファイルの操作やスクリプトの実行をするには、「スクリプトのネットワーク接続を許可」をオンにする必要があります</string>
+    <string name="sandbox_network_explain">デフォルトでは、如愿 はファイルの操作とスクリプトの実行をオンラインで行います。これをオンにすると、スクリプトがネットワークを使えるようになり(論文や地図の検索など)、チャット内のファイルを外部に送信することもできてしまいます。</string>
+    <string name="sandbox_isolation_unavailable">この端末では、スクリプトをオフラインに保てません。如愿 がファイルの操作やスクリプトの実行をするには、「スクリプトのネットワーク接続を許可」をオンにする必要があります</string>
     <string name="sandbox_reset_title">環境をリセットしますか？</string>
-    <string name="sandbox_reset_body">Mika がファイルとスクリプトに使う環境と、各チャットで作成されたファイル(添付したものを含む)を削除し、自動で設定し直します。チャットと設定には影響しません。</string>
+    <string name="sandbox_reset_body">如愿 がファイルとスクリプトに使う環境と、各チャットで作成されたファイル(添付したものを含む)を削除し、自動で設定し直します。チャットと設定には影響しません。</string>
     <string name="sandbox_broken">セットアップが完了しませんでした: %1$s</string>
     <string name="sandbox_reset_sub">不具合があるときに: 削除して設定し直します</string>
     <string name="sandbox_reset">環境をリセット</string>
