@@ -72,7 +72,16 @@ fun Modifier.screenFrame(): Modifier = this
     .imePadding()
 
 @Composable
-fun DshApp(session: RemoteSessionController, signIn: SignInController) {
+fun DshApp(
+    session: RemoteSessionController,
+    signIn: SignInController,
+    showSso: Boolean = true,
+    /**
+     * 宿主（如愿）嵌入时传入：远程控制是宿主里的一页，根页要能退回去。
+     * 独立 App 时为 null —— 它自己就是根，返回键交给系统退出。
+     */
+    onExit: (() -> Unit)? = null,
+) {
     val p = LocalRuyiPalette.current
     val signedIn = session.phase is AccountPhase.SignedIn
 
@@ -176,6 +185,8 @@ fun DshApp(session: RemoteSessionController, signIn: SignInController) {
     val current = stack.lastOrNull() ?: root
 
     BackHandler(enabled = stack.isNotEmpty()) { pop() }
+    // 根页（我的电脑 / 连接电脑）没有内部可退的页面：嵌入在宿主里时，退回去的是宿主。
+    BackHandler(enabled = stack.isEmpty() && onExit != null) { onExit?.invoke() }
     // 抽屉在最上层：返回键先关它，而不是把下面的页面也一起弹走。
     BackHandler(enabled = drawerOpen) { drawerOpen = false }
 
@@ -211,12 +222,14 @@ fun DshApp(session: RemoteSessionController, signIn: SignInController) {
                     session = session,
                     signIn = signIn,
                     onBack = pop,
+                    showSso = showSso,
                 )
 
                 Screen.Hosts -> HostsScreen(
                     session = session,
                     onOpenHost = { push(Screen.HostDetail(it.id)) },
                     onOpenSettings = { push(Screen.Settings) },
+                    onExit = onExit,
                 )
 
                 is Screen.HostDetail -> {

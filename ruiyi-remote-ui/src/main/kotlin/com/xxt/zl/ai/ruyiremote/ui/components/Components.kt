@@ -82,6 +82,8 @@ fun DshTopBar(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     onBack: (() -> Unit)? = null,
+    /** 返回按钮的无障碍文案；宿主嵌入时传「返回如愿」之类，让语义更明确。 */
+    backLabel: String = "返回",
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     val p = LocalRuyiPalette.current
@@ -96,7 +98,7 @@ fun DshTopBar(
             // 让箭头与标题那一行对齐（40dp 圆钮 vs 24dp 行高 → 8~9dp）。
             PressableCircle(
                 onClick = onBack,
-                label = "返回",
+                label = backLabel,
                 modifier = if (subtitle != null) Modifier.offset(y = (-9).dp) else Modifier,
             ) { GlyphBack(tint = p.text) }
         }

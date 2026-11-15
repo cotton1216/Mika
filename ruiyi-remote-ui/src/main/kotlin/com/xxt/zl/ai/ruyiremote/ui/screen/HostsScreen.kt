@@ -55,12 +55,19 @@ fun HostsScreen(
     session: RemoteSessionController,
     onOpenHost: (RemoteHost) -> Unit,
     onOpenSettings: () -> Unit,
+    /**
+     * 宿主（如愿）嵌入时传入：远程控制在宿主里只是其中一页，这里给一个显式的
+     * 「返回如愿」箭头。独立 App 时为 null，不显示 —— 它自己就是根，没有可退的宿主。
+     */
+    onExit: (() -> Unit)? = null,
 ) {
     val p = LocalRuyiPalette.current
 
     Column(Modifier.screenFrame()) {
         DshTopBar(
             title = "我的电脑",
+            onBack = onExit,
+            backLabel = "返回如愿",
             // 副标题说「有几台、几台在线」而不是回显账号名 —— 账号名在设置页已经有了，
             // 这里更该回答「我能不能连上」。
             subtitle = when {

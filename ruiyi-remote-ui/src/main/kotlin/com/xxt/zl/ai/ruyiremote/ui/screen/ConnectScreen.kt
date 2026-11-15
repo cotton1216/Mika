@@ -203,12 +203,17 @@ private fun OtherWays(onClick: () -> Unit) {
  * 单独一屏而不是塞回首屏：如意账号要跳一次系统浏览器，比配对码多两步操作，
  * 仍按次要入口摆；但「中继不认 AI Server 令牌」那条边界已经不存在了 ——
  * 授权码交给中继换票，拿到的是中继自己的会话（见 [SignInController]）。
+ *
+ * [showSso] 为假时不出「如意账号」那一张卡：宿主 App 自己已经有如意登录时，
+ * 这里再摆一个入口就是第二个登录页。设备由宿主那次登录顺带注册好，用户通常
+ * 根本走不到这一屏。
  */
 @Composable
 fun AlternateSignInScreen(
     session: RemoteSessionController,
     signIn: SignInController,
     onBack: () -> Unit,
+    showSso: Boolean = true,
 ) {
     val p = LocalRuyiPalette.current
     val failure = session.phase as? AccountPhase.Failed
@@ -225,9 +230,10 @@ fun AlternateSignInScreen(
                 InlineError(failure.message, code = failure.code, retryLabel = "清除错误", onRetry = session::backToSignIn)
             }
             PasswordCard(session)
-            SsoCard(signIn)
+            if (showSso) SsoCard(signIn)
             Text(
-                "两条都需要电脑端用同一账号登录并打开远程访问。",
+                if (showSso) "两条都需要电脑端用同一账号登录并打开远程访问。"
+                else "需要电脑端用同一账号登录并打开远程访问。",
                 style = MaterialTheme.typography.labelSmall,
                 color = p.textTertiary,
                 modifier = Modifier.padding(horizontal = Space.xs),

@@ -90,6 +90,7 @@ import com.wangzan101.mika.ui.components.TopBar
 import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaTheme
 import com.wangzan101.mika.ui.theme.MikaType
+import com.xxt.zl.ai.ruyiremote.ui.RemoteSso
 
 /**
  * 配置模型:用途(主模型、看图模型、轻量模型)和服务商两块。首次上手时 [onboarding] 为真
@@ -105,6 +106,9 @@ internal fun rememberModelSetupViewModel(store: ProviderStore): ModelSetupViewMo
         val signIns = (context.applicationContext as? MikaApp)?.chatGptSignIn ?: ChatGptSignIns(scope)
         ModelSetupViewModel(
             store, scope, browser = AndroidSignInBrowser(context.applicationContext), signIns = signIns,
+            // 一个登录就够了:如愿登录拿到的账号票顺手把远程控制的设备注册掉,
+            // 用户进「远程控制」时直接是已登录状态,不会再看到第二个登录页。
+            onRuyiSignedIn = { accessToken -> RemoteSso.signIn(context.applicationContext, accessToken) },
             speech = (context.applicationContext as? MikaApp)?.speech,
             systemSpeech = {
                 val silent = (context.applicationContext as? MikaApp)?.speech?.systemSilent?.value ?: false

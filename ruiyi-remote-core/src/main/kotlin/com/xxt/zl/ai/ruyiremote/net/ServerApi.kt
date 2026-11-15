@@ -321,6 +321,33 @@ class RemoteServerApi(
         return AccountLogin(token, account, body?.intValue("expiresAt"))
     }
 
+    /**
+     * 用**别处已经登录拿到的 AI-Server `access_token`** 换中继账号会话
+     * （`POST /api/v1/auth/iam`，请求体 `{token}`）。
+     *
+     * 存在的理由只有一个：AI-Server 的授权码一次性、60 秒过期，同一个码换不出两份票。
+     * 如愿 App 的登录已经把码换成了 access_token，远程控制若再走一次授权就是第二个登录页。
+     * 中继这个入口把同一个 access_token 交给 `iamFromToken` 读 profile，与
+     * `/api/v1/auth/aiserver/exchange` 调的是同一个 helper、同一个账号主键，
+     * 所以「一个登录、两个用途」不会变成两个账号。
+     *
+     * 名字里的 iam 只是中继内部的模块名（它读的是 AI-Server profile），不是另一套登录方式。
+     * 令牌按次传入、只在本请求里用一次：不落日志、不进 URL。
+     */
+    suspend fun loginWithAiServerToken(accessToken: String): AccountLogin {
+        if (accessToken.length < 20) throw invalid("The access token is too short.")
+        val body = request(
+            "POST", "/api/v1/auth/iam",
+            body = buildJsonObject { put("token", accessToken) },
+        ) as? JsonObject
+        val token = body.str("token")
+        val account = body.str("account")
+        if (token == null || token.length < 16 || account.isNullOrEmpty()) {
+            throw invalid("The server returned an invalid account login.")
+        }
+        return AccountLogin(token, account, body?.intValue("expiresAt"))
+    }
+
     /** `GET /api/v1/auth/me`：账号会话令牌 → 账号名。 */
     suspend fun accountMe(accountToken: String): String {
         val body = request("GET", "/api/v1/auth/me", bearer = accountToken) as? JsonObject

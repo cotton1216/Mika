@@ -768,6 +768,7 @@ private fun MikaRoot(
 Route.Remote -> RemoteScreen(
             callback = remoteCallback,
             onCallbackConsumed = onRemoteCallbackConsumed,
+            onBack = back,
         )
         Route.Calls -> CallSettingsScreen(app.calls, onBack = back, standalone = true, initialHistoryCallId = focusedCallHistoryId)
     }

@@ -1,5 +1,6 @@
 package com.wangzan101.mika.ui
 
+import android.util.Log
 import com.wangzan101.mika.R
 import com.wangzan101.mika.i18n.tr
 import com.wangzan101.mika.core.model.ListFailure
@@ -57,6 +58,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+
+/** 登录/列模型这条链路的日志标签（令牌、账号票一律不进日志）。 */
+private const val TAG = "ModelSetup"
 
 /** 列模型(「测试并保存」或刷新一个服务商)的进度。 */
 sealed interface ListState {
@@ -312,6 +316,13 @@ class ModelSetupViewModel(
     private val scope: CoroutineScope,
     private val io: CoroutineDispatcher = Dispatchers.IO,
     private val browser: SignInBrowser? = null,
+    /**
+     * 如愿登录成功后顺手做的事:把这一次登录拿到的 AI-Server 账号票交给远程控制注册设备。
+     *
+     * 远程控制不能自己再登录一次 —— 授权码一次性,已经在这里花掉了。失败不打断如愿登录
+     * (模型已经能用),所以调用方负责兜住异常、这边不做容错。
+     */
+    private val onRuyiSignedIn: suspend (accessToken: String) -> Unit = {},
     /** 登录跑在哪:界面给的是 App 那一份(退到后台、界面重建都不断,期间开前台服务);测试里就用 [scope]。 */
     private val signIns: ChatGptSignIns = ChatGptSignIns(scope),
     /** 语音转文字的选择;测试和上手流程不传,卡片就不出现。 */
@@ -857,13 +868,19 @@ class ModelSetupViewModel(
 
     /** 如意授权换 Key,列出模型,按如意预设存下(或更新)那一家。回调走 mika:// scheme,由 MainActivity 交给 [RuyiSignIn]。 */
     private suspend fun connectRuyi(browser: SignInBrowser): Pair<Provider, ModelListResult> {
-        val key = signInWithRuyi(
+        val signed = signInWithRuyi(
             store.ruyiAuth, browser::open,
             awaitCode = { attempt, timeoutMs -> RuyiSignIn.awaitCode(attempt.state, timeoutMs) },
         )
+        // 同一个登录顺带把远程控制注册掉:授权码一次性,不在这里用掉这张票,Remote 就只能
+        // 自己再开一个登录页。失败只记一笔 —— 模型已经能用了,远程还能走配对码。
+        withContext(io) {
+            runCatching { onRuyiSignedIn(signed.accessToken) }
+                .onFailure { Log.w(TAG, "远程控制随如愿登录注册失败", it) }
+        }
         val existing = store.ruyiAccount()
-        val listed = store.listModels(ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, key.value)
-        return store.connectRuyi(key.value, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty()) to listed
+        val listed = store.listModels(ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, signed.key.value)
+        return store.connectRuyi(signed.key.value, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty()) to listed
     }
 
     /** 把短码留在界面上。打开浏览器由登录流程自己做,这里不再开一次。 */

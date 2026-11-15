@@ -45,6 +45,16 @@ fun RemoteHome(
     // 库里不反向依赖宿主 MainActivity；宿主（App 壳或米卡）通过外部浏览器打开登录页，
     // 返回是否成功启动。默认不打开（纯库/测试场景）。
     openBrowser: (String?) -> Boolean = { false },
+    /**
+     * 是否在「其他登录方式」里保留如意账号登录。宿主自己已经有如意登录时传 false：
+     * 设备在宿主那次登录里就注册好了，这里再摆一个入口就是第二个登录页。
+     */
+    showSso: Boolean = true,
+    /**
+     * 宿主（如愿）嵌入时传入：远程控制根页给一个显式「返回如愿」，返回键也退回宿主。
+     * 独立 App 时为 null，它自己就是根。
+     */
+    onExit: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -134,6 +144,6 @@ fun RemoteHome(
     }
 
     RuyiTheme {
-        DshApp(session = session, signIn = signIn)
+        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit)
     }
 }

@@ -28,6 +28,16 @@ data class RuyiAttempt(val state: String, val verifier: String, val redirectUri:
 data class RuyiKey(val id: Long, val value: String, val name: String)
 
 /**
+ * 一次如意登录的全部产物。
+ *
+ * [accessToken] 是 AI-Server 自己签的账号票，本来只用于换 [key]，用完就丢。现在多留一份
+ * 给「远程控制」：AI-Server 的授权码一次性且 60 秒过期，同一个码换不出第二份票，所以
+ * Remote 不能自己再发起一次授权 —— 它必须复用这一次登录拿到的票去中继换会话，否则就是
+ * 第二个登录页。票只在内存里传一次，不落盘、不进日志。
+ */
+data class RuyiSignIn(val key: RuyiKey, val accessToken: String)
+
+/**
  * 用如意账号登录(AI-Server 桌面的同一套协议):在浏览器里打开授权页,用户在如意/统一账号里登录后,带着 `code`
  * 经 scheme 回调回到如愿,再用 `code` 和校验串换账号 JWT,列出账号下的推理 Key,取第一把 active 的。之后这把 Key
  * 和手动填 Key 的服务商一样用(列模型、调用都走 [API_BASE])。
@@ -78,11 +88,12 @@ class RuyiAuth(
     }
 
     /** 用 `code` 和校验串换账号 JWT(`POST /api/v1/auth/desktop/exchange`),再列出账号下的 Key。 */
-    suspend fun signIn(code: String, attempt: RuyiAttempt): RuyiKey {
+    suspend fun signIn(code: String, attempt: RuyiAttempt): RuyiSignIn {
         val account = exchange(code, attempt)
         val keys = listKeys(account.accessToken, account.userId)
-        return keys.firstOrNull()
+        val key = keys.firstOrNull()
             ?: throw AccountSignInException(AccountSignInFailure.Rejected, "no_key")
+        return RuyiSignIn(key, account.accessToken)
     }
 
     /** 换账号 JWT。响应是 `{code:0, data:{access_token,…}}` 信封。出错只带回状态码,不带响应正文。 */
@@ -189,7 +200,7 @@ class RuyiAuth(
  * 走一遍如意登录:生成一次随机校验([auth.newAttempt])→ [openBrowser] 打开授权页 → [awaitCode] 等浏览器跳回
  * scheme 回调(授权码在 URL 片段里,由接收方直接读 fragment)→ 换账号 JWT、列 Key、取第一把。换 Key 这一步
  * (至多 [finishTimeoutMs])算入总时长;等回调至多 [timeoutMs]。失败抛 [AccountSignInException];取消照常往外抛。
- * 返回换到的推理 Key。
+ * 返回换到的推理 Key,以及那次登录的账号票([RuyiSignIn.accessToken],远程控制要靠它注册设备)。
  */
 suspend fun signInWithRuyi(
     auth: RuyiAuth,
@@ -197,7 +208,7 @@ suspend fun signInWithRuyi(
     awaitCode: suspend (RuyiAttempt, Long) -> Map<String, String>?,
     timeoutMs: Long = 5 * 60_000L,
     finishTimeoutMs: Long = 20_000L,
-): RuyiKey {
+): RuyiSignIn {
     val attempt = auth.newAttempt()
     openBrowser(auth.authorizeUrl(attempt))
     val params = awaitCode(attempt, timeoutMs) ?: throw AccountSignInException(AccountSignInFailure.TimedOut)
