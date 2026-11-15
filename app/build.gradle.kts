@@ -16,6 +16,19 @@ val gitHash: String = runCatching {
 val ruyiVersionName = "0.1.48"
 val ruyiVersionCode = 49
 
+// apphub 地址由构建注入：debug 默认本地，release/perf 必须由 -PapphubBaseUrl 指定。
+// 生产地址形如 https://<域名>/apphub（网关剥前缀），本地联调 http://127.0.0.1:3100。
+val defaultApphubBaseUrl = "http://127.0.0.1:3100"
+val apphubBaseUrl: String? = providers.gradleProperty("apphubBaseUrl").orNull
+    ?.trim()
+    ?.trimEnd('/')
+    ?.takeIf { it.isNotEmpty() }
+if (apphubBaseUrl == null &&
+    gradle.startParameter.taskNames.any { Regex("(?i)(perf|release)").containsMatchIn(it) }
+) {
+    throw GradleException("出 release/perf 包必须传 -PapphubBaseUrl=<apphub 地址>（例如 https://<域名>/apphub）")
+}
+
 // 发布签名：读 app/release-signing.properties（不入库）。缺失时 release 回退到调试签名，避免构建失败。
 val releaseSigning = file("release-signing.properties")
     .takeIf { it.exists() }
@@ -173,6 +186,12 @@ tasks.withType<Test>().configureEach {
 // 调试包保持 app-debug.apk 不变，脚本与真机验收流程仍按原名引用。
 androidComponents {
     onVariants { variant ->
+        variant.buildConfigFields.put(
+            "APPHUB_BASE_URL",
+            com.android.build.api.variant.BuildConfigField(
+                "String", "\"${apphubBaseUrl ?: defaultApphubBaseUrl}\"", "apphub 服务地址",
+            ),
+        )
         if (variant.buildType == "debug") return@onVariants
         variant.outputs.forEach { output ->
             val abi = output.filters

@@ -177,7 +177,7 @@ preflight();
 // 1) 构建
 if (!SKIP_BUILD) {
   log('构建', ':app:assembleRelease');
-  sh(`${join(ROOT, 'gradlew')} :app:assembleRelease`, { cwd: ROOT });
+  sh(`${join(ROOT, 'gradlew')} :app:assembleRelease -PapphubBaseUrl="${APPHUB_BASE_URL}"`, { cwd: ROOT });
 }
 if (!existsSync(apkLocal)) {
   fail(`未找到产物 APK：${apkLocal}。构建是否成功？或用 --abi 指定其他架构。`, 3);

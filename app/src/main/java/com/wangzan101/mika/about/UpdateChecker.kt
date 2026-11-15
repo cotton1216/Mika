@@ -51,20 +51,19 @@ object UpdateSchedule {
 }
 
 /**
- * 检查更新,没有自己的服务器:只问 GitHub 发布列表接口,按 tag 前缀挑出如愿自己的最新发布;
- * 连不上、限流、读不懂、没有如愿的发布都算这次没查到。
+ * 检查更新:问自建发布平台(apphub)的检查更新接口,平台按 versionCode 判有没有新版;
+ * 连不上、读不懂算这次失败,平台还没有已发布版本算「已是最新」。
  * 查到的版本和上次自动检查的时间存在 [file],App 重开后红点还在;装了新版后当前版本不再落后,红点自然消失。
  * 这里只检查版本；用户主动下载、安装由 [ApkUpdater] 处理。
  */
 class UpdateChecker(
     private val file: File,
     private val currentVersion: String,
+    private val currentVersionCode: Int,
+    private val baseUrl: String = MikaLinks.RELEASES,
     private val client: OkHttpClient = defaultClient(),
-    private val releaseApi: String = MikaLinks.LATEST_RELEASE_API,
     private val now: () -> Long = System::currentTimeMillis,
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
-    /** 本机支持的 ABI(Build.SUPPORTED_ABIS),用来挑发布里合适的 APK;为空时取全架构包。 */
-    private val deviceAbis: List<String> = emptyList(),
 ) {
     private val _state = MutableStateFlow(UpdateState())
     val state: StateFlow<UpdateState> = _state.asStateFlow()
@@ -101,23 +100,23 @@ class UpdateChecker(
         mutex.withLock {
             loadLocked()
             if (manual) _state.update { it.copy(status = CheckStatus.Checking) }
-            val found = withContext(Dispatchers.IO) { fetchLatest() }
-            if (found != null) {
-                _state.update { it.withLatest(found) }
+            val result = withContext(Dispatchers.IO) { fetchLatest() }
+            // 查成功就以平台的答案为准:平台还没有已发布版本时也会把上一次的旧红点清掉
+            result.onSuccess { found -> _state.update { it.withLatest(found) } }
+            if (manual) _state.update {
+                it.copy(status = if (result.isSuccess) CheckStatus.Done else CheckStatus.Failed, manualRounds = it.manualRounds + 1)
             }
-            if (manual) _state.update { it.copy(status = if (found != null) CheckStatus.Done else CheckStatus.Failed, manualRounds = it.manualRounds + 1) }
             save()
         }
     }
 
-    /** GitHub 上如愿的最新发布;没查到为空。 */
-    internal fun fetchLatest(): ReleaseInfo? = runCatching { Releases.latest(get(releaseApi), deviceAbis) }.getOrNull()
+    /** 平台上最新的一版:请求或响应异常时带着异常失败,平台还没有已发布版本时成功但为空。 */
+    internal fun fetchLatest(): Result<ReleaseInfo?> =
+        runCatching { AppHub.parse(get(MikaLinks.checkUrl(baseUrl, currentVersionCode))) }
 
     private fun get(url: String): String {
         val req = Request.Builder().url(url)
             .header("User-Agent", "Yuan/$currentVersion")
-            .header("Accept", "application/vnd.github+json")
-            .header("X-GitHub-Api-Version", "2022-11-28")
             .build()
         client.newCall(req).execute().use { resp ->
             if (!resp.isSuccessful) error("HTTP ${resp.code}")
@@ -126,7 +125,11 @@ class UpdateChecker(
     }
 
     private fun UpdateState.withLatest(r: ReleaseInfo?): UpdateState =
-        copy(latest = r, update = r?.takeIf { AppVersion.isNewer(it.version, currentVersion) })
+        copy(latest = r, update = r?.takeIf { isNewer(it) })
+
+    /** 平台给的是 versionCode,按它比;缓存里没有 code 时退回按版本号比。 */
+    private fun isNewer(r: ReleaseInfo): Boolean =
+        r.versionCode?.let { it > currentVersionCode } ?: AppVersion.isNewer(r.version, currentVersion)
 
     private fun loadLocked() {
         if (loaded) return
@@ -154,7 +157,7 @@ class UpdateChecker(
     }
 
     companion object {
-        /** 有的网络连 GitHub 时快时慢:超时放短,失败就换备用来源。走设置 › 网络代理。 */
+        /** 连不上时尽快失败,不让检查更新拖住界面。走设置 › 网络代理。 */
         fun defaultClient(): OkHttpClient = NetProxy.shared.client(OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.SECONDS)
             .readTimeout(8, TimeUnit.SECONDS)

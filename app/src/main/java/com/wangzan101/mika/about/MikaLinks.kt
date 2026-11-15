@@ -1,5 +1,6 @@
 package com.wangzan101.mika.about
 
+import com.wangzan101.mika.BuildConfig
 import com.wangzan101.mika.R
 import com.wangzan101.mika.i18n.tr
 import java.net.URLEncoder
@@ -9,20 +10,26 @@ object MikaLinks {
     const val REPO = "https://github.com/wangzan101/Mika"
     const val REPO_LABEL = "github.com/wangzan101/如愿"
     const val README = "$REPO#readme"
-    const val RELEASES = "$REPO/releases"
     const val NEW_ISSUE = "$REPO/issues/new"
     const val X = "https://x.com/wangzan101"
     const val X_HANDLE = "@wangzan101"
 
-    /**
-     * 如愿和原来的 Mika 包共用一个仓库发布,但 tag 各带各的前缀:Mika 发布是 v0.1.x,
-     * 如愿发布是 [RELEASE_TAG_PREFIX] 开头(如 yuan-v0.1.45),互不打扰。
-     * 检查更新只挑带这个前缀的发布,资产命名相应是 `如愿-v<版本>.apk` 与 `如愿-v<版本>-arm64.apk`。
-     */
-    const val RELEASE_TAG_PREFIX = "yuan-v"
+    /** 发布页:自建发布平台(apphub)首页。地址随构建注入(见构建脚本的 apphubBaseUrl)。 */
+    val RELEASES: String get() = BuildConfig.APPHUB_BASE_URL
 
-    /** 检查更新只问 GitHub 发布列表接口(不登录,每小时有次数限制),按 [RELEASE_TAG_PREFIX] 挑出如愿自己的最新发布。 */
-    const val LATEST_RELEASE_API = "https://api.github.com/repos/wangzan101/Mika/releases?per_page=30"
+    /** 平台上的应用标识,必须是 applicationId(不是 namespace)。 */
+    const val APP_KEY = "com.zl.ruyiai.yuan"
+
+    /** 发布渠道,和发版脚本登记的 channel 一致。 */
+    const val CHANNEL = "official"
+
+    /**
+     * 检查更新的接口地址。[baseUrl] 是 apphub 地址(生产带 `/apphub` 前缀),
+     * 旧版本号由客户端带上,平台按 versionCode 判有没有新版本。
+     */
+    fun checkUrl(baseUrl: String, versionCode: Int): String =
+        "${baseUrl.trimEnd('/')}/api/v1/update/check" +
+            "?appKey=$APP_KEY&platform=android&channel=$CHANNEL&currentVersionCode=$versionCode"
 
     /** 反馈时预先填进问题模板的设备与版本信息。 */
     data class Device(

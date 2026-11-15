@@ -1,6 +1,9 @@
 package com.wangzan101.mika.about
 
+import com.wangzan101.mika.BuildConfig
+import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.io.File
 import java.security.MessageDigest
 
@@ -17,18 +20,28 @@ class ApkRejected(val reason: Reason) : Exception(reason.name) {
 }
 
 /**
- * 下载地址只接受官方仓库的 HTTPS 发布附件。之后的跳转(到 GitHub 的附件存储)由系统下载服务处理、我们管不到,
- * 所以下载完的文件一律再验:大小与 SHA-256(发布元数据给了才验)、包名、版本号、签名证书。
+ * 下载地址只接受官方发布通道的 HTTPS 直链:OSS 下载域名(过渡期兼容 GitHub 发布附件)。
+ * 之后的跳转由系统下载服务处理、我们管不到,所以下载完的文件一律再验:
+ * 大小与 SHA-256(平台给了才验)、包名、版本号、签名证书。
  */
 internal object ApkIntegrity {
-    private val official = "${MikaLinks.RELEASES}/download/".toHttpUrl()
+    /** 按主机放行:换桶/换路径不用跟着改,真正的防篡改靠下载后的摘要与签名校验。 */
+    private val allowedHosts = setOf("oss-chuangxin.thchengtay.com", "github.com")
 
     fun requireOfficialUrl(url: String) {
         val parsed = url.toHttpUrl()
-        require(parsed.isHttps && parsed.host == official.host && parsed.port == 443)
+        require((parsed.isHttps && parsed.host in allowedHosts && parsed.port == 443) || devHostMatches(parsed))
         require(parsed.username.isEmpty() && parsed.password.isEmpty())
-        require(parsed.encodedPath.startsWith(official.encodedPath))
         require(parsed.encodedPath.endsWith(".apk", ignoreCase = true))
+    }
+
+    /**
+     * 开发/测试构建注入的是 http 发布地址时,允许从同一主机取包(本地联调用)。
+     * 线上注入 https 时不生效,信任范围仍然只有上面的白名单域名。
+     */
+    private fun devHostMatches(url: HttpUrl): Boolean {
+        val base = BuildConfig.APPHUB_BASE_URL.toHttpUrlOrNull() ?: return false
+        return base.scheme == "http" && url.scheme == "http" && url.host == base.host
     }
 
     /** 给了摘要就必须是 sha256 且对得上;别的写法也算对不上,不放过。 */
