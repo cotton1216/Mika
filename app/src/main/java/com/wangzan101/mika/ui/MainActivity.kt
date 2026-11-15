@@ -959,8 +959,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
     // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
     val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }
     // 横向平铺:两个菜单项与球心同高、朝屏幕内侧一字排开(球 → 如意 → 如愿)。
-    // flatReachX = 球心到最外侧按钮外边缘的水平距离(球半径 + 两个按钮宽 + 两处间隙)。
-    val flatReachX = halfButtonPx + itemW * 2 + marginPx * 2
+    // 两按钮总宽 + 球半径 ≈ 226dp(球半径 26 + 按钮宽 84×2 + 间距 16×2),略大于半屏宽。
     // 纵向只按按钮半高 + 边距即可(按钮与球心同高,不再上下错开)。
     val flatReachY = itemH / 2 + marginPx
 
@@ -970,10 +969,11 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
         // 默认贴右下、但在输入框上方(平铺朝左上展开)。
         val cur = if (centerX >= 0) IntOffset(centerX, centerY)
                   else IntOffset(maxW - halfButtonPx - marginPx, maxH - halfButtonPx - bottomReservePx)
-        // 球在右半屏就朝左排、左半屏朝右排;贴边那一侧只留半颗球 + 边距,平铺朝内不越界。
+        // 球在右半屏就朝左排、左半屏朝右排,按钮始终朝屏幕内侧展开。
+        // 球心横向拖拽范围与展开方向解耦:球可在全屏左右自由拖动(只留贴边余量),
+        // 不再被「展开方向」卡在某一半屏。仅当球心落在正中间约 40dp 窄带时,按钮
+        // 展开会轻微贴边 —— 这是横向平铺两按钮总宽 226dp 略大于半屏 205dp 的固有权衡。
         val openLeft = cur.x > maxW / 2
-        val minCx = if (openLeft) flatReachX else halfButtonPx + marginPx
-        val maxCx = if (openLeft) maxW - halfButtonPx - marginPx else maxW - flatReachX
         val minCy = topSafePx + flatReachY
         val maxCy = maxH - halfButtonPx - bottomReservePx
 
@@ -1050,10 +1050,11 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                             val baseY = if (centerY >= 0) centerY else cur.y
                             val candX = baseX + amount.x
                             val candY = baseY + amount.y
-                            // 按候选位置动态判断扇形朝向,避免拖拽跨中线时 clamp 滞后。
-                            val left = candX > maxW / 2
-                            val loX = if (left) flatReachX else halfButtonPx + marginPx
-                            val hiX = if (left) maxW - halfButtonPx - marginPx else maxW - flatReachX
+                            // 球心横向全屏自由拖动,只留贴边余量;不再按「展开方向」把球
+                            // 卡在某一半屏。此前 flatReachX(226dp) > 半屏(205dp),按展开
+                            // 方向 clamp 会在中线处留下约 40dp 死区,慢拖时球跨不过中线。
+                            val loX = halfButtonPx + marginPx
+                            val hiX = maxW - halfButtonPx - marginPx
                             centerX = candX.roundToInt().coerceIn(loX, hiX)
                             centerY = candY.roundToInt().coerceIn(minCy, maxCy)
                         },
