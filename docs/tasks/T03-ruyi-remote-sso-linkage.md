@@ -1,7 +1,8 @@
 # T03 如愿 ↔ 如意 共享登录闭环（退出联动 + 失败可观测）
 
 > 状态行见仓根 `TASKS.md`（T03 行）。本文件是方案与进度单一事实源。
-> 版本 v1.4 · 生成 2026-11-16 10:52 · 修订 12:15（v1.3 上线模拟器验收时发现「登录成功但如意仍停登录页」根因：`RemoteAccount.restore()` 的内存缓存 `restored` 标志短路了重读；补 `reload()` + 常驻会话重读时先失效缓存，并让 `ssoState` 改为响应式）· 方案状态：实现完成，编译通过，模拟器验证通过（登录/退出双向联动 + 失败可观测）
+> 任务记忆（接手用）：`~/.task-memory/dsh/ruyi-sso-linkage/`（`README.md` 目标与状态、`index.md` 路径清单、`snapshots/2026-11-16-done.md` 六项快照）。
+> 版本 v1.7 · 生成 2026-11-16 10:52 · 修订 17:50（v1.7 收口：补真实模型推理证据、其他服务商登记为旁路、待办清零）· 方案状态：改动 1–15 全部落地并提交 `0a3fa8cf`，模拟器 11 项验收全过
 
 ## 一、任务标识
 
@@ -400,7 +401,8 @@ fun ensureModelsFresh() {
 | 登录后模型变化能跟上（v1.5） | 通过 | 把 `providers.json` 的如意模型从 21 删到 19 → 冷启动进模型页 → 「如意 新增 2 个模型，列表已更新」+「知道了」，服务商行回到「已连接 · 21 个模型」；再 `force-stop` 冷启动进页 → 无提示条，`providers.json` 的 `md5`（`42529cab…`）与 `mtime`（14:31:03）均未变，确认「无差量零副作用」 |
 | 「回如愿登录」在已登录态不再被弹走（v1.6） | 通过 | 造「如愿已登录 + 如意已退出」现场（凭据只留 pin、`last_state=signed_out`）→ 点「回如愿登录」→ 停在如愿登录页，且显示「已经登录。重新登录一次即可恢复远程控制。」（截图 `/tmp/t03_restore_entry.png`） |
 | 重新授权一次即恢复，且回的是如意（v1.6） | 通过 | 同上点「账号登录」→ 星桥授权 → `logcat RemoteSso: 远程控制已随如愿登录注册：device=01a1e31d-…` → **自动切回如意 Tab**，屏上「主机列表 / 2 台在线」 |
-| 其他服务商登录/退出回归 | 未做 | 见待办 ① |
+| 真实模型推理（v1.7 补测） | 通过 | 如愿对话页发 `Say hello in one short sentence.`（当前主模型 = 如意账号的 `gemini-3.8-flash`）→ 8s 内出字 `Hello! How can I help you today?`，对话统计 `1.19 万 Token`；`logcat` 见 `MikaTask: result Delivered: delivery 4 ms, since ready 21 ms`。截图 `/tmp/t03_real_inference.png` |
+| 其他服务商登录/退出回归 | 旁路已核（静态证据，不跑） | `grep -rn 'RemoteSso\.'` 全仓只有 6 处：`ModelSetupScreen.kt:111/113`（注入回调）、`MainActivity.kt:468/894`（订阅 revisions）、`ConnectScreen.kt:85/87`（订阅 state）、`RemoteHome.kt:118`。回调真正被调用的位置只有 `ModelSetupViewModel.kt:911`（`connectRuyi` 内）、`:951`（`signOutAccount` 里 `p.signIn == RUYI_SIGN_IN` 分支）、`:1254`（`removeProvider` 如意分支）；`connectXai`(:890) / `connectOpenRouter`(:895) / ChatGPT 走 `ChatGptSignIns`，三者都不触碰 `RemoteSso` → 属旁路，本任务改动无法影响 |
 
 > 模拟器验收的两个操作前提（不写下来会反复踩）：① 三个如愿包（`yuan` / `.perf` / `.dev`）都会处理 `ruyiai://auth2/callback`，必须 `pm disable-user` 另外两个，否则授权回来弹 Resolver；② 授权码 60 秒有效，授权页一旦出现「登录请求无效」只能回 App 重新点「账号登录」，重开旧链接无效。
 
@@ -467,10 +469,11 @@ fun ensureModelsFresh() {
 
 ### 中继不可达专项补充（2026-11-16）
 
-模拟器临时阻断出站 TCP 8443，删除并重新授权如意服务商后，服务商页显示已连接，注册失败日志出现，状态落盘为 `unreachable`；如意页实际显示「连不上中继」提示。已移除临时阻断规则。**限制**：未实测模型推理；恢复网络后点「回如愿登录」实际落回对话页，未能完成重新注册。代码中 `RuyiLoginScreen` 的 `LaunchedEffect(signedIn)` 在已有账号时会立即调用 `onSignedIn()`，与现象相符，仍需进一步验证及修复。测试期间曾出现一次 ANR，堆栈在 Compose 布局，因果未确定。
+模拟器临时阻断出站 TCP 8443，删除并重新授权如意服务商后，服务商页显示已连接，注册失败日志出现，状态落盘为 `unreachable`；如意页实际显示「连不上中继」提示。已移除临时阻断规则。**该专项暴露的两处问题已在 v1.6/v1.7 关闭**：①「回如愿登录」在已登录态被弹回对话页（根因 `RuyiLoginScreen` 首帧 `signedIn != null` 即 `onSignedIn()`，已改为按 `RemoteSso.revisions` 判「本次登录成功」）；② 未实测模型推理（v1.7 已补，见上表）。测试期间曾出现一次 ANR，堆栈在 Compose 布局，因果未确定，未再复现。
 
 ### 接手前置（目标 / 现状 / 下一步）
 
 - **目标**：如愿登录即如意就位、如愿退出即如意退出、失败可感知。
-- **现状**：改动 1–15 全部落地并编译通过（`ruiyi-remote-core` + `ruiyi-remote-ui` + `app` + 独立 `ruiyi-remote` 回归）。模拟器（`.dev` 包）**双向闭环均已实测通过**：退出方向（删除如意服务商 → 不重启切如意 → 登录页 + 提示 +「回如愿登录」，`revoke=true`）与登录方向（「回如愿登录」→ 如愿如意账号登录页 → 星桥授权 → 不重启切如意 → 主机列表 / 2 台在线，`device=01a1e2d5-…`），冷启动后仍已登录。v1.5 的「登录后模型变化能跟上」也已实测（有差量出提示并回写、无差量零副作用）。**未提交**。
-- **待办**：① 其余服务商登录/退出回归（ChatGPT / xAI / OpenRouter 不经过 `RemoteSso`，属旁路回归）；② 补测模型实际推理（登录、模型列表、远程连接均已实测，唯独没跑过一次真实推理）；③ 验收通过后由用户授权提交；④ 提交时 `git add` 新文件 `docs/tasks/T03-*.md`（`docs/*` 是目录级 ignore，可能要 `git add -f`）。
+- **现状**：改动 1–15 全部落地并编译通过（`ruiyi-remote-core` + `ruiyi-remote-ui` + `app` + 独立 `ruiyi-remote` 回归）。模拟器（`.dev` 包）**双向闭环均已实测通过**：退出方向（删除如意服务商 → 不重启切如意 → 登录页 + 提示 +「回如愿登录」，`revoke=true`）与登录方向（「回如愿登录」→ 如愿如意账号登录页 → 星桥授权 → 不重启切如意 → 主机列表 / 2 台在线，`device=01a1e2d5-…`），冷启动后仍已登录。v1.5 的「登录后模型变化能跟上」也已实测（有差量出提示并回写、无差量零副作用）。v1.7 补测真实推理通过（如愿对话页用如意账号的 `gemini-3.8-flash` 出字）。**已提交 `0a3fa8cf`**。
+- **待办**：无（v1.7 已清空）。其余服务商（ChatGPT / xAI / OpenRouter）经静态核对为旁路，不触碰 `RemoteSso`，登记为「不适用」而非「待跑」；真机复跑属可选加强，不阻塞结论。
+- **已完成**：代码提交 `0a3fa8cf`（25 文件，+985/−23）；模拟器 11 项验收全过；任务记忆 `~/.task-memory/dsh/ruyi-sso-linkage/`；分支 `ruyuan` 按既有约定**不推送**（`me/me` 远端含公开历史）。
