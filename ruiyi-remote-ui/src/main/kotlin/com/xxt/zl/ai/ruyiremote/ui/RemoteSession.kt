@@ -101,6 +101,32 @@ class RemoteSessionController(
      */
     private val connectionEpoch = ConnectionEpoch()
 
+    /**
+     * 自动连接用的一次性标记：已经为哪些 host 发起过「唯一在线机自动连接」。
+     *
+     * 主机列表在抽屉里每 20s 轮询一次（`SessionDrawer` 的 refreshHosts 循环），
+     * 若不加标记，唯一在线机会在每次刷新后再连一次——中继对同一个 client 只保留
+     * 一条链路，重复连接只会把刚建好的链路替换掉，界面表现为「一直正在连接」。
+     * 所以每台机在一次登录内只自动试一次。
+     */
+    private val autoConnectTried = mutableSetOf<String>()
+
+    /**
+     * 用户主动断开过：本次登录内不再自动连回去。
+     *
+     * 没有这个开关，用户点「断开」后下一轮轮询就会把他重新连上，按钮等于失效。
+     * 一旦他手动连上任意一台，说明意图明确，标记清空，自动连接恢复。
+     */
+    private var autoConnectSuppressed = false
+
+    /**
+     * 上次连过的电脑，供「网络恢复」时补连。
+     *
+     * 掉线后 [connectedHost] 会被清空，但「网回来该连谁」还得有答案，所以单独记一份。
+     * 主动断开与登出都会清掉它——那是用户的明确意图，不能替他连回去。
+     */
+    private var reconnectTarget: RemoteHost? = null
+
     val serverUrl: String get() = account.serverUrl
 
     /**
@@ -197,12 +223,38 @@ class RemoteSessionController(
         scope.launch {
             try {
                 hosts = account.listHosts().sortedWith(compareByDescending<RemoteHost> { it.online }.thenBy { it.name })
+                autoConnectSoleOnlineHost()
             } catch (e: Exception) {
                 hostsError = describeWithCode(e, "读取电脑列表")
             } finally {
                 hostsLoading = false
             }
         }
+    }
+
+    /**
+     * 只有一台电脑在线时直接连它，省掉「打开抽屉 → 选电脑 → 等连接」三步。
+     *
+     * 触发点挂在 [refreshHosts] 成功之后：冷启动 [restore]、抽屉轮询、手动刷新
+     * 都会经过这里，不必再往界面层加生命周期钩子。判定条件刻意收得很窄——
+     * 已登录、当前既没连上也没在连、在线机器**恰好一台**；两台以上一律交回
+     * 用户选择，猜错主机比多点一次的代价高得多。
+     *
+     * 两条防重复：同一台机在一次登录内只自动试一次（[autoConnectTried]），
+     * 用户主动断开后本次登录内不再自动连（[autoConnectSuppressed]）。失败后
+     * 也不重试：`connect` 的 [ConnectionEpoch] 语义下与轮询叠加会让链路反复
+     * 替换，交给抽屉里的展开列表与「重试」入口兜底。
+     */
+    private fun autoConnectSoleOnlineHost() {
+        if (autoConnectSuppressed) return
+        if (phase !is AccountPhase.SignedIn) return
+        if (connection != null || connectingHostId != null) return
+        val online = hosts.filter { it.online }
+        if (online.size != 1) return
+        val host = online.first()
+        if (!autoConnectTried.add(host.id)) return
+        Log.i(TAG, "唯一在线电脑 ${host.name}，自动连接")
+        connect(host)
     }
 
     /**
@@ -216,6 +268,10 @@ class RemoteSessionController(
      */
     fun connect(host: RemoteHost) {
         if (connectingHostId != null) return
+        // 用户亲手选的机器：断开的抑制到此为止，之后唯一在线机仍可自动连。
+        autoConnectSuppressed = false
+        // 记下目标：网络恢复时靠它补连，而不是让用户自己再找一遍。
+        reconnectTarget = host
         val previous = connection
         val attempt = connectionEpoch.begin()
         connectingHostId = host.id
@@ -330,8 +386,35 @@ class RemoteSessionController(
         scope.launch { runCatching { open.onNetworkLost() } }
     }
 
+    /**
+     * 系统网络恢复（`ConnectivityManager.onAvailable`）时调用。
+     *
+     * 自动重连窗口只有约 82s（见 [watchTransport] 的退避表）。断网十分钟再开会超过它：
+     * 那时 [connection] 已被置空、只剩一句「需要重新连接」，而这台手机明明已经能上网了。
+     * 这里补一次连接，把「用户手动点重连」从常规路径降级为最后兜底。
+     *
+     * 只在「确实是因为掉网而断」时动手，判定条件：
+     * 已登录、没有任何连接/连接中、**[connectionError] 为空**（主动断开或上次连接失败都会
+     * 写别的状态，不属于本场景，也避免失败态被网络抖动反复重试）。
+     */
+    fun onNetworkAvailable() {
+        if (phase !is AccountPhase.SignedIn) return
+        if (autoConnectSuppressed) return
+        if (connection != null || connectingHostId != null) return
+        // 上一次是「连接失败」而不是「连上后掉线」：不自动重试，交给界面的重试入口。
+        if (connectionError != null) return
+        val target = reconnectTarget ?: return
+        Log.i(TAG, "网络恢复，重连 ${target.name}")
+        connect(target)
+    }
+
     /** 主动断开，但保留账号与 pin（下次还能连）。未完成的切换也一并作废。 */
     fun disconnect() {
+        // 点「断开」就是明确不想连着：本次登录内不再自动连回去，否则下一轮 20s
+        // 轮询会把他拽回来，这个按钮等于失效。
+        autoConnectSuppressed = true
+        // 也不再作为「网络恢复后补连」的目标。
+        reconnectTarget = null
         connectionEpoch.invalidate()
         val open = connection
         connection = null
@@ -376,6 +459,10 @@ class RemoteSessionController(
         connectingHostId = null
         reconnecting = false
         hosts = emptyList()
+        // 换账号/登出后旧标记一律作废：新账号的唯一在线机应当能正常自动连接。
+        autoConnectTried.clear()
+        autoConnectSuppressed = false
+        reconnectTarget = null
         phase = AccountPhase.SignedOut
         // 先摘掉引用再 close：否则通道关闭回调会把它当成「被动断线」弹提示。
         scope.launch { runCatching { open?.close() } }

@@ -123,7 +123,9 @@ fun SessionDrawer(
 ) {
     val p = LocalRuyiPalette.current
     var pane by remember { mutableStateOf(DrawerPane.Sessions) }
-    var hostsExpanded by remember { mutableStateOf(false) }
+    // 默认展开：抽屉的用途就是「先选电脑再看会话」，收起态只留一行时，多数人
+    // 第一步的动作都得是这个下拉。展开只在本次抽屉生命周期内有效，关掉即复位。
+    var hostsExpanded by remember { mutableStateOf(true) }
     var pendingKill by remember { mutableStateOf<RemoteJob?>(null) }
     // 抽屉是从对话页浮上来的，输入框此时通常还在焦点上：不收键盘的话，抽屉下半屏
     // 会被 IME 一直占着，任务详情只能看到三四行（实机截图可见）。
@@ -307,8 +309,9 @@ fun SessionDrawer(
 /**
  * 抽屉顶部的电脑切换区。
  *
- * 当前主机常驻一行，展开后才列全部电脑——抽屉纵向空间要留给会话列表，而大多
- * 数人平时只有一两台机器。连接中/失败时会自动展开，避免「点了没反应」。
+ * 首行常驻「当前 / 待选」状态，电脑列表**默认展开**：抽屉的第一件事就是选电脑，
+ * 让人再点一次才看到列表属于多余步骤。展开区高度上限 208dp 且可滚动，机器多的
+ * 账号不会把会话列表挤没。连接中/失败时同样保持展开，避免「点了没反应」。
  *
  * 顶部的关闭钮也挂在这一行：抽屉没有独立标题栏了，「我的电脑」就是视觉上的第一行，
  * 关闭钮放它右端既省一层高度，又仍在拇指够得到的右上角。

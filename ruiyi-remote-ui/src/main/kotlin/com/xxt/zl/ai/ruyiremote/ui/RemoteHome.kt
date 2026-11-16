@@ -126,6 +126,14 @@ fun RemoteHome(
         val connectivity = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val mainHandler = Handler(Looper.getMainLooper())
         val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                // 网络恢复：切 Wi-Fi、关飞行模式、进电梯出来都会走这里。断网时间一旦
+                // 超过重连窗口（约 82s，见 watchTransport 的退避表），connection 已被
+                // 置空，只靠心跳不会自愈；这里补一次连接，别让用户对着「需要重新连接」
+                // 发愣。已连接/已抑制（主动断开）时控制器内部是 no-op。
+                mainHandler.post { session.onNetworkAvailable() }
+            }
+
             override fun onLost(network: Network) {
                 // 回调在 ConnectivityService 的 binder 线程上。这里只读系统状态，
                 // 真正碰 Compose snapshot state 的动作一律 post 回主线程。
