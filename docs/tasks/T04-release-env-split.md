@@ -108,4 +108,4 @@
 - **三项外部验收**：`update/check?currentVersionCode=48` → `hasUpdate=true` `policy=optional`；`versions` → total=1 `published` `rolloutPercent=100`；OSS 直链 HEAD → 200 `application/vnd.android.package-archive` 132,555,025 B。
 - **真机安装验证**：Redmi `24122RKC7C`（`33325df`）卸载旧 debug 包后装正式包 `Success`，`pkgFlags` 中 `DEBUGGABLE`/`TEST_ONLY` 消失、签名哈希变化、`MainActivity` 正常前台无崩溃。
 - **已知偏差**：`BETA=true` 未改（关于页显示 Beta），留待下个版本。
-- **提交**：本次改动（技能两文件 + 本文件 + `TASKS.md` 状态）已提交，Commit ID 见 `TASKS.md` T04 行留档说明。
+- **提交**：本次改动（技能两文件 + 本文件 + `TASKS.md` 状态置 `done`）提交于 `61d03b60`（2026-11-16），未 push；`app/release-signing.properties` 因 gitignore 未入库（本机文件，权限 600）。
