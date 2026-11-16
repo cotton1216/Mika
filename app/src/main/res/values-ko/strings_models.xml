@@ -45,6 +45,7 @@
     <string name="save">저장</string>
     <string name="models_models">모델</string>
     <string name="models_models_note">모델을 눌러 메인, 비전, 경량 모델로 사용하세요.</string>
+    <string name="models_fresh_note">%1$s에 새 모델 %2$d개가 있습니다. 목록을 업데이트했습니다</string>
     <string name="models_no_list_note">이 제공업체에는 모델 목록이 없어요. 이 제공업체의 모델을 쓰려면 “역할”에서 문서에 나온 이름을 직접 입력하세요.</string>
     <string name="models_untested_note">이 제공업체는 테스트 없이 저장되어서 동작 여부를 알 수 없어요. 모델을 골라 테스트하거나 새로고침을 눌러 모델 목록을 가져오세요.</string>
     <string name="models_not_listed">이 제공업체의 모델 목록을 아직 가져오지 않았어요.</string>
@@ -196,6 +197,7 @@
     <string name="ruyi_login_cta">루이 계정으로 로그인</string>
     <string name="ruyi_login_waiting">승인 대기 중…</string>
     <string name="ruyi_login_skip">나중에</string>
+    <string name="ruyi_login_restore_hint">이미 로그인되어 있습니다. 다시 로그인하면 원격 제어가 복구됩니다.</string>
     <string name="signin_row_ruyi">루이(Ruyi) 계정으로 로그인해 모델 목록을 동기화합니다</string>
     <string name="signin_ruyi_title">루이 계정으로 로그인</string>
     <string name="signin_ruyi_body">루이 인증 페이지를 엽니다. 로그인하면 루이가 전용 추론 키를 발급하고, 사용량은 루이 계정에서 차감되며 계정의 모델을 바로 사용할 수 있습니다.</string>

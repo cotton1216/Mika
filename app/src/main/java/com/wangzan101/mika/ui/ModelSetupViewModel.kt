@@ -193,6 +193,22 @@ data class AddForm(
 }
 
 /**
+ * 进模型页时静默重列发现的「多出来的模型」,给界面报一次。
+ *
+ * 只报数量、不报名字:新增可能是一批相似的名字(如 `gemini-4-*`),列出来只会把提示条撑长;
+ * 要知道具体是哪些,点进这家看完整列表就是了。
+ */
+data class FreshModels(val providerName: String, val count: Int)
+
+/**
+ * 静默重列的间隔。
+ *
+ * 账号下的模型不会一分钟一变,[ModelSetupViewModel.ensureModelsFresh] 每次进模型页都列一次既慢又废流量;
+ * 十分钟内只列一次,够跟上「账号里加了模型」这个节奏,又不至于用户来回进出时反复打网络。
+ */
+private const val MODEL_SYNC_TTL_MS = 10 * 60 * 1000L
+
+/**
  * 配置模型(上手时)和设置 › 模型共用的全部状态:已连接的服务商、添加服务商表单、三个用途。
  * [providers]、[configs]、[roles] 是 [ProviderStore] 的快照,[keyed] 是存了 Key 的服务商 id;
  * [listing] 是各服务商刷新列表的进度(按服务商 id)。
@@ -243,6 +259,11 @@ data class ModelSetupUi(
     val systemSpeech: SystemCapability = SystemCapability(available = false, onDevice = false),
     /** 正在拿一小段录音试转的服务商 id;没有时为 null。 */
     val speechTesting: String? = null,
+    /**
+     * 静默重列刚发现的新增模型;显示过一次或用户点掉后清空。
+     * 见 [ModelSetupViewModel.ensureModelsFresh]。
+     */
+    val freshModels: FreshModels? = null,
 ) {
     /** 还没有服务商时表单总是展开。 */
     val showForm: Boolean get() = formOpen || providers.isEmpty()
@@ -323,6 +344,14 @@ class ModelSetupViewModel(
      * (模型已经能用),所以调用方负责兜住异常、这边不做容错。
      */
     private val onRuyiSignedIn: suspend (accessToken: String) -> Unit = {},
+    /**
+     * 如愿退出如意账号时顺手做的事:把远程控制那边的设备令牌一并清掉。
+     *
+     * 与 [onRuyiSignedIn] 成对。少了这一步,本机 Keystore 里还留着上一个账号的设备令牌,
+     * 退到「远程控制」会直接看到那个账号的电脑列表 —— 换号场景就是串号。注销失败不
+     * 阻断「退出如愿登录」这个用户显式动作,所以调用方负责兜住异常。
+     */
+    private val onRuyiSignedOut: suspend () -> Unit = {},
     /** 登录跑在哪:界面给的是 App 那一份(退到后台、界面重建都不断,期间开前台服务);测试里就用 [scope]。 */
     private val signIns: ChatGptSignIns = ChatGptSignIns(scope),
     /** 语音转文字的选择;测试和上手流程不传,卡片就不出现。 */
@@ -341,6 +370,10 @@ class ModelSetupViewModel(
 
     private var testJob: Job? = null
     private val refreshJobs = mutableMapOf<String, Job>()
+
+    /** 服务商 id -> 上次静默重列的时刻(见 [ensureModelsFresh])。只在内存里:重启后进模型页再列一次才准。 */
+    private val syncedAt = mutableMapOf<String, Long>()
+    private var syncJob: Job? = null
 
     init {
         // 别处(开发者选项等)改了存储时跟着更新
@@ -880,7 +913,10 @@ class ModelSetupViewModel(
         }
         val existing = store.ruyiAccount()
         val listed = store.listModels(ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, signed.key.value)
-        return store.connectRuyi(signed.key.value, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty()) to listed
+        val saved = store.connectRuyi(signed.key.value, (listed as? ModelListResult.Ok)?.models ?: existing?.models.orEmpty())
+        // 这一趟刚列过,别让模型页一打开又静默列一次
+        syncedAt[saved.id] = System.currentTimeMillis()
+        return saved to listed
     }
 
     /** 把短码留在界面上。打开浏览器由登录流程自己做,这里不再开一次。 */
@@ -908,7 +944,13 @@ class ModelSetupViewModel(
                 val p = store.provider(providerId) ?: return@withContext
                 when {
                     p.kind == ProviderConfig.Kind.Xai -> store.signOutAccount(providerId)
-                    p.signIn == ProviderStore.RUYI_SIGN_IN -> store.signOutRuyi(providerId)
+                    p.signIn == ProviderStore.RUYI_SIGN_IN -> {
+                        store.signOutRuyi(providerId)
+                        // 如愿这半边退出成功与否,远程那半边都要跟着清:留着设备令牌
+                        // 等于下一个登录的人继承上一个账号的电脑列表。
+                        runCatching { onRuyiSignedOut() }
+                            .onFailure { Log.w(TAG, "远程控制随如愿退出注销失败", it) }
+                    }
                     else -> store.signOutOpenRouter(providerId)
                 }
             }
@@ -1126,6 +1168,46 @@ class ModelSetupViewModel(
         _state.value.providers.filter { it.models == null && _state.value.listing[it.id] == null && listable(it) }.forEach { refresh(it.id) }
     }
 
+    /**
+     * 进模型页时静默重列如意账号的模型,把账号侧新增/下架的跟上。
+     *
+     * 为什么需要:登录时只列一次(见 [connectRuyi]),之后账号里加了模型,这台手机上永远看不到 ——
+     * 用户得自己进服务商详情点「刷新」,而大部分人不会想到那儿。
+     *
+     * 只做如意:其他账号登录那几家(ChatGPT、xAI、OpenRouter)的模型名放出来就基本不动,
+     * 每次进页面多打一次网络不划算;自家填 Key 的服务商更可能是不通的地址,静默请求会把页面拖慢。
+     *
+     * 静默的三条:不置 [ModelSetupUi.listing](不显示转圈)、失败不弹错(下次再试)、只在真有新增时才出声。
+     * 没有 `before` 的服务商(第一次列)不算新增 —— 那是「建立列表」,不是「列表变了」。
+     */
+    fun ensureModelsFresh() {
+        val p = store.ruyiAccount() ?: return
+        if (!listable(p)) return
+        val now = System.currentTimeMillis()
+        syncedAt[p.id]?.let { if (now - it < MODEL_SYNC_TTL_MS) return }
+        if (syncJob?.isActive == true) return
+        // 先记时间再发请求:失败也按这个间隔退避,不然每次重组都重打一次不通的网络
+        syncedAt[p.id] = now
+        val before = p.models?.map { it.id to it.displayName }.orEmpty()
+        syncJob = scope.launch {
+            val listed = withContext(io) { runCatching { store.listModels(p) }.getOrNull() }
+            val models = (listed as? ModelListResult.Ok)?.models?.takeIf { it.isNotEmpty() } ?: return@launch
+            // 一模一样就别回写:rememberModels 会写一次配置文件、还会让整页重新组合,
+            // 而「进来看看」是绝大多数情况,没变化时什么都不该发生。
+            if (models.map { it.id to it.displayName } == before) return@launch
+            withContext(io) { store.rememberModels(p.id, models) }
+            val known = before.map { it.first }.toSet()
+            if (known.isEmpty()) return@launch
+            val added = models.count { it.id !in known }
+            if (added == 0) return@launch
+            val name = store.provider(p.id)?.name ?: p.name
+            _state.update { snapshot(it.copy(freshModels = FreshModels(name, added))) }
+        }
+    }
+
+    /** 提示条看过了。 */
+    fun dismissFreshModels() = _state.update { it.copy(freshModels = null) }
+
     /** 退出了登录的列不了模型,等再登录。 */
     private fun listable(p: Provider) = if (p.signIn != null) store.hasKey(p.id) else when (p.kind) {
         ProviderConfig.Kind.ChatGpt -> store.chatGptSession(p.id)?.signedIn == true
@@ -1162,11 +1244,18 @@ class ModelSetupViewModel(
     fun removeProvider(providerId: String) {
         scope.launch {
             withContext(io) {
-                // ChatGPT 的先在服务端注销登录,再删
-                when (store.provider(providerId)?.kind) {
-                    ProviderConfig.Kind.ChatGpt -> store.signOutChatGpt(providerId)
-                    ProviderConfig.Kind.Xai -> store.signOutAccount(providerId)
-                    else -> Unit
+                val provider = store.provider(providerId)
+                // 登录态先在服务端注销,再删本地配置 —— 判据是「登录方式」而不是「服务商类型」:
+                // 如意来的那家只是个普通的 OpenAiCompat,单看类型认不出来,漏掉就会把
+                // 远程控制的设备令牌留在本机,下一个登录的人直接看到上一个账号的电脑列表。
+                when {
+                    provider?.signIn == ProviderStore.RUYI_SIGN_IN ->
+                        // 注销要联网,失败也不能挡住「删服务商」这个用户显式动作
+                        runCatching { onRuyiSignedOut() }
+                            .onFailure { Log.w(TAG, "删如意服务商时注销远程设备失败", it) }
+                    // ChatGPT 的先在服务端注销登录,再删
+                    provider?.kind == ProviderConfig.Kind.ChatGpt -> store.signOutChatGpt(providerId)
+                    provider?.kind == ProviderConfig.Kind.Xai -> store.signOutAccount(providerId)
                 }
                 // OpenRouter 授权来的 Key 随服务商一起删;OpenRouter 那边的 Key 要用户自己到 Keys 页面删
                 store.removeProvider(providerId)

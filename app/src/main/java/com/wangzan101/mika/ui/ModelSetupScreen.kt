@@ -109,6 +109,8 @@ internal fun rememberModelSetupViewModel(store: ProviderStore): ModelSetupViewMo
             // 一个登录就够了:如愿登录拿到的账号票顺手把远程控制的设备注册掉,
             // 用户进「远程控制」时直接是已登录状态,不会再看到第二个登录页。
             onRuyiSignedIn = { accessToken -> RemoteSso.signIn(context.applicationContext, accessToken) },
+            // 退出也要成对:不然本机还留着上一账号的设备令牌,进「远程控制」直接看到别人的电脑。
+            onRuyiSignedOut = { RemoteSso.signOut(context.applicationContext) },
             speech = (context.applicationContext as? MikaApp)?.speech,
             systemSpeech = {
                 val silent = (context.applicationContext as? MikaApp)?.speech?.systemSilent?.value ?: false
@@ -148,6 +150,9 @@ fun ModelSetupScreen(
     LaunchedEffect(ui.chatGptAccount?.signedIn, ui.chatGptSignIn) {
         if (signInSheet == SignInKind.ChatGpt && ui.chatGptAccount?.signedIn == true && ui.chatGptSignIn == ListState.Idle) signInSheet = null
     }
+    // 进模型页顺手把如意账号那边的模型跟上:登录后账号里加了模型,这台手机上也能看到。
+    // 静默(不转圈、失败不弹错),只在真有新增时出一条提示;间隔见 ensureModelsFresh。
+    LaunchedEffect(Unit) { vm.ensureModelsFresh() }
 
     val provider = openProvider?.let { id -> ui.providers.firstOrNull { it.id == id } }
     val role = picking
@@ -223,6 +228,7 @@ fun ModelSetupScreen(
                     openSignIn = { signInSheet = it },
                     setReasoningEffort = vm::setReasoningEffort,
                     setModelContext = vm::setModelContext,
+                    dismissFreshModels = vm::dismissFreshModels,
                 ),
                 onBack,
             )
@@ -278,6 +284,8 @@ class ModelSetupActions(
     val openSignIn: (SignInKind) -> Unit = {},
     val setReasoningEffort: (ModelRole, String?) -> Unit = { _, _ -> },
     val setModelContext: (String, ModelContextSettings) -> Boolean = { _, _ -> false },
+    /** 关掉「账号那边多了几个模型」的提示条。 */
+    val dismissFreshModels: () -> Unit = {},
 )
 
 /**
@@ -351,6 +359,9 @@ private fun ProvidersSection(ui: ModelSetupUi, actions: ModelSetupActions) {
             }
         }
     }
+    ui.freshModels?.let { fresh ->
+        FreshModelsNote(ModelsCopy.freshModels(fresh.providerName, fresh.count), actions.dismissFreshModels)
+    }
     ui.probeNote?.let { FooterNote(it, Modifier.testTag("setup-probe-note"), color = c.warn) }
     // 刚存下的那家一个模型都没试通过:直接去选主模型(选的时候先试调用)
     if (ui.pickToProbe != null && ui.roles.main == null) {
@@ -362,6 +373,28 @@ private fun ProvidersSection(ui: ModelSetupUi, actions: ModelSetupActions) {
     }
     if (ui.showForm) AddProviderForm(ui, actions)
     FooterNote(ModelsCopy.KEY_NOTE)
+}
+
+/**
+ * 「账号那边多了模型」这一行的提示:一行字 + 「知道了」。
+ *
+ * 不做成横幅也不做成弹窗:这是用户没主动做的事(他只是在翻模型页),不该打断;
+ * 但确实改了列表,不吭声又等于让用户自己发现。
+ */
+@Composable
+private fun FreshModelsNote(text: String, onDismiss: () -> Unit) {
+    val c = MikaTheme.colors
+    Row(
+        Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Text(text, Modifier.weight(1f).testTag("fresh-models-note"), style = MikaType.Hint, color = c.accent)
+        Text(
+            tr(R.string.ok_got_it),
+            Modifier.clickable(onClick = onDismiss).testTag("fresh-models-dismiss"),
+            fontSize = 13.sp, fontWeight = FontWeight.Medium, color = c.accent,
+        )
+    }
 }
 
 /** 添加服务商:先是「用账号登录」一组(不用填 Key),再是填 Key 的:预设胶囊 → (自定义时)接口类型和地址 → API Key →「测试并保存」。 */

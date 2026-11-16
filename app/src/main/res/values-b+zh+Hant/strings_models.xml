@@ -45,6 +45,7 @@
     <string name="save">儲存</string>
     <string name="models_models">模型</string>
     <string name="models_models_note">點一個模型，可以把它用作主模型、看圖或輕量模型。</string>
+    <string name="models_fresh_note">%1$s 新增 %2$d 個模型，清單已更新</string>
     <string name="models_no_list_note">這家不提供模型列表。要用它的模型，在「用途」裡照說明文件填模型名。</string>
     <string name="models_untested_note">這家是跳過測試存下的，還不知道能不能用。選一個模型時會先試呼叫，也可以點右上角重新整理列出它的模型。</string>
     <string name="models_not_listed">還沒列出這家的模型。</string>
@@ -198,6 +199,7 @@
     <string name="ruyi_login_cta">帳號登入</string>
     <string name="ruyi_login_waiting">等待授權中…</string>
     <string name="ruyi_login_skip">暫不登入</string>
+    <string name="ruyi_login_restore_hint">已經登入。重新登入一次即可恢復遠端控制。</string>
     <string name="signin_row_ruyi">用如意帳號登入，模型列表自動同步</string>
     <string name="signin_ruyi_title">用如意帳號登入</string>
     <string name="signin_ruyi_body">會打開如意的授權頁。你登入後，如意給如愿一把屬於你的推理 Key，用量從你的如意帳號裡扣，一次就能用上帳號下的模型。</string>

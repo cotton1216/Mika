@@ -1017,4 +1017,7 @@ object ModelsCopy {
     fun providerLine(p: Provider, state: ListState?, roles: List<ModelRole>): String =
         if (state is ListState.Failed) LIST_FAILED
         else listOfNotNull(CONNECTED, modelCount(p), roles.takeIf { it.isNotEmpty() }?.let { tr(R.string.models_used_by, roleNames(it)) }).joinToString(" · ")
+
+    /** 静默重列发现账号侧多了模型时的提示(见 [ModelSetupViewModel.ensureModelsFresh])。 */
+    fun freshModels(name: String, count: Int): String = tr(R.string.models_fresh_note, name, count)
 }

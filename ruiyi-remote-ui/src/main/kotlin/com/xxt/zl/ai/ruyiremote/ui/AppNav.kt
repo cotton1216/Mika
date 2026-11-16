@@ -93,6 +93,11 @@ fun DshApp(
      * 值本身无意义，只看变化；0 为初始值，宿主每次点击 +1。
      */
     closeDrawerRequest: Int = 0,
+    /**
+     * 宿主（如愿）嵌入且自己承担如意账号登录时传入：登录首屏上给一条「回如愿登录」。
+     * 与 [showSso] 成对 —— 关掉这里的如意账号入口，就得把回去的路交出来。
+     */
+    onBackToHostSignIn: (() -> Unit)? = null,
 ) {
     val p = LocalRuyiPalette.current
     val signedIn = session.phase is AccountPhase.SignedIn
@@ -233,6 +238,7 @@ fun DshApp(
                     session = session,
                     signIn = signIn,
                     onOpenAlternatives = { push(Screen.AltSignIn) },
+                    onBackToHostSignIn = onBackToHostSignIn,
                 )
 
                 Screen.AltSignIn -> AlternateSignInScreen(

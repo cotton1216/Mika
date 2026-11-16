@@ -45,6 +45,7 @@
     <string name="save">Сохранить</string>
     <string name="models_models">Модели</string>
     <string name="models_models_note">Нажмите на модель, чтобы использовать её как основную, зрительную или лёгкую.</string>
+    <string name="models_fresh_note">У %1$s появилось новых моделей: %2$d. Список обновлён.</string>
     <string name="models_no_list_note">У этого провайдера нет списка моделей. Чтобы использовать его модель, введите её название из документации в разделе «Роли».</string>
     <string name="models_untested_note">Этот провайдер сохранён без проверки, поэтому неизвестно, работает ли он. Выберите модель, чтобы проверить её, или нажмите «Обновить», чтобы получить список моделей.</string>
     <string name="models_not_listed">Список моделей этого провайдера ещё не получен.</string>
@@ -210,6 +211,7 @@
     <string name="ruyi_login_cta">Войти с Ruyi</string>
     <string name="ruyi_login_waiting">Ожидание авторизации…</string>
     <string name="ruyi_login_skip">Не сейчас</string>
+    <string name="ruyi_login_restore_hint">Вы уже вошли. Войдите снова, чтобы восстановить удалённое управление.</string>
     <string name="signin_row_ruyi">Войдите с аккаунтом Ruyi, чтобы синхронизировать его модели</string>
     <string name="signin_ruyi_title">Вход с Ruyi</string>
     <string name="signin_ruyi_body">Откроется страница авторизации Ruyi. После входа Ruyi выдаст ваш собственный ключ вывода; расходы идут с вашего аккаунта Ruyi, и его модели сразу готовы.</string>

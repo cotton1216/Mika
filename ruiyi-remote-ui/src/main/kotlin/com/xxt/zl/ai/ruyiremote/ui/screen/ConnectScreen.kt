@@ -21,6 +21,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,10 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.xxt.zl.ai.ruyiremote.ui.AccountPhase
 import com.xxt.zl.ai.ruyiremote.ui.RemoteSessionController
+import com.xxt.zl.ai.ruyiremote.ui.RemoteSso
 import com.xxt.zl.ai.ruyiremote.ui.SignInController
 import com.xxt.zl.ai.ruyiremote.ui.SignInPhase
 import com.xxt.zl.ai.ruyiremote.ui.components.DshCard
@@ -62,10 +66,25 @@ fun ConnectScreen(
     session: RemoteSessionController,
     signIn: SignInController,
     onOpenAlternatives: () -> Unit,
+    /**
+     * 回宿主（如愿）走如意账号登录。为 null 时不渲染这个入口 —— 独立 App 自己就是根，
+     * 没有「别处」可回。
+     */
+    onBackToHostSignIn: (() -> Unit)? = null,
 ) {
     val p = LocalRuyiPalette.current
+    val context = LocalContext.current
     var code by remember { mutableStateOf("") }
     val failure = session.phase as? AccountPhase.Failed
+    // 宿主（如愿）那次联动留下的状态：注册失败，或随如愿退出被主动清除。两个场景
+    // 都要说明白 —— 这一屏没有如意账号入口（宿主传了 showSso=false），不写清楚
+    // 用户只会觉得「明明登录过，怎么又要登录」。独立 App 不写这个标记，天然不显示。
+    //
+    // 订阅 RemoteSso.state 而不是 remember 快照：登录/退出/注册失败都在同进程改标记，
+    // 登录页常驻组合、首帧之后不再重建，remember 会永远停在首帧那个值。
+    val ssoState by RemoteSso.state.collectAsState()
+    // 冷启动/首帧把落盘值同步进流；之后由 signIn/signOut 实时推。
+    LaunchedEffect(Unit) { RemoteSso.lastState(context) }
 
     Column(
         modifier = Modifier
@@ -107,6 +126,22 @@ fun ConnectScreen(
 
                 session.signedOutNotice?.let {
                     NoticeBar(it)
+                    Spacer(Modifier.height(Space.l))
+                }
+
+                ssoState?.let { state ->
+                    NoticeBar(ssoStateText(state))
+                    // 提示说「回如愿登录一次」，那就得有一条能真的回去的路：这一屏没有
+                    // 如意账号入口（宿主传了 showSso=false），只有配对码和账号密码。
+                    // 光写文字等于让用户自己去翻设置。
+                    if (onBackToHostSignIn != null) {
+                        Spacer(Modifier.height(Space.m))
+                        GhostButton(
+                            text = "回如愿登录",
+                            onClick = onBackToHostSignIn,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                     Spacer(Modifier.height(Space.l))
                 }
 
@@ -321,4 +356,18 @@ private fun SsoCard(signIn: SignInController) {
             }
         }
     }
+}
+
+/**
+ * 把 [RemoteSso.lastState] 的粗分类翻成人话。
+ *
+ * 关键是**指向同一件事**：恢复登录只有一条路 —— 回如愿用如意账号登录一次，这里
+ * 会自动重新注册。不要写成「在这里登录」：这一屏没有如意账号入口，那会把用户引到
+ * 配对码/账号密码那条岔路，等于制造第二个登录。
+ */
+private fun ssoStateText(state: String): String = when (state) {
+    "signed_out" -> "已随如愿退出而清除本机登录。回到如愿用如意账号登录一次，这里会自动恢复。"
+    "unreachable" -> "上次随如愿登录自动注册未完成：连不上中继。回到如愿重新登录一次即可恢复。"
+    "rejected" -> "上次随如愿登录自动注册未完成：账号校验没通过。回到如愿重新登录一次即可恢复。"
+    else -> "上次随如愿登录自动注册未完成。回到如愿重新登录一次即可恢复。"
 }

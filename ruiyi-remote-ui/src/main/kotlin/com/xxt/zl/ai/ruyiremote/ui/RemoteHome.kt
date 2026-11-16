@@ -11,6 +11,8 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -65,6 +67,11 @@ fun RemoteHome(
      * 值无意义，只看变化；见 [DshApp.closeDrawerRequest]。
      */
     closeDrawerRequest: Int = 0,
+    /**
+     * 宿主（如愿）嵌入时传入：登录首屏给一条「回如愿登录」。
+     * [showSso] 为 false 时本库不提供如意账号登录，联动的失败/退出提示必须能指回去。
+     */
+    onBackToHostSignIn: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -104,6 +111,14 @@ fun RemoteHome(
 
     // 有凭据就直接进「我的电脑」，不必每次重启都重新登录。
     LaunchedEffect(session) { session.restore() }
+
+    // 宿主（如愿）换了本机设备令牌：登录成功要认这个登录，退出要真的退回登录页。
+    // 这一页在宿主的 Tab 里是常驻组合，不重读就一直是切换前那个账号的界面。
+    // 重读本身是幂等的（[RemoteSessionController.restore] 双向），失败分类也由它回答。
+    val hostAccountRevision by RemoteSso.revisions.collectAsState()
+    LaunchedEffect(hostAccountRevision) {
+        if (hostAccountRevision > 0) session.restore()
+    }
 
     // 系统网络丢失 → 静默断线亚秒判死。否则只能靠中继心跳 watchdog（25s×3=75s）
     // 才意识到「网络没了」，断网后的自动重连会被拖慢一分多钟。
@@ -154,6 +169,14 @@ fun RemoteHome(
     }
 
     RuyiTheme {
-        DshApp(session = session, signIn = signIn, showSso = showSso, onExit = onExit, active = active, closeDrawerRequest = closeDrawerRequest)
+        DshApp(
+            session = session,
+            signIn = signIn,
+            showSso = showSso,
+            onExit = onExit,
+            active = active,
+            closeDrawerRequest = closeDrawerRequest,
+            onBackToHostSignIn = onBackToHostSignIn,
+        )
     }
 }

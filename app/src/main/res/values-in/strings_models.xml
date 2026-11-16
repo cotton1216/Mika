@@ -45,6 +45,7 @@
     <string name="save">Simpan</string>
     <string name="models_models">Model</string>
     <string name="models_models_note">Ketuk sebuah model untuk memakainya sebagai model utama, visual, atau ringan.</string>
+    <string name="models_fresh_note">%1$s punya %2$d model baru. Daftar diperbarui.</string>
     <string name="models_no_list_note">Penyedia ini tidak punya daftar model. Untuk memakai salah satu modelnya, masukkan nama dari dokumentasinya di bawah “Peran”.</string>
     <string name="models_untested_note">Penyedia ini disimpan tanpa pengujian, jadi belum diketahui apakah berfungsi. Pilih sebuah model untuk mengujinya, atau ketuk Segarkan untuk memuat daftar modelnya.</string>
     <string name="models_not_listed">Model penyedia ini belum dimuat.</string>
@@ -196,6 +197,7 @@
     <string name="ruyi_login_cta">Masuk dengan Ruyi</string>
     <string name="ruyi_login_waiting">Menunggu otorisasi…</string>
     <string name="ruyi_login_skip">Nanti saja</string>
+    <string name="ruyi_login_restore_hint">Anda sudah masuk. Masuk lagi untuk menyambungkan kembali kontrol jarak jauh.</string>
     <string name="signin_row_ruyi">Masuk dengan akun Ruyi Anda untuk menyinkronkan modelnya</string>
     <string name="signin_ruyi_title">Masuk dengan Ruyi</string>
     <string name="signin_ruyi_body">Membuka halaman otorisasi Ruyi. Setelah masuk, Ruyi memberi Anda kunci inferensi pribadi; pemakaian dihitung dari akun Ruyi Anda, dan modelnya langsung siap.</string>

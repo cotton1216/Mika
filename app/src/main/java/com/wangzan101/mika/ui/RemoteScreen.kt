@@ -30,6 +30,11 @@ internal fun RemoteScreen(
     active: Boolean = true,
     /** 悬浮球点击递增的信号：抽屉展开时点悬浮球把抽屉一并收起。 */
     closeDrawerRequest: Int = 0,
+    /**
+     * 回如愿用如意账号登录。登录首屏上那句「回如愿登录一次」要有落点：这个库自己
+     * 不注册如意账号（[showSso] 为 false），只能由宿主给一条回去的路。
+     */
+    onBackToHostSignIn: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     RemoteHome(
@@ -43,6 +48,7 @@ internal fun RemoteScreen(
         onExit = onBack,
         active = active,
         closeDrawerRequest = closeDrawerRequest,
+        onBackToHostSignIn = onBackToHostSignIn,
     )
 }
 

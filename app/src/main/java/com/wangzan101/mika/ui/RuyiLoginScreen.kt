@@ -34,14 +34,29 @@ import com.wangzan101.mika.ui.components.MikaLogo
  * 首屏登录页:还没登录如意时,App 打开先停在这里。点「登录」走和设置 › 模型里一样的如意授权
  * (浏览器授权 → scheme 回跳 → 换推理 Key → 列出账号下的模型 → 存成服务商、没有主模型时选一个),
  * 全部完成后 [onSignedIn] 进主界面;[onSkip] 暂不登录直接进主界面,以后可在设置 › 模型里登录。
+ *
+ * [autoAdvance] 为 false 时,**进来就已经登录**不会自动离开 —— 这是「如意」里点「回如愿登录」
+ * 的那条路:那边的情况是登录成功、只有中继注册失败,自动离开会立刻弹回对话页,用户连
+ * 重新授权的入口都摸不到。账号票按 [com.wangzan101.mika.core.oauth.RuyiSignIn] 的约定只走内存
+ * 不落盘,所以「用旧票重试注册」不成立,重新登录一次是唯一出路。
  */
 @Composable
-fun RuyiLoginScreen(store: ProviderStore, onSignedIn: () -> Unit, onSkip: () -> Unit) {
+fun RuyiLoginScreen(
+    store: ProviderStore,
+    onSignedIn: () -> Unit,
+    onSkip: () -> Unit,
+    autoAdvance: Boolean = true,
+) {
     val vm = rememberModelSetupViewModel(store)
     val ui by vm.state.collectAsState()
     val (signedIn, running, failure) = ui.signInState(SignInKind.Ruyi)
-    // 授权完成(Key 换到、模型列出、服务商存好)后自动进主界面
-    LaunchedEffect(signedIn) { if (signedIn != null) onSignedIn() }
+    val restoringRemote = !autoAdvance
+    // 授权完成(Key 换到、模型列出、服务商存好)后自动进主界面。
+    // autoAdvance=false 时不在这里判「登录成功」:同一个账号重登服务商 id 不变,判不出来;
+    // 那条路的去处由宿主盯着 RemoteSso 的注册计数决定(注册上了才回如意)。
+    LaunchedEffect(signedIn) {
+        if (signedIn != null && autoAdvance) onSignedIn()
+    }
     Surface(Modifier.fillMaxSize()) {
         Column(
             Modifier.fillMaxSize().padding(40.dp),
@@ -62,6 +77,16 @@ fun RuyiLoginScreen(store: ProviderStore, onSignedIn: () -> Unit, onSkip: () -> 
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
+            // 从「如意」过来的:用户是登录着的,只是远程控制没就位。不讲清楚,这一页看起来像出错
+            if (restoringRemote && signedIn != null) {
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    stringResource(R.string.ruyi_login_restore_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
             Spacer(Modifier.height(40.dp))
             if (failure != null) {
                 Text(

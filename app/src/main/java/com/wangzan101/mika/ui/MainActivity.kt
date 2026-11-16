@@ -1,5 +1,6 @@
 package com.wangzan101.mika.ui
 
+import com.xxt.zl.ai.ruyiremote.ui.RemoteSso
 import com.wangzan101.mika.i18n.AppLanguage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -457,6 +458,21 @@ private fun MikaRoot(
     var setupRepair by rememberSaveable { mutableStateOf(false) }
     // 首次上手正在走哪一步;为空时不在上手流程里。配置模型页从哪儿来就回哪儿去
     var onboarding by rememberSaveable { mutableStateOf<OnboardingStep?>(null) }
+    // 这次进登录页是「如意」里点「回如愿登录」来的:登录完要回如意,而且**已经登录过也别自动跳走** ——
+    // 中继不可达时登录是成功的、只有注册失败,自动跳走会让用户落回对话页、永远走不到重新授权那一步。
+    // 账号票只在内存里传一次、不落盘(RuyiSignIn 的约定),所以「重试注册」在技术上不成立,重新授权是唯一出路。
+    var ruyiLoginForRemote by rememberSaveable { mutableStateOf(false) }
+    // 进这一页那一刻的联动计数。这条路上「登录成功」的判据是**远程真的注册上了**(RemoteSso 计数 +1) ——
+    // 不能看已登录服务商的 id:同一个账号重登,服务商还是那一条、id 不变,页面会停在原地。
+    var ssoRevisionAtEntry by rememberSaveable { mutableStateOf(0) }
+    val ssoRevision by RemoteSso.revisions.collectAsState()
+    LaunchedEffect(ssoRevision) {
+        if (ruyiLoginForRemote && ssoRevision > ssoRevisionAtEntry) {
+            ruyiLoginForRemote = false
+            nav.reset()
+            selectedTab = RootTab.Ruyi
+        }
+    }
     val onFix: (Fix) -> Unit = { fix ->
         when (fix) {
             Fix.AddModel -> nav.push(Route.Models)
@@ -604,8 +620,28 @@ private fun MikaRoot(
                     }
                     Route.RuyiLogin -> RuyiLoginScreen(
                         store,
-                        onSignedIn = { nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding) },
-                        onSkip = { nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding) },
+                        // 「回如愿登录」这条路上,用户本来就是登录着的 —— 让他停在这一页,
+                        // 点一次「账号登录」重新授权,远程控制那边才会重新注册。
+                        autoAdvance = !ruyiLoginForRemote,
+                        onSignedIn = {
+                            if (ruyiLoginForRemote) {
+                                // 登录页留在如愿的栈里会把下次切回来又推出来,先归位再回如意
+                                ruyiLoginForRemote = false
+                                nav.reset()
+                                selectedTab = RootTab.Ruyi
+                            } else {
+                                nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding)
+                            }
+                        },
+                        onSkip = {
+                            if (ruyiLoginForRemote) {
+                                ruyiLoginForRemote = false
+                                nav.reset()
+                                selectedTab = RootTab.Ruyi
+                            } else {
+                                nav.reset(); Onboarding.start(onboardingInputs())?.let(::goOnboarding)
+                            }
+                        },
                     )
                     Route.Welcome -> WelcomeScreen { goOnboarding(OnboardingStep.Model) }
                     Route.ModelSetup -> {
@@ -849,6 +885,16 @@ private fun MikaRoot(
                     onBack = { selectedTab = RootTab.Ruyuan },
                     active = selectedTab == RootTab.Ruyi,
                     closeDrawerRequest = closeRemoteDrawer,
+                    // 如意的登录由如愿统一负责（RemoteScreen 里 showSso=false），所以
+                    // 「回如愿登录」得切回如愿 Tab 再落到如意账号那一页 —— 只切 Tab
+                    // 会停在对话页，用户还得自己翻设置找登录入口。
+                    onBackToHostSignIn = {
+                        // 标记来路:登录页要停住(autoAdvance=false)、注册成功后才回如意
+                        ruyiLoginForRemote = true
+                        ssoRevisionAtEntry = RemoteSso.revisions.value
+                        selectedTab = RootTab.Ruyuan
+                        nav.show(Route.RuyiLogin)
+                    },
                 )
             }
         }

@@ -45,6 +45,7 @@
     <string name="save">حفظ</string>
     <string name="models_models">النماذج</string>
     <string name="models_models_note">انقر على نموذج لاستخدامه كنموذج رئيسي أو للرؤية أو خفيف.</string>
+    <string name="models_fresh_note">%1$s: %2$d نماذج جديدة. تم تحديث القائمة.</string>
     <string name="models_no_list_note">لا توجد قائمة نماذج لهذا المزوّد. لاستخدام أحد نماذجه، أدخل الاسم الوارد في وثائقه ضمن «الأدوار».</string>
     <string name="models_untested_note">حُفظ هذا المزوّد دون اختباره، لذا لا يُعرف إن كان يعمل. اختر نموذجًا لاختباره، أو انقر على «تحديث» لسرد نماذجه.</string>
     <string name="models_not_listed">لم تُسرد نماذج هذا المزوّد بعد.</string>
@@ -218,6 +219,7 @@
     <string name="ruyi_login_cta">تسجيل الدخول بحساب روي</string>
     <string name="ruyi_login_waiting">في انتظار التفويض…</string>
     <string name="ruyi_login_skip">ليس الآن</string>
+    <string name="ruyi_login_restore_hint">أنت مسجّل الدخول بالفعل. سجّل الدخول مرة أخرى لاستعادة التحكم عن بُعد.</string>
     <string name="signin_row_ruyi">سجّل الدخول بحساب روي لمزامنة نماذجه</string>
     <string name="signin_ruyi_title">تسجيل الدخول بحساب روي</string>
     <string name="signin_ruyi_body">يفتح صفحة تفويض روي. بعد تسجيل الدخول، يمنحك روي مفتاح استدلال خاصاً بك، ويُحسب الاستهلاك من حسابك في روي، وتصبح نماذج الحساب جاهزة فوراً.</string>

@@ -111,16 +111,29 @@ class RemoteSessionController(
     var booting: Boolean by mutableStateOf(true)
         private set
 
-    /** 冷启动恢复：有凭据就直接进已登录态。 */
+    /**
+     * 冷启动恢复：有凭据就直接进已登录态。
+     *
+     * 也是「重新读一遍本机令牌」的唯一入口：宿主（如愿）登录/退出如意账号后，本机
+     * Keystore 里的设备令牌被换掉或删掉，但这里的控制器是常驻的、只在冷启动跑过一次。
+     * 所以**两个方向都得管**：有凭据就进已登录，凭据没了就得真的退回登录页 —— 只换
+     * 一句提示，界面会继续显示上一个账号的电脑列表，等于退出了还看得见别人的电脑。
+     */
     fun restore() {
         scope.launch {
             try {
+                // 登录/退出联动走的是另一个 RemoteAccount 实例、写同一份 Keystore；这里
+                // 常驻的实例已经 restore 过一次，`restored` 标志会短路掉重读，必须显式失效
+                // 再读，否则宿主换掉/删掉设备令牌后这里永远拿内存里的旧值。
+                account.reload()
                 val user = runCatching { account.currentUser() }.getOrNull()
                 if (user != null) {
                     signedOutNotice = null
                     phase = AccountPhase.SignedIn(user)
                     refreshHosts()
                 } else {
+                    // 只有从已登录掉下来才做清理：冷启动时本来就是未登录，没东西可清。
+                    if (phase is AccountPhase.SignedIn) clearSession()
                     // 存档存在但用不了时给登录页一句话，而不是让用户对着配对码猜。
                     signedOutNotice = runCatching { account.restoreIssue() }.getOrNull()
                 }
@@ -340,6 +353,17 @@ class RemoteSessionController(
     }
 
     fun logout() {
+        clearSession()
+        scope.launch { runCatching { account.logout() } }
+    }
+
+    /**
+     * 把界面退回「未登录」，并把还开着的那条隧道关掉。
+     *
+     * 只清本地状态，不碰 [RemoteAccount]：调用方分两种 —— [logout] 要先清界面再登出，
+     * [restore] 则是因为本机令牌已经没了（宿主那边退出/删掉了服务商），没有可登出的。
+     */
+    private fun clearSession() {
         // 登出时可能还有一台主机正在切换；先作废它的回包，避免登出后又被写回
         // 一条「已连接」状态。
         connectionEpoch.invalidate()
@@ -351,12 +375,10 @@ class RemoteSessionController(
         transportNotice = null
         connectingHostId = null
         reconnecting = false
-        scope.launch {
-            runCatching { open?.close() }
-            runCatching { account.logout() }
-            hosts = emptyList()
-            phase = AccountPhase.SignedOut
-        }
+        hosts = emptyList()
+        phase = AccountPhase.SignedOut
+        // 先摘掉引用再 close：否则通道关闭回调会把它当成「被动断线」弹提示。
+        scope.launch { runCatching { open?.close() } }
     }
 
     /** 账号名为配对码的局部标签时，UI 要翻成人话。 */

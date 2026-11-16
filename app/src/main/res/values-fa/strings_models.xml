@@ -45,6 +45,7 @@
     <string name="save">ذخیره</string>
     <string name="models_models">مدل‌ها</string>
     <string name="models_models_note">برای استفاده از یک مدل به‌عنوان مدل اصلی، بینایی یا سبک، روی آن بزنید.</string>
+    <string name="models_fresh_note">%1$s: %2$d مدل جدید. فهرست به‌روز شد.</string>
     <string name="models_no_list_note">این ارائه‌دهنده فهرست مدل ندارد. برای استفاده از یکی از مدل‌های آن، نام موجود در مستندات را در بخش «نقش‌ها» وارد کنید.</string>
     <string name="models_untested_note">این ارائه‌دهنده بدون آزمون ذخیره شده است، بنابراین عملکرد آن مشخص نیست. مدلی را برای آزمون انتخاب کنید یا برای دریافت فهرست مدل‌ها «تازه‌سازی» را بزنید.</string>
     <string name="models_not_listed">فهرست مدل‌های این ارائه‌دهنده هنوز دریافت نشده است.</string>
@@ -202,6 +203,7 @@
     <string name="ruyi_login_cta">ورود با حساب رویی</string>
     <string name="ruyi_login_waiting">در انتظار تأیید…</string>
     <string name="ruyi_login_skip">فعلاً نه</string>
+    <string name="ruyi_login_restore_hint">شما وارد شده‌اید. برای بازیابی کنترل از راه دور دوباره وارد شوید.</string>
     <string name="signin_row_ruyi">برای همگام‌سازی مدل‌ها با حساب رویی وارد شوید</string>
     <string name="signin_ruyi_title">ورود با حساب رویی</string>
     <string name="signin_ruyi_body">صفحه تأیید رویی باز می‌شود. پس از ورود، رویی یک کلید استنتاج اختصاصی به شما می‌دهد؛ مصرف از حساب رویی شما محاسبه می‌شود و مدل‌های حساب بلافاصله در دسترس‌اند.</string>

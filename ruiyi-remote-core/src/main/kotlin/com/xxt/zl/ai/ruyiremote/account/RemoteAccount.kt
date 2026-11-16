@@ -251,6 +251,25 @@ class RemoteAccount(
     }
 
     /**
+     * 强制下一轮 [restore] 重新读一次 SecretStore，而不是用内存缓存。
+     *
+     * 常驻会话的账号实例只在冷启动 restore 过一次（`restored=true` 后就短路）；而登录/
+     * 退出联动走的是**另一个** [RemoteAccount] 实例、写的是同一份 Keystore。不主动失效，
+     * 这个实例就永远拿内存里的旧值 —— 登录了进不去、退出了下不来。所以换设备令牌后
+     * 必须显式 reload 一次，让 [currentUser] 重新看到磁盘上的真实状态。
+     *
+     * pin 不在这里重读：它独立于凭据、按 Host 键值存，登录/退出都不该动它（与
+     * [logout] 里「pin 保留」的语义一致）。
+     */
+    suspend fun reload() {
+        restored = false
+        identity = null
+        credentials = null
+        parsedCredentials = null
+        restore()
+    }
+
+    /**
      * 为什么「有存档却进不去」。
      *
      * 返回 null 表示本来就没存过（新装），那种情况用户看到配对码是正常的；

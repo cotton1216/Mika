@@ -778,6 +778,37 @@ class ModelSetupViewModelTest {
         assertTrue("已有的配置保留它的能力", vm.state.value.options(vm.state.value.providers.single()).first().capabilities.vision)
     }
 
+    @Test fun enteringModelsPageSyncsNewModelsFromRuyiAccountOnce() = runTest {
+        val store = store()
+        val ruyi = store.connectRuyi("rk", listOf(ListedModel("gemini-3.8-flash"), ListedModel("gemini-4-argon")))
+        listing[ruyi.baseUrl] = ModelListResult.Ok(
+            listOf(ListedModel("gemini-3.8-flash"), ListedModel("gemini-4-argon"), ListedModel("gemini-4-carbon")),
+        )
+        val vm = vm(store)
+        runCurrent()
+        vm.ensureModelsFresh(); runCurrent()
+        assertEquals("账号侧新增的模型跟上", 3, store.providers.value.single().models?.size)
+        assertEquals(1, vm.state.value.freshModels?.count)
+        assertEquals(ruyi.name, vm.state.value.freshModels?.providerName)
+        // 十分钟内再进来不重复打网络
+        val calls = listCalls.size
+        vm.ensureModelsFresh(); runCurrent()
+        assertEquals(calls, listCalls.size)
+        vm.dismissFreshModels()
+        assertNull(vm.state.value.freshModels)
+    }
+
+    @Test fun syncStaysQuietWhenAccountHasNothingNew() = runTest {
+        val store = store()
+        val ruyi = store.connectRuyi("rk", listOf(ListedModel("gemini-3.8-flash")))
+        listing[ruyi.baseUrl] = ModelListResult.Ok(listOf(ListedModel("gemini-3.8-flash")))
+        val vm = vm(store)
+        runCurrent()
+        vm.ensureModelsFresh(); runCurrent()
+        assertNull("没有新增就不出声", vm.state.value.freshModels)
+        assertEquals(1, store.providers.value.single().models?.size)
+    }
+
     @Test fun refreshFailureIsShownAndRemovingProviderDropsItsRoles() = runTest {
         listing[deepseekUrl] = deepseek
         val store = store()

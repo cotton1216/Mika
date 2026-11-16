@@ -45,6 +45,7 @@
     <string name="save">Save</string>
     <string name="models_models">Models</string>
     <string name="models_models_note">Tap a model to use it as the main, vision or light model.</string>
+    <string name="models_fresh_note">%1$s has %2$d new models. List updated.</string>
     <string name="models_no_list_note">This provider has no model list. To use one of its models, enter the name from its docs under “Roles”.</string>
     <string name="models_untested_note">This provider was saved without a test, so nothing is known about whether it works. Pick a model to test it, or tap Refresh to list its models.</string>
     <string name="models_not_listed">This provider’s models haven’t been listed yet.</string>
@@ -178,6 +179,7 @@
     <string name="ruyi_login_cta">Sign in</string>
     <string name="ruyi_login_waiting">Waiting for authorization…</string>
     <string name="ruyi_login_skip">Not now</string>
+    <string name="ruyi_login_restore_hint">Already signed in. Sign in again to reconnect remote control.</string>
     <string name="signin_ruyi_title">Sign in with Ruyi</string>
     <string name="signin_ruyi_body">Opens Ruyi\'s authorization page. Once you sign in, Ruyi gives 如愿 an inference key of your own; usage comes out of your Ruyi account, and its models are ready at once.</string>
     <string name="signin_ruyi_note">Sign-in details are stored encrypted on this phone only and are never written to logs. The key is issued by your Ruyi account; delete it on Ruyi\'s Keys page if you no longer want it.</string>

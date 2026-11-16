@@ -45,6 +45,7 @@
     <string name="save">Salvar</string>
     <string name="models_models">Modelos</string>
     <string name="models_models_note">Toque em um modelo para usá-lo como modelo principal, de visão ou leve.</string>
+    <string name="models_fresh_note">%1$s tem %2$d modelos novos. Lista atualizada.</string>
     <string name="models_no_list_note">Este provedor não tem lista de modelos. Para usar um modelo dele, digite em “Funções” o nome que consta na documentação.</string>
     <string name="models_untested_note">Este provedor foi salvo sem teste, então não se sabe se funciona. Escolha um modelo para testá-lo ou toque em Atualizar para listar os modelos dele.</string>
     <string name="models_not_listed">Os modelos deste provedor ainda não foram listados.</string>
@@ -204,6 +205,7 @@
     <string name="ruyi_login_cta">Entrar com Ruyi</string>
     <string name="ruyi_login_waiting">Aguardando autorização…</string>
     <string name="ruyi_login_skip">Agora não</string>
+    <string name="ruyi_login_restore_hint">Você já está conectado. Entre novamente para reconectar o controle remoto.</string>
     <string name="signin_row_ruyi">Entre com sua conta Ruyi para sincronizar os modelos dela</string>
     <string name="signin_ruyi_title">Entrar com Ruyi</string>
     <string name="signin_ruyi_body">Abre a página de autorização do Ruyi. Ao entrar, o Ruyi fornece uma chave de inferência sua; o uso é cobrado da sua conta Ruyi e os modelos ficam prontos na hora.</string>

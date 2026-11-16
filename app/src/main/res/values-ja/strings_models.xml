@@ -45,6 +45,7 @@
     <string name="save">保存</string>
     <string name="models_models">モデル</string>
     <string name="models_models_note">モデルをタップすると、メイン、ビジョン、軽量のモデルとして使えます。</string>
+    <string name="models_fresh_note">%1$s に新しいモデルが %2$d 件あります。一覧を更新しました</string>
     <string name="models_no_list_note">このプロバイダーにはモデル一覧がありません。このプロバイダーのモデルを使うには、「役割」で、ドキュメントに載っているモデル名を入力してください。</string>
     <string name="models_untested_note">このプロバイダーはテストせずに保存したので、動作するかどうかは分かっていません。モデルを選んでテストするか、「更新」をタップしてモデルを一覧にしてください。</string>
     <string name="models_not_listed">このプロバイダーのモデルは、まだ一覧にしていません。</string>
@@ -198,6 +199,7 @@
     <string name="ruyi_login_cta">如意アカウントでログイン</string>
     <string name="ruyi_login_waiting">認証を待っています…</string>
     <string name="ruyi_login_skip">後で</string>
+    <string name="ruyi_login_restore_hint">すでにログイン済みです。もう一度ログインするとリモート接続が復旧します。</string>
     <string name="signin_row_ruyi">如意アカウントでログインしてモデル一覧を同期</string>
     <string name="signin_ruyi_title">如意アカウントでログイン</string>
     <string name="signin_ruyi_body">如意の認証ページを開きます。ログインすると、如意からあなた専用の推論キーが発行され、利用量は如意アカウントから精算され、アカウントのモデルがすぐ使えます。</string>
