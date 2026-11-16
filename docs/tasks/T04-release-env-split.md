@@ -118,3 +118,4 @@
 - **升级提示的真实形态**（本次查清，此前误以为有启动弹窗）：无启动弹窗。`UpdateChecker.autoCheckInBackground()` 在 `MainActivity.onStart()`（第 290 行）静默查一次，2 分钟内不重查；结果只落两处——侧栏「关于如愿」红点（`AboutCopy.drawerDot`）与关于页「检查更新」行「有新版本 / x 可更新」（`AboutCopy.checkValue`）。自动下载另需用户手开「自动更新」且连 Wi-Fi（`AutomaticUpdates.enabled` 默认 `false`）。
 - **真机闭环**：机上 0.1.48 出现 27×27px 红点节点 → 关于页「0.1.49 可更新」→ `adb install -r` 覆盖安装（同签名无需卸载）→ 红点消失、关于页 `版本 0.1.49` 且 **Beta 标记消失**、`检查更新 / 已是最新`。
 - **文档笔误修正**：真实 `applicationId` 与 `MikaLinks.APP_KEY` 均为 `com.zl.ruyiai.yuan`（单 i），本技能 `SKILL.md` 与 T01/T02 正文写成双 i（`com.zl.ruiyiai.yuan`）。双 i 键打 `update/check` **不报错、只静默返回 `hasUpdate=false`**，排查「发了没提示」时极易被带偏，全部 10 处已纠正。
+- **提交**：本次改动（`build.gradle.kts` 版本号与 `BETA`、`SKILL.md` 与 T01/T02 包名笔误、本文件记录）提交于 `7de308a2`（2026-11-16），未 push；`app/release-signing.properties` 仍因 gitignore 未入库。
