@@ -13,8 +13,8 @@ val gitHash: String = runCatching {
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
 // 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
-val ruyiVersionName = "0.1.49"
-val ruyiVersionCode = 50
+val ruyiVersionName = "0.1.50"
+val ruyiVersionCode = 51
 
 // apphub 地址由构建注入：debug 默认本地，release/perf 必须由 -PapphubBaseUrl 指定。
 // 生产地址形如 https://<域名>/apphub（网关剥前缀），本地联调 http://127.0.0.1:3100。

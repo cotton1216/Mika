@@ -5,9 +5,9 @@
  * 流水线：读版本 → 按环境构建 APK → 签名校验(prod) → ossutil 上传 OSS → apphub 登记 → 回读。
  *
  * 环境是必填项，且一次决定五件事（构建类型 / 签名要求 / OSS 前缀 / 默认渠道与状态 / 目标库）：
- *   --env prod  : assembleRelease + 必须正式签名 + OSS ai/mika/android + official/published + 生产库
+ *   --env prod  : assembleRelease + 必须正式签名 + OSS ai/ruyi/android + official/published + 生产库
  *   --env dev   : assemblePerf -PsideInstall(.perf 并排安装) + 允许调试签名
- *                 + OSS ai/mika/android/dev + beta/draft + 本地库
+ *                 + OSS ai/ruyi/android/dev + beta/draft + 本地库
  *
  * 依赖两个既有工具（本脚本只做编排，不重复实现它们的能力）：
  *   - ossutil 2.x         阿里云 OSS 命令行（负责把 APK 传到 chuangxin-prod 桶）
@@ -28,7 +28,7 @@
  *   OSS_BUCKET      默认 chuangxin-prod
  *   OSS_REGION      默认 cn-hangzhou
  *   OSS_ENDPOINT    默认 https://oss-cn-hangzhou.aliyuncs.com
- *   OSS_PREFIX      对象键前缀，dev 默认 ai/mika/android/dev，prod 默认 ai/mika/android
+ *   OSS_PREFIX      对象键前缀，dev 默认 ai/ruyi/android/dev，prod 默认 ai/ruyi/android
  *   OSS_PUBLIC_BASE 下载域名，默认 https://oss-chuangxin.thchengtay.com（登记进 apphub 的直链）
  *   OSSUTIL         ossutil 可执行文件，默认 PATH 里的 ossutil
  *
@@ -142,7 +142,7 @@ const PROFILES = {
     requireReleaseSigning: false,
     defaultChannel: 'beta',
     defaultStatus: 'draft',
-    defaultOssPrefix: 'ai/mika/android/dev',
+    defaultOssPrefix: 'ai/ruyi/android/dev',
     requireConfirm: false,
   },
   prod: {
@@ -153,7 +153,7 @@ const PROFILES = {
     requireReleaseSigning: true,
     defaultChannel: 'official',
     defaultStatus: 'published',
-    defaultOssPrefix: 'ai/mika/android',
+    defaultOssPrefix: 'ai/ruyi/android',
     requireConfirm: true,
   },
 };
@@ -431,7 +431,7 @@ function assertOssCredential() {
 // 主流程
 // ---------------------------------------------------------------------------
 const meta = readBuildMeta();
-const apkFileName = `mika-${meta.versionName}-${ABI}.apk`;
+const apkFileName = `ruyi-${meta.versionName}-${ABI}.apk`;
 const apkLocal = join(
   ROOT,
   'app',

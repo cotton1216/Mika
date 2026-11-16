@@ -16,7 +16,7 @@ description: 一键发布「如愿(Mika)」安卓包：按环境（dev/prod）�
 | 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan` |
 | 签名 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
 | 产物目录 | `app/build/outputs/apk/perf/` | `app/build/outputs/apk/release/` |
-| OSS 前缀 | `ai/mika/android/dev` | `ai/mika/android` |
+| OSS 前缀 | `ai/ruyi/android/dev` | `ai/ruyi/android` |
 | 默认渠道 / 状态 | `beta` / `draft`（入库不对外） | `official` / `published`（对外生效） |
 | 账号来源 | `APPHUB_USERNAME` / `APPHUB_PASSWORD` | `APPHUB_PROD_USERNAME` / `APPHUB_PROD_PASSWORD` → `--account` 账号文件 → `APPHUB_*` 回落 |
 | 二次确认 | 无 | **必须** `--yes`，否则拒跑 |
@@ -67,8 +67,8 @@ description: 一键发布「如愿(Mika)」安卓包：按环境（dev/prod）�
 版本号**只改一处**：`app/build.gradle.kts` 顶部
 
 ```kotlin
-val ruyiVersionName = "0.1.48"
-val ruyiVersionCode = 49
+val ruyiVersionName = "0.1.50"
+val ruyiVersionCode = 51
 ```
 
 脚本从这两行 + `applicationId` 自动读取，不手动传版本号。`applicationId` 读的是 `defaultConfig` 的值（`com.zl.ruyiai.yuan`），dev 的 `.perf` 后缀只影响安装包名，不改变 appKey。
@@ -158,7 +158,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | `OSS_BUCKET` | `chuangxin-prod` | 桶 |
 | `OSS_REGION` | `cn-hangzhou` | 地域 |
 | `OSS_ENDPOINT` | `https://oss-cn-hangzhou.aliyuncs.com` | 上传 endpoint |
-| `OSS_PREFIX` | `ai/mika/android/dev` / `ai/mika/android` | 对象键前缀 |
+| `OSS_PREFIX` | `ai/ruyi/android/dev` / `ai/ruyi/android` | 对象键前缀 |
 | `OSS_PUBLIC_BASE` | `https://oss-chuangxin.thchengtay.com` | 下载域名 |
 | `OSSUTIL` | `ossutil` | ossutil 可执行文件 |
 | `OSS_CONFIG_FILE` | 无（默认 `~/.ossutilconfig`） | 非默认位置的 ossutil 配置，脚本转成 `--config-file` |
@@ -169,8 +169,8 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 
 ## 直链与对象键约定
 
-- dev：`oss://<bucket>/ai/mika/android/dev/mika-<versionName>-<abi>.apk`
-- prod：`oss://<bucket>/ai/mika/android/mika-<versionName>-<abi>.apk`
+- dev：`oss://<bucket>/ai/ruyi/android/dev/ruyi-<versionName>-<abi>.apk`
+- prod：`oss://<bucket>/ai/ruyi/android/ruyi-<versionName>-<abi>.apk`
 - 登记进 apphub 的直链：`https://oss-chuangxin.thchengtay.com/<对象键>`
 - app-version-hub **不托管 APK 二进制**，只登记「元数据 + 直链」；上传由 ossutil 完成
 - dev 与 prod 物理分目录，`--force` 覆盖只可能影响同环境同版本号
@@ -199,7 +199,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | apphub `409 CONFLICT` | 该 versionCode 已存在（上次其实成功了）→ 直接回读确认；要重发先升 `ruyiVersionCode` |
 | apphub `404 应用不存在` | 先跑 `app:ensure`（脚本已自动包含这步） |
 | 找不到产物 APK | 目录按环境区分：dev 在 `apk/perf/`、prod 在 `apk/release/`；检查 `--abi` 是否选错 |
-| gradle 报 `What went wrong: 25.0.4` | 默认 JAVA_HOME 是 JDK 25，Gradle 8.11.1 不认。构建前 `export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home` |
+| gradle 报 `What went wrong: 25.0.4` | PATH 上的 `java` 是 Zulu 25，Gradle 8.11.1 不认。构建前指定 JDK 17 或 21 均可：`export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`，或 `export JAVA_HOME=/Users/binny/Library/Java/JavaVirtualMachines/jbr-21.0.11/Contents/Home`（实测 0.1.49/0.1.50 用后者构建通过） |
 
 ## 硬规则
 
