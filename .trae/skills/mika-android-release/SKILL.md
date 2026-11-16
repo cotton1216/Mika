@@ -135,7 +135,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | `--env` | **必填** | `dev` 或 `prod`（别名 `development`/`local`/`production`） |
 | `--account` | 无 | 读 `~/.config/apphub/agents/<账号名>.env`：提供账号；prod 下同时提供地址，dev 只用账号（地址仍走本地）。`MIKA_ACCOUNT` 等价 |
 | `--abi` | `universal` | 可选 `arm64-v8a`（小包，仅 arm64 原生库） |
-| `--changelog` | 空 | 给用户看的更新说明 |
+| `--changelog` | 空 | 给用户看的更新说明；**prod 必填**（空则脚本直接 `fail`，退出码 2），会显示在客户端「关于页 → 更新说明」与公开门户 / 管理台 |
 | `--channel` | `beta` / `official` | 渠道 |
 | `--status` | `draft` / `published` | `published` 对外生效 |
 | `--skip-build` | 关 | 跳过 gradle 构建，用已有 APK |

@@ -460,6 +460,18 @@ log('信息', `账号=${APPHUB_USERNAME || '(未提供)'}`);
 
 assertProdDownloadUrl(downloadUrl);
 
+// 更新说明（changelog）会显示在客户端「关于页 → 更新说明」与公开门户 / 管理台；
+// prod 对外发布必须写清本次改了什么，空说明禁止发生产，避免「发了没说明」。
+if (ENV_NAME === 'prod' && !CHANGELOG.trim()) {
+  fail(
+    'prod 发版必须带更新说明：用 --changelog "本次改动…" 或 MIKA_CHANGELOG 提供（会显示在客户端关于页与公开门户）。',
+    2
+  );
+}
+if (ENV_NAME === 'dev' && !CHANGELOG.trim()) {
+  warn('dev 未提供 --changelog，将登记为空说明（不影响 dev 联调，但 prod 会拒绝）。');
+}
+
 if (DRY_RUN) {
   if (!URL_OVERRIDE) {
     const status = ossCredentialStatus();
