@@ -99,13 +99,22 @@
   三份文件 `APPHUB_BASE_URL` 一致（`https://ai.thchengtay.com/apphub`），脚本在未显式给地址就直接采用；
   `--account agent-01` 可同时取到地址与账号。实测：prod 自动发现命中、`--account` 命中、dev 仍走 `127.0.0.1:3100`
   （账号文件里的生产地址不参与 dev）、账号名不存在时列出可用账号。
-- 待验证：`agent-01/02/03` 是否能登录生产、是否拥有 `com.zl.ruiyiai.yuan`（未跑生产登录，需用户授权选定账号）。
+- 待验证：`agent-01/02/03` 是否能登录生产、是否拥有 `com.zl.ruyiai.yuan`（未跑生产登录，需用户授权选定账号）。
 
 ## 收尾（2026-11-16 14:36，验收全部达成）
 
-- **验收第 7 条已过**：`--env prod --account agent-01 --yes` 真实跑通全链路——构建（release，签名 `CN=CN=Yuan AI, OU=Mobile, O=XXT`）→ OSS `ai/mika/android/mika-0.1.48-universal.apk` → 生产库建应用 `com.zl.ruiyiai.yuan`（id=6，owner agent-01）→ 登记 `0.1.48 / code 49 / android·official·published`（version id=3）。
+- **验收第 7 条已过**：`--env prod --account agent-01 --yes` 真实跑通全链路——构建（release，签名 `CN=CN=Yuan AI, OU=Mobile, O=XXT`）→ OSS `ai/mika/android/mika-0.1.48-universal.apk` → 生产库建应用 `com.zl.ruyiai.yuan`（id=6，owner agent-01）→ 登记 `0.1.48 / code 49 / android·official·published`（version id=3）。
 - **账号问题解决**：`agent-01/02/03` 三个都能登录生产（role=publisher），但应用 owner 是 agent-01，换账号发会 404（`findOwnedApp` 按 owner 过滤）。
 - **三项外部验收**：`update/check?currentVersionCode=48` → `hasUpdate=true` `policy=optional`；`versions` → total=1 `published` `rolloutPercent=100`；OSS 直链 HEAD → 200 `application/vnd.android.package-archive` 132,555,025 B。
 - **真机安装验证**：Redmi `24122RKC7C`（`33325df`）卸载旧 debug 包后装正式包 `Success`，`pkgFlags` 中 `DEBUGGABLE`/`TEST_ONLY` 消失、签名哈希变化、`MainActivity` 正常前台无崩溃。
 - **已知偏差**：`BETA=true` 未改（关于页显示 Beta），留待下个版本。
 - **提交**：本次改动（技能两文件 + 本文件 + `TASKS.md` 状态置 `done`）提交于 `61d03b60`（2026-11-16），未 push；`app/release-signing.properties` 因 gitignore 未入库（本机文件，权限 600）。
+
+## 二次发版（2026-11-16 14:50，0.1.49 / code 50）
+
+- **触发**：用户要求「上传 OSS + 更新发布平台版本信息，整个链路完整走一遍」。0.1.48 已在 14:31 上线，原样重跑会撞 `apphub-publish.mjs:214` 的 versionCode 冲突，故升版。
+- **改动**：`ruyiVersionName="0.1.49"`、`ruyiVersionCode=50`、`BETA=false`（补上 0.1.48 遗留的「关于页显示 Beta」偏差）。
+- **结果**：version id=4、`official/published`、sha256 `268e6966…6cf60`；三项验收同 0.1.48 全过（`versions` total=2、`check?currentVersionCode=49` → `hasUpdate=true`、OSS HEAD 200）。
+- **升级提示的真实形态**（本次查清，此前误以为有启动弹窗）：无启动弹窗。`UpdateChecker.autoCheckInBackground()` 在 `MainActivity.onStart()`（第 290 行）静默查一次，2 分钟内不重查；结果只落两处——侧栏「关于如愿」红点（`AboutCopy.drawerDot`）与关于页「检查更新」行「有新版本 / x 可更新」（`AboutCopy.checkValue`）。自动下载另需用户手开「自动更新」且连 Wi-Fi（`AutomaticUpdates.enabled` 默认 `false`）。
+- **真机闭环**：机上 0.1.48 出现 27×27px 红点节点 → 关于页「0.1.49 可更新」→ `adb install -r` 覆盖安装（同签名无需卸载）→ 红点消失、关于页 `版本 0.1.49` 且 **Beta 标记消失**、`检查更新 / 已是最新`。
+- **文档笔误修正**：真实 `applicationId` 与 `MikaLinks.APP_KEY` 均为 `com.zl.ruyiai.yuan`（单 i），本技能 `SKILL.md` 与 T01/T02 正文写成双 i（`com.zl.ruiyiai.yuan`）。双 i 键打 `update/check` **不报错、只静默返回 `hasUpdate=false`**，排查「发了没提示」时极易被带偏，全部 10 处已纠正。

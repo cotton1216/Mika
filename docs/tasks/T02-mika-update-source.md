@@ -33,7 +33,7 @@
 ### 检查更新
 
 - `UpdateChecker(file, currentVersion, currentVersionCode, baseUrl)`：
-  - `GET {baseUrl}/api/v1/update/check?appKey=com.zl.ruiyiai.yuan&platform=android&channel=official&currentVersionCode=<BuildConfig.VERSION_CODE>`
+  - `GET {baseUrl}/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official&currentVersionCode=<BuildConfig.VERSION_CODE>`
   - 只带 `User-Agent: Yuan/<versionName>`，不再带 GitHub 的 `Accept` / `X-GitHub-Api-Version` 头。
   - 取 `latest`：`versionName`、`versionCode`、`changelog`、`packageSize`、`sha256`、`publishedAt`、`download.url`。
   - 新旧判定：`latest.versionCode > BuildConfig.VERSION_CODE`；缓存里没有 code 时退回版本号字符串比较。
@@ -104,7 +104,7 @@
   - 修复：`AppHub.parse` 改为「`latest` 缺失/为 null 返回 null；响应读不懂抛异常」；`UpdateChecker.fetchLatest(): Result<ReleaseInfo?>`，`check()` 以 `result.isSuccess` 判 Done/Failed，成功时用平台答案覆盖旧 latest（清旧红点）。
   - 文案：11 个语言目录的 `about_check_sub`、`about_offline`、`about_offline_toast`、`about_changelog_all`、`about_update_download` 及 `about_data_note` 句尾从 GitHub 口径改为发布平台口径；`about_feedback*`、`about_repo*` 仍指向 GitHub。
   - 验证：`:app:testDebugUnitTest`（含新增 `brokenResponseThrows`、`platformWithoutPublishedVersionIsNotAFailure`、`unreadableBodyIsAFailure`）与 `:app:assemblePerf -PsideInstall -PapphubBaseUrl=http://10.0.2.2:3100` 均 BUILD SUCCESSFUL。
-  - 模拟器 `dshgo_android` 复测：新 perf 包（`com.zl.ruiyiai.yuan.perf`，versionCode 49，dex 含 `http://10.0.2.2:3100`）覆盖安装后登录态保留；点「检查更新」出现 `10.0.2.15:xxxxx → 10.0.2.2:3100` 的 ESTAB 连接，本地接口返回 `hasUpdate:false, latest:null`，界面副标题保持「从发布平台获取新版本」（不再是「检查更新失败」），即判定为 Done。
+  - 模拟器 `dshgo_android` 复测：新 perf 包（`com.zl.ruyiai.yuan.perf`，versionCode 49，dex 含 `http://10.0.2.2:3100`）覆盖安装后登录态保留；点「检查更新」出现 `10.0.2.15:xxxxx → 10.0.2.2:3100` 的 ESTAB 连接，本地接口返回 `hasUpdate:false, latest:null`，界面副标题保持「从发布平台获取新版本」（不再是「检查更新失败」），即判定为 Done。
 - 未验证：
   - 验收标准 4、5（本地 apphub 登记更高 versionCode 后的红点、下载、SHA/包名/versionCode/签名校验、拉起系统安装器）未做——需往本地 apphub 写服务数据，待单独确认。
   - 真机未使用（按要求）。

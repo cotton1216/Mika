@@ -35,7 +35,7 @@
 - 复用两个既有工具，本技能只做编排：
   - `ossutil 2.x` 上传 APK 到 `chuangxin-prod`（cn-hangzhou）。
   - `app-version-hub/scripts/apphub-publish.mjs` 负责登录、`app:ensure`、`publish`（自动 sha256/size、回读校验）。
-- 版本事实源 = `app/build.gradle.kts` 顶部的 `ruyiVersionName` / `ruyiVersionCode` / `applicationId`（当前 `com.zl.ruiyiai.yuan`）。
+- 版本事实源 = `app/build.gradle.kts` 顶部的 `ruyiVersionName` / `ruyiVersionCode` / `applicationId`（当前 `com.zl.ruyiai.yuan`）。
 - OSS 对象键 `ai/mika/android/mika-<version>-<abi>.apk`（ASCII 安全），下载直链 `https://oss-chuangxin.thchengtay.com/<key>`。
 - apphub 登记：`--code` 直接传 build.gradle 的 versionCode（不依赖服务端自增），`--channel official`，`--status published`。
 - 凭证：apphub 走 `APPHUB_USERNAME`/`APPHUB_PASSWORD` 环境变量；OSS 走 ossutil 自身 `~/.ossutilconfig` 或 `ALICLOUD_*` 环境变量。
@@ -44,7 +44,7 @@
 
 1. **只发 universal 全架构包为默认**（`--abi universal`），保证所有设备可更新；`arm64-v8a` 小包作为可选项。理由：apphub 每个 (platform,channel,versionCode) 只登记一个主 URL，全架构包是安全默认。
 2. **对象键去中文化**：APK 文件名 `如愿-<ver>-<abi>-release.apk` 含中文，登记成 `mika-<ver>-<abi>.apk`，避免 URL 编码问题。
-3. **appKey 从 build.gradle 读**，不硬编码：实际是 `com.zl.ruiyiai.yuan`（非 `com.zl.ruiyi.yuan`），避免登记错应用。
+3. **appKey 从 build.gradle 读**，不硬编码：实际是 `com.zl.ruyiai.yuan`（非 `com.zl.ruiyi.yuan`），避免登记错应用。
 
 ## 已否决方案
 

@@ -13,7 +13,7 @@ description: 一键发布「如愿(Mika)」安卓包：按环境（dev/prod）�
 | --- | --- | --- |
 | 目标库 | `http://127.0.0.1:3100`（本地 hub，可被 `APPHUB_BASE_URL` 覆盖） | 三级取值：`APPHUB_PROD_BASE_URL` → `--account` 文件 → `~/.config/apphub/agents/*.env` 自动发现 |
 | 构建任务 | `:app:assemblePerf -PsideInstall` | `:app:assembleRelease` |
-| 包名 | `com.zl.ruiyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruiyiai.yuan` |
+| 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan` |
 | 签名 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
 | 产物目录 | `app/build/outputs/apk/perf/` | `app/build/outputs/apk/release/` |
 | OSS 前缀 | `ai/mika/android/dev` | `ai/mika/android` |
@@ -31,7 +31,7 @@ description: 一键发布「如愿(Mika)」安卓包：按环境（dev/prod）�
    - `prod`：账号在**生产库**。本机现成落点是 `~/.config/apphub/agents/<账号>.env`
      （600 权限，内含 `export APPHUB_BASE_URL` / `APPHUB_USERNAME` / `APPHUB_PASSWORD` 三行，
      现有 `agent-01` / `agent-02` / `agent-03`）——用 `--account <账号名>` 直接复用，含其中的生产地址
-   - **应用归属先确认**：账号文件只解决「连哪个库 + 用谁登录」，不代表该账号拥有 `com.zl.ruiyiai.yuan`。
+   - **应用归属先确认**：账号文件只解决「连哪个库 + 用谁登录」，不代表该账号拥有 `com.zl.ruyiai.yuan`。
      用不属于该应用的账号发布会 403；生产首次发布前需由目标账号跑 `app:ensure` 建立归属
    - **建生产账号属生产数据变更，必须先单独和用户确认再执行**
    - 接入细节见 `app-version-hub/skills/apphub-publish/SKILL.md`
@@ -71,7 +71,7 @@ val ruyiVersionName = "0.1.48"
 val ruyiVersionCode = 49
 ```
 
-脚本从这两行 + `applicationId` 自动读取，不手动传版本号。`applicationId` 读的是 `defaultConfig` 的值（`com.zl.ruiyiai.yuan`），dev 的 `.perf` 后缀只影响安装包名，不改变 appKey。
+脚本从这两行 + `applicationId` 自动读取，不手动传版本号。`applicationId` 读的是 `defaultConfig` 的值（`com.zl.ruyiai.yuan`），dev 的 `.perf` 后缀只影响安装包名，不改变 appKey。
 
 ## 用法
 
@@ -99,7 +99,7 @@ node "$SCRIPT" --env prod --account agent-01 --yes --changelog "本次更新说�
 node "$SCRIPT" --env prod --dry-run        # 地址自动发现；账号仍要 --account 或 APPHUB_PROD_USERNAME
 ```
 
-prod 发布前请逐条确认：版本号已在 `build.gradle.kts` 递增、`release-signing.properties` 在位、changelog 面向用户、该账号确实拥有 `com.zl.ruiyiai.yuan`。
+prod 发布前请逐条确认：版本号已在 `build.gradle.kts` 递增、`release-signing.properties` 在位、changelog 面向用户、该账号确实拥有 `com.zl.ruyiai.yuan`。
 
 ### 开发联调（本地库，不对外）
 
