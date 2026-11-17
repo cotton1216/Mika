@@ -823,6 +823,36 @@ class SessionChatController(
         return true
     }
 
+    /**
+     * 重发一条**发送失败**的提问。
+     *
+     * 这种失败意味着 prompt 根本没送到 Host，所以先把本地那条失败行摘掉再重发：
+     * 否则会同时留下「发送失败」和「发送中」两个气泡，看起来像发了两遍。
+     * 图片随行一起带回——[MessageImage.data] 保留着原始 base64，不必让用户重选。
+     */
+    fun resend(row: UserRow): Boolean {
+        // 连点两下会发两遍：`send` 本身不拦并发，守卫放在入口。
+        if (_state.value.sending || _state.value.running) return false
+        row.requestId?.let { pending.remove(it) }
+        rebuild()
+        return send(row.text, row.images.toPromptImages())
+    }
+
+    /**
+     * 重试最近一轮，用于「本轮失败」「输出被中断」这两类**已经发出去**的失败。
+     *
+     * 核心层没有 `session/retry`（RPC 只有 prompt / cancel / job.kill），只能把上一条
+     * 用户提问原样再发一次。代价是会话里会多一轮消息：这一轮的上下文已经消耗掉了，
+     * 不复用旧 turn 才不会凭空捏造一个 Host 侧不存在的重试语义。
+     */
+    fun retryLastTurn(): Boolean {
+        val state = _state.value
+        // 正在发/正在跑时重试只会多插一轮，先在入口挡住。
+        if (state.sending || state.running) return false
+        val lastUser = state.rows.lastOrNull { it is UserRow } as? UserRow ?: return false
+        return send(lastUser.text, lastUser.images.toPromptImages())
+    }
+
     fun cancelTurn() {
         val session = _state.value.openSession ?: return
         scope.launch {
@@ -1398,4 +1428,20 @@ private fun isTransportClosed(error: Throwable): Boolean =
 
 private fun syncFailure(error: Throwable, what: String): String =
     if (isTransportClosed(error)) "与电脑的连接已断开，请返回上一页重新连接这台电脑。" else describe(error, what)
+
+/**
+ * 把界面上已经渲染过的图片还原成可以再次提交的形态，供「重试」「重新发送」使用。
+ *
+ * 只认还带着 base64 的那些：走 attachmentId 引用的图片内容是 Host 侧的，本机没有正本，
+ * 硬凑一个空 data 只会让 Host 收到一张坏图，所以这类图片在重发时丢弃（文字仍会发出去）。
+ */
+private fun List<MessageImage>.toPromptImages(): List<PromptImage> = mapNotNull { image ->
+    val data = image.data?.takeIf { it.isNotBlank() } ?: return@mapNotNull null
+    PromptImage(
+        name = image.name,
+        mediaType = image.mediaType ?: "image/png",
+        data = data,
+        bytes = data.length / 4 * 3,
+    )
+}
 

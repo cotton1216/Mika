@@ -123,9 +123,11 @@ fun SessionDrawer(
 ) {
     val p = LocalRuyiPalette.current
     var pane by remember { mutableStateOf(DrawerPane.Sessions) }
-    // 默认展开：抽屉的用途就是「先选电脑再看会话」，收起态只留一行时，多数人
-    // 第一步的动作都得是这个下拉。展开只在本次抽屉生命周期内有效，关掉即复位。
-    var hostsExpanded by remember { mutableStateOf(true) }
+    // 有列表就让位：抽屉里已经有会话（或任务）可读时，电脑列表占的那两百来 dp 只是干扰；
+    // 只有列表还空着、用户下一步必须先选电脑时才默认展开。连接中/失败仍强制展开（见下方 effect）。
+    var hostsExpanded by remember { mutableStateOf(sessions.isEmpty()) }
+    // 用户亲手拉过这个下拉之后，列表到达就不再自动收起——否则他刚展开就被合上。
+    var hostsToggled by remember { mutableStateOf(false) }
     var pendingKill by remember { mutableStateOf<RemoteJob?>(null) }
     // 抽屉是从对话页浮上来的，输入框此时通常还在焦点上：不收键盘的话，抽屉下半屏
     // 会被 IME 一直占着，任务详情只能看到三四行（实机截图可见）。
@@ -157,6 +159,17 @@ fun SessionDrawer(
         }
     }
     val jobsState: RemoteJobsState? = if (jobs != null) jobs.state.collectAsState().value else null
+    val jobCount = jobsState?.jobs?.size ?: 0
+
+    // 列表一到位就收起电脑区。
+    //
+    // 抽屉刚打开时会话还在路上（sessions 为空），此时展开是对的——用户确实得先选一台。
+    // 但数据回来之后还占着两百来 dp，就变成把要读的会话往下挤。这里只在用户没亲手
+    // 拉过下拉时自动收起；他自己展开的，不该被一次数据刷新合上。
+    LaunchedEffect(sessions.isEmpty(), jobCount) {
+        if (hostsToggled) return@LaunchedEffect
+        if (sessions.isNotEmpty() || jobCount > 0) hostsExpanded = false
+    }
 
     // 切换中自动展开主机列表：用户刚点过某台主机，这时最需要看到「正在连哪台」，
     // 以及失败后立刻改选另一台。
@@ -210,7 +223,11 @@ fun SessionDrawer(
                 hostsError = hostsError,
                 connectionError = connectionError,
                 expanded = hostsExpanded,
-                onToggle = { hostsExpanded = !hostsExpanded },
+                onToggle = {
+                    // 记一笔「是他自己动的」：之后数据刷新不再自动收起，尊重这次选择。
+                    hostsToggled = true
+                    hostsExpanded = !hostsExpanded
+                },
                 onRefresh = onRefreshHosts,
                 onSelect = onSelectHost,
                 onRetry = onRetryHost,
