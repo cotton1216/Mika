@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 /**
  * Read-only diagnostics; no recorder, track, call, role, or app-op is opened or changed.
  * From an authorized adb shell:
- * CLASSPATH=<如愿 base.apk> app_process /system/bin com.wangzan101.mika.cap.phone.shell.CallAudioPreflight
+ * CLASSPATH=<如意 AI base.apk> app_process /system/bin com.wangzan101.mika.cap.phone.shell.CallAudioPreflight
  */
 @Keep
 object CallAudioPreflight {

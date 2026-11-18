@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">دسترسی به برنامه‌ها</string>
     <string name="appaccess_row_sub">مسدود کردن برنامه‌ها و اشتراک‌گذاری صفحه برای هر برنامه</string>
-    <string name="appaccess_intro">انتخاب کنید 如愿 با ابزارهای معمول کنترل گوشی کدام برنامه‌ها را می‌تواند بخواند و کنترل کند. این تنظیم دستورات شل، محیط اجرا و دسترسی رایانه (MCP) را محدود نمی‌کند.</string>
+    <string name="appaccess_intro">انتخاب کنید 如意 AI با ابزارهای معمول کنترل گوشی کدام برنامه‌ها را می‌تواند بخواند و کنترل کند. این تنظیم دستورات شل، محیط اجرا و دسترسی رایانه (MCP) را محدود نمی‌کند.</string>
     <string name="appaccess_privacy">دسته‌بندی، نام برنامه‌ها و بسته‌های آن‌ها را به مدل هوش مصنوعی ارسال می‌کند؛ «به‌روزرسانی فهرست برنامه‌ها» ابتدا از شما اجازه می‌گیرد.</string>
     <string name="appaccess_unavailable">تنظیمات دسترسی به برنامه‌ها خوانده نمی‌شود، بنابراین دسترسی معمول به گوشی متوقف است. بازنشانی، مجوزها و دسته‌های ذخیره‌شده را پاک می‌کند.</string>
     <string name="appaccess_reset">بازنشانی دسترسی به برنامه‌ها</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">انصراف</string>
 
     <string name="appaccess_recommend_title">پیشنهاد مسدودسازی: برنامه‌های مالی</string>
-    <string name="appaccess_recommend_body">این برنامه‌ها در دستهٔ مالی یا پرداخت قرار گرفته‌اند و 如愿 همچنان می‌تواند آن‌ها را کنترل کند. آن‌ها را یک‌به‌یک یا یک‌جا مسدود کنید.</string>
+    <string name="appaccess_recommend_body">این برنامه‌ها در دستهٔ مالی یا پرداخت قرار گرفته‌اند و 如意 AI همچنان می‌تواند آن‌ها را کنترل کند. آن‌ها را یک‌به‌یک یا یک‌جا مسدود کنید.</string>
     <string name="appaccess_recommend_empty">موردی برای مسدود کردن وجود ندارد.</string>
     <string name="appaccess_block">مسدود کردن</string>
     <string name="appaccess_block_all">مسدود کردن همه</string>

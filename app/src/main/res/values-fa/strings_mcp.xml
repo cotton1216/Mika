@@ -37,7 +37,7 @@
     <string name="mcp_cli_install">۱. رایانهٔ خود را آماده کنید</string>
     <string name="mcp_cli_install_sub">راهنمای نصب را برای دستیار هوش مصنوعی رایانه بفرستید یا خودتان در رایانه دنبال کنید.</string>
     <string name="mcp_copy_install">کپی راهنمای نصب</string>
-    <string name="mcp_cli_install_prompt">برای نصب 如愿 CLI یا مهارت این دستیار، راهنمای https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md را دنبال کنید. از روش اتصال انتخاب‌شده در گوشی استفاده کنید: USB از ADB مجاز استفاده می‌کند؛ Wi-Fi یا VPN خصوصی از نشانی HTTP و فایل توکن خصوصی استفاده می‌کند. برای بررسی اتصال، دستور connect را اجرا کنید. اگر فقط مهارت را دارید، از اسکریپت همراه آن استفاده کنید. کارهای گوشی را ارسال نکنید و توکن‌ها را در گفتگو چاپ نکنید.</string>
+    <string name="mcp_cli_install_prompt">برای نصب 如意 AI CLI یا مهارت این دستیار، راهنمای https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md را دنبال کنید. از روش اتصال انتخاب‌شده در گوشی استفاده کنید: USB از ADB مجاز استفاده می‌کند؛ Wi-Fi یا VPN خصوصی از نشانی HTTP و فایل توکن خصوصی استفاده می‌کند. برای بررسی اتصال، دستور connect را اجرا کنید. اگر فقط مهارت را دارید، از اسکریپت همراه آن استفاده کنید. کارهای گوشی را ارسال نکنید و توکن‌ها را در گفتگو چاپ نکنید.</string>
     <string name="mcp_cli_connect">۲. گوشی را متصل کنید</string>
     <string name="mcp_cli_connect_sub">در رایانه از طریق USB یا اشکال‌زدایی بی‌سیم جفت‌شده اجرا کنید. دستور connect اتصال را بررسی می‌کند. اگر فقط مهارت را دارید، از دستیار بخواهید کلاینت همراه آن را اجرا کند.</string>
     <string name="mcp_copy_command">کپی دستور</string>
@@ -50,7 +50,7 @@
     <string name="mcp_usb_client">۳. کلاینت MCP را پیکربندی کنید</string>
     <string name="mcp_usb_client_sub">دستور شروع، نشانی و توکن را در رایانه چاپ می‌کند. آن‌ها را به کلاینت اضافه کنید و بررسی کنید زمان درخواست در بالا به‌روز شود.</string>
     <string name="mcp_copy_instructions">کپی دستورالعمل راه‌اندازی</string>
-    <string name="mcp_usb_client_instructions">یک سرور MCP از نوع Streamable HTTP با نشانی http://127.0.0.1:%1$d/mcp در این رایانه اضافه کنید. سرآیند Authorization را با Bearer و سپس توکنی که دستور شروع 如愿 چاپ کرده تنظیم کنید. توکن را در گفتگو چاپ نکنید. متصل شوید یا فهرست ابزارها را تازه کنید و بررسی کنید زمان درخواست در گوشی به‌روز شود. راهنما: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">یک سرور MCP از نوع Streamable HTTP با نشانی http://127.0.0.1:%1$d/mcp در این رایانه اضافه کنید. سرآیند Authorization را با Bearer و سپس توکنی که دستور شروع 如意 AI چاپ کرده تنظیم کنید. توکن را در گفتگو چاپ نکنید. متصل شوید یا فهرست ابزارها را تازه کنید و بررسی کنید زمان درخواست در گوشی به‌روز شود. راهنما: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">اجازه به این اتصال شبکه</string>
     <string name="mcp_network_enable_action">فعال کردن دسترسی شبکه</string>
     <string name="mcp_network_address_step">۱. نشانی قابل دسترسی انتخاب کنید</string>

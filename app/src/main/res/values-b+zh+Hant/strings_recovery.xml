@@ -2,22 +2,22 @@
 <resources>
     <string name="rec_a11y">替我開啟無障礙</string>
     <string name="rec_default_on">預設開啟</string>
-    <string name="rec_a11y_body">如愿要用「無障礙」讀螢幕上的文字和按鈕。開啟後,如愿會替你在系統裡開啟它自己的無障礙服務,你已經開著的其他無障礙服務不受影響。關掉這裡,如愿會把自己的無障礙服務關掉。</string>
+    <string name="rec_a11y_body">如意 AI 要用「無障礙」讀螢幕上的文字和按鈕。開啟後,如意 AI 會替你在系統裡開啟它自己的無障礙服務,你已經開著的其他無障礙服務不受影響。關掉這裡,如意 AI 會把自己的無障礙服務關掉。</string>
     <string name="rec_battery">不受省電限制</string>
-    <string name="rec_battery_body">開啟後,如愿會把自己加進系統的「電池最佳化」例外名單,系統省電時就不會在背景停掉它,手機操作更不容易中斷;可能會多用一點電。關掉這裡就恢復系統預設的省電管理。</string>
+    <string name="rec_battery_body">開啟後,如意 AI 會把自己加進系統的「電池最佳化」例外名單,系統省電時就不會在背景停掉它,手機操作更不容易中斷;可能會多用一點電。關掉這裡就恢復系統預設的省電管理。</string>
     <string name="rec_boot">重啟後自動恢復</string>
-    <string name="rec_boot_body">手機重啟後「無線偵錯」會自己關掉。開啟後,如愿會在開機時替你重新開啟無線偵錯並自動連上。為此如愿需要「修改系統設定」的授權,只用來開啟無線偵錯。只在你信任過的 Wi-Fi 上有效。關掉這裡或解除配對,如愿都會交還這項授權。</string>
+    <string name="rec_boot_body">手機重啟後「無線偵錯」會自己關掉。開啟後,如意 AI 會在開機時替你重新開啟無線偵錯並自動連上。為此如意 AI 需要「修改系統設定」的授權,只用來開啟無線偵錯。只在你信任過的 Wi-Fi 上有效。關掉這裡或解除配對,如意 AI 都會交還這項授權。</string>
     <string name="rec_auto_wireless">自動開啟無線偵錯</string>
-    <string name="rec_auto_wireless_body">Wi-Fi 斷線或重啟手機後,系統會把「無線偵錯」關掉。手機操作平時用不著它,只在重新啟動時(比如如愿更新之後)要它開著。開啟後,遇到這種時候、又連著 Wi-Fi,如愿會替你開啟無線偵錯並自動連上,但不會替你關掉它。這和「重啟後自動恢復」用同一項「修改系統設定」的授權,只在你允許過的 Wi-Fi 上有效。關掉這裡,如愿就不再替你開啟。</string>
+    <string name="rec_auto_wireless_body">Wi-Fi 斷線或重啟手機後,系統會把「無線偵錯」關掉。手機操作平時用不著它,只在重新啟動時(比如如意 AI 更新之後)要它開著。開啟後,遇到這種時候、又連著 Wi-Fi,如意 AI 會替你開啟無線偵錯並自動連上,但不會替你關掉它。這和「重啟後自動恢復」用同一項「修改系統設定」的授權,只在你允許過的 Wi-Fi 上有效。關掉這裡,如意 AI 就不再替你開啟。</string>
     <string name="rec_need_setup">需要先完成手機操作設定</string>
     <string name="rec_failed">沒能完成,請確認手機操作已就緒後再試</string>
     <string name="rec_working">正在處理…</string>
     <string name="rec_restarted_at">上次在 %1$s 自動重啟過無障礙服務。</string>
-    <string name="rec_not_allowed_here">這個 Wi-Fi 還沒允許無線偵錯,如愿打不開它。請親手開啟一次,系統問時勾選「始終允許使用此網路」,以後如愿就能自己開啟。</string>
-    <string name="rec_refused">這臺手機不讓如愿開啟無線偵錯。需要時請手動開啟,如愿會自己連上。</string>
-    <string name="rec_gave_up">替你打開了幾次無線偵錯,手機操作還是沒能啟動,先停下了。換個 Wi-Fi 或在手機操作裡點重試,如愿會再試。</string>
+    <string name="rec_not_allowed_here">這個 Wi-Fi 還沒允許無線偵錯,如意 AI 打不開它。請親手開啟一次,系統問時勾選「始終允許使用此網路」,以後如意 AI 就能自己開啟。</string>
+    <string name="rec_refused">這臺手機不讓如意 AI 開啟無線偵錯。需要時請手動開啟,如意 AI 會自己連上。</string>
+    <string name="rec_gave_up">替你打開了幾次無線偵錯,手機操作還是沒能啟動,先停下了。換個 Wi-Fi 或在手機操作裡點重試,如意 AI 會再試。</string>
     <string name="rec_permission_missing">上次開機時授權已經不在了,沒能自動恢復。請關掉再開啟這個開關。</string>
-    <string name="rec_setting_unavailable">這臺手機不允許如愿在開機時開啟無線偵錯。重啟後請手動開啟,如愿會自己連上。</string>
-    <string name="rec_not_recovered">上次開機沒能自動連上。確認連著信任過的 Wi-Fi、無線偵錯開著,如愿會自己連上。</string>
+    <string name="rec_setting_unavailable">這臺手機不允許如意 AI 在開機時開啟無線偵錯。重啟後請手動開啟,如意 AI 會自己連上。</string>
+    <string name="rec_not_recovered">上次開機沒能自動連上。確認連著信任過的 Wi-Fi、無線偵錯開著,如意 AI 會自己連上。</string>
     <string name="rec_needs_pairing">要先配對過無線偵錯才用得上。現在的助手是用 USB 指令啟動的,手機重啟後請再執行一次指令。</string>
 </resources>

@@ -65,8 +65,8 @@
     <string name="tool_tap">Нажать</string>
     <string name="tool_type">Ввести текст</string>
     <string name="tool_clear">Очистить поле</string>
-    <string name="tool_mika_status">Состояние Mika</string>
-    <string name="tool_mika_open_screen">Открыть страницу Mika</string>
+    <string name="tool_mika_status">Состояние 如意 AI</string>
+    <string name="tool_mika_open_screen">Открыть страницу 如意 AI</string>
     <string name="tool_mika_open_file">Открыть файл</string>
     <string name="tool_mika_notify">Отправить уведомление</string>
     <string name="tool_mika_copy">Скопировать текст</string>

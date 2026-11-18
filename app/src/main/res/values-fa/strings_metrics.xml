@@ -6,8 +6,8 @@
     <string name="metrics_other">سایر موارد (انتظار و تلاش دوباره)</string>
     <string name="metrics_title">آمار اجرا</string>
     <string name="metrics_sub">زمان، تعداد رفت‌وبرگشت به مدل و توکن‌های اجراهای اخیر</string>
-    <string name="metrics_empty">هنوز آماری ثبت نشده است. از 如愿 بخواهید کاری انجام دهد تا اینجا ثبت شود.</string>
-    <string name="metrics_note">فقط %1$d اجرای آخر در این گوشی محاسبه می‌شود. زمان از آغاز کار 如愿 شروع می‌شود؛ اولین بازخورد زمانی است که نخستین نشانهٔ کار را می‌بینید.</string>
+    <string name="metrics_empty">هنوز آماری ثبت نشده است. از 如意 AI بخواهید کاری انجام دهد تا اینجا ثبت شود.</string>
+    <string name="metrics_note">فقط %1$d اجرای آخر در این گوشی محاسبه می‌شود. زمان از آغاز کار 如意 AI شروع می‌شود؛ اولین بازخورد زمانی است که نخستین نشانهٔ کار را می‌بینید.</string>
     <string name="metrics_copy">کپی JSON</string>
     <string name="metrics_share">اشتراک‌گذاری JSON</string>
     <string name="metrics_last_10">۱۰ مورد آخر</string>

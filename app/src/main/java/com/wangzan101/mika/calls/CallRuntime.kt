@@ -570,9 +570,9 @@ class CallRuntime(private val app: MikaApp) {
             if (!settings.state.value.enabled) return@withLock report("请先开启 AI 电话")
             if (work != null || liveCalls().isNotEmpty()) return@withLock report("请在没有通话时准备 AI 电话")
             if (!access.supported) return@withLock report("电话伴侣模式需要 Android 12 及以上、主用户及运营商通话功能")
-            if (!access.hasPhonePermissions()) return@withLock report("请允许如愿的电话权限")
+            if (!access.hasPhonePermissions()) return@withLock report("请允许如意 AI 的电话权限")
             if (managedCallPresent() != false) return@withLock report("Android 正在通话或无法确认空闲，请稍后再准备")
-            val helper = shell ?: return@withLock report("请先连接如愿内置助手")
+            val helper = shell ?: return@withLock report("请先连接如意 AI 内置助手")
             configuring = true
             publish()
             try {
@@ -699,7 +699,7 @@ class CallRuntime(private val app: MikaApp) {
         // There is no indefinite standby wake lock and no attempt to wake or unlock the display.
         pending.wakeLock = runCatching {
             val power = checkNotNull(app.getSystemService(PowerManager::class.java))
-            power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "如愿:LockedDial").apply {
+            power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "如意 AI:LockedDial").apply {
                 setReferenceCounted(false)
                 acquire((ticket.expiresAtMs - SystemClock.elapsedRealtime() + 1_000L).coerceIn(1L, 46_000L))
             }
@@ -984,7 +984,7 @@ class CallRuntime(private val app: MikaApp) {
             if (w.automatic) waitAutoAnswerDelay(w)
             prerequisite(ignoreWork = true)?.let { throw CallProblem(it) }
             validateTarget(w)
-            val helper = shell ?: throw CallProblem("如愿内置助手未连接")
+            val helper = shell ?: throw CallProblem("如意 AI 内置助手未连接")
             val profile = voiceProfiles.get(w.config.activeVoiceProfileId)
                 ?: throw CallProblem("实时语音配置不可用，请重新选择")
             val credentials = withContext(Dispatchers.IO) { voiceProfiles.credentials(profile.id) }
@@ -1183,7 +1183,7 @@ class CallRuntime(private val app: MikaApp) {
         releaseCallWakeLock(w)
         runCatching {
             val power = app.getSystemService(PowerManager::class.java) ?: return
-            val lock = power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "如愿:ActiveCall")
+            val lock = power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "如意 AI:ActiveCall")
             lock.setReferenceCounted(false)
             w.wakeLock = lock
             lock.acquire(timeoutMs)
@@ -1527,7 +1527,7 @@ class CallRuntime(private val app: MikaApp) {
         !settings.state.value.enabled -> "AI 电话已关闭"
         configuring -> "AI 电话正在配置"
         !armed || !access.hasPhonePermissions() -> "请先准备 AI 电话"
-        shell == null -> "如愿内置助手未连接"
+        shell == null -> "如意 AI 内置助手未连接"
         !activeVoiceProfile().credentialsConfigured -> "请先配置实时语音凭据"
         !activeVoiceProfile().connectionTested -> "请先测试实时语音连接"
         !(notificationReady ?: notifications.ready()) -> "请允许 AI 电话通知，以便取消或接管"
@@ -1619,7 +1619,7 @@ class CallRuntime(private val app: MikaApp) {
             callId = calls.singleOrNull()?.id,
             number = current?.number ?: active?.requestedNumber,
             aiActive = active?.aiActive == true,
-            detail = if (enabled && unobservedManagedCall && current == null) "Android 正在通话，但如愿尚未收到该通话的回调" else detail,
+            detail = if (enabled && unobservedManagedCall && current == null) "Android 正在通话，但如意 AI 尚未收到该通话的回调" else detail,
             pendingAutoAnswer = pending,
             autoAnswerStage = autoStage,
             autoAnswerRemainingSeconds = countdown,

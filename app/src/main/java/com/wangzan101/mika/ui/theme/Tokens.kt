@@ -68,7 +68,7 @@ object MikaShapes {
     val Card = RoundedCornerShape(MikaRadius.Card)
     /** 用户消息气泡:右下角是尾角。 */
     val UserBubble = RoundedCornerShape(MikaRadius.Bubble, MikaRadius.Bubble, MikaRadius.BubbleTail, MikaRadius.Bubble)
-    /** 如愿的回答:左下角是尾角,和用户气泡对称。 */
+    /** 如意 AI 的回答:左下角是尾角,和用户气泡对称。 */
     val AnswerBubble = RoundedCornerShape(MikaRadius.Bubble, MikaRadius.Bubble, MikaRadius.Bubble, MikaRadius.BubbleTail)
     val Button = RoundedCornerShape(MikaRadius.Button)
     val Tile = RoundedCornerShape(MikaRadius.Tile)

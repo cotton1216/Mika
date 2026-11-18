@@ -10,7 +10,7 @@ import android.util.Log
 
 /**
  * 只在有虚拟屏时监听任务方向、窗口大小变化;不读应用内容,不改变任务焦点。
- * 注册不上任务监听时退回每 [POLL_MS] 扫一次,只在 [active](还有如愿的屏)为真时扫;
+ * 注册不上任务监听时退回每 [POLL_MS] 扫一次,只在 [active](还有如意 AI 的屏)为真时扫;
  * 屏放完后由 [close] 停下,[active] 变假时轮询也自己停。
  */
 @SuppressLint("PrivateApi")

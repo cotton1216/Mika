@@ -44,17 +44,17 @@
     <string name="selfcheck_advice_too_old">هذا النظام أقدم من Android 12، لذا لا يتوفر التحكم بالهاتف. وما زالت المحادثة والويب وبيئة العزل تعمل.</string>
     <string name="selfcheck_advice_no_wireless">لا يتضمن هذا النظام تصحيح الأخطاء اللاسلكي. يمكنك بدء التحكم بالهاتف من كمبيوتر عبر USB بدلًا من ذلك.</string>
     <string name="selfcheck_advice_phone_unavailable">لا تستطيع هذه البيئة تشغيل التطبيقات على هاتفك (لا تتوفر خيارات المطوّر أو ميزة تصحيح الأخطاء اللاسلكي)؛ وتعمل المحادثة والويب والملفات والحسابات كالمعتاد.</string>
-    <string name="selfcheck_advice_a11y_off">إمكانية الوصول متوقفة. فعّل إمكانية الوصول الخاصة بـ 如愿 من الإعدادات › التحكم بالهاتف.</string>
-    <string name="selfcheck_advice_a11y_restart">إمكانية الوصول مفعّلة لكنها لا تعمل. أوقف إمكانية الوصول الخاصة بـ 如愿 ثم أعد تشغيلها من إعدادات النظام.</string>
+    <string name="selfcheck_advice_a11y_off">إمكانية الوصول متوقفة. فعّل إمكانية الوصول الخاصة بـ 如意 AI من الإعدادات › التحكم بالهاتف.</string>
+    <string name="selfcheck_advice_a11y_restart">إمكانية الوصول مفعّلة لكنها لا تعمل. أوقف إمكانية الوصول الخاصة بـ 如意 AI ثم أعد تشغيلها من إعدادات النظام.</string>
     <string name="selfcheck_advice_notifications">الإشعارات محظورة، لذا لن ترى تقدّم المهام أو تنبيهات «تحتاج إليك».</string>
-    <string name="selfcheck_advice_battery">استخدام البطارية مقيّد، لذا قد يتوقف 如愿 في الخلفية. يمكنك إلغاء هذا القيد من الاستعادة والإصلاح.</string>
+    <string name="selfcheck_advice_battery">استخدام البطارية مقيّد، لذا قد يتوقف 如意 AI في الخلفية. يمكنك إلغاء هذا القيد من الاستعادة والإصلاح.</string>
     <string name="selfcheck_advice_setup">المساعد المضمّن لا يعمل. أكمل الإعداد من الإعدادات › التحكم بالهاتف، ثم أعد الفحص.</string>
-    <string name="selfcheck_advice_display">تعذّر إنشاء الشاشة الافتراضية لـ 如愿. أعد توصيل المساعد وحاول مجددًا؛ وإذا استمر الإخفاق، يُرجى الإبلاغ عنه.</string>
-    <string name="selfcheck_advice_focus">لا تملك شاشة 如愿 الافتراضية تركيزًا مستقلًا، لذا قد تفقد شاشتك تركيز الإدخال لفترة وجيزة أثناء عمل 如愿. سيظل كل شيء يعمل.</string>
-    <string name="selfcheck_advice_launch">لم تُفتح صفحة على شاشة 如愿 الافتراضية. يُرجى الإبلاغ عن ذلك.</string>
-    <string name="selfcheck_advice_on_main">فُتحت إعدادات النظام على شاشتك بدلًا من شاشة 如愿 الافتراضية. يُرجى الإبلاغ عن ذلك.</string>
+    <string name="selfcheck_advice_display">تعذّر إنشاء الشاشة الافتراضية لـ 如意 AI. أعد توصيل المساعد وحاول مجددًا؛ وإذا استمر الإخفاق، يُرجى الإبلاغ عنه.</string>
+    <string name="selfcheck_advice_focus">لا تملك شاشة 如意 AI الافتراضية تركيزًا مستقلًا، لذا قد تفقد شاشتك تركيز الإدخال لفترة وجيزة أثناء عمل 如意 AI. سيظل كل شيء يعمل.</string>
+    <string name="selfcheck_advice_launch">لم تُفتح صفحة على شاشة 如意 AI الافتراضية. يُرجى الإبلاغ عن ذلك.</string>
+    <string name="selfcheck_advice_on_main">فُتحت إعدادات النظام على شاشتك بدلًا من شاشة 如意 AI الافتراضية. يُرجى الإبلاغ عن ذلك.</string>
     <string name="selfcheck_advice_settings_in_use">إعدادات النظام مفتوحة على شاشتك، لذا لم تُفتح في هذه الخطوة. أغلقها وأعد الفحص.</string>
-    <string name="selfcheck_advice_read">تعذّرت قراءة عناصر التحكم في الصفحة. أوقف إمكانية الوصول الخاصة بـ 如愿 ثم أعد تشغيلها، وبعدها أعد الفحص.</string>
+    <string name="selfcheck_advice_read">تعذّرت قراءة عناصر التحكم في الصفحة. أوقف إمكانية الوصول الخاصة بـ 如意 AI ثم أعد تشغيلها، وبعدها أعد الفحص.</string>
     <string name="selfcheck_advice_blank">صورة الشاشة الافتراضية سوداء بالكامل أو فارغة. يُرجى الإبلاغ عن ذلك.</string>
     <string name="selfcheck_advice_action">لم تُنفّذ بعض الإجراءات (راجع التقرير). يُرجى الإبلاغ عن ذلك.</string>
     <string name="selfcheck_advice_frames">تتوقف الشاشة الافتراضية عن التحديث بعد فترة، لذا قد تتعطل المهام. يُرجى الإبلاغ عن ذلك.</string>
@@ -69,8 +69,8 @@
     <string name="selfcheck_advice_out_of_time">انتهت مهلة الفحص الذاتي قبل إجراء هذا الفحص.</string>
     <string name="selfcheck_advice_cancelled">أُلغي.</string>
 
-    <string name="selfcheck_target_title">صفحة الفحص الذاتي في 如愿</string>
-    <string name="selfcheck_target_note">هذه صفحة اختبار خاصة بـ 如愿. ينقر فحص التوافق الذاتي هنا ويكتب، ولا يؤثر في تطبيقاتك الأخرى.</string>
+    <string name="selfcheck_target_title">صفحة الفحص الذاتي في 如意 AI</string>
+    <string name="selfcheck_target_note">هذه صفحة اختبار خاصة بـ 如意 AI. ينقر فحص التوافق الذاتي هنا ويكتب، ولا يؤثر في تطبيقاتك الأخرى.</string>
     <string name="selfcheck_target_taps">النقرات: %1$d</string>
     <string name="selfcheck_target_button">انقر هنا</string>
     <string name="selfcheck_target_input">اكتب هنا</string>

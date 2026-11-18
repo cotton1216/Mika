@@ -106,7 +106,7 @@ internal fun rememberModelSetupViewModel(store: ProviderStore): ModelSetupViewMo
         val signIns = (context.applicationContext as? MikaApp)?.chatGptSignIn ?: ChatGptSignIns(scope)
         ModelSetupViewModel(
             store, scope, browser = AndroidSignInBrowser(context.applicationContext), signIns = signIns,
-            // 一个登录就够了:如愿登录拿到的账号票顺手把远程控制的设备注册掉,
+            // 一个登录就够了:如意 AI 登录拿到的账号票顺手把远程控制的设备注册掉,
             // 用户进「远程控制」时直接是已登录状态,不会再看到第二个登录页。
             onRuyiSignedIn = { accessToken -> RemoteSso.signIn(context.applicationContext, accessToken) },
             // 退出也要成对:不然本机还留着上一账号的设备令牌,进「远程控制」直接看到别人的电脑。
@@ -526,7 +526,7 @@ private fun PresetSuggestion(f: AddForm, label: String, onUse: () -> Unit) {
     )
 }
 
-/** 第一次用 ChatGPT 登录成功后说明一次:如愿里的用量走你的 ChatGPT 套餐。 */
+/** 第一次用 ChatGPT 登录成功后说明一次:如意 AI 里的用量走你的 ChatGPT 套餐。 */
 @Composable
 private fun ChatGptWelcome(onDismiss: () -> Unit) {
     MikaDialog(
@@ -538,8 +538,8 @@ private fun ChatGptWelcome(onDismiss: () -> Unit) {
 }
 
 /**
- * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到如愿的链接(intent 链接,点了由浏览器打开如愿);
- * 登录完(成功或失败)把如愿带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
+ * 登录要用的系统能力:授权页用系统浏览器打开;回调页(换完令牌之后才给出)写成功或失败的原因,再放一个回到如意 AI 的链接(intent 链接,点了由浏览器打开如意 AI);
+ * 登录完(成功或失败)把如意 AI 带回前台。安卓限制后台打开界面,带不回来时用户点回调页的链接或从最近任务回来。
  */
 private class AndroidSignInBrowser(private val context: Context) : SignInBrowser {
     override fun open(url: String) {

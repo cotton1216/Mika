@@ -8,7 +8,7 @@ import kotlinx.serialization.json.put
 import java.util.Locale
 
 /**
- * 网页按哪种语言请求。用户在如愿里选定了界面语言时,网页也按这一种要(Accept-Language 请求头,
+ * 网页按哪种语言请求。用户在如意 AI 里选定了界面语言时,网页也按这一种要(Accept-Language 请求头,
  * 内核同时让 navigator.language(s) 跟着它);跟随系统时不动,内核发系统给的那串。
  * 经 `Emulation.setUserAgentOverride` 的 acceptLanguage 设:桌面版加在桌面身份上([withLanguage]),
  * 手机版要换成一份照搬默认手机身份、只多了语言的覆盖([mobileOverride]),UA 与 UA-CH 都不变。

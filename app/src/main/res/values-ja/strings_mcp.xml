@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. パソコンを準備</string>
     <string name="mcp_cli_install_sub">インストールガイドをパソコンの AI に送るか、パソコンで自分で手順を進めてください。</string>
     <string name="mcp_copy_install">インストールガイドをコピー</string>
-    <string name="mcp_cli_install_prompt">https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md に従って、この agent 用の 如愿 CLI または Skill をインストールしてください。スマホで選んだ接続方法を使います。USB は認証済みの ADB、Wi-Fi/プライベート VPN は HTTP アドレスと非公開のトークンファイルを使います。connect を実行して接続を確認してください。Skill だけの場合は、付属のスクリプトを使います。スマホのタスクを送信したり、会話にトークンを表示したりしないでください。</string>
+    <string name="mcp_cli_install_prompt">https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md に従って、この agent 用の 如意 AI CLI または Skill をインストールしてください。スマホで選んだ接続方法を使います。USB は認証済みの ADB、Wi-Fi/プライベート VPN は HTTP アドレスと非公開のトークンファイルを使います。connect を実行して接続を確認してください。Skill だけの場合は、付属のスクリプトを使います。スマホのタスクを送信したり、会話にトークンを表示したりしないでください。</string>
     <string name="mcp_cli_connect">2. スマホを接続</string>
     <string name="mcp_cli_connect_sub">パソコンで、USB またはペア設定済みのワイヤレスデバッグ経由で実行します。connect で接続を確認できます。Skill だけの場合は、agent に付属のクライアントを実行してもらってください。</string>
     <string name="mcp_copy_command">コマンドをコピー</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. MCP クライアントを設定</string>
     <string name="mcp_usb_client_sub">開始コマンドが、パソコンにアドレスとトークンを表示します。それをクライアントに追加し、上のリクエスト時刻が更新されるか確認してください。</string>
     <string name="mcp_copy_instructions">設定手順をコピー</string>
-    <string name="mcp_usb_client_instructions">このパソコンで、http://127.0.0.1:%1$d/mcp に Streamable HTTP の MCP サーバーを追加してください。Authorization ヘッダーには、如愿 の開始コマンドが表示したトークンを Bearer に続けて設定します。会話にトークンを表示しないでください。接続するかツール一覧を更新して、スマホのリクエスト時刻が更新されるか確認してください。ガイド: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">このパソコンで、http://127.0.0.1:%1$d/mcp に Streamable HTTP の MCP サーバーを追加してください。Authorization ヘッダーには、如意 AI の開始コマンドが表示したトークンを Bearer に続けて設定します。会話にトークンを表示しないでください。接続するかツール一覧を更新して、スマホのリクエスト時刻が更新されるか確認してください。ガイド: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">このネットワーク接続を許可</string>
     <string name="mcp_network_enable_action">ネットワークアクセスを有効にする</string>
     <string name="mcp_network_address_step">1. 届くアドレスを選択</string>

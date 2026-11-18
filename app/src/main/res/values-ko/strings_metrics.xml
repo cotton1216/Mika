@@ -6,8 +6,8 @@
     <string name="metrics_other">기타 (대기, 재시도)</string>
     <string name="metrics_title">실행 통계</string>
     <string name="metrics_sub">최근 실행의 시간, 모델 왕복 횟수, 토큰</string>
-    <string name="metrics_empty">아직 실행 통계가 없어요. Mika에게 일을 시키면 여기에 기록돼요.</string>
-    <string name="metrics_note">이 휴대전화의 최근 %1$d회 실행만 집계해요. 시간은 Mika가 작업을 시작한 때부터 재고, 첫 반응은 작업하는 모습이 처음 보인 시점이에요.</string>
+    <string name="metrics_empty">아직 실행 통계가 없어요. 如意 AI에게 일을 시키면 여기에 기록돼요.</string>
+    <string name="metrics_note">이 휴대전화의 최근 %1$d회 실행만 집계해요. 시간은 如意 AI가 작업을 시작한 때부터 재고, 첫 반응은 작업하는 모습이 처음 보인 시점이에요.</string>
     <string name="metrics_copy">JSON 복사</string>
     <string name="metrics_share">JSON 공유</string>
     <string name="metrics_last_10">최근 10회</string>

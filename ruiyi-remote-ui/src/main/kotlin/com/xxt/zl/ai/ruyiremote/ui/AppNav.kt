@@ -78,7 +78,7 @@ fun DshApp(
     signIn: SignInController,
     showSso: Boolean = true,
     /**
-     * 宿主（如愿）嵌入时传入：远程控制是宿主里的一页，根页要能退回去。
+     * 宿主（如意 AI）嵌入时传入：远程控制是宿主里的一页，根页要能退回去。
      * 独立 App 时为 null —— 它自己就是根，返回键交给系统退出。
      */
     onExit: (() -> Unit)? = null,
@@ -94,7 +94,7 @@ fun DshApp(
      */
     closeDrawerRequest: Int = 0,
     /**
-     * 宿主（如愿）嵌入且自己承担如意账号登录时传入：登录首屏上给一条「回如愿登录」。
+     * 宿主（如意 AI）嵌入且自己承担如意账号登录时传入：登录首屏上给一条「回如意 AI 登录」。
      * 与 [showSso] 成对 —— 关掉这里的如意账号入口，就得把回去的路交出来。
      */
     onBackToHostSignIn: (() -> Unit)? = null,

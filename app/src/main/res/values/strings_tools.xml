@@ -65,8 +65,8 @@
     <string name="tool_tap">Tap</string>
     <string name="tool_type">Type text</string>
     <string name="tool_clear">Clear field</string>
-    <string name="tool_mika_status">Look at Mika’s state</string>
-    <string name="tool_mika_open_screen">Open a Mika page</string>
+    <string name="tool_mika_status">Look at 如意 AI’s state</string>
+    <string name="tool_mika_open_screen">Open a 如意 AI page</string>
     <string name="tool_mika_open_file">Open a file</string>
     <string name="tool_mika_notify">Send a notification</string>
     <string name="tool_mika_copy">Copy text</string>

@@ -20,7 +20,7 @@
     <string name="about_group">Hubungi pembuat</string>
     <string name="about_group_sub">WeChat</string>
     <string name="about_group_sheet_title">Hubungi pembuat</string>
-    <string name="about_group_sheet_sub">Ngobrol soal cara pakai atau bagikan ide. Saat menambahkan di WeChat, sebutkan Mika di permintaan Anda</string>
+    <string name="about_group_sheet_sub">Ngobrol soal cara pakai atau bagikan ide. Saat menambahkan di WeChat, sebutkan 如意 AI di permintaan Anda</string>
     <string name="about_group_hint">Tekan lama untuk menyimpan · atau pindai di WeChat</string>
     <string name="about_save_qr">Simpan kode QR</string>
     <string name="about_qr_saved">Kode QR disimpan ke Foto</string>
@@ -31,7 +31,7 @@
     <string name="about_repo_sub">%1$s · beri bintang ya</string>
     <string name="about_guide">Panduan &amp; cara berkontribusi</string>
     <string name="about_guide_sub">Mulai memakai; tambahkan pengetahuan aplikasi tanpa perlu coding</string>
-    <string name="about_data_note">Apa yang Anda kirim ke 如愿 — pesan, isi layar, dan tangkapan layar — hanya dikirim ke penyedia model yang Anda atur. 如愿 tidak punya server sendiri dan tidak mengumpulkan data Anda; pemeriksaan pembaruan hanya menghubungi server rilis.</string>
+    <string name="about_data_note">Apa yang Anda kirim ke 如意 AI — pesan, isi layar, dan tangkapan layar — hanya dikirim ke penyedia model yang Anda atur. 如意 AI tidak punya server sendiri dan tidak mengumpulkan data Anda; pemeriksaan pembaruan hanya menghubungi server rilis.</string>
     <string name="about_license_link">Lisensi Apache-2.0</string>
     <string name="about_author">Dibuat oleh Wang Zan · © 2026</string>
     <string name="about_license_title">Lisensi Apache-2.0</string>
@@ -46,11 +46,11 @@
     <string name="about_update_retry">Unduh lagi</string>
     <string name="about_update_cancel">Hapus unduhan</string>
     <string name="about_update_working">Memproses…</string>
-    <string name="about_update_install_hint">Setelah selesai diunduh, ketuk “Instal pembaruan” dan konfirmasi di penginstal sistem. Anda mungkin perlu mengizinkan 如愿 menginstal aplikasi tidak dikenal terlebih dahulu.</string>
+    <string name="about_update_install_hint">Setelah selesai diunduh, ketuk “Instal pembaruan” dan konfirmasi di penginstal sistem. Anda mungkin perlu mengizinkan 如意 AI menginstal aplikasi tidak dikenal terlebih dahulu.</string>
     <string name="about_update_error">Pengunduhan atau penginstalan belum selesai. Silakan coba lagi nanti.</string>
     <string name="about_update_bad_file">Paket yang diunduh tidak lengkap atau tidak cocok dengan rilisnya. Paket sudah dihapus; silakan unduh ulang.</string>
-    <string name="about_update_not_newer">Paket yang diunduh tidak lebih baru dari 如愿 yang terpasang. Paket sudah dihapus.</string>
-    <string name="about_update_bad_signer">Paket ini ditandatangani berbeda dari 如愿 yang terpasang, jadi tidak bisa memperbaruinya. Paket sudah dihapus. Jika Anda membangun 如愿 sendiri, copot dulu, lalu instal versi resmi.</string>
+    <string name="about_update_not_newer">Paket yang diunduh tidak lebih baru dari 如意 AI yang terpasang. Paket sudah dihapus.</string>
+    <string name="about_update_bad_signer">Paket ini ditandatangani berbeda dari 如意 AI yang terpasang, jadi tidak bisa memperbaruinya. Paket sudah dihapus. Jika Anda membangun 如意 AI sendiri, copot dulu, lalu instal versi resmi.</string>
     <string name="about_update_later">Nanti</string>
     <string name="about_no_browser">Tidak ada browser untuk membuka tautan</string>
     <string name="about_version">Versi %1$s</string>
@@ -60,7 +60,7 @@
     <string name="about_current">Saat ini %1$s</string>
     <string name="about_released_on">" · dirilis %1$s"</string>
     <string name="about_released_under">Dirilis di bawah %1$s</string>
-    <string name="issue_body">- Perangkat: %1$s\n- Versi Android: %2$s (SDK %3$d)\n- Versi 如愿: %4$s (build %5$s)\n\n### Apa yang salah\n\n\n### Langkah yang Anda lakukan\n\n\n### Yang Anda harapkan\n\n\n### Diagnostik\n(Opsional) Di 如愿, buka Tentang › Kirim masukan › Salin diagnostik, lalu tempel di sini\n\n</string>
+    <string name="issue_body">- Perangkat: %1$s\n- Versi Android: %2$s (SDK %3$d)\n- Versi 如意 AI: %4$s (build %5$s)\n\n### Apa yang salah\n\n\n### Langkah yang Anda lakukan\n\n\n### Yang Anda harapkan\n\n\n### Diagnostik\n(Opsional) Di 如意 AI, buka Tentang › Kirim masukan › Salin diagnostik, lalu tempel di sini\n\n</string>
     <string name="licenses_third_party">Komponen pihak ketiga · %1$d</string>
     <string name="licenses_footer">Teks lisensi lengkap dan pemberitahuan hak cipta ada di LICENSE dan folder licenses/ (termasuk THIRD_PARTY_NOTICES.md) pada repositori kode sumber.</string>
     <string name="diagnostics_copy">Salin diagnostik</string>
@@ -74,8 +74,8 @@
     <string name="about_auto_update">Pembaruan otomatis</string>
     <string name="about_auto_update_detail">Unduh versi baru di latar belakang hanya melalui Wi-Fi dan minta konfirmasi sebelum memasang</string>
     <string name="about_auto_update_disable">Matikan pembaruan otomatis</string>
-    <string name="about_auto_update_ready">如愿 %1$s telah diunduh</string>
-    <string name="about_auto_update_confirm_title">Versi baru 如愿 siap</string>
+    <string name="about_auto_update_ready">如意 AI %1$s telah diunduh</string>
+    <string name="about_auto_update_confirm_title">Versi baru 如意 AI siap</string>
     <string name="about_auto_update_confirm_detail">Pasang %1$s sekarang atau matikan pembaruan otomatis dan periksa secara manual di Pengaturan.</string>
     <string name="about_auto_update_now">Perbarui sekarang</string>
 </resources>

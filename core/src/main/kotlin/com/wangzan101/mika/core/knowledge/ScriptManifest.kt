@@ -14,7 +14,7 @@ data class ScriptEntry(val file: String, val runnable: Boolean, val needs: List<
  * run_bundled_script 与 knowledge_read、skill_read 都以它为准。
  */
 object ScriptManifest {
-    const val NEEDS_NETWORK = "needs network access: the user can turn on \"Allow scripts to go online\" (允许脚本联网) in 如愿's settings"
+    const val NEEDS_NETWORK = "needs network access: the user can turn on \"Allow scripts to go online\" (允许脚本联网) in 如意 AI's settings"
     private val json = Json { ignoreUnknownKeys = true }
     private val INTERPRETERS = mapOf("py" to "/usr/bin/python3", "mjs" to "/usr/bin/node", "js" to "/usr/bin/node", "sh" to "/bin/sh")
 

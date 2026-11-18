@@ -53,7 +53,7 @@ fun RemoteHome(
      */
     showSso: Boolean = true,
     /**
-     * 宿主（如愿）嵌入时传入：远程控制根页给一个显式「返回如愿」，返回键也退回宿主。
+     * 宿主（如意 AI）嵌入时传入：远程控制根页给一个显式「返回如意 AI」，返回键也退回宿主。
      * 独立 App 时为 null，它自己就是根。
      */
     onExit: (() -> Unit)? = null,
@@ -68,7 +68,7 @@ fun RemoteHome(
      */
     closeDrawerRequest: Int = 0,
     /**
-     * 宿主（如愿）嵌入时传入：登录首屏给一条「回如愿登录」。
+     * 宿主（如意 AI）嵌入时传入：登录首屏给一条「回如意 AI 登录」。
      * [showSso] 为 false 时本库不提供如意账号登录，联动的失败/退出提示必须能指回去。
      */
     onBackToHostSignIn: (() -> Unit)? = null,
@@ -112,7 +112,7 @@ fun RemoteHome(
     // 有凭据就直接进「我的电脑」，不必每次重启都重新登录。
     LaunchedEffect(session) { session.restore() }
 
-    // 宿主（如愿）换了本机设备令牌：登录成功要认这个登录，退出要真的退回登录页。
+    // 宿主（如意 AI）换了本机设备令牌：登录成功要认这个登录，退出要真的退回登录页。
     // 这一页在宿主的 Tab 里是常驻组合，不重读就一直是切换前那个账号的界面。
     // 重读本身是幂等的（[RemoteSessionController.restore] 双向），失败分类也由它回答。
     val hostAccountRevision by RemoteSso.revisions.collectAsState()

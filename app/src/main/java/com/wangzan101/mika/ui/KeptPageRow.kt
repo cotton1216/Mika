@@ -43,7 +43,7 @@ sealed interface KeptRow {
     companion object {
         /**
          * [ex] 那一轮下面显示什么:此刻留着的 [live] 就是这一轮留的,是 [Live];这一轮记着留过页、而它已经不在了,是 [Closed]
-         * (没记下原因的按如愿退出了说);别的为 null。
+         * (没记下原因的按如意 AI 退出了说);别的为 null。
          */
         fun of(ex: Exchange, live: KeptPage?): KeptRow? = when {
             live != null && ex.runId != null && live.runId == ex.runId -> Live(live)

@@ -114,7 +114,7 @@ class RootControl(context: Context, private val scope: CoroutineScope, private v
     /** Agent 能用 root 工具:用户打开了、su 答应过、su 还在。 */
     fun commandsAllowed(): Boolean = _state.value.commands && answer(KEY_COMMANDS_ANSWER) == SuAnswer.Granted && suPresent()
 
-    /** 打开或关掉「允许如愿执行 root 命令」。打开时以 root 问 su 一次,答应了才打开。 */
+    /** 打开或关掉「允许如意 AI 执行 root 命令」。打开时以 root 问 su 一次,答应了才打开。 */
     fun setCommands(on: Boolean) {
         if (!on) {
             commandsRequest.incrementAndGet()

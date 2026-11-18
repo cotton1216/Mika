@@ -126,7 +126,7 @@ class McpRuntime(
 
     /**
      * 有一种开着就把服务起来(已经在跑就让它按开关重新对一遍)。从后台起前台服务可能被系统拒绝,这时记成没开起来,
-     * 等下次打开如愿的界面再起。
+     * 等下次打开如意 AI 的界面再起。
      */
     fun ensureRunning() {
         if (!active || com.wangzan101.mika.settings.FeatureFlags.get(context).quitRequested()) return

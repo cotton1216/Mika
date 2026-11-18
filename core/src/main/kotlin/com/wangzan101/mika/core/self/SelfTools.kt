@@ -59,7 +59,7 @@ internal object MikaStatus : SelfTool {
 /** 打开 Mika 自己的一页;只改用户眼前的页面,不改任何设置。 */
 internal object MikaOpenScreen : SelfTool {
     override val verb = Verb.SelfOpenScreen
-    override val label = "打开 Mika 的页面"
+    override val label = "打开如意 AI 的页面"
     override val risk = Risk.Write
     override val def = ToolDef(
         "mika_open_screen",

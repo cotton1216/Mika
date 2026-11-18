@@ -6,8 +6,8 @@
     <string name="metrics_other">Otros (esperas, reintentos)</string>
     <string name="metrics_title">Estadísticas de ejecución</string>
     <string name="metrics_sub">Tiempo, idas y vueltas al modelo y tokens de las últimas ejecuciones</string>
-    <string name="metrics_empty">Aún no hay estadísticas. Pídele algo a 如愿 y quedará registrado aquí.</string>
-    <string name="metrics_note">Solo se cuentan las últimas %1$d ejecuciones en este teléfono. El tiempo empieza cuando 如愿 se pone a trabajar; la primera respuesta es cuando ves por primera vez lo que está haciendo.</string>
+    <string name="metrics_empty">Aún no hay estadísticas. Pídele algo a 如意 AI y quedará registrado aquí.</string>
+    <string name="metrics_note">Solo se cuentan las últimas %1$d ejecuciones en este teléfono. El tiempo empieza cuando 如意 AI se pone a trabajar; la primera respuesta es cuando ves por primera vez lo que está haciendo.</string>
     <string name="metrics_copy">Copiar JSON</string>
     <string name="metrics_share">Compartir JSON</string>
     <string name="metrics_last_10">Últimas 10</string>

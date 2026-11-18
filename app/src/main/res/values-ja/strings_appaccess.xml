@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">アプリのアクセス</string>
     <string name="appaccess_row_sub">アプリごとに操作と画面共有をブロック</string>
-    <string name="appaccess_intro">標準のスマホ操作ツールで 如愿 が読み取り・操作してよいアプリを選びます。シェルコマンド、サンドボックス、パソコンへのアクセス(MCP)は、この設定の対象外です。</string>
+    <string name="appaccess_intro">標準のスマホ操作ツールで 如意 AI が読み取り・操作してよいアプリを選びます。シェルコマンド、サンドボックス、パソコンへのアクセス(MCP)は、この設定の対象外です。</string>
     <string name="appaccess_privacy">分類すると、アプリ名とパッケージ名が AI モデルに送信されます。「アプリ一覧を更新」は、事前に確認が出ます。</string>
     <string name="appaccess_unavailable">アプリのアクセス設定を読み取れないため、標準のスマホ操作を停止しています。リセットすると、保存した権限と分類が消去されます。</string>
     <string name="appaccess_reset">アプリのアクセスをリセット</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">キャンセル</string>
 
     <string name="appaccess_recommend_title">ブロック推奨: 金融系アプリ</string>
-    <string name="appaccess_recommend_body">これらのアプリは金融または決済に分類されていて、如愿 はまだ操作できます。1 つずつ、またはまとめてブロックできます。</string>
+    <string name="appaccess_recommend_body">これらのアプリは金融または決済に分類されていて、如意 AI はまだ操作できます。1 つずつ、またはまとめてブロックできます。</string>
     <string name="appaccess_recommend_empty">ブロックするものはありません。</string>
     <string name="appaccess_block">ブロック</string>
     <string name="appaccess_block_all">すべてブロック</string>

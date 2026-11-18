@@ -8,7 +8,7 @@
     <string name="usage_title">استخدام الرموز</string>
     <string name="usage_none">لا شيء بعد</string>
     <string name="usage_empty_title">لا يوجد استخدام خلال هذه الفترة</string>
-    <string name="usage_empty_body">اطلب من 如愿 تنفيذ مهمة، وسيُسجّل هنا عدد الرموز المستخدمة.</string>
+    <string name="usage_empty_body">اطلب من 如意 AI تنفيذ مهمة، وسيُسجّل هنا عدد الرموز المستخدمة.</string>
     <string name="usage_note">الأرقام كما أبلغ عنها مزوّدو الخدمة، ولا تُحفظ إلا على هذا الهاتف.</string>
     <string name="usage_total">الإجمالي</string>
     <string name="usage_trend">الاتجاه</string>

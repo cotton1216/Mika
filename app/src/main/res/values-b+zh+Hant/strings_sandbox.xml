@@ -6,7 +6,7 @@
     <string name="install_skills">同步技能腳本</string>
     <string name="install_interrupted">安裝被中斷,可以重試</string>
     <string name="install_checksum">檔案檢查碼不符</string>
-    <string name="install_unpack_failed">執行環境解包失敗,請重新安裝如愿:%1$s</string>
+    <string name="install_unpack_failed">執行環境解包失敗,請重新安裝如意 AI:%1$s</string>
     <string name="install_unsupported">此裝置不支援(需要 arm64)</string>
     <string name="install_no_space">可用空間不足 %1$d MB(剩 %2$d MB)</string>
     <string name="install_cannot_start">執行環境無法啟動:%1$s</string>
@@ -17,10 +17,10 @@
     <string name="sandbox_not_finished">安裝沒有完成,可以重試</string>
     <string name="sandbox_network">允許腳本連上網路</string>
     <string name="sandbox_network_sub">預設開啟</string>
-    <string name="sandbox_network_explain">如愿處理檔案、執行腳本時預設連上網路。開啟後腳本可以連上網路(比如查論文、查地圖),也可能把對話裡的檔案發出去。</string>
-    <string name="sandbox_isolation_unavailable">此裝置無法限制腳本連上網路:只有開啟「允許腳本連上網路」時,如愿才能處理檔案和執行腳本</string>
+    <string name="sandbox_network_explain">如意 AI 處理檔案、執行腳本時預設連上網路。開啟後腳本可以連上網路(比如查論文、查地圖),也可能把對話裡的檔案發出去。</string>
+    <string name="sandbox_isolation_unavailable">此裝置無法限制腳本連上網路:只有開啟「允許腳本連上網路」時,如意 AI 才能處理檔案和執行腳本</string>
     <string name="sandbox_reset_title">重置執行環境?</string>
-    <string name="sandbox_reset_body">會刪除如愿處理檔案、執行腳本用的執行環境,以及各對話裡生成的檔案(包括你附加的檔案),然後自動重新準備。對話記錄和設定不受影響。</string>
+    <string name="sandbox_reset_body">會刪除如意 AI 處理檔案、執行腳本用的執行環境,以及各對話裡生成的檔案(包括你附加的檔案),然後自動重新準備。對話記錄和設定不受影響。</string>
     <string name="sandbox_broken">準備沒有完成:%1$s</string>
     <string name="sandbox_reset_sub">出問題時用:刪除後自動重新準備</string>
     <string name="sandbox_reset">重置執行環境</string>

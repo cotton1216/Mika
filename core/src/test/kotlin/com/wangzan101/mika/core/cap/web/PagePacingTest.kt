@@ -204,7 +204,7 @@ class PagePacingTest {
         assertTrue("$e", e is PageLimitReached && e.pages == 3 && e.cap == 3 && e.site == "shop.example.com")
         val result = dwellStopped(e as PageLimitReached).content
         assertEquals(JsonPrimitive("page_limit"), result["error"])
-        assertTrue(result["message"].toString().contains("如愿 reached its per-task web page budget"))
+        assertTrue(result["message"].toString().contains("如意 AI reached its per-task web page budget"))
         val budget = result["navigationBudget"] as JsonObject
         assertEquals(JsonPrimitive("web_pages"), budget["scope"])
         assertEquals(JsonPrimitive("shop.example.com"), budget["target"])

@@ -2149,7 +2149,7 @@ class ChatViewModelTest {
 
     @Test fun suspendedSkillRestoreAndView() = runTest {
         val vm = vmWithHistory()
-        val learned = com.wangzan101.mika.core.skills.SkillNote("如愿学会了一项技能:发微信", draftId = "d1")
+        val learned = com.wangzan101.mika.core.skills.SkillNote("如意 AI 学会了一项技能:发微信", draftId = "d1")
         val suspended = com.wangzan101.mika.core.skills.SkillNote("这项技能最近不灵,先停用了", suspended = "wechat-msg")
         notesFlow.value = mapOf("r1" to com.wangzan101.mika.memory.RunNotes("c1", "r1", skillNotes = listOf(learned, suspended)))
         runCurrent()

@@ -16,12 +16,12 @@
     <string name="dev_parallel_sub">کارهای گفتگوهای مختلف هر کدام صفحهٔ مجازی خود را دارند و هم‌زمان اجرا می‌شوند</string>
     <string name="dev_compaction">خلاصه‌های ساختاریافته برای کارهای طولانی</string>
     <string name="dev_compaction_sub">هنگام خلاصه کردن مراحل زیاد، هدف، اطلاعات، پیشرفت و مرحلهٔ بعدی را ثبت می‌کند</string>
-    <string name="dev_group">نحوهٔ کار 如愿</string>
+    <string name="dev_group">نحوهٔ کار 如意 AI</string>
     <string name="dev_autonomy">حالت خودکار</string>
-    <string name="dev_autonomy_sub">وقتی روشن باشد، 如愿 حتی پیش از پرداخت هم سؤال نمی‌کند و کار را تمام می‌کند؛ وقتی خاموش باشد، فقط پیش از پرداخت می‌پرسد</string>
-    <string name="dev_note">این گزینه‌ها بر نحوه و سرعت کار 如愿 تأثیر دارند. معمولاً بهتر است آن‌ها را در حالت پیش‌فرض نگه دارید.</string>
+    <string name="dev_autonomy_sub">وقتی روشن باشد، 如意 AI حتی پیش از پرداخت هم سؤال نمی‌کند و کار را تمام می‌کند؛ وقتی خاموش باشد، فقط پیش از پرداخت می‌پرسد</string>
+    <string name="dev_note">این گزینه‌ها بر نحوه و سرعت کار 如意 AI تأثیر دارند. معمولاً بهتر است آن‌ها را در حالت پیش‌فرض نگه دارید.</string>
     <string name="dev_grounding">مکان‌یابی تصویری تأیید شده است</string>
-    <string name="dev_grounding_sub">پس از آزمایش دقت مدل تصویری %1$s در مکان‌یابی، این گزینه را روشن کنید؛ در حالت خاموش، 如愿 پیش از لمس نقاط مشخص‌شده به شواهد دیگری نیاز دارد.</string>
+    <string name="dev_grounding_sub">پس از آزمایش دقت مدل تصویری %1$s در مکان‌یابی، این گزینه را روشن کنید؛ در حالت خاموش، 如意 AI پیش از لمس نقاط مشخص‌شده به شواهد دیگری نیاز دارد.</string>
     <string name="dev_speed">سرعت</string>
     <string name="dev_experiments">آزمایش‌ها</string>
     <string name="dev_run_log">سوابق اجرا</string>

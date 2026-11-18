@@ -48,7 +48,7 @@ object ChatCopy {
     }
 
     /** 对话页顶栏的标题:固定是 App 名;副标题说此刻在做什么。 */
-    const val APP_TITLE = "如愿"
+    const val APP_TITLE = "如意 AI"
 
     /** 对话的名字:第一句话(只取第一行,附件那几行不算;只发了屏幕时是「你此刻的屏幕」);空对话为空。侧栏里用它称呼对话。 */
     fun title(exchanges: List<Exchange>): String =

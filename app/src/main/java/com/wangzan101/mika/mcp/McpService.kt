@@ -21,7 +21,7 @@ import com.wangzan101.mika.task.TaskService
  *
  * 电脑经 USB 调试打开、关掉 USB 方式也是起这个服务:清单里它对外开放,但要求调用方持有
  * INTERACT_ACROSS_USERS_FULL。这个权限 shell 有,普通 App 拿不到(只给系统签名和安装器,adb 也授不了),
- * 所以只有 `adb shell am start-foreground-service` 这样以 shell 身份发起的才起得了;如愿自己起不受限。
+ * 所以只有 `adb shell am start-foreground-service` 这样以 shell 身份发起的才起得了;如意 AI 自己起不受限。
  * 以前台服务的方式起:安卓 12 起后台的 App 一般不能自己开前台服务,但由 shell 发起的启动不在此限。
  */
 class McpService : Service() {

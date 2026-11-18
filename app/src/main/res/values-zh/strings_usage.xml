@@ -8,7 +8,7 @@
     <string name="usage_title">Token 用量</string>
     <string name="usage_none">还没有</string>
     <string name="usage_empty_title">这段时间还没有用量</string>
-    <string name="usage_empty_body">让如愿办件事，这里就会记下用了多少 Token。</string>
+    <string name="usage_empty_body">让如意 AI 办件事，这里就会记下用了多少 Token。</string>
     <string name="usage_note">数字以服务商返回的为准，只存在这台手机上。</string>
     <string name="usage_total">总用量</string>
     <string name="usage_trend">用量趋势</string>

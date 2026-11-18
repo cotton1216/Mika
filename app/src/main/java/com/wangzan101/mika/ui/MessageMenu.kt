@@ -164,11 +164,11 @@ internal fun Modifier.behindMenu(open: Boolean, progress: () -> Float): Modifier
 
 /** 把消息的纯文字放进剪贴板,提示一句「已复制」。 */
 internal fun copyMessage(context: Context, text: String) {
-    context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("如愿", text))
+    context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("如意 AI", text))
     Toast.makeText(context, context.getString(R.string.chat_copied), Toast.LENGTH_SHORT).show()
 }
 
-/** 引用怎么念给读屏:「引用如愿:……」「引用你的话:……」。 */
+/** 引用怎么念给读屏:「引用如意 AI:……」「引用你的话:……」。 */
 @Composable
 private fun quoteDescription(q: QuoteMessage.Quote): String =
     stringResource(if (q.from == QuoteMessage.From.Mika) R.string.chat_quoting_mika else R.string.chat_quoting_you, q.text)

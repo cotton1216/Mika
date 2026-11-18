@@ -30,7 +30,7 @@ enum class ProxyFailure {
 }
 
 /**
- * 如愿自己的网络连接(调模型、列模型、账号登录换令牌、下更新、内置浏览器下载)用的网络代理。
+ * 如意 AI 自己的网络连接(调模型、列模型、账号登录换令牌、下更新、内置浏览器下载)用的网络代理。
  * [source] 每次给出此刻存着的代理地址(空串不用);按原文缓存解析结果,改了设置后调 [changed]。
  *
  * - 经 [client] 建的 OkHttp 客户端每个请求都问 [selector]:本机、局域网地址([LocalHosts.bypassesProxy])直连,别的走代理;
@@ -45,7 +45,7 @@ class NetProxy(private val source: () -> String) {
     @Volatile private var parsed: Parsed? = null
     private val pools = CopyOnWriteArrayList<WeakReference<okhttp3.ConnectionPool>>()
 
-    /** 此刻如愿自己的连接要走的代理;没设、写法不对或不适用时为 null。 */
+    /** 此刻如意 AI 自己的连接要走的代理;没设、写法不对或不适用时为 null。 */
     fun current(): ProxyAddress? {
         val raw = runCatching(source).getOrDefault("")
         parsed?.takeIf { it.raw == raw }?.let { return it.address }

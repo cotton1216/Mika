@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * mika-android-release · 一键发布「如愿(Mika)」安卓包到 app-version-hub
+ * mika-android-release · 一键发布「如意 AI(Mika)」安卓包到 app-version-hub
  *
  * 流水线：读版本 → 按环境构建 APK → 签名校验(prod) → ossutil 上传 OSS → apphub 登记 → 回读。
  *
@@ -34,7 +34,7 @@
  *
  * 其他可选环境变量：
  *   MIKA_ROOT                 项目根（含 gradlew 与 app/build.gradle.kts），默认 process.cwd()
- *   APP_NAME                  应用显示名，默认「如愿」
+ *   APP_NAME                  应用显示名，默认「如意 AI」
  *   MIKA_CHANGELOG            变更说明（也可用 --changelog 覆盖）
  *   APKSIGNER                 apksigner 路径（prod 签名校验用，默认自动探测 ANDROID_HOME/build-tools）
  *   MIKA_EXPECTED_SIGNER_CN   期望的签名者 CN，默认 Yuan AI
@@ -284,7 +284,7 @@ const APPHUB_BASE_URL = resolveBaseUrl();
 const APPHUB_USERNAME = resolveCredential('USERNAME');
 const APPHUB_PASSWORD = resolveCredential('PASSWORD');
 
-const APP_NAME = String(process.env.APP_NAME || '如愿');
+const APP_NAME = String(process.env.APP_NAME || '如意 AI');
 const CHANNEL = String(args.channel || process.env.MIKA_CHANNEL || profile.defaultChannel);
 const STATUS = String(args.status || profile.defaultStatus);
 const ABI = String(args.abi || process.env.MIKA_ABI || 'universal');
@@ -439,7 +439,7 @@ const apkLocal = join(
   'outputs',
   'apk',
   profile.buildType,
-  `如愿-${meta.versionName}-${ABI}-${profile.buildType}.apk`
+  `如意 AI-${meta.versionName}-${ABI}-${profile.buildType}.apk`
 );
 const objectKey = `${OSS_PREFIX}/${apkFileName}`;
 // --url 给了就跳过 OSS 上传，直接用给定的直链登记（本地联调 / 包已在别处托管时用）

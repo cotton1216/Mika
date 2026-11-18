@@ -101,7 +101,7 @@ fun teachGoalAccepted(goal: String): Boolean {
 
 object TeachTrace {
     /**
-     * 不在采集中、不是主屏、是如愿自己的界面、或没有包名：原样返回，不新增步骤。
+     * 不在采集中、不是主屏、是如意 AI 自己的界面、或没有包名：原样返回，不新增步骤。
      */
     fun reduce(session: TeachSession, event: TeachObservation, ownPackage: String): TeachSession {
         if (!session.phase.collects()) return session
@@ -269,12 +269,12 @@ fun teachLine(step: TeachStep): String {
 object TeachSkill {
     const val SOURCE = "demonstrated"
     const val PREFIX = "teach:"
-    const val NOT_TRIAL_RUN = "如愿还没有试跑成功。"
+    const val NOT_TRIAL_RUN = "如意 AI 还没有试跑成功。"
     const val NOT_ABSENT = "这次示范没走到的入口，不能据此认为那个入口不存在。"
     const val STOP_IF_UNMATCHED = "当前界面看不出上面写的入口或前置条件时，停止套用这份技能，改用平常的查看和询问。"
     /** 模型读到试用中的示范技能时加在正文前。 */
     const val USE_NOTE =
-        "[Demonstrated, not trial-run. 如愿 has not successfully replayed this. " +
+        "[Demonstrated, not trial-run. 如意 AI has not successfully replayed this. " +
             "Apply it only when the current screen matches the entrance and preconditions written below. " +
             "If they do not match, stop using this skill and explore or ask. " +
             "An entrance that was not used in the demonstration is not evidence that it does not exist.]"

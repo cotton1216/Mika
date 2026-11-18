@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">The microphone isn’t available. Another app may be using it</string>
     <string name="voice_hold_to_talk">Hold to talk</string>
     <string name="voice_mic_blocked_title">The microphone still isn’t available</string>
-    <string name="voice_mic_blocked_body">Recording is already allowed, but 如愿 still can’t record. Check that the microphone access switch in Quick Settings is on (Android 12 and later), and that 如愿’s microphone isn’t turned off in the system’s permission manager. Another app may also be using the microphone.</string>
+    <string name="voice_mic_blocked_body">Recording is already allowed, but 如意 AI still can’t record. Check that the microphone access switch in Quick Settings is on (Android 12 and later), and that 如意 AI’s microphone isn’t turned off in the system’s permission manager. Another app may also be using the microphone.</string>
     <string name="voice_provider_failed">Couldn’t turn it into text: %1$s</string>
     <string name="voice_unavailable_title">Voice input isn’t ready</string>
     <string name="voice_unavailable_no_engine">This phone has no built-in speech recognition, and no speech-to-text model has been picked. Pick a provider’s speech model in Settings › Models › Speech to text and it will work.</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">The provider of the chosen speech model has been removed. Pick another one in Settings › Models › Speech to text.</string>
     <string name="voice_unavailable_off">Speech to text is turned off. Pick one in Settings › Models › Speech to text.</string>
     <string name="voice_go_pick">Pick one</string>
-    <string name="voice_permission_title">如愿 needs the microphone</string>
-    <string name="voice_permission_body">To hear you while you hold to talk, 如愿 needs to record audio. It was denied before, so the phone won’t ask again. Turn on the microphone on 如愿’s permission page in system settings.</string>
+    <string name="voice_permission_title">如意 AI needs the microphone</string>
+    <string name="voice_permission_body">To hear you while you hold to talk, 如意 AI needs to record audio. It was denied before, so the phone won’t ask again. Turn on the microphone on 如意 AI’s permission page in system settings.</string>
     <string name="voice_permission_open">Open settings</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">Talk</string>
     <string name="capsule_voice_send">Send</string>
-    <string name="capsule_voice_answer_title">Answering 如愿</string>
+    <string name="capsule_voice_answer_title">Answering 如意 AI</string>
     <string name="capsule_voice_continue_title">Continuing “%1$s”</string>
     <string name="capsule_voice_cancel">Cancel</string>
     <string name="capsule_voice_edit">Edit</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">Told the task: %1$s</string>
     <string name="capsule_voice_answered">Answered: %1$s</string>
     <string name="capsule_voice_sent">Sent: %1$s</string>
-    <string name="capsule_voice_need_mic">Tap to allow the mic in 如愿</string>
+    <string name="capsule_voice_need_mic">Tap to allow the mic in 如意 AI</string>
     <string name="capsule_voice_not_ready">Voice input isn’t ready · tap</string>
-    <string name="capsule_voice_open">Open 如愿</string>
+    <string name="capsule_voice_open">Open 如意 AI</string>
 </resources>

@@ -41,7 +41,7 @@ import com.wangzan101.mika.ui.theme.MikaIcons
 import com.wangzan101.mika.ui.theme.MikaTheme
 import com.wangzan101.mika.ui.theme.MikaType
 
-/** 上手第一步:说清如愿是什么、能做哪几类事,开始前要做的两件事和大概时间。 */
+/** 上手第一步:说清如意 AI 是什么、能做哪几类事,开始前要做的两件事和大概时间。 */
 @Composable
 fun WelcomeScreen(onStart: () -> Unit) {
     val c = MikaTheme.colors

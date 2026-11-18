@@ -197,7 +197,7 @@ class PhoneSetupCopyTest {
         assertTrue(PhoneSetupCopy.rootEntryLine(false).contains("已关闭"))
         assertTrue(PhoneSetupCopy.rootEntryLine(true).contains("已开启"))
         assertTrue(PhoneSetupCopy.ROOT_COMMANDS_WARNING.contains("其他 App 的数据"))
-        assertEquals("允许如愿执行 root 命令", PhoneSetupCopy.ROOT_COMMANDS)
+        assertEquals("允许如意 AI 执行 root 命令", PhoneSetupCopy.ROOT_COMMANDS)
         assertEquals("用 root 启动手机助手", PhoneSetupCopy.ROOT_START)
     }
 

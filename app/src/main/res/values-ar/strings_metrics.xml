@@ -6,8 +6,8 @@
     <string name="metrics_other">أخرى (انتظار، إعادة المحاولة)</string>
     <string name="metrics_title">إحصاءات التشغيل</string>
     <string name="metrics_sub">الوقت ومرات تبادل الطلبات مع النموذج والرموز في عمليات التشغيل الأخيرة</string>
-    <string name="metrics_empty">لا توجد إحصاءات تشغيل بعد. اطلب من 如愿 تنفيذ مهمة وستُسجّل هنا.</string>
-    <string name="metrics_note">يُحتسب فقط آخر %1$d عملية تشغيل على هذا الهاتف. يبدأ احتساب الوقت عندما تبدأ 如愿 العمل؛ وتُسجّل أول استجابة عندما ترى ما تفعله للمرة الأولى.</string>
+    <string name="metrics_empty">لا توجد إحصاءات تشغيل بعد. اطلب من 如意 AI تنفيذ مهمة وستُسجّل هنا.</string>
+    <string name="metrics_note">يُحتسب فقط آخر %1$d عملية تشغيل على هذا الهاتف. يبدأ احتساب الوقت عندما تبدأ 如意 AI العمل؛ وتُسجّل أول استجابة عندما ترى ما تفعله للمرة الأولى.</string>
     <string name="metrics_copy">نسخ JSON</string>
     <string name="metrics_share">مشاركة JSON</string>
     <string name="metrics_last_10">آخر 10</string>

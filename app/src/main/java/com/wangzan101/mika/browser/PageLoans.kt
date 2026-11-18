@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * 浏览器页上看着的那一页借给任务(用户在这一页上问如愿):用户一问,先「答应借」给那个对话([offer]);
+ * 浏览器页上看着的那一页借给任务(用户在这一页上问如意 AI):用户一问,先「答应借」给那个对话([offer]);
  * 那个对话的任务开跑时来取([claim]),取到后这个标签就是任务的当前网页标签,任务一侧接上([bind])。
  * 同一时间只借出一份(看得见的页面只有一个)。生死仍归浏览器页:
  * - 任务结束([end]):还回来,页面留在用户眼前;

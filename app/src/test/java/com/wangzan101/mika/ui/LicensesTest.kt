@@ -15,13 +15,13 @@ class LicensesTest {
         assertTrue("notices has headings", headings.size >= 16)
         val shown = Licenses.ENTRIES.map { it.name }
         headings.forEach { assertTrue("missing on licenses screen: $it", it in shown) }
-        assertEquals("如愿", shown.first())
+        assertEquals("如意 AI", shown.first())
     }
 
     @Test
     fun gplSourceOfferPresent() {
         val byName = Licenses.ENTRIES.associateBy { it.name }
-        assertEquals("Apache-2.0", byName.getValue("如愿").license)
+        assertEquals("Apache-2.0", byName.getValue("如意 AI").license)
         assertEquals("GPL-2.0-or-later", byName.getValue("PRoot").license)
         assertEquals("LGPL-3.0-or-later", byName.getValue("talloc").license)
         assertEquals("Apache-2.0", byName.getValue("Apache Commons Compress").license)

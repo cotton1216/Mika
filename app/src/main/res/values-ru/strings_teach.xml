@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="teach_title">Научить 如愿</string>
-    <string name="teach_menu">Научить 如愿</string>
+    <string name="teach_title">Научить 如意 AI</string>
+    <string name="teach_menu">Научить 如意 AI</string>
     <string name="teach_goal_label">Цель</string>
-    <string name="teach_goal_hint">Что 如愿 должна запомнить? Одно предложение.</string>
+    <string name="teach_goal_hint">Что 如意 AI должна запомнить? Одно предложение.</string>
     <string name="teach_disclosure">Шаги остаются на этом телефоне и только после нажатия «Начать показ». Если модель настроена, при создании навыка ей отправляется краткое описание цели и шагов без паролей, кодов и платежных данных. Если модели нет, черновик пишется на телефоне и ничего не отправляется. Пока вы его не примете, он не используется и не был успешно проверен.</string>
     <string name="teach_continue">Далее</string>
-    <string name="teach_ready_body">如愿 только смотрит и не управляет телефоном. Можно поставить на паузу, закончить или отменить. До нажатия «Начать показ» ничего не записывается.</string>
+    <string name="teach_ready_body">如意 AI только смотрит и не управляет телефоном. Можно поставить на паузу, закончить или отменить. До нажатия «Начать показ» ничего не записывается.</string>
     <string name="teach_start">Начать показ</string>
     <string name="teach_learning">Учится</string>
     <string name="teach_paused">Пауза</string>
@@ -21,7 +21,7 @@
     <string name="teach_remove">Удалить</string>
     <string name="teach_generate">Создать черновик</string>
     <string name="teach_busy">Задача уже выполняется. Дождитесь конца, прежде чем учить.</string>
-    <string name="teach_need_a11y">Сначала включите специальные возможности. Без них 如愿 не видит нажатия.</string>
+    <string name="teach_need_a11y">Сначала включите специальные возможности. Без них 如意 AI не видит нажатия.</string>
     <string name="teach_interrupted">Показ остановился: приложение перезапустилось или специальные возможности выключены. Запись не идет, пока вы не продолжите.</string>
     <string name="teach_need_goal">Сначала напишите цель.</string>
     <string name="teach_secret_goal">Эта цель похожа на пароль или код, поэтому она не сохранена.</string>
@@ -29,13 +29,13 @@
     <string name="teach_draft_ready">Черновик ждет в «Память и навыки». Он не используется, пока вы его не примете, и не был успешно проверен.</string>
     <string name="teach_open_drafts">Открыть черновики</string>
     <string name="teach_no_steps">Шаги не сохранены.</string>
-    <string name="teach_blocked_task">如愿 сейчас учится, поэтому эта задача не начата.</string>
+    <string name="teach_blocked_task">如意 AI сейчас учится, поэтому эта задача не начата.</string>
     <string name="teach_channel">Обучение</string>
     <string name="teach_sensitive_note">Секретный ввод не сохранен.</string>
     <string name="teach_insufficient_note">Недостаточно данных об интерфейсе. Это не действие по координатам.</string>
-    <string name="teach_notification">如愿 не управляет телефоном.</string>
+    <string name="teach_notification">如意 AI не управляет телефоном.</string>
     <string name="teach_no_visible">Полосу «Учится» не удалось показать, поэтому запись не началась. Разрешение на уведомления не нужно. Нужна видимая панель спецвозможностей с паузой и завершением.</string>
     <string name="teach_watch_lost">Полоса «Учится» исчезла, поэтому показ остановлен. Больше ничего не записывается.</string>
-    <string name="teach_shelf_expand">Показать Научить 如愿</string>
-    <string name="teach_shelf_collapse">Скрыть Научить 如愿</string>
+    <string name="teach_shelf_expand">Показать Научить 如意 AI</string>
+    <string name="teach_shelf_collapse">Скрыть Научить 如意 AI</string>
 </resources>

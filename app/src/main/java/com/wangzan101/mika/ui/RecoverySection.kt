@@ -39,7 +39,7 @@ import com.wangzan101.mika.ui.theme.MikaType
 
 /**
  * 设置 › 恢复与修复 里手机操作的几个授权开关的文字(纯函数,便于测试)。和引导页一样说大白话,
- * 每一项都写清楚打开后如愿会做什么、怎么关;说明一直写在开关下面。都默认打开,配好手机操作后如愿自己补上。
+ * 每一项都写清楚打开后如意 AI 会做什么、怎么关;说明一直写在开关下面。都默认打开,配好手机操作后如意 AI 自己补上。
  */
 object RecoveryCopy {
     data class SwitchCopy(val title: String, val subtitle: String, val explain: String)

@@ -91,7 +91,7 @@ fun SettingsScreen(
     /** 任务运行里的「自主模式」:当前值和换它的办法。 */
     autonomous: Boolean = false,
     onAutonomous: (Boolean) -> Unit = {},
-    /** 查到的新版本号;有它时「关于如愿」一行写「x 可更新」带红点。 */
+    /** 查到的新版本号;有它时「关于如意 AI」一行写「x 可更新」带红点。 */
     updateVersion: String? = null,
     onOpenAbout: () -> Unit = {},
     /** 外部 MCP server 设置(outbound);为空时不显示入口。 */
@@ -542,7 +542,7 @@ fun AdvancedSettingsContent(
             }
         }
 
-        // 完全退出:和无障碍服务不同,它只是让如愿安静下来;下次打开 App 就回来
+        // 完全退出:和无障碍服务不同,它只是让如意 AI 安静下来;下次打开 App 就回来
         GroupCard {
             ListRow(
                 MikaIcons.Power, stringResource(R.string.quit_title), stringResource(R.string.quit_row_sub),

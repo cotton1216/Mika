@@ -25,7 +25,7 @@ import com.wangzan101.mika.core.tool.Verb
 import com.wangzan101.mika.core.net.UrlHost
 
 /**
- * 起草技能的全部输入:[events] 是这次运行的事件,[toolNames] 是如愿当前的工具名,
+ * 起草技能的全部输入:[events] 是这次运行的事件,[toolNames] 是如意 AI 当前的工具名,
  * [tools] 按名字查工具做的动作。
  */
 /** [answer] 是交给用户的最终回答,[sources] 是代码找到的回答来源(见 [AnswerSource])。 */
@@ -48,7 +48,7 @@ object Eligibility {
         return when {
             ended?.outcome != "succeeded" -> "not_succeeded"
             !done -> "not_done"
-            // 这次用户已经让如愿照他的意思写下了技能,不再另起一份草稿
+            // 这次用户已经让如意 AI 照他的意思写下了技能,不再另起一份草稿
             events.any { it is RunEvent.ToolResult && tools.verb(it.tool) == Verb.SkillSave && it.resultJson.contains("\"ok\":true") } -> "skill_saved"
             // 出错的动作不算步数(结果可能被截短,按原文判)
             events.count { it is RunEvent.ToolResult && tools.verb(it.tool) in ACTION_VERBS && !it.resultJson.contains("\"ok\":false") } < MIN_ACTIONS -> "too_few_actions"
@@ -56,10 +56,10 @@ object Eligibility {
         }
     }
 
-    /** 这次的经过有一段不是如愿自己走的(跳过了接管、用户自己办完、不同意确认),从它学不到东西:返回原因,否则 null。 */
+    /** 这次的经过有一段不是如意 AI 自己走的(跳过了接管、用户自己办完、不同意确认),从它学不到东西:返回原因,否则 null。 */
     fun interrupted(events: List<RunEvent>): String? = when {
         events.any { it is RunEvent.Takeover && it.outcome == "skipped" } -> "takeover_skipped"
-        // 用户自己办完的:那段路线如愿没走过
+        // 用户自己办完的:那段路线如意 AI 没走过
         events.any { it is RunEvent.Takeover && it.outcome == "user_finished" } -> "takeover_user_finished"
         events.any { it is RunEvent.Confirmation && it.decision in DECLINED } -> "confirmation_declined"
         else -> null

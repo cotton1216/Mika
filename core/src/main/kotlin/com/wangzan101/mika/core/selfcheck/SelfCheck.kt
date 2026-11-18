@@ -5,15 +5,15 @@ package com.wangzan101.mika.core.selfcheck
  * [key] 是报告里的英文名,[timeoutMs] 是这一项最多跑多久(整次自检另有总时限,见 [SelfCheckRunner.TOTAL_BUDGET_MS])。
  */
 enum class SelfCheck(val key: String, val timeoutMs: Long) {
-    /** 机型、系统版本、处理器架构、内存、屏幕、有没有无线调试、如愿的版本。 */
+    /** 机型、系统版本、处理器架构、内存、屏幕、有没有无线调试、如意 AI 的版本。 */
     DEVICE("device", 5_000),
     /** 无障碍开着且已绑定、通知允许、电池不受限制。 */
     PERMISSIONS("permissions", 5_000),
     /** 内置助手在运行、怎么起来的、一次简单调用来回多久。 */
     HELPER("helper", 15_000),
-    /** 能建如愿的虚拟屏;安卓 14 起它有没有自己的焦点。 */
+    /** 能建如意 AI 的虚拟屏;安卓 14 起它有没有自己的焦点。 */
     VIRTUAL_DISPLAY("virtual display", 10_000),
-    /** 在虚拟屏上打开如愿自己的自检页,再打开系统设置(只看不点),确认开在如愿的屏上、不在主屏。 */
+    /** 在虚拟屏上打开如意 AI 自己的自检页,再打开系统设置(只看不点),确认开在如意 AI 的屏上、不在主屏。 */
     APP_LAUNCH("app launch", 20_000),
     /** 自检页的控件树读得到、要的控件都在;虚拟屏的截图不是一片黑或一片空。 */
     SCREEN_READING("screen reading", 10_000),
@@ -83,7 +83,7 @@ enum class Advice {
     DisplayFailed,
     /** 安卓 14 以下虚拟屏没有自己的焦点,后台操作时主屏的输入焦点可能短暂丢失。 */
     FocusShared,
-    /** 页面没开到如愿的屏上。 */
+    /** 页面没开到如意 AI 的屏上。 */
     LaunchFailed,
     /** 系统设置开到了主屏上。 */
     OpenedOnMainScreen,

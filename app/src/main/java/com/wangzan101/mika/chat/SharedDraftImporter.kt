@@ -24,7 +24,7 @@ class SharedDraftImporter(private val context: Context, private val store: Share
             withContext(Dispatchers.IO) {
                 if (text.length > SharedDraftStore.MAX_TEXT_CHARS || declaredType?.startsWith("image/") != true) return@withContext null
                 if (uri.scheme != ContentResolver.SCHEME_CONTENT) return@withContext null
-                // 外部分享不应该借如愿自己的私有 provider 指定另一个内部文件;所有收到的内容都从外部 provider 新复制。
+                // 外部分享不应该借如意 AI 自己的私有 provider 指定另一个内部文件;所有收到的内容都从外部 provider 新复制。
                 val authority = uri.authority.orEmpty()
                 if (authority == context.packageName || authority.startsWith("${context.packageName}.")) return@withContext null
                 val resolver = context.contentResolver

@@ -6,8 +6,8 @@
     <string name="metrics_other">其他（等待、重試）</string>
     <string name="metrics_title">執行統計</string>
     <string name="metrics_sub">最近幾次執行的用時、來回次數和 Token</string>
-    <string name="metrics_empty">還沒有執行統計。讓如愿辦件事，這裡就會記下。</string>
-    <string name="metrics_note">只統計這臺手機上最近 %1$d 次執行；時間從如愿開始處理算起，第一次回報是第一次看到它在做什麼的時候。</string>
+    <string name="metrics_empty">還沒有執行統計。讓如意 AI 辦件事，這裡就會記下。</string>
+    <string name="metrics_note">只統計這臺手機上最近 %1$d 次執行；時間從如意 AI 開始處理算起，第一次回報是第一次看到它在做什麼的時候。</string>
     <string name="metrics_copy">複製 JSON</string>
     <string name="metrics_share">分享 JSON</string>
     <string name="metrics_last_10">最近 10 次</string>

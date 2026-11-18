@@ -3,7 +3,7 @@
     <string name="viewer_no_open_app">没有能打开这个文件的 App</string>
     <string name="viewer_no_share_app">没有能分享这个文件的 App</string>
     <string name="viewer_open_elsewhere">用其他应用打开</string>
-    <string name="viewer_unsupported">这个文件不能在如愿里查看。</string>
+    <string name="viewer_unsupported">这个文件不能在如意 AI 里查看。</string>
     <string name="viewer_read_error">读取这个文件时出错了。</string>
     <string name="viewer_page">第 %1$d 页</string>
     <string name="viewer_truncated">文件较大，只显示前面一部分。</string>

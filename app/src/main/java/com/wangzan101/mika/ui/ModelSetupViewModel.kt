@@ -101,7 +101,7 @@ data class AccountSignInUi(
 )
 
 /**
- * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到如愿、本机回调收到后浏览器里显示的网页。
+ * 用账号登录要用到的系统能力:在浏览器里打开授权页、登录完回到如意 AI、本机回调收到后浏览器里显示的网页。
  * 界面给出(要 Context);测试里不给,就不能登录。
  */
 interface SignInBrowser {
@@ -338,18 +338,18 @@ class ModelSetupViewModel(
     private val io: CoroutineDispatcher = Dispatchers.IO,
     private val browser: SignInBrowser? = null,
     /**
-     * 如愿登录成功后顺手做的事:把这一次登录拿到的 AI-Server 账号票交给远程控制注册设备。
+     * 如意 AI 登录成功后顺手做的事:把这一次登录拿到的 AI-Server 账号票交给远程控制注册设备。
      *
-     * 远程控制不能自己再登录一次 —— 授权码一次性,已经在这里花掉了。失败不打断如愿登录
+     * 远程控制不能自己再登录一次 —— 授权码一次性,已经在这里花掉了。失败不打断如意 AI 登录
      * (模型已经能用),所以调用方负责兜住异常、这边不做容错。
      */
     private val onRuyiSignedIn: suspend (accessToken: String) -> Unit = {},
     /**
-     * 如愿退出如意账号时顺手做的事:把远程控制那边的设备令牌一并清掉。
+     * 如意 AI 退出如意账号时顺手做的事:把远程控制那边的设备令牌一并清掉。
      *
      * 与 [onRuyiSignedIn] 成对。少了这一步,本机 Keystore 里还留着上一个账号的设备令牌,
      * 退到「远程控制」会直接看到那个账号的电脑列表 —— 换号场景就是串号。注销失败不
-     * 阻断「退出如愿登录」这个用户显式动作,所以调用方负责兜住异常。
+     * 阻断「退出如意 AI 登录」这个用户显式动作,所以调用方负责兜住异常。
      */
     private val onRuyiSignedOut: suspend () -> Unit = {},
     /** 登录跑在哪:界面给的是 App 那一份(退到后台、界面重建都不断,期间开前台服务);测试里就用 [scope]。 */
@@ -784,9 +784,9 @@ class ModelSetupViewModel(
     // ---------- 用 ChatGPT 登录 ----------
 
     /**
-     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到如愿。
+     * 打开浏览器登录 ChatGPT,回调后换令牌、核对,列出模型,存成(或更新)ChatGPT 服务商,回到如意 AI。
      * 还没有主模型时选它的一个模型为主模型。第一次注册成功后说明一次在用套餐额度。失败说原因(并记下给诊断信息)。
-     * 跑在 [signIns] 里:用户在浏览器里登录时如愿在后台,不能跟着界面走。
+     * 跑在 [signIns] 里:用户在浏览器里登录时如意 AI 在后台,不能跟着界面走。
      */
     fun signInWithChatGpt() {
         val browser = browser ?: return
@@ -842,7 +842,7 @@ class ModelSetupViewModel(
      * 用账号登录 xAI 或 OpenRouter:xAI 在浏览器里打开核对过的验证页、界面留下短码,等用户确认;
      * OpenRouter 打开授权页,同意后回到本机回调、换到一把属于用户的 Key。
      * 成功后列出模型、存下这一家,还没有主模型时选一个,再打开它的详情页([ModelSetupUi.signedInProvider])。
-     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时如愿在后台。
+     * 失败只说类别和错误代码(并记下给诊断信息)。和 ChatGPT 一样跑在 [signIns] 里:用户在浏览器里时如意 AI 在后台。
      */
     fun signInWithAccount(provider: AccountProvider) {
         val browser = browser ?: return
@@ -909,7 +909,7 @@ class ModelSetupViewModel(
         // 自己再开一个登录页。失败只记一笔 —— 模型已经能用了,远程还能走配对码。
         withContext(io) {
             runCatching { onRuyiSignedIn(signed.accessToken) }
-                .onFailure { Log.w(TAG, "远程控制随如愿登录注册失败", it) }
+                .onFailure { Log.w(TAG, "远程控制随如意 AI 登录注册失败", it) }
         }
         val existing = store.ruyiAccount()
         val listed = store.listModels(ProviderConfig.Kind.OpenAiCompat, RuyiAuth.API_BASE, signed.key.value)
@@ -946,10 +946,10 @@ class ModelSetupViewModel(
                     p.kind == ProviderConfig.Kind.Xai -> store.signOutAccount(providerId)
                     p.signIn == ProviderStore.RUYI_SIGN_IN -> {
                         store.signOutRuyi(providerId)
-                        // 如愿这半边退出成功与否,远程那半边都要跟着清:留着设备令牌
+                        // 如意 AI 这半边退出成功与否,远程那半边都要跟着清:留着设备令牌
                         // 等于下一个登录的人继承上一个账号的电脑列表。
                         runCatching { onRuyiSignedOut() }
-                            .onFailure { Log.w(TAG, "远程控制随如愿退出注销失败", it) }
+                            .onFailure { Log.w(TAG, "远程控制随如意 AI 退出注销失败", it) }
                     }
                     else -> store.signOutOpenRouter(providerId)
                 }

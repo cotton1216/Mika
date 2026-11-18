@@ -24,7 +24,7 @@ class SelfCheckReportTest {
             CheckResult(SelfCheck.STAYS_ALIVE, CheckStatus.Fail, "frames stopped after 6 s", Advice.FramesStopped),
         ))
         val lines = text.lines()
-        assertEquals("如愿 self-check 0.1.21 (build abc1234)", lines[0])
+        assertEquals("如意 AI self-check 0.1.21 (build abc1234)", lines[0])
         assertEquals("Device: Acme Phone 7, Android 14 (SDK 34), arm64-v8a, RAM 12.0 GB, 1224x2700", lines[1])
         assertEquals("Wireless debugging: present", lines[2])
         assertEquals("Result: 10 pass, 1 partial, 1 fail, 0 skipped in 62 s", lines[3])
@@ -70,7 +70,7 @@ class SelfCheckReportTest {
     @Test
     fun onlyKnownLinesAppear() {
         val text = SelfCheckReport.render(done())
-        val allowed = listOf("如愿 self-check ", "Device: ", "Wireless debugging: ", "Developer options page: ", "Phone control: ", "Result: ") +
+        val allowed = listOf("如意 AI self-check ", "Device: ", "Wireless debugging: ", "Developer options page: ", "Phone control: ", "Result: ") +
             SelfCheck.entries.map { "${it.number} ${it.key}: " }
         for (l in text.lines().filter { it.isNotEmpty() }) assertTrue(l, allowed.any { l.startsWith(it) })
     }

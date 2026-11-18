@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">下午好</string>
     <string name="chat_greeting_evening">晚上好</string>
     <string name="chat_greeting_night">夜深了</string>
-    <string name="chat_empty_prompt">想讓如愿做什麼？</string>
+    <string name="chat_empty_prompt">想讓如意 AI 做什麼？</string>
     <string name="chat_slogan">如您所願，您的私人助理</string>
     <string name="chat_example_follow">開啟小紅書，搜尋博主「王赞不赞」，點擊關注，然後加入群聊</string>
     <string name="chat_example_alarms">幫我訂明天早上9:40、9:50、10:00 的鬧鐘</string>
@@ -50,7 +50,7 @@
     </plurals>
     <string name="chat_background_note">在背景進行，可以繼續用手機。點小畫面可以放大看。</string>
     <string name="chat_placeholder_busy">補充或改要求…</string>
-    <string name="chat_placeholder_answer">回答如愿的問題</string>
+    <string name="chat_placeholder_answer">回答如意 AI 的問題</string>
     <string name="chat_placeholder_more">繼續說點什麼…</string>
     <string name="chat_cannot_start">還不能開始任務</string>
     <string name="chat_missing">還缺:%1$s</string>
@@ -179,11 +179,11 @@
     <string name="attach_album">相簿</string>
     <string name="attach_files">檔案</string>
     <string name="attach_recent">最近的照片</string>
-    <string name="attach_recent_partial">你允許如愿存取的照片</string>
+    <string name="attach_recent_partial">你允許如意 AI 存取的照片</string>
     <string name="attach_all">全部照片</string>
     <string name="attach_change">更改範圍</string>
     <string name="attach_no_photos">還沒有照片</string>
-    <string name="attach_need_access">在這裡直接選照片,需要允許如愿存取照片</string>
+    <string name="attach_need_access">在這裡直接選照片,需要允許如意 AI 存取照片</string>
     <string name="attach_grant">允許存取照片</string>
     <string name="attach_grant_hint">不允許也可以點上面的「相簿」,用系統的照片選擇器</string>
     <string name="attach_full">一次最多 %1$d 個附件</string>
@@ -203,10 +203,10 @@
     <string name="attach_file_and_more">%1$s 等 %2$d 個檔案</string>
     <string name="screen_tag">你此刻的螢幕</string>
     <string name="screen_blocked">沒截到：這個頁面不允許截圖</string>
-    <string name="screen_camera">截目前螢幕發給如愿</string>
+    <string name="screen_camera">截目前螢幕發給如意 AI</string>
     <string name="screen_remove">不要這張截圖</string>
-    <string name="screen_send">把此刻的螢幕發給如愿</string>
-    <string name="pip_screen">如愿的虛擬螢幕</string>
+    <string name="screen_send">把此刻的螢幕發給如意 AI</string>
+    <string name="pip_screen">如意 AI 的虛擬螢幕</string>
     <string name="collapse">收起</string>
     <string name="no_app_for_link">沒有能開啟這個連結的 App</string>
     <string name="source_none">沒有儲存這次答覆的來源</string>
@@ -235,7 +235,7 @@
     <string name="chat_retry_failed">%1$s：複製失敗</string>
     <string name="chat_select_hint">長按文字就能選取</string>
     <string name="chat_quote_remove">移除引用</string>
-    <string name="chat_quoting_mika">引用如愿:%1$s</string>
+    <string name="chat_quoting_mika">引用如意 AI:%1$s</string>
     <string name="chat_quoting_you">引用你的話:%1$s</string>
     <string name="chat_edit_message">編輯訊息</string>
     <string name="chat_withdraw_message">收回訊息</string>

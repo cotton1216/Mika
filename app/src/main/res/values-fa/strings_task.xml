@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notif_channel_prepare">آماده‌سازی در پس‌زمینه</string>
-    <string name="notif_preparing">如愿 در حال آماده شدن است</string>
-    <string name="notif_result_title">نتیجهٔ کار 如愿</string>
+    <string name="notif_preparing">如意 AI در حال آماده شدن است</string>
+    <string name="notif_result_title">نتیجهٔ کار 如意 AI</string>
     <string name="parallel_second_display_failed">ساخت صفحهٔ مجازی دوم ممکن نشد، بنابراین فعلاً هر بار فقط یک کار اجرا می‌شود</string>
     <string name="parallel_needs_14">اجرای هم‌زمان چند کار به اندروید ۱۴ یا جدیدتر نیاز دارد</string>
     <string name="parallel_low_ram">حافظهٔ این گوشی کم است، بنابراین هر بار یک کار اجرا می‌شود</string>
     <string name="skill_suspended">این مهارت اخیراً درست کار نکرده است، بنابراین موقتاً متوقف شده است</string>
     <string name="skill_verified">مهارت موفق بود و اکنون به‌طور معمول استفاده می‌شود: %1$s</string>
-    <string name="skill_learned">如愿 مهارتی یاد گرفت: %1$s</string>
-    <string name="skill_app_draft">如愿 چند نکته دربارهٔ %1$s یادداشت کرد تا بررسی کنید</string>
-    <string name="skill_app_revised">如愿 یادداشت‌های مربوط به %1$s را برای بررسی شما بازبینی کرد</string>
+    <string name="skill_learned">如意 AI مهارتی یاد گرفت: %1$s</string>
+    <string name="skill_app_draft">如意 AI چند نکته دربارهٔ %1$s یادداشت کرد تا بررسی کنید</string>
+    <string name="skill_app_revised">如意 AI یادداشت‌های مربوط به %1$s را برای بررسی شما بازبینی کرد</string>
     <string name="recovered_result">نتیجهٔ بازیابی‌شدهٔ کار</string>
     <string name="recover_delivery_failed">آخرین کار پایان یافت، اما ارسال اعلان نتیجه ناموفق بود. گفتگو را بررسی کنید.</string>
     <string name="recover_maybe_delivered">ممکن است آخرین نتیجه قبلاً ارسال شده باشد. ابتدا گفتگو را بررسی کنید تا کار دوباره انجام نشود.</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">«%1$s» به اقدام شما روی صفحه نیاز دارد. پس از پایان روی «ادامه» بزنید</string>
     <string name="gate_finish_unknown">برنامه‌ای که باز شد به اقدام شما روی صفحه نیاز دارد. پس از پایان روی «ادامه» بزنید</string>
     <string name="gate_moved_away">شما این برنامه را باز کردید. پس از پایان کار روی «ادامه» بزنید</string>
-    <string name="gate_move_back_failed">بازگرداندن برنامه به صفحهٔ 如愿 ممکن نشد. برای تلاش دوباره روی «ادامه» بزنید</string>
+    <string name="gate_move_back_failed">بازگرداندن برنامه به صفحهٔ 如意 AI ممکن نشد. برای تلاش دوباره روی «ادامه» بزنید</string>
     <string name="gate_shell_down">اتصال کنترل گوشی قطع شد. پس از اتصال دوباره روی «ادامه» بزنید یا مشکل را در تنظیمات رفع کنید</string>
     <plurals name="queue_ahead">
         <item quantity="one">در صف: %1$d کار پیش از این مورد است</item>
@@ -31,19 +31,19 @@
     <string name="fail_model_untested">مدل اصلی هنوز آزمون %1$s را با موفقیت نگذرانده است. به تنظیمات › مدل‌ها › %1$s بروید و برای بررسی روی «آزمون دوباره» بزنید.</string>
     <string name="fail_no_web">وب در این دستگاه در دسترس نیست، بنابراین بررسی شرط اجرا نمی‌شود</string>
     <string name="task_waiting_display">در صف: پس از پایان کار دیگر شروع می‌شود</string>
-    <string name="task_no_phone_helper">کنترل گوشی آماده نیست. «راه‌اندازی کنترل گوشی» را در 如愿 کامل کنید. کارهای وب و فایل تغییری نمی‌کنند.</string>
-    <string name="task_no_a11y">سرویس دسترس‌پذیری 如愿 خاموش است. 如愿 را در بخش دسترس‌پذیری تنظیمات سیستم روشن کنید.</string>
-    <string name="task_a11y_not_running">سرویس دسترس‌پذیری 如愿 فعال است، اما اندروید آن را متصل نکرده است. 如愿 را در بخش دسترس‌پذیری تنظیمات سیستم خاموش و دوباره روشن کنید. اگر اندروید مانع شد، ابتدا تنظیمات محدودشده را در اطلاعات برنامهٔ 如愿 مجاز کنید.</string>
+    <string name="task_no_phone_helper">کنترل گوشی آماده نیست. «راه‌اندازی کنترل گوشی» را در 如意 AI کامل کنید. کارهای وب و فایل تغییری نمی‌کنند.</string>
+    <string name="task_no_a11y">سرویس دسترس‌پذیری 如意 AI خاموش است. 如意 AI را در بخش دسترس‌پذیری تنظیمات سیستم روشن کنید.</string>
+    <string name="task_a11y_not_running">سرویس دسترس‌پذیری 如意 AI فعال است، اما اندروید آن را متصل نکرده است. 如意 AI را در بخش دسترس‌پذیری تنظیمات سیستم خاموش و دوباره روشن کنید. اگر اندروید مانع شد، ابتدا تنظیمات محدودشده را در اطلاعات برنامهٔ 如意 AI مجاز کنید.</string>
     <string name="task_error">خطای کار: %1$s</string>
-    <string name="task_app_blocked">«%1$s» غیرفعال است، بنابراین 如愿 نمی‌تواند آن را بخواند یا کنترل کند. آن را در تنظیمات › دسترسی به برنامه‌ها مجاز کنید و دوباره تلاش کنید.</string>
+    <string name="task_app_blocked">«%1$s» غیرفعال است، بنابراین 如意 AI نمی‌تواند آن را بخواند یا کنترل کند. آن را در تنظیمات › دسترسی به برنامه‌ها مجاز کنید و دوباره تلاش کنید.</string>
     <string name="task_app_this_app">این برنامه</string>
     <string name="task_app_access_unavailable">خواندن تنظیمات دسترسی به برنامه‌ها ممکن نیست. آن‌ها را در تنظیمات › دسترسی به برنامه‌ها بازنشانی کنید و دوباره تلاش کنید.</string>
-    <string name="task_app_protected">این صفحه باید توسط خودتان انجام شود؛ 如愿 نمی‌تواند آن را خودکار کند.</string>
+    <string name="task_app_protected">این صفحه باید توسط خودتان انجام شود؛ 如意 AI نمی‌تواند آن را خودکار کند.</string>
     <string name="task_app_unverified">تشخیص اینکه کدام برنامه روی صفحه است ممکن نشد، بنابراین اقدام دیگری انجام نشد. دوباره تلاش کنید یا ابتدا برنامهٔ موردنظر را باز کنید.</string>
     <string name="task_condition_interrupted">بررسی شرط قطع شد</string>
     <string name="task_check_unfinished">بررسی زمان‌بندی‌شده کامل نشد: %1$s</string>
     <string name="task_may_make_sound">این برنامه ممکن است صدا پخش کند</string>
-    <string name="task_notif_title">如愿: %1$s</string>
+    <string name="task_notif_title">如意 AI: %1$s</string>
     <plurals name="task_active">
         <item quantity="one">%1$d کار در حال اجراست</item>
         <item quantity="other">%1$d کار در حال اجراست</item>
@@ -66,8 +66,8 @@
     <string name="task_not_done">کار کامل نشد</string>
     <string name="task_stopped">کار متوقف شد</string>
     <string name="task_stopped_body">شما این کار را متوقف کردید</string>
-    <string name="gate_user_on_page">شما در حال استفاده از صفحه هستید، بنابراین 如愿 موقتاً متوقف شد</string>
-    <string name="task_no_phone_helper_usb">برنامهٔ کمکی گوشی متوقف شده است (معمولاً پس از راه‌اندازی مجدد گوشی). 如愿 را باز کنید و دستور شروع USB را دوباره اجرا کنید؛ می‌توانید آن را در «راه‌اندازی کنترل گوشی» کپی کنید. کارهای وب و فایل تغییری نمی‌کنند.</string>
+    <string name="gate_user_on_page">شما در حال استفاده از صفحه هستید، بنابراین 如意 AI موقتاً متوقف شد</string>
+    <string name="task_no_phone_helper_usb">برنامهٔ کمکی گوشی متوقف شده است (معمولاً پس از راه‌اندازی مجدد گوشی). 如意 AI را باز کنید و دستور شروع USB را دوباره اجرا کنید؛ می‌توانید آن را در «راه‌اندازی کنترل گوشی» کپی کنید. کارهای وب و فایل تغییری نمی‌کنند.</string>
     <string name="drawer_screens">صفحه‌های پس‌زمینه</string>
     <string name="screens_title">صفحه‌های پس‌زمینه</string>
     <string name="screens_empty">در حال حاضر کاری در حال اجرا نیست.</string>

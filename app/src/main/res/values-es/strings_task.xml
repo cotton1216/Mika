@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notif_channel_prepare">Preparación en segundo plano</string>
-    <string name="notif_preparing">如愿 se está preparando</string>
-    <string name="notif_result_title">Resultado de la tarea de 如愿</string>
+    <string name="notif_preparing">如意 AI se está preparando</string>
+    <string name="notif_result_title">Resultado de la tarea de 如意 AI</string>
     <string name="parallel_second_display_failed">No se pudo crear una segunda pantalla virtual, así que por ahora solo se ejecuta una tarea a la vez</string>
     <string name="parallel_needs_14">Ejecutar varias tareas a la vez requiere Android 14 o posterior</string>
     <string name="parallel_low_ram">Este teléfono tiene poca memoria, así que se ejecuta una tarea a la vez</string>
     <string name="skill_suspended">Esta habilidad no ha funcionado bien últimamente, así que está en pausa</string>
     <string name="skill_verified">La habilidad funcionó y ahora está en uso normal: %1$s</string>
-    <string name="skill_learned">如愿 aprendió una habilidad: %1$s</string>
-    <string name="skill_app_draft">如愿 anotó algunos datos sobre %1$s para que los revises</string>
-    <string name="skill_app_revised">如愿 revisó sus notas sobre %1$s para que las revises</string>
+    <string name="skill_learned">如意 AI aprendió una habilidad: %1$s</string>
+    <string name="skill_app_draft">如意 AI anotó algunos datos sobre %1$s para que los revises</string>
+    <string name="skill_app_revised">如意 AI revisó sus notas sobre %1$s para que las revises</string>
     <string name="recovered_result">Resultado de la tarea recuperado</string>
     <string name="recover_delivery_failed">La última tarea terminó, pero falló la notificación de su resultado. Mira el chat.</string>
     <string name="recover_maybe_delivered">Puede que el último resultado ya se haya entregado. Mira primero el chat para no hacerlo dos veces.</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">“%1$s” te necesita en la pantalla. Toca Continuar cuando termines</string>
     <string name="gate_finish_unknown">La app que se acaba de abrir te necesita en la pantalla. Toca Continuar cuando termines</string>
     <string name="gate_moved_away">Abriste esta app. Toca Continuar cuando termines</string>
-    <string name="gate_move_back_failed">No se pudo devolver la app a la pantalla de 如愿. Toca Continuar para reintentar</string>
+    <string name="gate_move_back_failed">No se pudo devolver la app a la pantalla de 如意 AI. Toca Continuar para reintentar</string>
     <string name="gate_shell_down">El control del teléfono se desconectó. Toca Continuar cuando se reconecte (o arréglalo en Ajustes)</string>
     <plurals name="queue_ahead">
         <item quantity="one">En cola: %1$d tarea por delante</item>
@@ -32,19 +32,19 @@
     <string name="fail_model_untested">El modelo principal aún no ha pasado una prueba en %1$s. Ve a Ajustes › Modelos › %1$s y toca “Probar de nuevo” para comprobarlo.</string>
     <string name="fail_no_web">La web no está disponible en este dispositivo, así que no se puede comprobar la condición</string>
     <string name="task_waiting_display">En cola: empieza cuando termine la otra tarea</string>
-    <string name="task_no_phone_helper">El control del teléfono no está listo. Termina “Configurar el control del teléfono” en 如愿. Las tareas web y de archivos no se ven afectadas.</string>
-    <string name="task_no_a11y">El servicio de accesibilidad de 如愿 está desactivado. Activa 如愿 en Accesibilidad, en los ajustes del sistema.</string>
-    <string name="task_a11y_not_running">El servicio de accesibilidad de 如愿 está activado, pero Android no se ha conectado a él. Desactiva 如愿 y vuelve a activarlo en Accesibilidad, en los ajustes del sistema. Si Android lo impide, permite primero los ajustes restringidos en la información de 如愿.</string>
+    <string name="task_no_phone_helper">El control del teléfono no está listo. Termina “Configurar el control del teléfono” en 如意 AI. Las tareas web y de archivos no se ven afectadas.</string>
+    <string name="task_no_a11y">El servicio de accesibilidad de 如意 AI está desactivado. Activa 如意 AI en Accesibilidad, en los ajustes del sistema.</string>
+    <string name="task_a11y_not_running">El servicio de accesibilidad de 如意 AI está activado, pero Android no se ha conectado a él. Desactiva 如意 AI y vuelve a activarlo en Accesibilidad, en los ajustes del sistema. Si Android lo impide, permite primero los ajustes restringidos en la información de 如意 AI.</string>
     <string name="task_error">Error en la tarea: %1$s</string>
-    <string name="task_app_blocked">“%1$s” está desactivada, así que 如愿 no puede leerla ni manejarla. Permítela en Ajustes › Acceso a apps e inténtalo de nuevo.</string>
+    <string name="task_app_blocked">“%1$s” está desactivada, así que 如意 AI no puede leerla ni manejarla. Permítela en Ajustes › Acceso a apps e inténtalo de nuevo.</string>
     <string name="task_app_this_app">Esta app</string>
     <string name="task_app_access_unavailable">No se pueden leer los ajustes de acceso a apps. Restablécelos en Ajustes › Acceso a apps e inténtalo de nuevo.</string>
-    <string name="task_app_protected">Esta pantalla necesita que la manejes tú; 如愿 no puede automatizarla.</string>
+    <string name="task_app_protected">Esta pantalla necesita que la manejes tú; 如意 AI no puede automatizarla.</string>
     <string name="task_app_unverified">No se pudo confirmar qué app está al frente, así que no se hizo nada más. Inténtalo de nuevo o abre primero la app de destino.</string>
     <string name="task_condition_interrupted">Comprobación de la condición interrumpida</string>
     <string name="task_check_unfinished">La comprobación programada no terminó: %1$s</string>
     <string name="task_may_make_sound">Esta app puede emitir sonido</string>
-    <string name="task_notif_title">如愿: %1$s</string>
+    <string name="task_notif_title">如意 AI: %1$s</string>
     <plurals name="task_active">
         <item quantity="one">%1$d tarea en ejecución</item>
         <item quantity="many">%1$d tareas en ejecución</item>
@@ -69,8 +69,8 @@
     <string name="task_not_done">Tarea sin terminar</string>
     <string name="task_stopped">Tarea detenida</string>
     <string name="task_stopped_body">Detuviste esta tarea</string>
-    <string name="gate_user_on_page">Estás usando la página, así que 如愿 se detuvo</string>
-    <string name="task_no_phone_helper_usb">El asistente del teléfono se ha detenido (normalmente tras reiniciar el teléfono). Abre 如愿 y vuelve a ejecutar el comando de inicio por USB; puedes copiarlo en “Configurar el control del teléfono”. Las tareas web y de archivos no se ven afectadas.</string>
+    <string name="gate_user_on_page">Estás usando la página, así que 如意 AI se detuvo</string>
+    <string name="task_no_phone_helper_usb">El asistente del teléfono se ha detenido (normalmente tras reiniciar el teléfono). Abre 如意 AI y vuelve a ejecutar el comando de inicio por USB; puedes copiarlo en “Configurar el control del teléfono”. Las tareas web y de archivos no se ven afectadas.</string>
     <string name="drawer_screens">Pantallas en segundo plano</string>
     <string name="screens_title">Pantallas en segundo plano</string>
     <string name="screens_empty">Ahora mismo no hay ninguna tarea en ejecución.</string>

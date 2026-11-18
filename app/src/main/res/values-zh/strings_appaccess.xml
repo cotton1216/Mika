@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">应用访问</string>
     <string name="appaccess_row_sub">按应用设置禁用和屏幕分享许可</string>
-    <string name="appaccess_intro">选择允许如愿通过标准手机工具读取和操作的应用。Shell 命令、沙箱和电脑接入（MCP）不受此设置限制。</string>
+    <string name="appaccess_intro">选择允许如意 AI 通过标准手机工具读取和操作的应用。Shell 命令、沙箱和电脑接入（MCP）不受此设置限制。</string>
     <string name="appaccess_privacy">分类会把应用名称和包名发送给 AI 模型；点「刷新应用列表」时会先征求你的同意。</string>
     <string name="appaccess_unavailable">应用访问设置无法读取，标准手机访问已暂停。重置会清掉已保存的权限和分类。</string>
     <string name="appaccess_reset">重置应用访问</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">取消</string>
 
     <string name="appaccess_recommend_title">推荐禁用金融交易应用</string>
-    <string name="appaccess_recommend_body">这些应用会被识别为金融交易类，而如愿现在仍能自动操作它们。可以逐个禁用，或一次全部禁用。</string>
+    <string name="appaccess_recommend_body">这些应用会被识别为金融交易类，而如意 AI 现在仍能自动操作它们。可以逐个禁用，或一次全部禁用。</string>
     <string name="appaccess_recommend_empty">没有需要禁用的应用。</string>
     <string name="appaccess_block">禁用</string>
     <string name="appaccess_block_all">全部禁用</string>

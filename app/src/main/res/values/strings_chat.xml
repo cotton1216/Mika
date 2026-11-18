@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">Good afternoon</string>
     <string name="chat_greeting_evening">Good evening</string>
     <string name="chat_greeting_night">Up late</string>
-    <string name="chat_empty_prompt">What should 如愿 do?</string>
+    <string name="chat_empty_prompt">What should 如意 AI do?</string>
     <string name="chat_slogan">As you wish — your personal assistant</string>
     <string name="chat_example_follow">Open X, search for Wang Zan (@wangzan101), and follow the account.</string>
     <string name="chat_example_alarms">Set alarms for 9:40, 9:50 and 10:00 tomorrow morning.</string>
@@ -51,7 +51,7 @@
     </plurals>
     <string name="chat_background_note">Running in the background — keep using your phone. Tap the small view to enlarge it.</string>
     <string name="chat_placeholder_busy">Add or change details…</string>
-    <string name="chat_placeholder_answer">Answer 如愿’s question</string>
+    <string name="chat_placeholder_answer">Answer 如意 AI’s question</string>
     <string name="chat_placeholder_more">Say something more…</string>
     <string name="chat_cannot_start">Can’t start tasks yet</string>
     <string name="chat_missing">Missing: %1$s</string>
@@ -63,7 +63,7 @@
     <string name="chat_expand_steps">Show steps</string>
     <string name="chat_collapse_steps">Hide steps</string>
     <string name="chat_view_process">See how it went</string>
-    <string name="chat_unlock_body">Your phone is locked. 如愿 will continue once you unlock it.</string>
+    <string name="chat_unlock_body">Your phone is locked. 如意 AI will continue once you unlock it.</string>
     <string name="chat_input_body">%1$s\nTap an option or type below. %2$s</string>
     <string name="chat_refuse">Refuse</string>
     <string name="chat_allow_once">Allow this once</string>
@@ -176,7 +176,7 @@
     <string name="step_declined_not_said">Not written: not your own words</string>
     <string name="step_declined_sensitive">Not written: sensitive information</string>
     <string name="step_declined_not_asked">Not changed: you did not ask for it</string>
-    <string name="step_declined_not_requested">Not written: this message did not ask Mika to remember</string>
+    <string name="step_declined_not_requested">Not written: this message did not ask 如意 AI to remember</string>
     <string name="step_number">Step %1$d</string>
     <string name="source_label">Source</string>
     <plurals name="screenshots">
@@ -190,11 +190,11 @@
     <string name="attach_album">Photos</string>
     <string name="attach_files">Files</string>
     <string name="attach_recent">Recent photos</string>
-    <string name="attach_recent_partial">Photos you let 如愿 access</string>
+    <string name="attach_recent_partial">Photos you let 如意 AI access</string>
     <string name="attach_all">All photos</string>
     <string name="attach_change">Change access</string>
     <string name="attach_no_photos">No photos yet</string>
-    <string name="attach_need_access">To pick photos here, allow 如愿 to access your photos</string>
+    <string name="attach_need_access">To pick photos here, allow 如意 AI to access your photos</string>
     <string name="attach_grant">Allow photo access</string>
     <string name="attach_grant_hint">You can also tap “Photos” above to use the system photo picker</string>
     <string name="attach_full">Up to %1$d attachments at a time</string>
@@ -215,10 +215,10 @@
     <string name="attach_file_and_more">%1$s and %2$d more files</string>
     <string name="screen_tag">Your screen right now</string>
     <string name="screen_blocked">Couldn’t capture: this page doesn’t allow screenshots</string>
-    <string name="screen_camera">Capture this screen for 如愿</string>
+    <string name="screen_camera">Capture this screen for 如意 AI</string>
     <string name="screen_remove">Remove this screenshot</string>
-    <string name="screen_send">Send your current screen to 如愿</string>
-    <string name="pip_screen">如愿’s virtual screen</string>
+    <string name="screen_send">Send your current screen to 如意 AI</string>
+    <string name="pip_screen">如意 AI’s virtual screen</string>
     <string name="collapse">Collapse</string>
     <string name="no_app_for_link">No app can open this link</string>
     <string name="source_none">No source was saved for this answer</string>
@@ -247,7 +247,7 @@
     <string name="chat_retry_failed">%1$s: could not copy</string>
     <string name="chat_select_hint">Press and hold the text to select it</string>
     <string name="chat_quote_remove">Remove quote</string>
-    <string name="chat_quoting_mika">Quoting 如愿: %1$s</string>
+    <string name="chat_quoting_mika">Quoting 如意 AI: %1$s</string>
     <string name="chat_quoting_you">Quoting you: %1$s</string>
     <string name="chat_edit_message">Edit message</string>
     <string name="chat_withdraw_message">Withdraw message</string>

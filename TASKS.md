@@ -11,3 +11,4 @@
 | T06 | 如意抽屉默认展开电脑列表 + 唯一在线机自动连接 | done | [docs/tasks/T06-ruyi-drawer-default-host.md](docs/tasks/T06-ruyi-drawer-default-host.md) | 2026-11-16 |
 | T07 | 网络恢复后自动补连（onAvailable），断网超窗口不再停在断开页 | done | [docs/tasks/T07-ruyi-network-recovery.md](docs/tasks/T07-ruyi-network-recovery.md) | 2026-11-16 |
 | T08 | 抽屉有列表即收起 + SVG 渲染 + 失败重试 + 模型弹窗关闭 icon | doing | [docs/tasks/T08-ruyi-ux-polish.md](docs/tasks/T08-ruyi-ux-polish.md) | 2026-11-16 |
+| T10 | 安卓端展示品牌统一为「如意 AI」，保留技术标识及数据兼容性 | done（源码与构建；全量 core 文档检查阻塞） | [docs/tasks/T10-ruyi-ai-brand.md](docs/tasks/T10-ruyi-ai-brand.md) | 2026-11-18 |

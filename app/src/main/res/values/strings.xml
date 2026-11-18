@@ -17,8 +17,8 @@
     <string name="calls_summary_pending">Pending</string>
     <string name="calls_summary_done">Done</string>
     <string name="calls_summary_unknown">Unknown</string>
-    <string name="app_name" translatable="false">如愿</string>
-    <string name="a11y_service_description">This system permission lets 如愿 read and operate what\'s on any screen. 如愿 uses it only on its own virtual screen to do the tasks you give it, and acts on your main screen only when you hand it a task there.</string>
+    <string name="app_name" translatable="false">如意 AI</string>
+    <string name="a11y_service_description">This system permission lets 如意 AI read and operate what\'s on any screen. 如意 AI uses it only on its own virtual screen to do the tasks you give it, and acts on your main screen only when you hand it a task there.</string>
     <string name="channel_attention">Needs you</string>
     <string name="takeover_title">Needs you</string>
     <string name="takeover_title_reason">Needs you: %1$s</string>
@@ -30,15 +30,15 @@
     <string name="takeover_handed_over_hint">The app is now on your main screen. Tap “Done” when you\'re finished; if you\'ve already done the whole thing yourself, tap “I did it myself”.</string>
     <string name="takeover_web_busy">A website sign-in is open in Settings. Tap “Done” there first, then tap “I’ll handle it”.</string>
     <string name="takeover_move_to_main_failed">Couldn’t move the app to the main screen. Tap “I’ll handle it” to try again.</string>
-    <string name="takeover_move_back_failed">Couldn’t move the app back to 如愿’s screen. Try again.</string>
+    <string name="takeover_move_back_failed">Couldn’t move the app back to 如意 AI’s screen. Try again.</string>
     <string name="action_take_over">I’ll handle it</string>
     <string name="action_hand_back">Done</string>
     <string name="action_finished_myself">I did it myself</string>
     <string name="action_skip">Skip</string>
     <string name="action_cancel_task">Cancel task</string>
     <string name="input_title">Needs your answer</string>
-    <string name="no_answer_note">If there’s no answer within %1$d min, 如愿 will go on without one.</string>
-    <string name="input_too_late">Too late: after %1$d min 如愿 went on without an answer.</string>
+    <string name="no_answer_note">If there’s no answer within %1$d min, 如意 AI will go on without one.</string>
+    <string name="input_too_late">Too late: after %1$d min 如意 AI went on without an answer.</string>
     <string name="action_approve">Approve</string>
     <string name="action_decline">Decline</string>
     <string name="confirmation_locked_hint">Unlock to see the recipient and content</string>
@@ -145,7 +145,7 @@
     <string name="terminal_close_confirm">Close</string>
     <string name="terminal_retry">Open again</string>
     <string name="terminal_stop">Stop</string>
-    <string name="terminal_task_running">如愿 is working in this workspace too; changes from both sides may interfere.</string>
+    <string name="terminal_task_running">如意 AI is working in this workspace too; changes from both sides may interfere.</string>
     <string name="terminal_copy_all">Copy all</string>
     <string name="terminal_copied">Copied</string>
     <string name="personal_replay_title">Phone screen</string>

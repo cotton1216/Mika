@@ -52,7 +52,7 @@ fun SystemStatus.notificationOverview() = NotificationOverview.of(
 )
 
 sealed interface Problem {
-    /** 安卓 12 以下未启用如愿的手机操作能力。 */
+    /** 安卓 12 以下未启用如意 AI 的手机操作能力。 */
     data object SystemTooOld : Problem
     /** 内置助手没在运行(没设置、无线调试关着、正在连、出错)。 */
     data class PhoneHelper(val status: BuiltinShellStatus) : Problem

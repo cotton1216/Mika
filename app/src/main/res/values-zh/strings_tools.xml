@@ -66,7 +66,7 @@
     <string name="tool_type">输入文字</string>
     <string name="tool_clear">清空输入框</string>
     <string name="tool_mika_status">查看自身状态</string>
-    <string name="tool_mika_open_screen">打开 Mika 的页面</string>
+    <string name="tool_mika_open_screen">打开如意 AI 的页面</string>
     <string name="tool_mika_open_file">打开文件</string>
     <string name="tool_mika_notify">发通知</string>
     <string name="tool_mika_copy">复制文字</string>

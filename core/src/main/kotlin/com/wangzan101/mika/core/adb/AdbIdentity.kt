@@ -24,7 +24,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 /**
- * 如愿自己的 adb 身份:一把 RSA-2048 钥匙 + 自签名证书。配对时把 [adbPublicKey] 交给设备,
+ * 如意 AI 自己的 adb 身份:一把 RSA-2048 钥匙 + 自签名证书。配对时把 [adbPublicKey] 交给设备,
  * 之后每次 TLS 连接都出示 [certificate](设备只比对证书里的公钥)。
  */
 class AdbIdentity(val keyPair: KeyPair, val name: String) {

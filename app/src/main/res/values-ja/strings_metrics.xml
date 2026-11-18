@@ -6,8 +6,8 @@
     <string name="metrics_other">その他(待機、再試行)</string>
     <string name="metrics_title">実行の統計</string>
     <string name="metrics_sub">最近の実行の所要時間、モデルとのやり取りの回数、トークン</string>
-    <string name="metrics_empty">実行の統計はまだありません。如愿 に何かお願いすると、ここに記録されます。</string>
-    <string name="metrics_note">このスマホでの直近 %1$d 回の実行だけを集計しています。時間は 如愿 が作業を始めたときから数え、初回の反応は、何をしているかが最初に見えたときです。</string>
+    <string name="metrics_empty">実行の統計はまだありません。如意 AI に何かお願いすると、ここに記録されます。</string>
+    <string name="metrics_note">このスマホでの直近 %1$d 回の実行だけを集計しています。時間は 如意 AI が作業を始めたときから数え、初回の反応は、何をしているかが最初に見えたときです。</string>
     <string name="metrics_copy">JSON をコピー</string>
     <string name="metrics_share">JSON を共有</string>
     <string name="metrics_last_10">直近 10 回</string>

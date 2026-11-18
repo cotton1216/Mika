@@ -44,17 +44,17 @@
     <string name="selfcheck_advice_too_old">This system is older than Android 12, so phone control isn’t available. Chat, web and the sandbox still work.</string>
     <string name="selfcheck_advice_no_wireless">This system has no Wireless debugging. You can start phone control from a computer over USB instead.</string>
     <string name="selfcheck_advice_phone_unavailable">This environment can’t operate the apps on your phone (no Developer options or Wireless debugging); chat, web, files and calculations work as usual.</string>
-    <string name="selfcheck_advice_a11y_off">Accessibility is off. Turn on 如愿’s accessibility in Settings › Phone control.</string>
-    <string name="selfcheck_advice_a11y_restart">Accessibility is on but not running. Turn 如愿’s accessibility off and on again in system settings.</string>
+    <string name="selfcheck_advice_a11y_off">Accessibility is off. Turn on 如意 AI’s accessibility in Settings › Phone control.</string>
+    <string name="selfcheck_advice_a11y_restart">Accessibility is on but not running. Turn 如意 AI’s accessibility off and on again in system settings.</string>
     <string name="selfcheck_advice_notifications">Notifications are blocked, so you won’t see task progress or “needs you” alerts.</string>
-    <string name="selfcheck_advice_battery">Battery use is restricted, so 如愿 may be stopped in the background. You can lift this in Recovery &amp; repair.</string>
+    <string name="selfcheck_advice_battery">Battery use is restricted, so 如意 AI may be stopped in the background. You can lift this in Recovery &amp; repair.</string>
     <string name="selfcheck_advice_setup">The built-in helper isn’t running. Finish setup in Settings › Phone control, then run this again.</string>
-    <string name="selfcheck_advice_display">如愿’s virtual display couldn’t be created. Reconnect the helper and try again; if it still fails, please report it.</string>
-    <string name="selfcheck_advice_focus">如愿’s virtual display has no focus of its own, so your screen may briefly lose input focus while 如愿 works. Everything still works.</string>
-    <string name="selfcheck_advice_launch">A page didn’t open on 如愿’s virtual display. Please report this.</string>
-    <string name="selfcheck_advice_on_main">System Settings opened on your screen instead of 如愿’s virtual display. Please report this.</string>
+    <string name="selfcheck_advice_display">如意 AI’s virtual display couldn’t be created. Reconnect the helper and try again; if it still fails, please report it.</string>
+    <string name="selfcheck_advice_focus">如意 AI’s virtual display has no focus of its own, so your screen may briefly lose input focus while 如意 AI works. Everything still works.</string>
+    <string name="selfcheck_advice_launch">A page didn’t open on 如意 AI’s virtual display. Please report this.</string>
+    <string name="selfcheck_advice_on_main">System Settings opened on your screen instead of 如意 AI’s virtual display. Please report this.</string>
     <string name="selfcheck_advice_settings_in_use">System Settings is open on your screen, so this step didn’t open it. Close it and run this again.</string>
-    <string name="selfcheck_advice_read">The page’s controls couldn’t be read. Turn 如愿’s accessibility off and on again, then run this again.</string>
+    <string name="selfcheck_advice_read">The page’s controls couldn’t be read. Turn 如意 AI’s accessibility off and on again, then run this again.</string>
     <string name="selfcheck_advice_blank">The virtual display’s picture is all black or empty. Please report this.</string>
     <string name="selfcheck_advice_action">Some actions didn’t take effect (see the report). Please report this.</string>
     <string name="selfcheck_advice_frames">The virtual display stops updating after a while, so tasks may get stuck. Please report this.</string>
@@ -69,8 +69,8 @@
     <string name="selfcheck_advice_out_of_time">The self-check ran out of time before this check.</string>
     <string name="selfcheck_advice_cancelled">Cancelled.</string>
 
-    <string name="selfcheck_target_title">如愿 self-check page</string>
-    <string name="selfcheck_target_note">This is 如愿’s own test page. The compatibility self-check taps and types here; it doesn’t touch your other apps.</string>
+    <string name="selfcheck_target_title">如意 AI self-check page</string>
+    <string name="selfcheck_target_note">This is 如意 AI’s own test page. The compatibility self-check taps and types here; it doesn’t touch your other apps.</string>
     <string name="selfcheck_target_taps">Taps: %1$d</string>
     <string name="selfcheck_target_button">Tap me</string>
     <string name="selfcheck_target_input">Type here</string>

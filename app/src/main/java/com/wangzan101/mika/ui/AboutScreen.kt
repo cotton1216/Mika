@@ -63,7 +63,7 @@ import com.wangzan101.mika.ui.theme.MikaType
 private enum class AboutSheet { Update }
 
 /**
- * 关于「如愿」:顶上图标、名字、一句话介绍、版本(Beta 标记、构建编号);下面是检查更新与自动更新;一段数据说明。
+ * 关于「如意 AI」:顶上图标、名字、一句话介绍、版本(Beta 标记、构建编号);下面是检查更新与自动更新;一段数据说明。
  * 手动检查的结果到了([UpdateState.manualRounds] 变了)才提示。
  */
 @Composable

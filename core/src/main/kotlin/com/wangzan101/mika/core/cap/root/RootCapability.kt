@@ -10,7 +10,7 @@ import com.wangzan101.mika.core.tool.ToolContext
 
 internal const val ROOT = "root"
 
-/** 以 root 跑命令的端口:已 root 的手机上、用户打开了「允许如愿执行 root 命令」时由 App 给出,否则不给(工具也就不登记)。 */
+/** 以 root 跑命令的端口:已 root 的手机上、用户打开了「允许如意 AI 执行 root 命令」时由 App 给出,否则不给(工具也就不登记)。 */
 interface RootPort {
     /** 以 root 跑 [command],最多 [timeoutMs]。会阻塞,实现自己换到 IO 线程。 */
     suspend fun run(command: String, timeoutMs: Long): RootRun

@@ -20,7 +20,7 @@ private val APP_KINDS = listOf(
 
 /**
  * 内置知识 + 用户补充:[notes] 按条目名(App 名或站点域名),附在对应条目正文后面并标明是用户自己写的;
- * [learnedNotes] 是如愿自学的 App 知识补充,附在最后并标明试用中还是已核实。
+ * [learnedNotes] 是如意 AI 自学的 App 知识补充,附在最后并标明试用中还是已核实。
  * 匹配是确定性的字符串匹配,不调用模型。
  */
 class KnowledgeStore(private val bundled: List<KnowledgeEntry>, notes: Map<String, String> = emptyMap(),

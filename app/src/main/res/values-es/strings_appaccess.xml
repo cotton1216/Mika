@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">Acceso a apps</string>
     <string name="appaccess_row_sub">Bloquea apps y el uso compartido de pantalla app por app</string>
-    <string name="appaccess_intro">Elige qué apps puede leer y manejar 如愿 con las herramientas estándar del teléfono. Los comandos de shell, el sandbox y el acceso desde el ordenador (MCP) no están restringidos por este ajuste.</string>
+    <string name="appaccess_intro">Elige qué apps puede leer y manejar 如意 AI con las herramientas estándar del teléfono. Los comandos de shell, el sandbox y el acceso desde el ordenador (MCP) no están restringidos por este ajuste.</string>
     <string name="appaccess_privacy">Al clasificar se envían los nombres de las apps y de sus paquetes al modelo de IA; “Actualizar lista de apps” te lo pregunta antes.</string>
     <string name="appaccess_unavailable">No se pueden leer los ajustes de acceso a apps, así que el acceso estándar al teléfono está en pausa. Al restablecer se borran los permisos y categorías guardados.</string>
     <string name="appaccess_reset">Restablecer acceso a apps</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">Cancelar</string>
 
     <string name="appaccess_recommend_title">Se recomienda bloquear: apps financieras</string>
-    <string name="appaccess_recommend_body">Estas apps están clasificadas como financieras o de pagos, y 如愿 aún puede manejarlas. Bloquéalas una a una, o todas a la vez.</string>
+    <string name="appaccess_recommend_body">Estas apps están clasificadas como financieras o de pagos, y 如意 AI aún puede manejarlas. Bloquéalas una a una, o todas a la vez.</string>
     <string name="appaccess_recommend_empty">No hay nada que bloquear.</string>
     <string name="appaccess_block">Bloquear</string>
     <string name="appaccess_block_all">Bloquear todas</string>

@@ -25,7 +25,7 @@
     <string name="memory_use_sub">关掉后不读也不记</string>
     <string name="memory_auto">自动记住我说过的事</string>
     <string name="memory_auto_sub">任务结束后从你的原话里整理</string>
-    <string name="memory_infer">让 Mika 自己归纳着记</string>
+    <string name="memory_infer">让如意 AI 自己归纳着记</string>
     <string name="memory_infer_sub">你让它记时,它自己归纳的也存,并标明不是你说的</string>
     <string name="memory_learn">从做过的事里学(技能和 App 知识)</string>
     <string name="memory_learn_sub">学到的技能和 App 知识要你收下才会用</string>
@@ -56,12 +56,12 @@
     <string name="skill_missing_description">要写一句描述(description)</string>
     <string name="skill_missing_section">要有入口、步骤、容易出错的地方、怎样算办成、什么时候停下交给用户五个小节</string>
     <string name="skill_too_long">技能太长了,最多 4000 字</string>
-    <string name="skill_unknown_tool">里面提到了如愿没有的工具</string>
+    <string name="skill_unknown_tool">里面提到了如意 AI 没有的工具</string>
     <string name="memory_manual">你手写的</string>
     <string name="date_pattern_md">M 月 d 日</string>
     <string name="memory_said_via">你在 %1$s通过%2$s说:『%3$s』</string>
     <string name="memory_said">你在 %1$s说:『%2$s』</string>
-    <string name="memory_inferred">Mika 在 %1$s按你的要求归纳:『%2$s』</string>
+    <string name="memory_inferred">如意 AI 在 %1$s按你的要求归纳:『%2$s』</string>
     <string name="verify_returned">核查退回</string>
     <string name="skills_drafts">新技能草稿，收下后先试用</string>
     <string name="skills_accept_try">收下试用</string>

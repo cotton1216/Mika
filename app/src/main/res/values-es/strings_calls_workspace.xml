@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">Sin SIM preferida</string>
     <string name="calls_task_back_to_edit">Volver a editar</string>
     <string name="calls_task_confirm_dial">Confirmar y llamar</string>
-    <string name="calls_task_confirm_note">如愿 usa este encargo para esta llamada. Se usa la SIM elegida y pueden aplicarse cargos del operador y de voz en tiempo real.</string>
+    <string name="calls_task_confirm_note">如意 AI usa este encargo para esta llamada. Se usa la SIM elegida y pueden aplicarse cargos del operador y de voz en tiempo real.</string>
     <string name="calls_task_constraints">Qué no se puede prometer</string>
     <string name="calls_task_context">Contexto adicional</string>
     <string name="calls_task_filled">Añadido</string>

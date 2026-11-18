@@ -6,8 +6,8 @@
     <string name="metrics_other">Lainnya (menunggu, mencoba ulang)</string>
     <string name="metrics_title">Statistik eksekusi</string>
     <string name="metrics_sub">Waktu, bolak-balik model, dan token dari eksekusi terbaru</string>
-    <string name="metrics_empty">Belum ada statistik eksekusi. Minta 如愿 mengerjakan sesuatu dan akan dicatat di sini.</string>
-    <string name="metrics_note">Hanya %1$d eksekusi terakhir di ponsel ini yang dihitung. Waktu mulai saat 如愿 mulai bekerja; umpan balik pertama adalah saat Anda pertama kali melihat apa yang sedang dikerjakannya.</string>
+    <string name="metrics_empty">Belum ada statistik eksekusi. Minta 如意 AI mengerjakan sesuatu dan akan dicatat di sini.</string>
+    <string name="metrics_note">Hanya %1$d eksekusi terakhir di ponsel ini yang dihitung. Waktu mulai saat 如意 AI mulai bekerja; umpan balik pertama adalah saat Anda pertama kali melihat apa yang sedang dikerjakannya.</string>
     <string name="metrics_copy">Salin JSON</string>
     <string name="metrics_share">Bagikan JSON</string>
     <string name="metrics_last_10">10 terakhir</string>

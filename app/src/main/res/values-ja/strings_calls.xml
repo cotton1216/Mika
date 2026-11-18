@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">電話をかける</string>
     <string name="calls_rules">応答ルール</string>
     <string name="calls_setup_credentials">Volcengine のリアルタイム音声認証情報を設定してください。</string>
-    <string name="calls_setup_shell">先に 如愿 の内蔵アシスタントに接続してください。</string>
+    <string name="calls_setup_shell">先に 如意 AI の内蔵アシスタントに接続してください。</string>
     <string name="calls_sim_clear_preferred">優先 SIM を解除</string>
     <string name="calls_sim_preferred">優先 SIM：%1$s</string>
     <string name="calls_sim_save_preferred">この SIM を優先する</string>

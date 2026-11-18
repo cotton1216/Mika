@@ -28,16 +28,16 @@ sealed interface PairingNotice {
     data class EnterCode(val port: Int?, val error: String? = null, val quiet: Boolean = false) : PairingNotice
     data object Working : PairingNotice
     data object Done : PairingNotice
-    /** 配对后没能连上:回如愿看怎么处理。 */
+    /** 配对后没能连上:回如意 AI 看怎么处理。 */
     data class Problem(val title: String) : PairingNotice
 
     companion object {
         /**
          * 只在用户正在配对的这段时间里用([PairingCoordinator] 开着时)。找到配对窗口才弹输入框;
-         * 还在找时先在通知栏里静静放一个(不带端口,配对时再找):系统可能在切到系统设置后冻结后台的如愿,
+         * 还在找时先在通知栏里静静放一个(不带端口,配对时再找):系统可能在切到系统设置后冻结后台的如意 AI,
          * 等找到窗口再发就发不出去了,用户下拉通知栏要能找到它;
          * 配对阶段的失败(码不对、过期、窗口关了)留在通知里重填;要重新配对的失败(配对失效)找到配对窗口后也给输入框,
-         * 和无障碍读码认的一样(PairingScreen.attempt),还在找时同样先静静备好;别的失败请用户回如愿。
+         * 和无障碍读码认的一样(PairingScreen.attempt),还在找时同样先静静备好;别的失败请用户回如意 AI。
          */
         fun of(status: BuiltinShellStatus, discovery: PairingDiscovery): PairingNotice? {
             val port = (discovery as? PairingDiscovery.Found)?.port
@@ -208,7 +208,7 @@ object PairingNotifier {
         // 没允许通知时系统会丢掉它;引导页在配对这一步先请用户允许
         runCatching { nm.notify(ID, b.build()) }.onFailure { Log.w(TAG, "pairing notification not posted", it) }
         // 发出去了也可能不弹:总开关、频道的重要程度都记一句(厂商另外的「悬浮通知」开关读不到)
-        if (!nm.areNotificationsEnabled()) Log.w(TAG, "notifications are off for 如愿; the pairing notice is dropped")
+        if (!nm.areNotificationsEnabled()) Log.w(TAG, "notifications are off for 如意 AI; the pairing notice is dropped")
         else nm.getNotificationChannel(channel)?.let { if (it.importance < NotificationManager.IMPORTANCE_HIGH) Log.i(TAG, "pairing channel importance ${it.importance}; it won't pop up") }
     }
 

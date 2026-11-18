@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">앱 접근</string>
     <string name="appaccess_row_sub">앱별로 앱과 화면 공유 차단</string>
-    <string name="appaccess_intro">Mika가 기본 휴대전화 도구로 읽고 조작할 수 있는 앱을 고르세요. 셸 명령, 샌드박스, 컴퓨터 접속(MCP)은 이 설정의 제한을 받지 않아요.</string>
+    <string name="appaccess_intro">如意 AI가 기본 휴대전화 도구로 읽고 조작할 수 있는 앱을 고르세요. 셸 명령, 샌드박스, 컴퓨터 접속(MCP)은 이 설정의 제한을 받지 않아요.</string>
     <string name="appaccess_privacy">분류할 때 앱 이름과 패키지 이름이 AI 모델로 전송돼요. “앱 목록 새로고침”은 먼저 물어봐요.</string>
     <string name="appaccess_unavailable">앱 접근 설정을 읽을 수 없어서 기본 휴대전화 접근이 일시 중지됐어요. 초기화하면 저장된 권한과 분류가 지워져요.</string>
     <string name="appaccess_reset">앱 접근 초기화</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">취소</string>
 
     <string name="appaccess_recommend_title">차단 권장: 금융 앱</string>
-    <string name="appaccess_recommend_body">이 앱들은 금융 또는 결제 앱으로 분류되었고 Mika가 아직 조작할 수 있어요. 하나씩 또는 한꺼번에 차단하세요.</string>
+    <string name="appaccess_recommend_body">이 앱들은 금융 또는 결제 앱으로 분류되었고 如意 AI가 아직 조작할 수 있어요. 하나씩 또는 한꺼번에 차단하세요.</string>
     <string name="appaccess_recommend_empty">차단할 앱이 없어요.</string>
     <string name="appaccess_block">차단</string>
     <string name="appaccess_block_all">모두 차단</string>

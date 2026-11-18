@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">یادآوری 如愿</string>
+    <string name="trigger_reminder">یادآوری 如意 AI</string>
     <string name="trigger_not_started_body">یک کار زمان‌بندی‌شده شروع نشد. آن را در صفحهٔ کارهای زمان‌بندی‌شده بررسی و دوباره اجرا کنید.</string>
     <string name="trigger_start_failed">شروع ناموفق بود</string>
     <string name="trigger_not_started">کار زمان‌بندی‌شده شروع نشد</string>
-    <string name="trigger_interrupted_body">یک کار زمان‌بندی‌شده قطع شد و تأیید نتیجهٔ آن ممکن نیست. ابتدا بررسی کنید چه اتفاقی افتاده است؛ 如愿 آن را خودکار تکرار نمی‌کند.</string>
+    <string name="trigger_interrupted_body">یک کار زمان‌بندی‌شده قطع شد و تأیید نتیجهٔ آن ممکن نیست. ابتدا بررسی کنید چه اتفاقی افتاده است؛ 如意 AI آن را خودکار تکرار نمی‌کند.</string>
     <string name="trigger_unconfirmed">نتیجهٔ کار زمان‌بندی‌شده به بررسی نیاز دارد</string>
     <string name="trigger_unlock_failed">کار زمان‌بندی‌شده نتوانست صفحهٔ گوشی را روشن کند یا قفل آن را باز کند. پیش از اجرای بعدی قفل گوشی را باز کنید، یا گزینهٔ «اجازهٔ روشن کردن صفحه و باز کردن قفل از راه دور» و اطلاعات قفل ذخیره‌شده را در تنظیمات › اتصال رایانه بررسی کنید.</string>
     <string name="trigger_alarm_title">کارهای زمان‌بندی‌شده به مجوز «زنگ‌ها و یادآوری‌ها» نیاز دارند</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">بدون این مجوز، کارهای زمان‌بندی‌شده ممکن است دیر اجرا شوند یا اصلاً اجرا نشوند. فقط یک بار لازم است آن را روشن کنید.</string>
     <string name="plans_running_n">فعال %1$d</string>
     <string name="plans_stopped_n">خاموش %1$d</string>
-    <string name="plans_empty">هنوز کار زمان‌بندی‌شده‌ای وجود ندارد.\nبرای ساختن یک کار روی + بزنید، یا در گفتگو به 如愿 بگویید چه زمانی چیزی را یادآوری کند یا کاری انجام دهد.</string>
+    <string name="plans_empty">هنوز کار زمان‌بندی‌شده‌ای وجود ندارد.\nبرای ساختن یک کار روی + بزنید، یا در گفتگو به 如意 AI بگویید چه زمانی چیزی را یادآوری کند یا کاری انجام دهد.</string>
     <string name="plans_none_running">کار زمان‌بندی‌شدهٔ فعالی وجود ندارد</string>
     <string name="plans_none_stopped">کار زمان‌بندی‌شدهٔ خاموشی وجود ندارد</string>
     <string name="plans_footer">با + خودتان کاری بسازید، یا در گفتگو بگویید «هر روز ساعت ۸...» یا «وقتی قیمت کم شد به من بگو»؛ نتیجه‌ها به همان گفتگو برمی‌گردند. صرفه‌جویی باتری ممکن است بر اجرای زمان‌بندی‌شده اثر بگذارد؛ خاموش کردن یا حذف فقط بر اجراهای آینده اثر دارد.</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">کار زمان‌بندی‌شدهٔ جدید</string>
     <string name="plans_task_mode">اجرای کار</string>
     <string name="plans_reminder_mode">فقط یادآوری</string>
-    <string name="plans_content_task">如愿 چه کاری انجام دهد؟</string>
+    <string name="plans_content_task">如意 AI چه کاری انجام دهد؟</string>
     <string name="plans_content_reminder">متن یادآوری</string>
     <string name="plans_repeat_interval">فاصلهٔ زمانی</string>
     <string name="plans_repeat_weekly">هفتگی</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">هنگام تغییر</string>
     <string name="plans_notify_each">هر بار</string>
     <string name="plans_cooldown_minutes">حداقل فاصلهٔ بین اجراها به دقیقه (اختیاری)</string>
-    <string name="plans_when_idle">فقط زمانی اجرا شود که 如愿 مشغول نیست</string>
+    <string name="plans_when_idle">فقط زمانی اجرا شود که 如意 AI مشغول نیست</string>
     <string name="plans_enabled">فعال</string>
     <string name="plans_error_content">یک کار یا یادآوری وارد کنید</string>
     <string name="plans_error_content_long">حداکثر ۴۰۰۰ نویسه یا برای یادآوری حداکثر ۲۰۰۰ نویسه وارد کنید</string>

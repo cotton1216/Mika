@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. Подготовьте компьютер</string>
     <string name="mcp_cli_install_sub">Отправьте инструкцию по установке ИИ на компьютере или выполните её сами.</string>
     <string name="mcp_copy_install">Копировать инструкцию по установке</string>
-    <string name="mcp_cli_install_prompt">Следуя https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md, установи 如愿 CLI или Skill для этого агента. Используй способ подключения, выбранный на телефоне: для USB это авторизованный ADB; для Wi-Fi или частного VPN это HTTP-адрес и закрытый файл с токеном. Выполни connect, чтобы проверить подключение. Если установлен только Skill, используй его встроенный скрипт. Не отправляй задачи на телефон и не выводи токены в разговор.</string>
+    <string name="mcp_cli_install_prompt">Следуя https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md, установи 如意 AI CLI или Skill для этого агента. Используй способ подключения, выбранный на телефоне: для USB это авторизованный ADB; для Wi-Fi или частного VPN это HTTP-адрес и закрытый файл с токеном. Выполни connect, чтобы проверить подключение. Если установлен только Skill, используй его встроенный скрипт. Не отправляй задачи на телефон и не выводи токены в разговор.</string>
     <string name="mcp_cli_connect">2. Подключите телефон</string>
     <string name="mcp_cli_connect_sub">Выполните на компьютере по USB или через сопряжённую беспроводную отладку. Команда connect проверяет подключение. Если установлен только Skill, попросите агента запустить его встроенный клиент.</string>
     <string name="mcp_copy_command">Копировать команду</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. Настройте клиент MCP</string>
     <string name="mcp_usb_client_sub">Команда запуска выводит адрес и токен на компьютере. Добавьте их в клиент и проверьте, что время запроса выше обновляется.</string>
     <string name="mcp_copy_instructions">Копировать инструкцию по настройке</string>
-    <string name="mcp_usb_client_instructions">Добавь на этом компьютере сервер MCP типа Streamable HTTP по адресу http://127.0.0.1:%1$d/mcp. В заголовке Authorization укажи Bearer и токен, который вывела команда запуска 如愿. Не выводи токен в разговор. Подключись или обнови список инструментов и проверь, что время запроса на телефоне обновилось. Руководство: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">Добавь на этом компьютере сервер MCP типа Streamable HTTP по адресу http://127.0.0.1:%1$d/mcp. В заголовке Authorization укажи Bearer и токен, который вывела команда запуска 如意 AI. Не выводи токен в разговор. Подключись или обнови список инструментов и проверь, что время запроса на телефоне обновилось. Руководство: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">Разрешить это сетевое подключение</string>
     <string name="mcp_network_enable_action">Включить сетевой доступ</string>
     <string name="mcp_network_address_step">1. Выберите доступный адрес</string>

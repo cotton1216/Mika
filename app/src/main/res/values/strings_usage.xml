@@ -8,7 +8,7 @@
     <string name="usage_title">Token usage</string>
     <string name="usage_none">None yet</string>
     <string name="usage_empty_title">No usage in this period</string>
-    <string name="usage_empty_body">Ask 如愿 to do something and the tokens used will be recorded here.</string>
+    <string name="usage_empty_body">Ask 如意 AI to do something and the tokens used will be recorded here.</string>
     <string name="usage_note">Numbers are as reported by your providers and stay on this phone only.</string>
     <string name="usage_total">Total</string>
     <string name="usage_trend">Trend</string>

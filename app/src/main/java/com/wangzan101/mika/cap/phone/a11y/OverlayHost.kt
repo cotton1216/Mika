@@ -183,7 +183,7 @@ class OverlayHost internal constructor(private val service: ScreenAccessibility)
     }
 
     /**
-     * 用户屏幕上输入法的上边(屏幕坐标);没弹出时为 null。不论输入法是对着哪个 App 弹的(包括如愿自己的浮层),
+     * 用户屏幕上输入法的上边(屏幕坐标);没弹出时为 null。不论输入法是对着哪个 App 弹的(包括如意 AI 自己的浮层),
      * 胶囊和卡片都据此让开。窗口一变就重读,读不到窗口时当作没弹出。
      */
     fun imeTop(): Flow<Int?> = service.windowChanges().onStart { emit(Unit) }

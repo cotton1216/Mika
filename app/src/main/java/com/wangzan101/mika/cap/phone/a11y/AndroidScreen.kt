@@ -99,17 +99,17 @@ class AndroidScreen(
     private val a11y: ScreenAccessibility,
     private val shell: IMikaShell,
     private val display: LazyAgentDisplay,
-    /** 剪贴板暂时换成如愿的文字时为 true,还原后为 false;任务服务据此记下,进程意外结束后下次启动还原。 */
+    /** 剪贴板暂时换成如意 AI 的文字时为 true,还原后为 false;任务服务据此记下,进程意外结束后下次启动还原。 */
     private val clipHeld: (Boolean) -> Unit = {},
     /** 剪贴板是全局的:几个任务同时跑时粘贴兜底共用一把锁。 */
     private val clipLock: Lock = ReentrantLock(),
-    /** 并行任务时为 true:打开 App 前先查它是不是正在如愿的另一块屏上给别的任务用。 */
+    /** 并行任务时为 true:打开 App 前先查它是不是正在如意 AI 的另一块屏上给别的任务用。 */
     private val checkOtherTasks: Boolean = false,
     /** 并行任务时替本任务占下这个包;别的任务已占着(且还在用)时返回 false。 */
     private val reserve: (String) -> Boolean = { true },
     /** 同 [reserve],占的是装在另一份用户(用户编号)里的那份:和本来那份分开占,两个任务能各用一份。 */
     private val reserveCopy: (String, Int) -> Boolean = { _, _ -> true },
-    /** 换剪贴板成功后交出用户原来的文字和如愿放进去的文字,供加密留底(进程被杀后据此还原)。 */
+    /** 换剪贴板成功后交出用户原来的文字和如意 AI 放进去的文字,供加密留底(进程被杀后据此还原)。 */
     private val clipSaved: (original: String, ours: String) -> Unit = { _, _ -> },
     /** App 此刻在用户手上(接管中):这时主屏上开出什么都是用户的事,不去挪。 */
     private val handedOver: () -> Boolean = { false },
@@ -223,7 +223,7 @@ class AndroidScreen(
     }
 
     /**
-     * 如愿屏上最上面的那个 App(包名、任务、所属用户),每换一个给一次:订阅时先给一次,之后窗口一变(开了新页面、
+     * 如意 AI 屏上最上面的那个 App(包名、任务、所属用户),每换一个给一次:订阅时先给一次,之后窗口一变(开了新页面、
      * 从别的 App 里点开了另一个 App、另一份顶上来)就重读。屏还没建、没有任务时不给。在调用方的线程上问内置助手。
      */
     fun foregroundApps(): Flow<TargetApp> = flow {
@@ -794,7 +794,7 @@ class AndroidScreen(
 
     /**
      * 树里没有拿着焦点的输入框:输入框可能在 App 自己画的界面里,树读不到它,焦点在它上面。
-     * 先全选(替换原有的字,和对着节点设字一样),再经剪贴板粘贴,按键只发到如愿的屏;之后比打字前后屏上读到的文字
+     * 先全选(替换原有的字,和对着节点设字一样),再经剪贴板粘贴,按键只发到如意 AI 的屏;之后比打字前后屏上读到的文字
      * 核对([UnseenField.typed])。不要求弹着输入法:按键发到这块屏拿着焦点的窗口,框不经输入法也收得到;
      * 没弹输入法而前后一点没变,就请模型先点输入框。弹着输入法时键盘上的字不算屏上的字。
      */
@@ -1039,7 +1039,7 @@ class AndroidScreen(
 
     /**
      * 打开装在另一份用户 [userId] 里的那份(调用方先按 [appCopies] 核对过):内置助手启动前再按同一规则核一次那份用户能不能用,
-     * 不能用为 copy_not_found;占用、冷启动都只看这一份。[userId] 就是如愿自己的用户时等于 [openApp]。
+     * 不能用为 copy_not_found;占用、冷启动都只看这一份。[userId] 就是如意 AI 自己的用户时等于 [openApp]。
      */
     override suspend fun openAppCopy(packageName: String, userId: Int, cold: Boolean): ActionResult =
         open(packageName, userId.takeIf { it != myUser }, cold)
@@ -1056,7 +1056,7 @@ class AndroidScreen(
         }
     }
 
-    /** 这个包([user] 那份)此刻开在如愿的另一块屏上(别的任务手里)。 */
+    /** 这个包([user] 那份)此刻开在如意 AI 的另一块屏上(别的任务手里)。 */
     private fun onOtherDisplay(packageName: String, user: Int?): Boolean {
         val other = runCatching { if (user == null) shell.displayOfPackage(packageName) else shell.displayOfPackageInUser(packageName, user) }.getOrDefault(-1)
         return other >= 0 && other != display.current?.displayId
@@ -1128,9 +1128,9 @@ class AndroidScreen(
     }
 
     /**
-     * 在如愿的屏上打开如愿的兼容性自检页([intent] 指明组件;只给兼容性自检用)。那一页只对 shell 这一级的调用方开放,
-     * 交给内置助手以 shell 身份直接启动到这块屏(助手只认这一个组件);shell 启动不受后台启动页面的限制,如愿在不在前台都一样。
-     * 之后和 [openApp] 一样等它到如愿屏的最上面;第一次用时建屏。
+     * 在如意 AI 的屏上打开如意 AI 的兼容性自检页([intent] 指明组件;只给兼容性自检用)。那一页只对 shell 这一级的调用方开放,
+     * 交给内置助手以 shell 身份直接启动到这块屏(助手只认这一个组件);shell 启动不受后台启动页面的限制,如意 AI 在不在前台都一样。
+     * 之后和 [openApp] 一样等它到如意 AI 屏的最上面;第一次用时建屏。
      */
     suspend fun openOwnPage(intent: Intent): ActionResult = withContext(Dispatchers.IO) {
         val before = if (hasDisplay) topWindowPackage().takeIf { it != chooserPackage } else null
@@ -1145,7 +1145,7 @@ class AndroidScreen(
     }
 
     /**
-     * 启动发出之后:等 [packageName] 到如愿屏的最上面,或系统先问打开哪一个([before] 是启动前最上面的窗口所在的包)。
+     * 启动发出之后:等 [packageName] 到如意 AI 屏的最上面,或系统先问打开哪一个([before] 是启动前最上面的窗口所在的包)。
      * [sharing]:这次是分享(App 有几个收分享的页面时系统问用哪一个,选项里不一定有 App 名):最上面换成了系统包的窗口也算在问。
      */
     private suspend fun awaitOpened(
@@ -1163,7 +1163,7 @@ class AndroidScreen(
             val now = foregroundTaskPackage() ?: ScreenReader.topPackage(windows())
             if (now == before && treeHash() == beforeTree) frameGuardSince = null
         }
-        // 打开了:如愿屏上最上面的任务是它(问不到任务时退回看无障碍读到的最上面的窗口);指定了哪一份时还得是那份用户的任务
+        // 打开了:如意 AI 屏上最上面的任务是它(问不到任务时退回看无障碍读到的最上面的窗口);指定了哪一份时还得是那份用户的任务
         fun launched(): Boolean = (foregroundTaskPackage()?.let { it == packageName } ?: (ScreenReader.topPackage(windows()) == packageName)) &&
             (user == null || userOf(runCatching { shell.topTaskId(displayId) }.getOrDefault(-1)).let { it < 0 || it == user })
         fun picker(): String? = if (sharing) systemPickerOf(packageName, before) else null
@@ -1213,7 +1213,7 @@ class AndroidScreen(
     }
 
     /**
-     * 要的是另一份用户 [user] 里的那份,系统却在如愿屏上问打开哪一个(选项可能名字一模一样,看不出哪个是哪份):
+     * 要的是另一份用户 [user] 里的那份,系统却在如意 AI 屏上问打开哪一个(选项可能名字一模一样,看不出哪个是哪份):
      * 逐个点选项,等开出来,读最上面任务所属的用户;是要的那份就算打开。不是就按一次返回让它退到后台(那可能是用户手上那份的任务,
      * 不结束它),再打开一次、点下一个。都试过还不是,照实失败 copy_not_opened,说开出来的是哪一份;不把错的那份当成功。
      */
@@ -1264,7 +1264,7 @@ class AndroidScreen(
         return ActionResult.Failed(COPY_NOT_OPENED, "$what Requested: the copy in user $user.")
     }
 
-    /** 系统在如愿屏上问打开哪一个时,那几个选项的中心点(屏上像素,先后同选项);不是在问为 null。认法同 [chooserOf]。 */
+    /** 系统在如意 AI 屏上问打开哪一个时,那几个选项的中心点(屏上像素,先后同选项);不是在问为 null。认法同 [chooserOf]。 */
     private fun chooserTargets(packageName: String, before: String?): List<Pair<Int, Int>>? {
         val w = ScreenReader.contentWindows(windows()).firstOrNull { it.root != null } ?: return null
         val pkg = w.root?.packageName?.toString() ?: return null
@@ -1374,8 +1374,8 @@ class AndroidScreen(
     // ---------- 系统动作 ----------
 
     /**
-     * 经安卓标准 intent 做系统动作(见 [SystemIntents])。先在如愿这边查谁接(能力检测,不用建屏):没有就 not_supported;
-     * 有几个时按 [SystemIntents.choose] 直接指定一个。再交给内置助手启动到如愿的屏(第一次用时建屏),动作前后照常盯着主屏。
+     * 经安卓标准 intent 做系统动作(见 [SystemIntents])。先在如意 AI 这边查谁接(能力检测,不用建屏):没有就 not_supported;
+     * 有几个时按 [SystemIntents.choose] 直接指定一个。再交给内置助手启动到如意 AI 的屏(第一次用时建屏),动作前后照常盯着主屏。
      * 闹钟、计时器本该悄悄设好:之后读系统的下一个闹钟核对;App 却开了界面时照实报。闹钟列表、新日程要等那个 App 到最上面。
      */
     override suspend fun systemAction(action: SystemAction): SystemActionResult = withContext(Dispatchers.IO) {
@@ -1403,7 +1403,7 @@ class AndroidScreen(
         val beforeTree = treeHash()
         val startedAt = System.nanoTime()
         val w = armSpillWatch()
-        // 接手的页面要求的权限(设闹钟)shell 可能没有:备一个以如愿身份启动的
+        // 接手的页面要求的权限(设闹钟)shell 可能没有:备一个以如意 AI 身份启动的
         val asMika = PendingIntent.getActivity(a11y, SYSTEM_ACTION_REQUEST, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         // 悄悄设好的(闹钟、计时器)不开界面,不去静它:时钟到点要响
         if (!action.silent) beforeOpen(pkg, null)
@@ -1503,7 +1503,7 @@ class AndroidScreen(
 
     private val systemPackages = java.util.concurrent.ConcurrentHashMap<String, Boolean>()
 
-    /** 系统自带的包;如愿自己看不到的包(安卓 11 起的包可见性)问内置助手。 */
+    /** 系统自带的包;如意 AI 自己看不到的包(安卓 11 起的包可见性)问内置助手。 */
     private fun isSystemPackage(pkg: String): Boolean = pkg in systemPickers || systemPackages.getOrPut(pkg) {
         val flags = runCatching { a11y.packageManager.getApplicationInfo(pkg, 0).flags }.getOrNull()
         if (flags != null) flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
@@ -1587,7 +1587,7 @@ class AndroidScreen(
 
     // ---------- 开到用户主屏上的 ----------
 
-    /** 一次动作的盯梢:[since] 开始的时刻,[topBefore] 那时主屏最上面的任务,[agentTopBefore] 那时如愿屏上最上面的任务。 */
+    /** 一次动作的盯梢:[since] 开始的时刻,[topBefore] 那时主屏最上面的任务,[agentTopBefore] 那时如意 AI 屏上最上面的任务。 */
     private class Watch(val since: Long, val topBefore: Int, val agentTopBefore: Int)
 
     /** 挪回来的 App 和(系统问打开哪一个时)认出的选项。 */
@@ -1599,13 +1599,13 @@ class AndroidScreen(
     /** 已经判过的记录到哪个时刻:同一条不判两次。 */
     @Volatile private var consumed = 0L
 
-    /** 从用户主屏挪回如愿屏上的任务,和从它们里面打开的:它们在最上面算目标 App 打开的,不算被切走。 */
+    /** 从用户主屏挪回如意 AI 屏上的任务,和从它们里面打开的:它们在最上面算目标 App 打开的,不算被切走。 */
     private val adopted: MutableSet<Int> = java.util.concurrent.ConcurrentHashMap.newKeySet()
 
     /**
      * 系统在用户主屏上问打开哪一个、等用户选的那一次:[taskId] 问的那个窗口的任务,[packageName] 它的包,[app] 问的是哪个 App,
-     * [topBefore] 它出来前主屏最上面的任务,[agentTop] 那时如愿屏上最上面的任务,[since] 它出来的时刻。
-     * 选择框从不挪:挪了屏它要按新屏重建,有的重建时自己关掉;如愿也不替别的 App 重新打开它(打开的一方得是原来那个 App)。
+     * [topBefore] 它出来前主屏最上面的任务,[agentTop] 那时如意 AI 屏上最上面的任务,[since] 它出来的时刻。
+     * 选择框从不挪:挪了屏它要按新屏重建,有的重建时自己关掉;如意 AI 也不替别的 App 重新打开它(打开的一方得是原来那个 App)。
      */
     class UserPick(val taskId: Int, val packageName: String, val app: String?, val topBefore: Int, val agentTop: Int, val since: Long)
 
@@ -1634,7 +1634,7 @@ class AndroidScreen(
         runCatching { a11y.packageManager.queryIntentActivities(home, 0).map { it.activityInfo.packageName } }.getOrDefault(emptyList()).toSet()
     }
 
-    /** 不算开到主屏上的:如愿自己、桌面 App。 */
+    /** 不算开到主屏上的:如意 AI 自己、桌面 App。 */
     private val notSpills: Set<String> by lazy { homeApps + a11y.packageName }
 
     /** 动作之前:请内置助手盯着主屏,记下此刻两块屏最上面的任务;没有屏、接管中或助手不支持时为 null(不盯)。 */
@@ -1647,7 +1647,7 @@ class AndroidScreen(
         return Watch(since, top, agentTop).also { watch = it }
     }
 
-    /** 盯梢期间记下用户在主屏上的点按(如愿自己的浮层不算);到期自己停。 */
+    /** 盯梢期间记下用户在主屏上的点按(如意 AI 自己的浮层不算);到期自己停。 */
     private fun watchUserTaps(until: Long) {
         tapWatchUntil = maxOf(tapWatchUntil, until)
         if (tapWatch?.isActive == true) return
@@ -1656,7 +1656,7 @@ class AndroidScreen(
                 a11y.eventsFor(Display.DEFAULT_DISPLAY).collect { e ->
                     val systemTouch = e.eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START
                     if (MainScreenSpill.isUserTap(e.eventType) &&
-                        // 如愿浮层自己的控件点击不是用户打开了别的 App;系统触摸事件没有这种包名歧义
+                        // 如意 AI 浮层自己的控件点击不是用户打开了别的 App;系统触摸事件没有这种包名歧义
                         (systemTouch || e.packageName?.toString() != a11y.packageName)
                     ) {
                         // 系统触摸事件带有真实发生时刻;通知栏、桌面等不发控件点击事件的入口也不能漏掉
@@ -1676,7 +1676,7 @@ class AndroidScreen(
     }
 
     /**
-     * 动作之后:问内置助手这次动作开始后主屏冒出来的任务,按 [MainScreenSpill] 判;开到主屏上的挪回如愿的屏,
+     * 动作之后:问内置助手这次动作开始后主屏冒出来的任务,按 [MainScreenSpill] 判;开到主屏上的挪回如意 AI 的屏,
      * 开在用户正用着的 App 里的只报不动。没有为 null。
      */
     private suspend fun takeSpill(w: Watch?): Spill? {
@@ -1691,7 +1691,7 @@ class AndroidScreen(
             // 开到用户主屏上的不在应用访问边界看的那块屏上:被禁用的不挪、不读
             appAccess.current().denial(pkg)?.let { throw it }
             last = when (v) {
-                // 系统问打开哪一个的先按选择框处理;要用户亲手处理的弹窗(登录验证、账号确认一类)留在主屏,不挪到如愿的屏上
+                // 系统问打开哪一个的先按选择框处理;要用户亲手处理的弹窗(登录验证、账号确认一类)留在主屏,不挪到如意 AI 的屏上
                 is MainScreenSpill.PullBack -> leaveForUser(a, pkg, w) ?: leavePopup(a, pkg) ?: pullBack(a, pkg) ?: last
                 is MainScreenSpill.InUse -> Spill(OpenedElsewhere(pkg, appLabel(pkg), pulledBack = false, inProfile = inProfileOf(pkg, a.userId)), null)
             }
@@ -1715,7 +1715,7 @@ class AndroidScreen(
     /**
      * 冒到主屏上的是要用户亲手处理的弹窗(登录验证、账号确认、付款确认一类):不挪,留在用户屏上。
      * 判据:系统账号登录服务(登记了账号认证器、没有桌面图标的包)的页面,顶层窗口不是整屏(对话框、底部弹层),窗口里有密码框,或页面本身不进最近任务(excludeFromRecents)。
-     * 这类窗口挪到如愿的屏上就从用户眼前消失,用户也就没法在主屏上点确认。不是为 null。
+     * 这类窗口挪到如意 AI 的屏上就从用户眼前消失,用户也就没法在主屏上点确认。不是为 null。
      * noHistory 不算:很多 App 的开屏页带着它,算进来就把普通 App 当成了弹窗。
      */
     private suspend fun leavePopup(a: MainScreenSpill.Arrival, pkg: String): Spill? =
@@ -1750,14 +1750,14 @@ class AndroidScreen(
     /**
      * 这个包是不是系统的账号登录服务:登记了账号认证器(AccountManager.authenticatorTypes,平台数据),自己又没有桌面图标
      * (没有 LAUNCHER 入口)。这种包没有自己的首页,冒到主屏上的只会是加账号、登录、验证、验证码一类页面,本身就是用户的事,
-     * 整屏、没有密码框也不能挪到如愿的屏上。有桌面图标的认证器包(同步联系人的聊天 App、邮箱 App 等)不算,
+     * 整屏、没有密码框也不能挪到如意 AI 的屏上。有桌面图标的认证器包(同步联系人的聊天 App、邮箱 App 等)不算,
      * 它们的会话、分享、写信页照常挪回。认证器表每次现读:新装的认证器也认得出,这一步只在有页面冒到主屏时才走。
      */
     private fun isAuthenticatorUi(pkg: String): Boolean {
         val authenticators = runCatching { AccountManager.get(a11y).authenticatorTypes.mapNotNull { it.packageName }.toSet() }
             .getOrDefault(emptySet())
         if (pkg !in authenticators) return false
-        // 有桌面图标的包对如愿一定看得见(清单里查了 LAUNCHER);查不到才算没有
+        // 有桌面图标的包对如意 AI 一定看得见(清单里查了 LAUNCHER);查不到才算没有
         val launcher = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(pkg)
         val hasLauncher = runCatching { a11y.packageManager.queryIntentActivities(launcher, 0).isNotEmpty() }.getOrDefault(true)
         return MainScreenSpill.authenticatorUi(pkg, authenticators, hasLauncher)
@@ -1786,7 +1786,7 @@ class AndroidScreen(
         return Spill(OpenedElsewhere(pkg, app, pulledBack = false, picker = true), choice)
     }
 
-    /** 把开到主屏上的任务挪到如愿的屏(只挪,不替它重新打开),等它到最上面;挪不动为 null。 */
+    /** 把开到主屏上的任务挪到如意 AI 的屏(只挪,不替它重新打开),等它到最上面;挪不动为 null。 */
     private suspend fun pullBack(a: MainScreenSpill.Arrival, pkg: String, byUser: Boolean = false): Spill? {
         if (!runCatching { shell.moveTask(a.taskId, displayId) }.getOrDefault(false)) {
             Log.w(TAG, "could not move task ${a.taskId} ($pkg) from the main screen")
@@ -1817,9 +1817,9 @@ class AndroidScreen(
     }
 
     /**
-     * 任务在下一个改动屏幕的动作前调:等用户在主屏上选完(选之前一直盯着主屏)。选完后,开到主屏上的普通页面挪回如愿的屏
+     * 任务在下一个改动屏幕的动作前调:等用户在主屏上选完(选之前一直盯着主屏)。选完后,开到主屏上的普通页面挪回如意 AI 的屏
      * (只挪,打开它的仍是原来那个 App);要用户亲手处理的(要输密码、窗口读不到,像付款、指纹)留在主屏,返回 [PickResult.NeedsUser];
-     * 开在了如愿屏上的一并算进来;用户把问题关了就照实说。没在等时为 null。
+     * 开在了如意 AI 屏上的一并算进来;用户把问题关了就照实说。没在等时为 null。
      */
     suspend fun awaitUserPick(): PickResult? = withContext(Dispatchers.IO) {
         val p = _userPick.value ?: return@withContext null
@@ -1843,7 +1843,7 @@ class AndroidScreen(
                     pendingReport = pullBack(opened, pkg)
                     return@withContext PickResult.Settled
                 }
-                // 选中的 App 开在了如愿的屏上(从那边打开的)
+                // 选中的 App 开在了如意 AI 的屏上(从那边打开的)
                 val top = runCatching { shell.topTaskId(displayId) }.getOrDefault(-1)
                 if (top >= 0 && top != p.agentTop && top !in adopted) {
                     adopted += top
@@ -1863,7 +1863,7 @@ class AndroidScreen(
         }
     }
 
-    /** 用户处理完([PickResult.NeedsUser])点了继续:它还在主屏上就挪回如愿的屏接着做,已经关了就照实说。 */
+    /** 用户处理完([PickResult.NeedsUser])点了继续:它还在主屏上就挪回如意 AI 的屏接着做,已经关了就照实说。 */
     suspend fun afterUserStep(r: PickResult.NeedsUser) = withContext(Dispatchers.IO) {
         val still = runCatching { shell.displayOfTask(r.taskId) }.getOrDefault(-1) == Display.DEFAULT_DISPLAY
         val moved = if (still) pullBack(MainScreenSpill.Arrival(r.taskId, r.packageName, r.userId, 0, Display.DEFAULT_DISPLAY, false, true, Display.DEFAULT_DISPLAY), r.packageName, byUser = true) else null
@@ -1894,7 +1894,7 @@ class AndroidScreen(
     }
 
     /**
-     * 动作之前如愿屏上最上面的是挪回来的任务(或从它里面打开的),动作之后最上面换成了另一个任务:
+     * 动作之前如意 AI 屏上最上面的是挪回来的任务(或从它里面打开的),动作之后最上面换成了另一个任务:
      * 这个也是那条路上打开的,一并算进来。装了两份的 App 报开的是哪一份。
      */
     private suspend fun adoptFromAdopted(w: Watch?): String? {
@@ -1906,7 +1906,7 @@ class AndroidScreen(
         return inProfileOf(pkg, runCatching { shell.userOfTask(top) }.getOrDefault(-1))
     }
 
-    /** 装了两份的 App 开的是哪一份:和如愿同一个用户的是本来那份;只装了一份或看不出为 null。 */
+    /** 装了两份的 App 开的是哪一份:和如意 AI 同一个用户的是本来那份;只装了一份或看不出为 null。 */
     private suspend fun inProfileOf(pkg: String, userId: Int): String? {
         if (userId < 0 || pkg !in otherProfiles()) return null
         return if (userId == myUser) OpenedElsewhere.MAIN_PROFILE else OpenedElsewhere.OTHER_PROFILE
@@ -1938,10 +1938,10 @@ class AndroidScreen(
         return when {
             o.closed -> "The user closed the system's question on their screen without picking, so nothing was opened. Decide what to do next; do not simply repeat the action."
             o.byUser && !o.pulledBack -> "$name needed the user; they handled it on their own screen and tapped continue, and it has closed. Observe before acting."
-            o.byUser -> "$name needed the user; they handled it on their own screen and tapped continue. It is now in front on 如愿's screen. Observe before acting."
+            o.byUser -> "$name needed the user; they handled it on their own screen and tapped continue. It is now in front on 如意 AI's screen. Observe before acting."
             o.needsUser && o.onUserScreen -> "It was $name: a popup on the user's screen that needs them (a sign-in, verification or confirmation step). " +
                 "It was left there on purpose; do not repeat the action. Call hand_to_user so they can finish it, then observe before acting."
-            o.pulledBack -> "It was $name, now in front on 如愿's screen.$copy Observe before acting."
+            o.pulledBack -> "It was $name, now in front on 如意 AI's screen.$copy Observe before acting."
             else -> "It was $name, which the user is using on their own screen, so it was left there. " +
                 "Do not repeat the previous action: call hand_to_user with reason other so the user can do that step there, or wait and try again later."
         }
@@ -2024,7 +2024,7 @@ class AndroidScreen(
     @Volatile private var requestedUser: Int? = null
 
     /**
-     * 目标 App 装了两份(列出过另一份、要的就是另一份,或打开的就是另一份)时,此刻如愿屏上是哪一份:(inProfile, 所属用户)。
+     * 目标 App 装了两份(列出过另一份、要的就是另一份,或打开的就是另一份)时,此刻如意 AI 屏上是哪一份:(inProfile, 所属用户)。
      * 只装一份、最上面不是它或读不到为 null;只装一份的 App 不多问。
      */
     private fun shownCopy(): Pair<String, Int>? {
@@ -2410,7 +2410,7 @@ class AndroidScreen(
         const val NO_FOCUS = "no_focus"
         const val EDITOR_NOT_VISIBLE = "editor_not_visible"
         const val PER_USER_RANGE = 100_000
-        /** 如愿所在的用户:本来那份 App 在这里。 */
+        /** 如意 AI 所在的用户:本来那份 App 在这里。 */
         val myUser: Int get() = AppCopyReader.myUser
         const val COPY_NOT_FOUND = "copy_not_found"
         const val COPY_NOT_OPENED = "copy_not_opened"
@@ -2465,7 +2465,7 @@ class AndroidScreen(
             "but new text containing it appeared on the screen after typing (e.g. suggestions), so the app seems to have received it. Observe to check before submitting."
         const val HINT_SHARE_PICKER = "The system is asking which of the app's share screens to use (the screen lists them). " +
             "Tap the one the task needs (for a message, the one that sends to a contact or chat); do not share again."
-        const val HINT_COLD_IGNORED = "coldIgnored: app has a task outside 如愿's screen, so it was not restarted (that would wipe the user's state there). It was opened as-is; navigate back to its start screen yourself if needed."
+        const val HINT_COLD_IGNORED = "coldIgnored: app has a task outside 如意 AI's screen, so it was not restarted (that would wipe the user's state there). It was opened as-is; navigate back to its start screen yourself if needed."
         const val MAX_ANCESTORS = 8
 
         // 悬停、触摸探索、手势识别、无障碍焦点这些不是界面内容的变化
@@ -2477,7 +2477,7 @@ class AndroidScreen(
     }
 }
 
-/** 桌面上能打开的 App(包名, 显示名),不含如愿自己;只用包管理器,不要内置助手和无障碍。 */
+/** 桌面上能打开的 App(包名, 显示名),不含如意 AI 自己;只用包管理器,不要内置助手和无障碍。 */
 fun launchableApps(pm: android.content.pm.PackageManager, ownPackage: String): List<Pair<String, String>> {
     val launcher = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launcher, 0)

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_personal_start">فتح المساعد الشخصي عند التشغيل</string>
-    <string name="settings_personal_start_sub">استخدام المساعد الشخصي كشاشة Mika الأولى</string>
+    <string name="settings_personal_start_sub">استخدام المساعد الشخصي كشاشة 如意 AI الأولى</string>
     <string name="language_title">اللغة</string>
     <string name="language_system">اتباع لغة النظام</string>
-    <string name="language_system_detail">يستخدم لغة النظام إذا كانت 如愿 تدعمها، وإلا يستخدم الإنجليزية</string>
+    <string name="language_system_detail">يستخدم لغة النظام إذا كانت 如意 AI تدعمها، وإلا يستخدم الإنجليزية</string>
     <string name="settings_basic">الشائع</string>
     <string name="settings_language_appearance">اللغة والمظهر</string>
     <string name="settings_model">النموذج</string>
@@ -45,7 +45,7 @@
     <string name="settings_recovery">الاسترداد والإصلاح</string>
     <string name="settings_developer_group">المطوّر</string>
     <string name="settings_developer">خيارات المطوّر</string>
-    <string name="settings_about">حول 如愿</string>
+    <string name="settings_about">حول 如意 AI</string>
     <string name="pill_unsupported">غير مدعوم</string>
     <string name="pill_available">جاهز</string>
     <string name="pill_needs_attention">يتطلب الانتباه</string>
@@ -55,7 +55,7 @@
     <string name="settings_all_ready_detail">النموذج مُعدّ · التحكم بالهاتف جاهز</string>
     <string name="settings_status">الحالة</string>
     <string name="settings_a11y">خدمة تسهيل الاستخدام</string>
-    <string name="settings_a11y_sub">تقرأ 如愿 شاشتها الافتراضية وتتحكم بها</string>
+    <string name="settings_a11y_sub">تقرأ 如意 AI شاشتها الافتراضية وتتحكم بها</string>
     <string name="settings_notif_progress_sub">التقدم وتنبيهات «بحاجة إليك»</string>
     <string name="settings_system_version">إصدار النظام</string>
     <string name="settings_android_focus">Android %1$s · في Android 12–13 قد تسرق المهام في الخلفية التركيز من شاشتك؛ يُوصى بـ Android 14 أو أحدث</string>
@@ -67,7 +67,7 @@
     <string name="settings_keep_on">إبقاء الشاشة قيد التشغيل</string>
     <string name="settings_keep_on_sub">تبقى الشاشة قيد التشغيل أثناء تنفيذ المهمة (وقد تخفت عند عدم استخدامها)، ثم تعود إلى وضعها المعتاد</string>
     <string name="settings_mute">كتم التطبيق المستخدم</string>
-    <string name="settings_mute_sub">تظل التطبيقات التي تستخدمها 如愿 صامتة؛ ويعود الصوت عندما تستلم التحكم</string>
+    <string name="settings_mute_sub">تظل التطبيقات التي تستخدمها 如意 AI صامتة؛ ويعود الصوت عندما تستلم التحكم</string>
     <string name="settings_pace">سرعة التشغيل</string>
     <string name="settings_pace_fast">سريع</string>
     <string name="settings_pace_fast_detail">دون توقف بين الخطوات؛ يُملأ النص دفعة واحدة</string>
@@ -88,14 +88,14 @@
     </plurals>
     <string name="capsule_settings_title">الكبسولة العائمة</string>
     <string name="capsule_settings_sub">اعرض تقدم المهمة على الشاشة أثناء استخدام تطبيقات أخرى</string>
-    <string name="capsule_settings_foot">تُعرض الكبسولة باستخدام خدمة تسهيل الاستخدام المفعّلة في 如愿، لذا لا تحتاج إلى إذن إضافي. ستظل تتلقى الإشعارات إذا كانت الخدمة متوقفة أو تعذّر عليها الرسم.</string>
-    <string name="capsule_settings_background">تغلق بعض الهواتف التطبيقات في الخلفية. إذا اختفت الكبسولة، اسمح لـ 如愿 بالعمل في الخلفية والبدء تلقائيًا من إعدادات النظام في هاتفك.</string>
+    <string name="capsule_settings_foot">تُعرض الكبسولة باستخدام خدمة تسهيل الاستخدام المفعّلة في 如意 AI، لذا لا تحتاج إلى إذن إضافي. ستظل تتلقى الإشعارات إذا كانت الخدمة متوقفة أو تعذّر عليها الرسم.</string>
+    <string name="capsule_settings_background">تغلق بعض الهواتف التطبيقات في الخلفية. إذا اختفت الكبسولة، اسمح لـ 如意 AI بالعمل في الخلفية والبدء تلقائيًا من إعدادات النظام في هاتفك.</string>
     <string name="capsule_mode_off">إيقاف</string>
     <string name="capsule_mode_tasks">أثناء المهام</string>
     <string name="capsule_mode_always">دائمًا</string>
     <string name="capsule_mode_off_detail">الإشعارات فقط</string>
     <string name="capsule_mode_tasks_detail">تظهر أثناء تنفيذ المهمة أو انتظارها لك، ثم تختفي بعد بضع ثوانٍ</string>
-    <string name="capsule_mode_always_detail">تُبقي أيقونة 如愿 على الشاشة حتى عند عدم وجود مهام</string>
+    <string name="capsule_mode_always_detail">تُبقي أيقونة 如意 AI على الشاشة حتى عند عدم وجود مهام</string>
     <string name="capsule_idle_opacity">عتامة الكبسولة عند السكون</string>
     <string name="capsule_idle_opacity_detail">بعد ثوانٍ من دون لمسها؛ يبقى كل ما يحتاج إلى انتباهك ظاهرًا بالكامل</string>
     <string name="capsule_card_size">حجم البطاقة</string>
@@ -116,14 +116,14 @@
     </plurals>
     <string name="routes_clear_all">مسح الكل</string>
     <string name="routes_clear_title">هل تريد مسح كل المسارات المحفوظة؟</string>
-    <string name="routes_clear_body">بعد المسح، ستعود 如愿 في المرة القادمة إلى حل الأمور خطوة بخطوة. لن تتأثر الإعدادات الأخرى.</string>
+    <string name="routes_clear_body">بعد المسح، ستعود 如意 AI في المرة القادمة إلى حل الأمور خطوة بخطوة. لن تتأثر الإعدادات الأخرى.</string>
     <string name="clear">مسح</string>
     <string name="sandbox_proxy_off">%1$s · يُستخدم مرة واحدة عند تفعيل الوصول إلى الشبكة</string>
     <string name="net_proxy">وكيل الشبكة</string>
     <string name="net_proxy_row_sub">لطلبات النماذج والتحديثات ومتصفح التطبيق والأوامر</string>
-    <string name="net_proxy_hint">يُستخدم لطلبات نماذج 如愿 (المحادثة وقوائم النماذج وتسجيل الدخول إلى الحساب)، وتنزيل تحديثات التطبيق، ومتصفحه، والأوامر في «الملفات وبيئة الحوسبة» عند تفعيل الوصول إلى الشبكة هناك. تتصل العناوين على هذا الهاتف أو شبكتك المحلية (localhost و192.168.x.x و10.x.x.x والأسماء المنتهية بـ .local) مباشرةً دائمًا، لذلك تظل النماذج المحلية تعمل. يمكن أن يتضمن العنوان user:password@، ويُخزّن مشفرًا على هذا الهاتف. اتركه فارغًا للاتصال المباشر.</string>
+    <string name="net_proxy_hint">يُستخدم لطلبات نماذج 如意 AI (المحادثة وقوائم النماذج وتسجيل الدخول إلى الحساب)، وتنزيل تحديثات التطبيق، ومتصفحه، والأوامر في «الملفات وبيئة الحوسبة» عند تفعيل الوصول إلى الشبكة هناك. تتصل العناوين على هذا الهاتف أو شبكتك المحلية (localhost و192.168.x.x و10.x.x.x والأسماء المنتهية بـ .local) مباشرةً دائمًا، لذلك تظل النماذج المحلية تعمل. يمكن أن يتضمن العنوان user:password@، ويُخزّن مشفرًا على هذا الهاتف. اتركه فارغًا للاتصال المباشر.</string>
     <string name="net_proxy_invalid">اكتبه بهذا الشكل http://host:port (تعمل أيضًا socks5 وsocks5h وhttps)، ويمكن إضافة user:password@ قبل المضيف.</string>
-    <string name="net_proxy_container_only">لا تُستخدم وكلاء https إلا لأوامر «الملفات وبيئة الحوسبة»؛ أما اتصالات 如愿 نفسها فتبقى مباشرة. استخدم http:// أو socks5:// لتغطية كل شيء.</string>
+    <string name="net_proxy_container_only">لا تُستخدم وكلاء https إلا لأوامر «الملفات وبيئة الحوسبة»؛ أما اتصالات 如意 AI نفسها فتبقى مباشرة. استخدم http:// أو socks5:// لتغطية كل شيء.</string>
     <string name="net_proxy_browser_unsupported">لا يستطيع WebView في هذا الهاتف استخدام وكيل منفصل، لذا يتصل متصفح التطبيق مباشرةً.</string>
     <string name="net_proxy_browser_socks_auth">لا يستطيع متصفح التطبيق استخدام وكيل SOCKS يتطلب اسم مستخدم وكلمة مرور، لذا يتصل مباشرةً.</string>
     <string name="net_proxy_unreachable">تعذر الوصول إلى وكيل الشبكة أو لم يُمرّر الطلب. تحقق من أن الوكيل يعمل ومن صحة العنوان في «الإعدادات › وكيل الشبكة».</string>
@@ -171,7 +171,7 @@
     <string name="skin_blur_strong">قوي</string>
     <string name="skin_accent_follow">لون التمييز من الصورة</string>
     <string name="skin_accent_follow_sub">يستخدم اللون الرئيسي في الصورة بدل لون التمييز أعلاه، إن وُجد</string>
-    <string name="settings_self_config">السماح لـ 如愿 بتغيير إعداداتها</string>
+    <string name="settings_self_config">السماح لـ 如意 AI بتغيير إعداداتها</string>
     <string name="settings_self_config_sub">عند التفعيل، تحصل المهام على أداة لقراءة هذه التفضيلات وتغييرها (السرعة والكتم والكبسولة والمظهر ولون التمييز وإبقاء الشاشة قيد التشغيل). لا تشمل النماذج أو مفاتيح API أو شبكة الحاوية أو أي شيء يحذف البيانات.</string>
     <string name="settings_step_limit">حد الخطوات لكل مهمة</string>
     <string name="settings_step_limit_sub">يعني الإيقاف عدم وجود حد. عند بلوغ الحد، تتوقف المهمة وتوضح أين توقفت.</string>
@@ -181,7 +181,7 @@
     <string name="settings_step_limit_invalid">أدخل عددًا صحيحًا من 1 إلى 500.</string>
     <string name="mcp_servers_title">خوادم MCP</string>
     <string name="mcp_servers_empty">لم يُضف أي خادم MCP</string>
-    <string name="mcp_servers_empty_sub">أضف خادم MCP خارجيًا لإتاحة أدواته لـ 如愿.</string>
+    <string name="mcp_servers_empty_sub">أضف خادم MCP خارجيًا لإتاحة أدواته لـ 如意 AI.</string>
     <string name="mcp_servers_add">إضافة خادم</string>
     <string name="mcp_servers_edit">تعديل الخادم</string>
     <string name="mcp_servers_name">الاسم</string>
@@ -216,9 +216,9 @@
     <string name="mcp_tools_expand_hint">اضغط على أداة لعرض الوصف الكامل</string>
     <string name="mcp_servers_refresh_all">اختبار الكل</string>
     <string name="mcp_servers_allowlist">الأدوات المسموح بها (مفصولة بفواصل، فارغ = الكل)</string>
-    <string name="quit_title">إنهاء 如愿 تمامًا</string>
+    <string name="quit_title">إنهاء 如意 AI تمامًا</string>
     <string name="quit_row_sub">إيقاف مهام الخلفية وإخفاء الكبسولة العائمة</string>
-    <string name="quit_confirm_body">ستتوقف المهام الجارية، وستختفي الكبسولة العائمة والإشعارات. افتح 如愿 مرة أخرى ليعود كل شيء.</string>
+    <string name="quit_confirm_body">ستتوقف المهام الجارية، وستختفي الكبسولة العائمة والإشعارات. افتح 如意 AI مرة أخرى ليعود كل شيء.</string>
     <string name="quit_confirm_action">إنهاء</string>
     <string name="settings_task_token_budget">ميزانية Token لكل مهمة</string>
     <string name="settings_task_token_budget_sub">تُحسب فقط رموز الإدخال والإخراج التي يبلغ عنها مزود الخدمة. عند بلوغ الميزانية لا تُرسل طلبات أخرى. قد تتجاوز الطلبات الجارية الميزانية، وتُحسب المكالمات بلا استخدام مُبلغ عنه بصفر.</string>

@@ -110,7 +110,7 @@ class CapsuleModelTest {
         assertEquals(CapsuleKind.NeedTakeover to "需要你：付款", line(takeover, Takeover.Stage.Waiting).let { it.kind to it.text })
         assertEquals("需要你：请登录", line(TaskState.WaitingTakeover("login", "请登录"), Takeover.Stage.Waiting).text)
         assertEquals(CapsuleKind.NeedConfirm to "要你同意：发送", line(confirm).let { it.kind to it.text })
-        assertEquals(CapsuleKind.NeedAnswer to "如愿问你：要哪个颜色？", line(TaskState.WaitingInput("要哪个颜色？")).let { it.kind to it.text })
+        assertEquals(CapsuleKind.NeedAnswer to "如意 AI 问你：要哪个颜色？", line(TaskState.WaitingInput("要哪个颜色？")).let { it.kind to it.text })
         assertEquals(CapsuleKind.Held to "先等等：你打开了这个 App", line(TaskState.Held(GateReason("paused", "你打开了这个 App"))).let { it.kind to it.text })
         // 要你在手机上动一下手(在系统的选择框里选一个):算要你处理
         val pick = line(TaskState.Held(GateReason("waiting_user", "「聊天」在问用哪个，请在屏幕上选一下", needsYou = true)))
@@ -182,7 +182,7 @@ class CapsuleModelTest {
     @Test fun stateChangeSwitchesAtOnce() {
         model.update(inputs(run("a", running("一"))), 0)
         val v = shown(model.update(inputs(run("a", TaskState.WaitingInput("要哪个？"))), 100))
-        assertEquals("如愿问你：要哪个？", v.text)
+        assertEquals("如意 AI 问你：要哪个？", v.text)
     }
 
     // ---------- 只变宽不变窄 ----------
@@ -387,7 +387,7 @@ class CapsuleModelTest {
         model.update(inputs(run("new", TaskState.Failed("x", FailKind.Model)), run("r", running("在搜")), run("q", TaskState.WaitingInput("要哪个？"))), 10)
         val rows = model.cardRuns()
         assertEquals(listOf("q", "r", "new", "old"), rows.map { it.run.key })
-        assertEquals(CapsuleKind.NeedAnswer to "如愿问你：要哪个？", rows[0].kind to rows[0].line)
+        assertEquals(CapsuleKind.NeedAnswer to "如意 AI 问你：要哪个？", rows[0].kind to rows[0].line)
         assertEquals(0L, rows[1].startedAt)
         assertNull(rows[0].startedAt)
         assertEquals(CapsuleKind.Failed, rows[2].kind)
@@ -459,10 +459,10 @@ class CapsuleModelTest {
     // ---------- 读屏 ----------
 
     @Test fun ballDescribesItsStatus() {
-        assertEquals("如愿在干活：在搜牙膏 · 共 2 件，点开看详情", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Running, "在搜牙膏 · 共 2 件", count = 2)))
+        assertEquals("如意 AI 在干活：在搜牙膏 · 共 2 件，点开看详情", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Running, "在搜牙膏 · 共 2 件", count = 2)))
         assertEquals("要你同意：发送，点开处理", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.NeedConfirm, "要你同意：发送")))
-        assertEquals("如愿 先等等：排队中，点开看详情", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Held, "先等等：排队中")))
-        assertEquals("如愿 办好了 · 点开看结果", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Done, "办好了 · 点开看结果")))
+        assertEquals("如意 AI 先等等：排队中，点开看详情", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Held, "先等等：排队中")))
+        assertEquals("如意 AI 办好了 · 点开看结果", CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Done, "办好了 · 点开看结果")))
         assertEquals(CapsuleCopy.IDLE, CapsuleCopy.describe(CapsuleView.Shown(CapsuleKind.Idle, "")))
     }
 }

@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">Selamat sore</string>
     <string name="chat_greeting_evening">Selamat malam</string>
     <string name="chat_greeting_night">Belum tidur?</string>
-    <string name="chat_empty_prompt">Apa yang harus dikerjakan 如愿?</string>
+    <string name="chat_empty_prompt">Apa yang harus dikerjakan 如意 AI?</string>
     <string name="chat_slogan">Sesuai keinginan Anda — asisten pribadi Anda</string>
     <string name="chat_example_follow">Buka X, cari Wang Zan (@wangzan101), lalu ikuti akun tersebut.</string>
     <string name="chat_example_alarms">Pasang alarm pukul 9.40, 9.50, dan 10.00 besok pagi.</string>
@@ -50,7 +50,7 @@
     </plurals>
     <string name="chat_background_note">Berjalan di latar belakang — silakan lanjut memakai ponsel. Ketuk tampilan kecil untuk memperbesarnya.</string>
     <string name="chat_placeholder_busy">Tambah atau ubah detail…</string>
-    <string name="chat_placeholder_answer">Jawab pertanyaan 如愿</string>
+    <string name="chat_placeholder_answer">Jawab pertanyaan 如意 AI</string>
     <string name="chat_placeholder_more">Tambahkan sesuatu…</string>
     <string name="chat_cannot_start">Belum bisa memulai tugas</string>
     <string name="chat_missing">Kurang: %1$s</string>
@@ -62,7 +62,7 @@
     <string name="chat_expand_steps">Tampilkan langkah</string>
     <string name="chat_collapse_steps">Sembunyikan langkah</string>
     <string name="chat_view_process">Lihat prosesnya</string>
-    <string name="chat_unlock_body">Ponsel Anda terkunci. 如愿 akan melanjutkan setelah Anda membukanya.</string>
+    <string name="chat_unlock_body">Ponsel Anda terkunci. 如意 AI akan melanjutkan setelah Anda membukanya.</string>
     <string name="chat_input_body">%1$s\nKetuk pilihan atau ketik di bawah. %2$s</string>
     <string name="chat_refuse">Tolak</string>
     <string name="chat_allow_once">Izinkan kali ini saja</string>
@@ -179,11 +179,11 @@
     <string name="attach_album">Foto</string>
     <string name="attach_files">Berkas</string>
     <string name="attach_recent">Foto terbaru</string>
-    <string name="attach_recent_partial">Foto yang Anda izinkan diakses 如愿</string>
+    <string name="attach_recent_partial">Foto yang Anda izinkan diakses 如意 AI</string>
     <string name="attach_all">Semua foto</string>
     <string name="attach_change">Ubah akses</string>
     <string name="attach_no_photos">Belum ada foto</string>
-    <string name="attach_need_access">Untuk memilih foto di sini, izinkan 如愿 mengakses foto Anda</string>
+    <string name="attach_need_access">Untuk memilih foto di sini, izinkan 如意 AI mengakses foto Anda</string>
     <string name="attach_grant">Izinkan akses foto</string>
     <string name="attach_grant_hint">Anda juga bisa mengetuk “Foto” di atas untuk memakai pemilih foto sistem</string>
     <string name="attach_full">Maksimal %1$d lampiran sekaligus</string>
@@ -203,10 +203,10 @@
     <string name="attach_file_and_more">%1$s dan %2$d berkas lainnya</string>
     <string name="screen_tag">Layar Anda saat ini</string>
     <string name="screen_blocked">Gagal menangkap: halaman ini tidak mengizinkan tangkapan layar</string>
-    <string name="screen_camera">Tangkap layar ini untuk 如愿</string>
+    <string name="screen_camera">Tangkap layar ini untuk 如意 AI</string>
     <string name="screen_remove">Hapus tangkapan layar ini</string>
-    <string name="screen_send">Kirim layar Anda saat ini ke 如愿</string>
-    <string name="pip_screen">Layar virtual 如愿</string>
+    <string name="screen_send">Kirim layar Anda saat ini ke 如意 AI</string>
+    <string name="pip_screen">Layar virtual 如意 AI</string>
     <string name="collapse">Ciutkan</string>
     <string name="no_app_for_link">Tidak ada aplikasi yang bisa membuka tautan ini</string>
     <string name="source_none">Tidak ada sumber yang disimpan untuk jawaban ini</string>
@@ -235,7 +235,7 @@
     <string name="chat_retry_failed">%1$s: tidak dapat disalin</string>
     <string name="chat_select_hint">Tekan lama teks untuk memilihnya</string>
     <string name="chat_quote_remove">Hapus kutipan</string>
-    <string name="chat_quoting_mika">Mengutip 如愿: %1$s</string>
+    <string name="chat_quoting_mika">Mengutip 如意 AI: %1$s</string>
     <string name="chat_quoting_you">Mengutip Anda: %1$s</string>
     <string name="chat_edit_message">Ubah pesan</string>
     <string name="chat_withdraw_message">Tarik pesan</string>

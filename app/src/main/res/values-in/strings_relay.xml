@@ -19,8 +19,8 @@
     <string name="relay_unpair">Lepas pemasangan gateway</string>
     <string name="relay_unpair_body">Putuskan ponsel ini dari gateway. Koneksi internet diperlukan. Token akses ponsel tidak berubah.</string>
     <string name="relay_failed">Gagal menyelesaikan. Periksa alamat gateway, koneksi internet, dan kode pemasangan. Jika pelepasan gagal, akses nonaktif; coba lagi atau cabut ponsel di gateway.</string>
-    <string name="relay_notif_body">Akses jarak jauh diaktifkan. Buka 如愿 untuk memeriksa koneksi gateway.</string>
-    <string name="relay_incompatible">Perbarui 如愿 dan gateway ke versi yang cocok</string>
+    <string name="relay_notif_body">Akses jarak jauh diaktifkan. Buka 如意 AI untuk memeriksa koneksi gateway.</string>
+    <string name="relay_incompatible">Perbarui 如意 AI dan gateway ke versi yang cocok</string>
     <string name="relay_copy_gateway">Salin alamat gateway</string>
     <string name="relay_cli_help">Simpan token akses ke berkas di komputer Anda, lalu jalankan perintah koneksi di atas.</string>
     <string name="relay_intro">Gateway meneruskan permintaan CLI dan MCP yang biasanya lewat Wi-Fi / LAN ke ponsel Anda untuk akses jarak jauh. Pasang di server publik Anda sendiri sebelum memasangkan.</string>

@@ -15,7 +15,7 @@ import okhttp3.Request
 /**
  * 用 xAI / Grok 订阅登录,再直接调 xAI 自己的 Responses 接口(`https://api.x.ai/v1/responses`)。
  *
- * 客户端身份复用 xAI 官方命令行工具的公开登录入口(公开 client_id,不是 xAI 给如愿注册的应用)。xAI 可能不支持这种用法,
+ * 客户端身份复用 xAI 官方命令行工具的公开登录入口(公开 client_id,不是 xAI 给如意 AI 注册的应用)。xAI 可能不支持这种用法,
  * 有账号被限制的风险;界面在登录前写明,不点就不发生。发现文档里的地址必须是 https 且主机是 [HOST],
  * 对不上就拒绝,不去连。刷新令牌走同一家的令牌端点。
  */
@@ -168,7 +168,7 @@ class XaiAuth(
         const val PROVIDER = "xai"
         const val HOST = "auth.x.ai"
         const val ISSUER = "https://auth.x.ai"
-        /** xAI 官方命令行工具的公开客户端。不是给如愿注册的,复用有风险,见界面上的说明。 */
+        /** xAI 官方命令行工具的公开客户端。不是给如意 AI 注册的,复用有风险,见界面上的说明。 */
         const val CLIENT_ID = "b1a00492-073a-47ea-816f-4c329264a828"
         const val SCOPE_CLI = "grok-cli:access"
         const val SCOPE_API = "api:access"

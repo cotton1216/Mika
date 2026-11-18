@@ -15,14 +15,14 @@ sealed interface SystemAction {
         val location: String? = null, val description: String? = null,
     ) : SystemAction
 
-    /** 交给 App 后不留界面(闹钟、计时器);其余在如愿的屏上打开那个 App 的页面。 */
+    /** 交给 App 后不留界面(闹钟、计时器);其余在如意 AI 的屏上打开那个 App 的页面。 */
     val silent: Boolean get() = this is SetAlarm || this is SetTimer
 }
 
 /**
  * 系统动作的结果。[result] 失败时原因为 [NOT_SUPPORTED](没有 App 接这个动作)、app_in_use_by_user、launch_failed 等;
  * [handledBy] 接手的 App 的包名;[nextAlarmBefore] / [nextAlarmAfter] 是动作前后系统报的下一个闹钟(毫秒时间戳,没有为 null),
- * [alarmReadable] 为 false 时读不到;[showing]:动作之后如愿的屏上开着 [handledBy] 的页面(本该悄悄设好的,App 却开了界面)。
+ * [alarmReadable] 为 false 时读不到;[showing]:动作之后如意 AI 的屏上开着 [handledBy] 的页面(本该悄悄设好的,App 却开了界面)。
  */
 data class SystemActionResult(
     val result: ActionResult,

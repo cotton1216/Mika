@@ -30,7 +30,7 @@ enum class BuiltinShellFailure(val defaultFix: BuiltinShellFix, val duringPairin
     PairingWindowClosed(BuiltinShellFix.RePair, duringPairing = true),
     /** 没连 Wi-Fi:无线调试打不开或连不上。 */
     NoWifi(BuiltinShellFix.OpenWifi, duringPairing = false),
-    /** 如愿替用户打开无线调试,系统马上又关掉了:这个 Wi-Fi 还没被允许无线调试,要用户亲手打开一次并允许。 */
+    /** 如意 AI 替用户打开无线调试,系统马上又关掉了:这个 Wi-Fi 还没被允许无线调试,要用户亲手打开一次并允许。 */
     WifiNotAllowed(BuiltinShellFix.OpenWirelessDebugging, duringPairing = false),
     /** 连不上本机的无线调试。 */
     ConnectFailed(BuiltinShellFix.Retry, duringPairing = false),
@@ -43,7 +43,7 @@ enum class BuiltinShellFailure(val defaultFix: BuiltinShellFix, val duringPairin
     /** 连上了,助手却没能启动或交接。 */
     HelperStartFailed(BuiltinShellFix.Retry, duringPairing = false),
     /**
-     * 经 USB 启动命令起的助手停了(多半是手机重启过),又没配对过无线调试,如愿自己起不来:
+     * 经 USB 启动命令起的助手停了(多半是手机重启过),又没配对过无线调试,如意 AI 自己起不来:
      * 再运行一次启动命令。不往无线调试引:有的手机根本没有能用的无线调试。
      */
     UsbHelperStopped(BuiltinShellFix.RunUsbCommand, duringPairing = false),
@@ -77,10 +77,10 @@ enum class BuiltinShellFix {
 enum class HelperRestart {
     /** 还没设置过。 */
     None,
-    /** 配对过无线调试:如愿自己经它再起;手机重启后打开无线调试就行(能替用户打开时连这一步也不用)。 */
+    /** 配对过无线调试:如意 AI 自己经它再起;手机重启后打开无线调试就行(能替用户打开时连这一步也不用)。 */
     Wireless,
     /**
-     * 只用 USB 启动命令起过、没配对过无线调试:如愿自己起不来,停了(比如手机重启后)要再运行一次命令。
+     * 只用 USB 启动命令起过、没配对过无线调试:如意 AI 自己起不来,停了(比如手机重启后)要再运行一次命令。
      * 有的手机没有能用的无线调试,只能走这条路,所以这时不提示去打开无线调试。
      */
     UsbCommand,
@@ -101,7 +101,7 @@ interface BuiltinShellControl {
     val status: StateFlow<BuiltinShellStatus>
     val pairingDiscovery: StateFlow<PairingDiscovery>
 
-    /** 配对过无线调试(如愿能自己经它起助手、跑命令)。助手也可能是电脑经 USB 起的,所以在运行不等于配对过。 */
+    /** 配对过无线调试(如意 AI 能自己经它起助手、跑命令)。助手也可能是电脑经 USB 起的,所以在运行不等于配对过。 */
     val paired: Boolean get() = status.value != BuiltinShellStatus.NotPaired
 
     /** 助手停了以后靠什么再起来(见 [HelperRestart])。 */
@@ -124,7 +124,7 @@ interface BuiltinShellControl {
     /** 用已配对的钥匙重新连接并启动助手。 */
     suspend fun retry()
 
-    /** 删除配对钥匙、停掉助手、撤销助手给如愿的授权;之后状态是 [BuiltinShellStatus.NotPaired]。 */
+    /** 删除配对钥匙、停掉助手、撤销助手给如意 AI 的授权;之后状态是 [BuiltinShellStatus.NotPaired]。 */
     suspend fun unpair()
 }
 

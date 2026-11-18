@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">Este permiso del sistema permite a 如愿 leer y manejar lo que hay en cualquier pantalla. 如愿 lo usa solo en su propia pantalla virtual para hacer las tareas que le das, y actúa en tu pantalla principal solo cuando le encargas una tarea allí.</string>
+    <string name="a11y_service_description">Este permiso del sistema permite a 如意 AI leer y manejar lo que hay en cualquier pantalla. 如意 AI lo usa solo en su propia pantalla virtual para hacer las tareas que le das, y actúa en tu pantalla principal solo cuando le encargas una tarea allí.</string>
     <string name="channel_attention">Te necesita</string>
     <string name="takeover_title">Te necesita</string>
     <string name="takeover_title_reason">Te necesita: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">La app ya está en tu pantalla principal. Toca “Listo” cuando termines; si ya lo hiciste todo tú, toca “Lo hice yo”.</string>
     <string name="takeover_web_busy">Hay un inicio de sesión web abierto en Ajustes. Toca “Listo” allí primero y luego toca “Me encargo yo”.</string>
     <string name="takeover_move_to_main_failed">No se pudo pasar la app a la pantalla principal. Toca “Me encargo yo” para intentarlo de nuevo.</string>
-    <string name="takeover_move_back_failed">No se pudo devolver la app a la pantalla de 如愿. Inténtalo de nuevo.</string>
+    <string name="takeover_move_back_failed">No se pudo devolver la app a la pantalla de 如意 AI. Inténtalo de nuevo.</string>
     <string name="action_take_over">Me encargo yo</string>
     <string name="action_hand_back">Listo</string>
     <string name="action_finished_myself">Lo hice yo</string>
     <string name="action_skip">Omitir</string>
     <string name="action_cancel_task">Cancelar tarea</string>
     <string name="input_title">Necesita tu respuesta</string>
-    <string name="no_answer_note">Si no hay respuesta en %1$d min, 如愿 continuará sin ella.</string>
-    <string name="input_too_late">Demasiado tarde: pasados %1$d min, 如愿 continuó sin respuesta.</string>
+    <string name="no_answer_note">Si no hay respuesta en %1$d min, 如意 AI continuará sin ella.</string>
+    <string name="input_too_late">Demasiado tarde: pasados %1$d min, 如意 AI continuó sin respuesta.</string>
     <string name="action_approve">Aprobar</string>
     <string name="action_decline">Rechazar</string>
     <string name="confirmation_locked_hint">Desbloquea para ver el destinatario y el contenido</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">Cerrar</string>
     <string name="terminal_retry">Abrir de nuevo</string>
     <string name="terminal_stop">Detener</string>
-    <string name="terminal_task_running">如愿 también está trabajando en este espacio. Los cambios de ambos lados pueden interferir.</string>
+    <string name="terminal_task_running">如意 AI también está trabajando en este espacio. Los cambios de ambos lados pueden interferir.</string>
     <string name="terminal_copy_all">Copiar todo</string>
     <string name="terminal_copied">Copiado</string>
     <string name="personal_replay_title">Pantalla del teléfono</string>
