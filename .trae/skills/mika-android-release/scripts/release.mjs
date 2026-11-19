@@ -1,17 +1,25 @@
 #!/usr/bin/env node
 /**
- * mika-android-release · 一键发布「如愿(Mika)」安卓包到 app-version-hub
+ * mika-android-release · 一键发布「如愿(Mika)」安卓包：APK 传 OSS + （桥接期）apphub 登记 + 静态 feed 发布
  *
- * 流水线：读版本 → 按环境构建 APK → 签名校验(prod) → ossutil 上传 OSS → apphub 登记 → 回读。
+ * 流水线：读版本 → 按环境构建 APK(注入 feed 地址) → 签名校验(prod) → ossutil 上传 OSS
+ *         → [桥接期] apphub 登记 → 生成并发布静态 feed → 回读。
  *
- * 环境是必填项，且一次决定五件事（构建类型 / 签名要求 / OSS 前缀 / 默认渠道与状态 / 目标库）：
- *   --env prod  : assembleRelease + 必须正式签名 + OSS ai/ruyi/android + official/published + 生产库
+ * 客户端更新事实源是自研静态 feed（desktop 同域托管），不是 apphub：
+ *   prod feed: https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json
+ *   dev  feed: http://127.0.0.1:3100/ruyi/android/latest.json
+ * apphub 在桥接版那一次仍需登记：存量老客户端只读 /api/v1/update/check，靠它引导升级到读 feed 的新版。
+ * 桥接完成、存量老客户端清零后用 --skip-apphub 跳过登记，之后所有版本只发 feed（不再写 apphub）。
+ *
+ * 环境是必填项，且一次决定六件事（构建类型 / 签名要求 / OSS 前缀 / 默认渠道与状态 / 目标库 / feed 地址）：
+ *   --env prod  : assembleRelease + 必须正式签名 + OSS ai/ruyi/android + official/published + 生产库 + 公网 feed
  *   --env dev   : assemblePerf -PsideInstall(.perf 并排安装) + 允许调试签名
- *                 + OSS ai/ruyi/android/dev + beta/draft + 本地库
+ *                 + OSS ai/ruyi/android/dev + beta/draft + 本地库 + 本地 feed
  *
- * 依赖两个既有工具（本脚本只做编排，不重复实现它们的能力）：
+ * 依赖三个既有工具（本脚本只做编排，不重复实现它们的能力）：
  *   - ossutil 2.x         阿里云 OSS 命令行（负责把 APK 传到 chuangxin-prod 桶）
- *   - apphub-publish.mjs   app-version-hub 自带发布 CLI（负责登记版本 + 回读）
+ *   - apphub-publish.mjs   app-version-hub 自带发布 CLI（负责台账登记版本）
+ *   - feed-publish.mjs     生成本项目静态 feed 并原子发布到 desktop web 根
  *
  * 环境变量（凭证一律走环境变量，不落仓库）：
  *   APPHUB_PROD_BASE_URL  prod 地址的最高优先级。形如 https://<PUBLIC_DOMAIN>/apphub（带 /apphub 前缀，
@@ -39,6 +47,15 @@
  *   APKSIGNER                 apksigner 路径（prod 签名校验用，默认自动探测 ANDROID_HOME/build-tools）
  *   MIKA_EXPECTED_SIGNER_CN   期望的签名者 CN，默认 Yuan AI
  *
+ * 静态 feed（客户端更新事实源，详见 feed-publish.mjs）：
+ *   UPDATE_FEED_URL   feed 对外地址并注入 APK；dev 默认 http://127.0.0.1:3100/ruyi/android/latest.json，
+ *                     prod 默认 https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json
+ *   FEED_PUBLISHER    feed-publish.mjs 路径，默认本脚本同目录
+ *   FEED_SERVER       feed 上传目标 ssh（仅 prod 上传用），默认与 desktop manifest-switch 同机
+ *   FEED_ROOT         desktop web 根，默认 /www/wwwroot/xxt-desktop
+ *   FEED_REL          feed 相对 web 根的路径，默认 ruyi/android/latest.json
+ *   FEED_SKIP_UPLOAD  设 1 时 prod 只生成 feed 不上传（先本地核对用）
+ *
  * 用法：
  *   node release.mjs --env dev --changelog "本地联调"            # 本地库 / beta / draft / .perf 包
  *   node release.mjs --env prod --account agent-01 --dry-run      # 生产预演（地址与账号取自账号文件）
@@ -46,12 +63,18 @@
  *   node release.mjs --env dev --skip-build                      # 已有 APK，跳过构建
  *   node release.mjs --env dev --url http://127.0.0.1:8080/t.apk # 跳过 OSS，用指定直链登记
  *   node release.mjs --env prod --abi arm64-v8a --yes            # 发布 arm64 小包
+ *   node release.mjs --env prod --feed-skip-upload --yes         # prod 全流程但在发布 feed 前停手（只落本地）
+ *   node release.mjs --env prod --skip-apphub --yes              # 桥接后发布：只发 feed，不写 apphub（无需 apphub 账号）
  *
- * 退出码：0 成功 / 1 用法或未知错误 / 2 配置缺失·环境非法·闸门未过 / 3 构建失败 / 4 上传失败 / 5 登记失败
+ * 退出码：0 成功 / 1 用法或未知错误 / 2 配置缺失·环境非法·闸门未过 / 3 构建失败 / 4 上传失败 / 5 登记失败 / 6 feed 发布失败
  */
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// 脚本所在目录：feed-publish.mjs 与本脚本同目录，不依赖 cwd。
+const SKILL_DIR = dirname(fileURLToPath(import.meta.url));
 
 // ---------------------------------------------------------------------------
 // 参数解析
@@ -79,6 +102,9 @@ function parseArgs(argv) {
 const args = parseArgs(process.argv.slice(2));
 const DRY_RUN = Boolean(args['dry-run']);
 const SKIP_BUILD = Boolean(args['skip-build']);
+// 桥接版之后只发 feed：跳过 apphub 登记（app:ensure + publish）及其凭证/地址前置检查。
+// 用于存量老客户端已全部升级到读 feed 的版本后，复用整条链路但不再写台账。
+const SKIP_APPHUB = Boolean(args['skip-apphub']);
 const CONFIRMED = Boolean(args.yes);
 
 function log(step, message) {
@@ -137,6 +163,7 @@ const PROFILES = {
   dev: {
     label: '开发',
     defaultBase: 'http://127.0.0.1:3100',
+    defaultFeedUrl: 'http://127.0.0.1:3100/ruyi/android/latest.json',
     buildTask: ':app:assemblePerf -PsideInstall',
     buildType: 'perf',
     requireReleaseSigning: false,
@@ -148,6 +175,7 @@ const PROFILES = {
   prod: {
     label: '生产',
     defaultBase: null,
+    defaultFeedUrl: 'https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json',
     buildTask: ':app:assembleRelease',
     buildType: 'release',
     requireReleaseSigning: true,
@@ -234,6 +262,8 @@ function discoverAgentBaseUrl() {
 }
 
 function resolveBaseUrl() {
+  // --skip-apphub 时不写台账，地址用不上；给个占位值，避免 prod 无账号文件时提前 fail。
+  if (SKIP_APPHUB) return '(skipped: no apphub publish)';
   if (ENV_NAME !== 'prod') {
     // dev 只认本地地址；账号文件里的 BASE_URL 是生产地址，绝不在这里借用
     const value = String(process.env.APPHUB_BASE_URL || '').trim();
@@ -299,6 +329,20 @@ const OSS_PUBLIC_BASE = trimEndSlash(process.env.OSS_PUBLIC_BASE || 'https://oss
 const OSSUTIL = String(process.env.OSSUTIL || 'ossutil');
 // 非默认位置的 ossutil 配置（CI / 换机器时用），对应 ossutil 的 --config-file
 const OSS_CONFIG_FILE = String(process.env.OSS_CONFIG_FILE || '').trim();
+
+// 静态 feed：客户端更新事实源。地址同时注入 APK（BuildConfig.UPDATE_FEED_URL）与 feed 回读。
+// prod 用公网地址，dev 可指向本地静态服务；--feed-url 与 UPDATE_FEED_URL 均可覆盖 profile 默认。
+const UPDATE_FEED_URL = trimEndSlash(
+  String(args['feed-url'] || process.env.UPDATE_FEED_URL || profile.defaultFeedUrl).trim()
+);
+const FEED_PUBLISHER = String(process.env.FEED_PUBLISHER || join(SKILL_DIR, 'feed-publish.mjs'));
+// 默认与 desktop manifest-switch 同一台机器（desktop web 根所在主机）。
+const FEED_SERVER = String(process.env.FEED_SERVER || 'xxt@10.10.117.5').trim();
+// feed 落在 desktop 站点的 web 根（nginx 只对 /desktop/xxt/ 前缀开放对外访问；
+// 早先尝试的 /www/wwwroot/xxt-desktop/ruyi/ 公网 404，已弃用）。
+const FEED_ROOT = String(process.env.FEED_ROOT || '/www/wwwroot/xxt-desktop/desktop/xxt').trim();
+const FEED_REL = String(process.env.FEED_REL || 'ruyi/android/latest.json').trim();
+const FEED_SKIP_UPLOAD = Boolean(args['feed-skip-upload']) || process.env.FEED_SKIP_UPLOAD === '1';
 
 // apphub CLI 路径：优先环境变量，其次已知仓库位置
 const APPHUB_CLI = String(
@@ -448,15 +492,16 @@ const downloadUrl = URL_OVERRIDE || `${OSS_PUBLIC_BASE}/${objectKey}`;
 
 console.log('==============================================');
 console.log(` 环境：${ENV_NAME}（${profile.label}）  构建类型：${profile.buildType}`);
-console.log(` 目标库：${APPHUB_BASE_URL}`);
-console.log(` 登记：android/${CHANNEL}/${STATUS}  versionCode=${meta.versionCode}`);
+console.log(` 台账：${SKIP_APPHUB ? '跳过（--skip-apphub，只发 feed）' : `${APPHUB_BASE_URL}  android/${CHANNEL}/${STATUS}`}`);
 console.log(` OSS：oss://${OSS_BUCKET}/${objectKey}${URL_OVERRIDE ? '（--url 已覆盖，跳过上传）' : ''}`);
+console.log(` 更新源：${UPDATE_FEED_URL}（客户端事实源）`);
 console.log('==============================================');
 log('信息', `appKey=${meta.appKey} 应用名=${APP_NAME}`);
 log('信息', `versionName=${meta.versionName} versionCode=${meta.versionCode} ABI=${ABI}`);
 log('信息', `APK 本地路径=${apkLocal}`);
 log('信息', `下载直链=${downloadUrl}`);
-log('信息', `账号=${APPHUB_USERNAME || '(未提供)'}`);
+log('信息', `feed 地址=${UPDATE_FEED_URL}${FEED_SKIP_UPLOAD ? '（--feed-skip-upload，只生成不上传）' : ''}`);
+log('信息', `账号=${SKIP_APPHUB ? '(跳过 apphub，无需账号)' : APPHUB_USERNAME || '(未提供)'}`);
 
 assertProdDownloadUrl(downloadUrl);
 
@@ -478,34 +523,47 @@ if (DRY_RUN) {
     console.log(`DRY OSS 凭证：${status.ok ? `OK（${status.how}）` : `缺失（${status.how}）`}`);
   }
   if (profile.requireConfirm) {
-    console.log('\nDRY 提示：prod 实际发布会登记进生产库并对外生效，需追加 --yes 才会执行构建/上传/登记。');
+    console.log(
+      SKIP_APPHUB
+        ? '\nDRY 提示：prod 实际发布会上传静态 feed 并对外生效（--skip-apphub 不写台账），需追加 --yes 才会执行。'
+        : '\nDRY 提示：prod 实际发布会登记进生产库并对外生效，需追加 --yes 才会执行构建/上传/登记。'
+    );
   }
-  console.log('DRY 以上为将要执行的动作，未做任何实际构建 / 上传 / 登记。');
+  console.log(`DRY 台账：${SKIP_APPHUB ? '跳过（--skip-apphub），本次只发 feed' : `apphub app:ensure + publish（version=${meta.versionName} code=${meta.versionCode}）`}`);
+  console.log(
+    `DRY feed：将以 version=${meta.versionName} code=${meta.versionCode} changelog="${CHANGELOG}" 生成 latest.json` +
+      (ENV_NAME === 'prod' && !FEED_SKIP_UPLOAD
+        ? `，并 scp 到 ${FEED_SERVER}:${FEED_ROOT}/${FEED_REL} 后原子切换`
+        : '（仅本地生成，不上传）')
+  );
+  console.log('DRY 以上为将要执行的动作，未做任何实际构建 / 上传 / 登记 / feed 发布。');
   process.exit(0);
 }
 
-if (!APPHUB_USERNAME || !APPHUB_PASSWORD) {
+if (!SKIP_APPHUB && (!APPHUB_USERNAME || !APPHUB_PASSWORD)) {
   const keys = ENV_NAME === 'prod' ? 'APPHUB_PROD_USERNAME / APPHUB_PROD_PASSWORD' : 'APPHUB_USERNAME / APPHUB_PASSWORD';
   fail(`缺少 ${keys}（发布方账号口令），请用环境变量注入。prod 不会自动复用 dev 凭证以外的猜测值。`, 2);
 }
-if (!existsSync(APPHUB_CLI)) {
+if (!SKIP_APPHUB && !existsSync(APPHUB_CLI)) {
   fail(`找不到 apphub-publish.mjs：${APPHUB_CLI}。请用 APPHUB_CLI 指定。`, 2);
 }
 if (profile.requireConfirm && !CONFIRMED) {
   fail(
-    'prod 发布会向生产库登记版本并对客户端生效，属对外变更。\n' +
+    (SKIP_APPHUB
+      ? 'prod 发布会上传静态 feed 并对全体客户端生效（--skip-apphub 已跳过的 apphub 台账不写），属对外变更。\n'
+      : 'prod 发布会向生产库登记版本并对外生效，属对外变更。\n') +
       '    确认无误请追加 --yes 重跑；只想看动作请用 --env prod --dry-run。',
     2
   );
 }
 
-// 1) 构建（apphub 地址在此注入 APK，与登记目标同源）
+// 1) 构建（静态 feed 地址在此注入 APK：BuildConfig.UPDATE_FEED_URL）
 assertOssCredential();
 if (!SKIP_BUILD) {
   log('构建', profile.buildTask);
-  sh(`${join(ROOT, 'gradlew')} ${profile.buildTask} -PapphubBaseUrl="${APPHUB_BASE_URL}"`, { cwd: ROOT });
+  sh(`${join(ROOT, 'gradlew')} ${profile.buildTask} -PupdateFeedUrl="${UPDATE_FEED_URL}"`, { cwd: ROOT });
 } else {
-  log('构建', `已跳过（--skip-build）。注意：APK 内嵌的检查更新地址由上次构建决定，请确认与 ${APPHUB_BASE_URL} 一致。`);
+  log('构建', `已跳过（--skip-build）。注意：APK 内嵌的 feed 地址由上次构建决定，请确认与 ${UPDATE_FEED_URL} 一致。`);
 }
 if (!existsSync(apkLocal)) {
   fail(
@@ -531,38 +589,77 @@ if (URL_OVERRIDE) {
 }
 
 // 4) 确保应用已注册（幂等）
-log('登记', 'apphub app:ensure');
-sh(
-  `node "${APPHUB_CLI}" app:ensure --key ${meta.appKey} --name "${APP_NAME}" --platforms android`,
-  {
-    cwd: ROOT,
-    env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
-  }
-);
+// ⚠️ 桥接版这次必须发：存量用户手机上的旧客户端只读 apphub /api/v1/update/check，不认识静态 feed。
+//    这一步 + 下面的 publish 是老客户端升级到「读 feed 的新版」的唯一引导渠道。
+//    桥接完成、存量老客户端清零后，用 --skip-apphub 跳过这两步，之后只发 feed。
+if (SKIP_APPHUB) {
+  log('登记', 'apphub 登记=跳过（--skip-apphub）：桥接已完成，本次只发 feed，不写台账');
+} else {
+  log('登记', 'apphub app:ensure');
+  sh(
+    `node "${APPHUB_CLI}" app:ensure --key ${meta.appKey} --name "${APP_NAME}" --platforms android`,
+    {
+      cwd: ROOT,
+      env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
+    }
+  );
 
-// 5) 登记版本（--code 用 build.gradle 的 versionCode，单一事实源；--file 算 sha256/size）
-log('登记', 'apphub publish');
-sh(
-  `node "${APPHUB_CLI}" publish ` +
-    `--key ${meta.appKey} --platform android --version ${meta.versionName} ` +
-    `--code ${meta.versionCode} --channel ${CHANNEL} --status ${STATUS} ` +
-    `--url "${downloadUrl}" --file "${apkLocal}" ` +
-    `--min-supported ${MIN_SUPPORTED} --changelog "${CHANGELOG}"`,
-  {
-    cwd: ROOT,
-    env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
-  }
-);
+  // 5) 登记版本（--code 用 build.gradle 的 versionCode，单一事实源；--file 算 sha256/size）
+  // ⚠️ 桥接版这次必须发：与第 6 步 feed 发布同期，把老客户端引导到读 feed 的新版。
+  //    两者必须用同一 versionCode、同一直链，否则老用户升级链会断。
+  log('登记', 'apphub publish');
+  sh(
+    `node "${APPHUB_CLI}" publish ` +
+      `--key ${meta.appKey} --platform android --version ${meta.versionName} ` +
+      `--code ${meta.versionCode} --channel ${CHANNEL} --status ${STATUS} ` +
+      `--url "${downloadUrl}" --file "${apkLocal}" ` +
+      `--min-supported ${MIN_SUPPORTED} --changelog "${CHANGELOG}"`,
+    {
+      cwd: ROOT,
+      env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
+    }
+  );
+}
 
-// 6) 结果汇报
+// 6) 生成并发布静态 feed（新客户端的更新事实源；上一步 apphub 服务存量老客户端的引导升级，两者缺一不可）
+if (!existsSync(FEED_PUBLISHER)) {
+  fail(`找不到 feed-publish.mjs：${FEED_PUBLISHER}。请用 FEED_PUBLISHER 指定。`, 6);
+}
+log('feed', `生成 latest.json（version=${meta.versionName} code=${meta.versionCode}）`);
+// 所有值都过单引号转义：changelog 是用户自由文本，含 $ ` " ' 或换行时不能被 shell 展开/截断。
+const sq = (s) => `'${String(s).replace(/'/g, `'\\''`)}'`;
+const feedArgs = [
+  'generate',
+  '--version', sq(meta.versionName),
+  '--code', sq(meta.versionCode),
+  '--url', sq(downloadUrl),
+  '--file', sq(apkLocal),
+  '--changelog', sq(CHANGELOG),
+  '--feed-url', sq(UPDATE_FEED_URL),
+  '--out', sq(join(ROOT, '.local', 'feed', 'latest.json')),
+];
+if (FEED_SKIP_UPLOAD || ENV_NAME !== 'prod') {
+  feedArgs.push('--no-upload');
+} else {
+  if (FEED_SERVER) feedArgs.push('--server', sq(FEED_SERVER));
+  feedArgs.push('--root', sq(FEED_ROOT), '--rel', sq(FEED_REL), '--verify-url', sq(UPDATE_FEED_URL));
+}
+sh(`node "${FEED_PUBLISHER}" ${feedArgs.join(' ')}`, { cwd: ROOT });
+
+// 7) 结果汇报
 console.log('\n===== 发布完成 =====');
-console.log(`环境：${ENV_NAME}（${profile.label}）  目标库：${APPHUB_BASE_URL}`);
+console.log(`环境：${ENV_NAME}（${profile.label}）  台账：${SKIP_APPHUB ? '跳过（--skip-apphub）' : APPHUB_BASE_URL}`);
 console.log(`应用：${APP_NAME}（${meta.appKey}）`);
 console.log(`版本：v${meta.versionName}（code=${meta.versionCode}）android/${CHANNEL}/${STATUS}`);
 console.log(`下载：${downloadUrl}`);
-console.log(
-  `检查更新：${APPHUB_BASE_URL}/api/v1/update/check?appKey=${meta.appKey}&platform=android&channel=${CHANNEL}`
-);
+console.log(`客户端更新源（静态 feed）：${UPDATE_FEED_URL}`);
+if (!SKIP_APPHUB) {
+  console.log(`apphub 台账（桥接引导老客户端，客户端不消费）：${APPHUB_BASE_URL}/api/v1/apps/${meta.appKey}/versions`);
+}
 if (ENV_NAME === 'dev') {
   console.log('提示：dev 包已用 .perf 包名并排安装，正式包与用户数据不受影响。');
+  console.log('提示：dev 只生成本地 feed，需在 127.0.0.1:3100 起静态服务指向 .local/feed/ 才能验证更新。');
+}
+if (FEED_SKIP_UPLOAD && ENV_NAME === 'prod') {
+  console.log('提示：--feed-skip-upload 已生效，prod feed 未上传，客户端仍读到旧版本。核对本地 feed 后去掉该参数重跑。');
 }

@@ -8,15 +8,15 @@ import org.junit.Test
 class ReleasesTest {
     private val body = """
         {
+          "version": "0.2.0",
+          "versionCode": 50,
+          "changelog": "### 新增\n- 附件面板",
+          "publishedAt": "2026-11-05T08:30:00Z",
           "policy": "force",
-          "latest": {
-            "versionName": "0.2.0",
-            "versionCode": 50,
-            "changelog": "### 新增\n- 附件面板",
-            "packageSize": 12345,
-            "sha256": "${"a".repeat(64)}",
-            "publishedAt": "2026-11-05T08:30:00Z",
-            "download": {"url": "https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-0.2.0-universal.apk"}
+          "download": {
+            "url": "https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.2.0-universal.apk",
+            "size": 12345,
+            "sha256": "${"a".repeat(64)}"
           }
         }
     """.trimIndent()
@@ -29,7 +29,7 @@ class ReleasesTest {
 
     @Test
     fun storedReleaseWithoutOptionalFieldsRoundTrips() {
-        val r = AppHub.parse("""{"latest":{"versionName":"0.2.0"}}""")!!
+        val r = AppHub.parse("""{"version":"0.2.0"}""")!!
         val bare = r.copy(date = null, apkUrl = null, apkSize = null, apkDigest = null, versionCode = null, force = false)
         assertEquals(bare, Releases.fromJson(Releases.toJson(bare)))
     }
@@ -42,7 +42,7 @@ class ReleasesTest {
     /** 平台没给直链时,「下载」回到平台首页,不留空链接。 */
     @Test
     fun releaseWithoutApkFallsBackToPlatformPage() {
-        val r = AppHub.parse("""{"latest":{"versionName":"0.2.0"}}""")!!
+        val r = AppHub.parse("""{"version":"0.2.0"}""")!!
         assertNull(r.apkUrl)
         assertEquals(MikaLinks.RELEASES, r.downloadUrl)
     }

@@ -37,7 +37,7 @@ class ApkIntegrityTest {
 
     /** 注入的发布地址是 http(本地联调)时,同主机的 http 直链也放行;其他域名照旧拒绝。 */
     @Test fun devBuildAllowsDownloadsFromConfiguredHost() {
-        val base = BuildConfig.APPHUB_BASE_URL.toHttpUrl()
+        val base = BuildConfig.UPDATE_FEED_URL.toHttpUrl()
         Assume.assumeTrue("仅在注入 http 地址的构建里验证", base.scheme == "http")
         ApkIntegrity.requireOfficialUrl("http://${base.host}:8099/mika-0.1.49-universal.apk")
         rejects { ApkIntegrity.requireOfficialUrl("http://evil.test:8099/mika-0.1.49-universal.apk") }

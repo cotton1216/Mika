@@ -43,20 +43,20 @@ class UpdateCheckerTest {
 
     private fun checker(current: String = "0.1.0", currentCode: Int = 10) = UpdateChecker(
         tmp.root.resolve("update-v2.json"), current, currentCode,
-        baseUrl = server.url("/apphub").toString(),
+        feedUrl = server.url("/ruyi/android/latest.json").toString(),
         client = OkHttpClient(),
         now = { clock },
     )
 
-    private fun latest(version: String, code: Int? = 20, digest: String = "a".repeat(64)): MockResponse {
+    private fun feed(version: String, code: Int? = 20, digest: String = "a".repeat(64)): MockResponse {
         val codeField = code?.let { ",\"versionCode\":$it" } ?: ""
-        val body = """{"appKey":"com.zl.ruyiai.yuan","platform":"android","channel":"official","hasUpdate":true,"policy":"optional","latest":{"versionName":"$version"$codeField,"changelog":"- 新东西","packageSize":12345,"sha256":"$digest","publishedAt":"2026-11-13T08:30:00Z","download":{"url":"https://oss-chuangxin.thchengtay.com/ai/mika/android/mika-$version-universal.apk"}}}"""
+        val body = """{"version":"$version"$codeField,"changelog":"- 新东西","publishedAt":"2026-11-13T08:30:00Z","policy":"optional","download":{"url":"https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-$version-universal.apk","sha256":"$digest","size":12345}}"""
         return MockResponse().setBody(body)
     }
 
     @Test
     fun newerVersionCodeShowsUpdate() = runTest {
-        response = latest("0.2.0")
+        response = feed("0.2.0")
         val c = checker()
         c.check(manual = true)
         val s = c.state.value
@@ -64,20 +64,17 @@ class UpdateCheckerTest {
         assertEquals("0.2.0", s.update?.version)
         assertTrue(s.hasUpdate)
         assertEquals(1, s.manualRounds)
-        assertEquals(
-            listOf("/apphub/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official&currentVersionCode=10"),
-            hits,
-        )
+        assertEquals(listOf("/ruyi/android/latest.json"), hits)
         val req = server.takeRequest()
         assertEquals("Yuan/0.1.0", req.getHeader("User-Agent"))
-        assertNull("不再带 GitHub 的 Accept 头", req.getHeader("Accept"))
+        assertNull("静态 feed 不带 GitHub 头", req.getHeader("Accept"))
         assertNull(req.getHeader("X-GitHub-Api-Version"))
     }
 
-    /** 平台按 versionCode 判新旧:版本号写得更花但 code 没涨,不算更新。 */
+    /** 按 versionCode 判新旧:版本号写得更花但 code 没涨,不算更新。 */
     @Test
     fun sameVersionCodeIsUpToDate() = runTest {
-        response = latest("0.9.0", code = 10)
+        response = feed("0.9.0", code = 10)
         val c = checker()
         c.check(manual = true)
         assertEquals(CheckStatus.Done, c.state.value.status)
@@ -87,15 +84,15 @@ class UpdateCheckerTest {
 
     @Test
     fun newerVersionNameWithSameCodeDoesNotUpdate() = runTest {
-        response = latest("0.1.1", code = 10)
+        response = feed("0.1.1", code = 10)
         checker().autoCheck()
         assertNull(checker().state.value.update)
     }
 
-    /** 平台没给 code(老数据/异常)时退回按版本号字符串比。 */
+    /** feed 没给 code(老数据/异常)时退回按版本号字符串比。 */
     @Test
     fun versionCodeMissingFallsBackToVersionName() = runTest {
-        response = latest("0.2.0", code = null)
+        response = feed("0.2.0", code = null)
         val c = checker()
         c.check(manual = true)
         assertEquals("0.2.0", c.state.value.update?.version)
@@ -106,15 +103,15 @@ class UpdateCheckerTest {
         assertNotNull(same.state.value.latest)
     }
 
-    /** 平台没有已发布版本(latest:null)是查成功,按「已是最新」处理,并把上一次的红点清掉。 */
+    /** feed 为空(还没发布版本)是查成功,按「已是最新」处理,并把上一次的红点清掉。 */
     @Test
-    fun platformWithoutPublishedVersionIsNotAFailure() = runTest {
-        response = latest("0.2.0")
+    fun emptyFeedIsNotAFailure() = runTest {
+        response = feed("0.2.0")
         val c = checker()
         c.check(manual = true)
         assertEquals("0.2.0", c.state.value.update?.version)
 
-        response = MockResponse().setBody("""{"appKey":"com.zl.ruyiai.yuan","policy":"none","latest":null}""")
+        response = MockResponse().setBody("{}")
         c.check(manual = true)
         assertEquals(CheckStatus.Done, c.state.value.status)
         assertNull(c.state.value.latest)
@@ -125,7 +122,7 @@ class UpdateCheckerTest {
     /** 网关回了一页 HTML 之类读不懂的响应仍算这次失败,也不清掉上一次查到的新版。 */
     @Test
     fun unreadableBodyIsAFailure() = runTest {
-        response = latest("0.2.0")
+        response = feed("0.2.0")
         val c = checker()
         c.check(manual = true)
 
@@ -156,7 +153,7 @@ class UpdateCheckerTest {
         assertFalse(c.autoCheck())
         assertEquals(before, hits.size)
         clock += 1
-        response = latest("0.2.0")
+        response = feed("0.2.0")
         assertTrue(c.autoCheck())
         assertEquals("0.2.0", c.state.value.update?.version)
         assertEquals(CheckStatus.Idle, c.state.value.status)
@@ -165,7 +162,7 @@ class UpdateCheckerTest {
     /** 查到的版本存盘:重开 App 不联网也有红点;装上新版后红点消失;上次自动检查的时间也记着。 */
     @Test
     fun foundUpdateSurvivesRestart() = runTest {
-        response = latest("0.2.0", code = 20)
+        response = feed("0.2.0", code = 20)
         checker(currentCode = 10).autoCheck()
         response = MockResponse().setResponseCode(500)
 
@@ -183,7 +180,7 @@ class UpdateCheckerTest {
     /** 同时进来的两次自动检查(查还没完)只真的查一次;隔十分钟再打开照样查。 */
     @Test
     fun concurrentAutoChecksHitServerOnce() = runTest {
-        response = latest("0.2.0")
+        response = feed("0.2.0")
         val c = checker()
         val ran = listOf(async { c.autoCheck() }, async { c.autoCheck() }).awaitAll()
         assertEquals(1, ran.count { it })

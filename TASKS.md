@@ -10,3 +10,4 @@
 | T04 | 发布技能区分生产/开发环境（`--env dev\|prod` 矩阵 + 生产闸门 + 签名校验） | done | [docs/tasks/T04-release-env-split.md](docs/tasks/T04-release-env-split.md) | 2026-11-16 |
 | T06 | 如意抽屉默认展开电脑列表 + 唯一在线机自动连接 | done | [docs/tasks/T06-ruyi-drawer-default-host.md](docs/tasks/T06-ruyi-drawer-default-host.md) | 2026-11-16 |
 | T07 | 网络恢复后自动补连（onAvailable），断网超窗口不再停在断开页 | done | [docs/tasks/T07-ruyi-network-recovery.md](docs/tasks/T07-ruyi-network-recovery.md) | 2026-11-16 |
+| T09 | 更新事实源从 apphub 接口切到自研静态 feed（desktop 同域托管） | doing | [docs/tasks/T09-apk-static-feed.md](docs/tasks/T09-apk-static-feed.md) | 2026-11-16 |

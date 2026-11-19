@@ -15,6 +15,9 @@ release-signing.properties
 dist/
 .omc/
 
+# 本地运行时产物（feed 生成、临时构建缓存）
+.local/
+
 # 给 AI 编程助手的本地规则,只留在本机
 CLAUDE.md
 

@@ -5,7 +5,7 @@ import com.wangzan101.mika.R
 import com.wangzan101.mika.i18n.tr
 import java.net.URLEncoder
 
-/** 如愿对外的地址都在这里:仓库、问题、检查更新用的来源。换地址只改这一处。 */
+/** 如愿对外的地址都在这里:仓库、问题、更新来源。换地址只改这一处。 */
 object MikaLinks {
     const val REPO = "https://github.com/wangzan101/Mika"
     const val REPO_LABEL = "github.com/wangzan101/如愿"
@@ -14,22 +14,14 @@ object MikaLinks {
     const val X = "https://x.com/wangzan101"
     const val X_HANDLE = "@wangzan101"
 
-    /** 发布页:自建发布平台(apphub)首页。地址随构建注入(见构建脚本的 apphubBaseUrl)。 */
-    val RELEASES: String get() = BuildConfig.APPHUB_BASE_URL
-
-    /** 平台上的应用标识,必须是 applicationId(不是 namespace)。 */
-    const val APP_KEY = "com.zl.ruyiai.yuan"
-
-    /** 发布渠道,和发版脚本登记的 channel 一致。 */
-    const val CHANNEL = "official"
+    /** 发布页:静态发布记录页。无 APK 直链时的兜底下载入口,不依赖任何动态服务。 */
+    const val RELEASES = "$REPO/releases"
 
     /**
-     * 检查更新的接口地址。[baseUrl] 是 apphub 地址(生产带 `/apphub` 前缀),
-     * 旧版本号由客户端带上,平台按 versionCode 判有没有新版本。
+     * 检查更新用的静态 feed 地址(构建注入,见 build.gradle.kts 的 updateFeedUrl):
+     * 一份描述当前最新版的 JSON,托管在固定 URL 上。
      */
-    fun checkUrl(baseUrl: String, versionCode: Int): String =
-        "${baseUrl.trimEnd('/')}/api/v1/update/check" +
-            "?appKey=$APP_KEY&platform=android&channel=$CHANNEL&currentVersionCode=$versionCode"
+    val UPDATE_FEED: String get() = BuildConfig.UPDATE_FEED_URL
 
     /** 反馈时预先填进问题模板的设备与版本信息。 */
     data class Device(

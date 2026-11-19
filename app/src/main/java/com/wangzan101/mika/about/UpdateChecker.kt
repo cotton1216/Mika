@@ -51,8 +51,8 @@ object UpdateSchedule {
 }
 
 /**
- * 检查更新:问自建发布平台(apphub)的检查更新接口,平台按 versionCode 判有没有新版;
- * 连不上、读不懂算这次失败,平台还没有已发布版本算「已是最新」。
+ * 检查更新:拉取一份静态 feed(JSON),按 versionCode 判有没有新版;
+ * 连不上、读不懂算这次失败,feed 为空(还没发布版本)算「已是最新」。
  * 查到的版本和上次自动检查的时间存在 [file],App 重开后红点还在;装了新版后当前版本不再落后,红点自然消失。
  * 这里只检查版本；用户主动下载、安装由 [ApkUpdater] 处理。
  */
@@ -60,7 +60,7 @@ class UpdateChecker(
     private val file: File,
     private val currentVersion: String,
     private val currentVersionCode: Int,
-    private val baseUrl: String = MikaLinks.RELEASES,
+    private val feedUrl: String = MikaLinks.UPDATE_FEED,
     private val client: OkHttpClient = defaultClient(),
     private val now: () -> Long = System::currentTimeMillis,
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
@@ -110,9 +110,9 @@ class UpdateChecker(
         }
     }
 
-    /** 平台上最新的一版:请求或响应异常时带着异常失败,平台还没有已发布版本时成功但为空。 */
+    /** feed 里最新的一版:请求或响应异常时带着异常失败,feed 为空(还没发布版本)时成功但为空。 */
     internal fun fetchLatest(): Result<ReleaseInfo?> =
-        runCatching { AppHub.parse(get(MikaLinks.checkUrl(baseUrl, currentVersionCode))) }
+        runCatching { AppHub.parse(get(feedUrl)) }
 
     private fun get(url: String): String {
         val req = Request.Builder().url(url)

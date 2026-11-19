@@ -40,7 +40,7 @@ internal object ApkIntegrity {
      * 线上注入 https 时不生效,信任范围仍然只有上面的白名单域名。
      */
     private fun devHostMatches(url: HttpUrl): Boolean {
-        val base = BuildConfig.APPHUB_BASE_URL.toHttpUrlOrNull() ?: return false
+        val base = BuildConfig.UPDATE_FEED_URL.toHttpUrlOrNull() ?: return false
         return base.scheme == "http" && url.scheme == "http" && url.host == base.host
     }
 
