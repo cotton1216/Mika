@@ -68,6 +68,27 @@
 - 验证：about 包 54 单测全绿；`assembleDebug` 编译通过；release 强制传参守卫反证生效；`release.mjs --env prod --dry-run` 串接正常；feed-publish 各子命令本地实测通过。
 - 待办：生产 feed 上传（改线上更新源，需单独授权）；真机回归（红点/changelog/下载校验/自动更新/节流）；commit/push（显式路径 add，禁 `-A`/`-a`）。
 
+## 收口记录（2026-11-19）
+
+**结论：代码与发布已收口，真机回归未做**（验收标准 1、2 无设备证据，只有单测覆盖）。
+
+- **提交**：`a36a0f66` feat(update): 更新事实源改读自研静态 feed（T09 实施层），15 文件 +855/−173；同补 `.gitignore` 忽略 `.local/`。
+- **合并**：`9786c57f` 合入 `ruyuan`，之后主干快进到该提交。5 处冲突处理——版本取主干 `0.1.52/53`（工作树的 `0.1.51/52` 会让已装 0.1.52 的用户被判降级）；`TASKS.md` 保留 T08/T09/T10 三行；`MikaLinks.kt`、`release.mjs`、`SKILL.md` 取品牌措辞 + feed 流水线口径。
+- **验证**：`:app:assembleDebug` 通过；`:app:testDebugUnitTest` 2179 项 / 0 失败 / 0 跳过；`app/src` 与 `core/src` 已无 `api/v1/update/check`、`APPHUB_BASE_URL` 残留。
+- **feed 补发（关键）**：0.1.52 那次发版从 `ruyuan` 走，链路里没有 feed，只写了 apphub——导致已升级到 0.1.51 的客户端（只读 feed）看不到 0.1.52。本次用本地同源 APK 补发：
+
+  | 项 | 值 |
+  | --- | --- |
+  | feed | `https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json` |
+  | 版本 | `0.1.52` / code 53（原 `0.1.51` / 52） |
+  | 直链 | `ruyi-0.1.52-universal.apk`，132,788,389 B，`ddcc4edd…4c47` |
+  | feed 文件 sha256 | `4f0d6f06aa92e67fcfe498533fd0117a805b54dfa7bc45846fdebcb7eee3fddf` |
+  | 备份 | 同目录 `latest.json.bak`（原 0.1.51 feed，413 B） |
+  | 回读 | 公网 GET 返回 0.1.52/53，与本地逐字段一致 |
+
+- **回滚**：`node feed-publish.mjs rollback --server xxt@10.10.117.5 --root /www/wwwroot/xxt-desktop/desktop/xxt --rel ruyi/android/latest.json`（用 `.bak` 覆盖）。
+- **遗留**：真机回归五项（红点、changelog、下载校验、自动更新、2 分钟节流）未做；后续发版确认存量老客户端已升级后，可改用 `--skip-apphub`。
+
 ## 责任人 / 更新时间
 
-- 实施：AI；发布授权：用户。2026-11-16。
+- 实施：AI；发布授权：用户。2026-11-16 立项，2026-11-19 收口。
