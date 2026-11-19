@@ -2,22 +2,22 @@
 <resources>
     <string name="rec_a11y">替我打开无障碍</string>
     <string name="rec_default_on">默认打开</string>
-    <string name="rec_a11y_body">如愿要用「无障碍」读屏幕上的文字和按钮。打开后,如愿会替你在系统里打开它自己的无障碍服务,你已经开着的其他无障碍服务不受影响。关掉这里,如愿会把自己的无障碍服务关掉。</string>
+    <string name="rec_a11y_body">如意 AI 要用「无障碍」读屏幕上的文字和按钮。打开后,如意 AI 会替你在系统里打开它自己的无障碍服务,你已经开着的其他无障碍服务不受影响。关掉这里,如意 AI 会把自己的无障碍服务关掉。</string>
     <string name="rec_battery">不受省电限制</string>
-    <string name="rec_battery_body">打开后,如愿会把自己加进系统的「电池优化」例外名单,系统省电时就不会在后台停掉它,手机操作更不容易断开;可能会多用一点电。关掉这里就恢复系统默认的省电管理。</string>
+    <string name="rec_battery_body">打开后,如意 AI 会把自己加进系统的「电池优化」例外名单,系统省电时就不会在后台停掉它,手机操作更不容易断开;可能会多用一点电。关掉这里就恢复系统默认的省电管理。</string>
     <string name="rec_boot">重启后自动恢复</string>
-    <string name="rec_boot_body">手机重启后「无线调试」会自己关掉。打开后,如愿会在开机时替你重新打开无线调试并自动连上。为此如愿需要「修改系统设置」的授权,只用来打开无线调试。只在你信任过的 Wi-Fi 上有效。关掉这里或解除配对,如愿都会交还这项授权。</string>
+    <string name="rec_boot_body">手机重启后「无线调试」会自己关掉。打开后,如意 AI 会在开机时替你重新打开无线调试并自动连上。为此如意 AI 需要「修改系统设置」的授权,只用来打开无线调试。只在你信任过的 Wi-Fi 上有效。关掉这里或解除配对,如意 AI 都会交还这项授权。</string>
     <string name="rec_auto_wireless">自动打开无线调试</string>
-    <string name="rec_auto_wireless_body">断开 Wi-Fi 或重启手机后,系统会把「无线调试」关掉。手机操作平时用不着它,只在重新启动时(比如如愿更新之后)要它开着。打开后,遇到这种时候、又连着 Wi-Fi,如愿会替你打开无线调试并自动连上,但不会替你关掉它。这和「重启后自动恢复」用同一项「修改系统设置」的授权,只在你允许过的 Wi-Fi 上有效。关掉这里,如愿就不再替你打开。</string>
+    <string name="rec_auto_wireless_body">断开 Wi-Fi 或重启手机后,系统会把「无线调试」关掉。手机操作平时用不着它,只在重新启动时(比如如意 AI 更新之后)要它开着。打开后,遇到这种时候、又连着 Wi-Fi,如意 AI 会替你打开无线调试并自动连上,但不会替你关掉它。这和「重启后自动恢复」用同一项「修改系统设置」的授权,只在你允许过的 Wi-Fi 上有效。关掉这里,如意 AI 就不再替你打开。</string>
     <string name="rec_need_setup">需要先完成手机操作设置</string>
     <string name="rec_failed">没能完成,请确认手机操作已就绪后再试</string>
     <string name="rec_working">正在处理…</string>
     <string name="rec_restarted_at">上次在 %1$s 自动重启过无障碍服务。</string>
-    <string name="rec_not_allowed_here">这个 Wi-Fi 还没允许无线调试,如愿打不开它。请亲手打开一次,系统问时勾选「始终允许使用此网络」,以后如愿就能自己打开。</string>
-    <string name="rec_refused">这台手机不让如愿打开无线调试。需要时请手动打开,如愿会自己连上。</string>
-    <string name="rec_gave_up">替你打开了几次无线调试,手机操作还是没能启动,先停下了。换个 Wi-Fi 或在手机操作里点重试,如愿会再试。</string>
+    <string name="rec_not_allowed_here">这个 Wi-Fi 还没允许无线调试,如意 AI 打不开它。请亲手打开一次,系统问时勾选「始终允许使用此网络」,以后如意 AI 就能自己打开。</string>
+    <string name="rec_refused">这台手机不让如意 AI 打开无线调试。需要时请手动打开,如意 AI 会自己连上。</string>
+    <string name="rec_gave_up">替你打开了几次无线调试,手机操作还是没能启动,先停下了。换个 Wi-Fi 或在手机操作里点重试,如意 AI 会再试。</string>
     <string name="rec_permission_missing">上次开机时授权已经不在了,没能自动恢复。请关掉再打开这个开关。</string>
-    <string name="rec_setting_unavailable">这台手机不允许如愿在开机时打开无线调试。重启后请手动打开,如愿会自己连上。</string>
-    <string name="rec_not_recovered">上次开机没能自动连上。确认连着信任过的 Wi-Fi、无线调试开着,如愿会自己连上。</string>
+    <string name="rec_setting_unavailable">这台手机不允许如意 AI 在开机时打开无线调试。重启后请手动打开,如意 AI 会自己连上。</string>
+    <string name="rec_not_recovered">上次开机没能自动连上。确认连着信任过的 Wi-Fi、无线调试开着,如意 AI 会自己连上。</string>
     <string name="rec_needs_pairing">要先配对过无线调试才用得上。现在的助手是用 USB 命令启动的,手机重启后请再运行一次命令。</string>
 </resources>

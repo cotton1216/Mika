@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="notif_channel_prepare">الإعداد في الخلفية</string>
-    <string name="notif_preparing">يستعد 如愿</string>
-    <string name="notif_result_title">نتيجة مهمة 如愿</string>
+    <string name="notif_preparing">يستعد 如意 AI</string>
+    <string name="notif_result_title">نتيجة مهمة 如意 AI</string>
     <string name="parallel_second_display_failed">تعذّر إنشاء شاشة افتراضية ثانية، لذا لا يمكن تشغيل أكثر من مهمة واحدة في الوقت الحالي</string>
     <string name="parallel_needs_14">يتطلب تشغيل عدة مهام في آنٍ واحد Android 14 أو أحدث</string>
     <string name="parallel_low_ram">ذاكرة هذا الهاتف قليلة، لذا تُشغّل مهمة واحدة في كل مرة</string>
     <string name="skill_suspended">لم تكن هذه المهارة تعمل مؤخرًا، لذا أُوقفت مؤقتًا</string>
     <string name="skill_verified">نجحت المهارة، وهي الآن قيد الاستخدام المعتاد: %1$s</string>
-    <string name="skill_learned">تعلّم 如愿 مهارة: %1$s</string>
-    <string name="skill_app_draft">دوّن 如愿 بعض المعلومات عن %1$s لمراجعتها</string>
-    <string name="skill_app_revised">راجع 如愿 ملاحظاته عن %1$s لمراجعتها</string>
+    <string name="skill_learned">تعلّم 如意 AI مهارة: %1$s</string>
+    <string name="skill_app_draft">دوّن 如意 AI بعض المعلومات عن %1$s لمراجعتها</string>
+    <string name="skill_app_revised">راجع 如意 AI ملاحظاته عن %1$s لمراجعتها</string>
     <string name="recovered_result">نتيجة المهمة المستعادة</string>
     <string name="recover_delivery_failed">انتهت المهمة الأخيرة، لكن تعذّر إرسال إشعار نتيجتها. تحقق من المحادثة.</string>
     <string name="recover_maybe_delivered">ربما أُرسلت النتيجة الأخيرة بالفعل. تحقق من المحادثة أولًا لتجنب تكرارها.</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">يحتاجك «%1$s» أمام الشاشة. انقر على «متابعة» عند الانتهاء</string>
     <string name="gate_finish_unknown">يحتاجك التطبيق الذي فُتح للتو أمام الشاشة. انقر على «متابعة» عند الانتهاء</string>
     <string name="gate_moved_away">فتحت هذا التطبيق. انقر على «متابعة» عند الانتهاء</string>
-    <string name="gate_move_back_failed">تعذّر نقل التطبيق إلى شاشة 如愿. انقر على «متابعة» لإعادة المحاولة</string>
+    <string name="gate_move_back_failed">تعذّر نقل التطبيق إلى شاشة 如意 AI. انقر على «متابعة» لإعادة المحاولة</string>
     <string name="gate_shell_down">انقطع اتصال التحكم بالهاتف. انقر على «متابعة» بعد إعادة الاتصال (أو أصلح الاتصال من الإعدادات)</string>
     <plurals name="queue_ahead">
         <item quantity="zero">في قائمة الانتظار: لا توجد مهام قبلك (%1$d)</item>
@@ -35,19 +35,19 @@
     <string name="fail_model_untested">لم يجتز النموذج الرئيسي اختبارًا على %1$s بعد. انتقل إلى الإعدادات › النماذج › %1$s وانقر على «اختبر مجددًا» للتحقق منه.</string>
     <string name="fail_no_web">الويب غير متاح على هذا الجهاز، لذا لا يمكن تشغيل فحص الشرط</string>
     <string name="task_waiting_display">في قائمة الانتظار: تبدأ بعد انتهاء المهمة الأخرى</string>
-    <string name="task_no_phone_helper">التحكم بالهاتف غير جاهز. أكمل «إعداد التحكم بالهاتف» في 如愿. لا تتأثر مهام الويب والملفات.</string>
-    <string name="task_no_a11y">خدمة إمكانية الوصول في 如愿 متوقفة. فعّل 如愿 ضمن إمكانية الوصول في إعدادات النظام.</string>
-    <string name="task_a11y_not_running">خدمة إمكانية الوصول في 如愿 مفعّلة، لكن Android لم يتصل بها. أوقف 如愿 ثم أعد تشغيله ضمن إمكانية الوصول في إعدادات النظام. إذا منع Android ذلك، فاسمح أولًا بالإعدادات المقيّدة في معلومات تطبيق 如愿.</string>
+    <string name="task_no_phone_helper">التحكم بالهاتف غير جاهز. أكمل «إعداد التحكم بالهاتف» في 如意 AI. لا تتأثر مهام الويب والملفات.</string>
+    <string name="task_no_a11y">خدمة إمكانية الوصول في 如意 AI متوقفة. فعّل 如意 AI ضمن إمكانية الوصول في إعدادات النظام.</string>
+    <string name="task_a11y_not_running">خدمة إمكانية الوصول في 如意 AI مفعّلة، لكن Android لم يتصل بها. أوقف 如意 AI ثم أعد تشغيله ضمن إمكانية الوصول في إعدادات النظام. إذا منع Android ذلك، فاسمح أولًا بالإعدادات المقيّدة في معلومات تطبيق 如意 AI.</string>
     <string name="task_error">خطأ في المهمة: %1$s</string>
-    <string name="task_app_blocked">«%1$s» معطّل، لذا لا يستطيع 如愿 قراءته أو تشغيله. اسمح به من الإعدادات › الوصول إلى التطبيقات ثم حاول مجددًا.</string>
+    <string name="task_app_blocked">«%1$s» معطّل، لذا لا يستطيع 如意 AI قراءته أو تشغيله. اسمح به من الإعدادات › الوصول إلى التطبيقات ثم حاول مجددًا.</string>
     <string name="task_app_this_app">هذا التطبيق</string>
     <string name="task_app_access_unavailable">تعذّرت قراءة إعدادات الوصول إلى التطبيقات. أعد ضبطها من الإعدادات › الوصول إلى التطبيقات ثم حاول مجددًا.</string>
-    <string name="task_app_protected">يتطلب هذا التطبيق أن تتولى الأمر بنفسك؛ لا يستطيع 如愿 أتمتته.</string>
+    <string name="task_app_protected">يتطلب هذا التطبيق أن تتولى الأمر بنفسك؛ لا يستطيع 如意 AI أتمتته.</string>
     <string name="task_app_unverified">تعذّر التحقق من التطبيق الظاهر، لذا لم يُتخذ أي إجراء آخر. حاول مجددًا أو افتح التطبيق المطلوب أولًا.</string>
     <string name="task_condition_interrupted">توقف فحص الشرط</string>
     <string name="task_check_unfinished">لم يكتمل الفحص المجدول: %1$s</string>
     <string name="task_may_make_sound">قد يصدر هذا التطبيق صوتًا</string>
-    <string name="task_notif_title">如愿: %1$s</string>
+    <string name="task_notif_title">如意 AI: %1$s</string>
     <plurals name="task_active">
         <item quantity="zero">لا توجد مهام قيد التشغيل (%1$d)</item>
         <item quantity="one">مهمة واحدة قيد التشغيل (%1$d)</item>
@@ -78,8 +78,8 @@
     <string name="task_not_done">لم تكتمل المهمة</string>
     <string name="task_stopped">أُوقفت المهمة</string>
     <string name="task_stopped_body">أوقفت هذه المهمة</string>
-    <string name="gate_user_on_page">أنت تستخدم الصفحة، لذا أوقف 如愿 مؤقتًا</string>
-    <string name="task_no_phone_helper_usb">توقف مساعد الهاتف (عادةً بعد إعادة تشغيل الهاتف). افتح 如愿 وشغّل أمر بدء USB مجددًا؛ يمكنك نسخه من «إعداد التحكم بالهاتف». لا تتأثر مهام الويب والملفات.</string>
+    <string name="gate_user_on_page">أنت تستخدم الصفحة، لذا أوقف 如意 AI مؤقتًا</string>
+    <string name="task_no_phone_helper_usb">توقف مساعد الهاتف (عادةً بعد إعادة تشغيل الهاتف). افتح 如意 AI وشغّل أمر بدء USB مجددًا؛ يمكنك نسخه من «إعداد التحكم بالهاتف». لا تتأثر مهام الويب والملفات.</string>
     <string name="drawer_screens">الشاشات الخلفية</string>
     <string name="screens_title">الشاشات الخلفية</string>
     <string name="screens_empty">لا توجد مهمة قيد التشغيل الآن.</string>

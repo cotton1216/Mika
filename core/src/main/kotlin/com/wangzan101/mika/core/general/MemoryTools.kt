@@ -94,7 +94,7 @@ internal object MemorySearch : AgentTool {
     }
 }
 
-/** 只改如愿自己的记忆,不动屏幕和外部世界。 */
+/** 只改如意 AI 自己的记忆,不动屏幕和外部世界。 */
 internal object MemorySave : AgentTool {
     override val verb = Verb.MemorySave
     override val label = "写入记忆"

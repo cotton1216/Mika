@@ -273,7 +273,7 @@ fun DuringWorkScreen(
             onPick = { onTokenBudget(it); editingTokenBudget = false },
             onDismiss = { editingTokenBudget = false },
         )
-        // 允许如愿改自己的设置:默认关,打开后任务里才有 settings_list、settings_set
+        // 允许如意 AI 改自己的设置:默认关,打开后任务里才有 settings_list、settings_set
         GroupCard {
             ListRow(
                 MikaIcons.Spark, stringResource(R.string.settings_self_config),

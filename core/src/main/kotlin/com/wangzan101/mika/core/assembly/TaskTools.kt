@@ -114,11 +114,11 @@ fun toolDispatcher(
     userScreens: UserScreenSource? = null,
     /** 用户的个人技能;和 [skills]、[utterances] 都给了才提供 skill_save(用户要求时写下或改一份个人技能)。 */
     personalSkills: PersonalSkills? = null,
-    /** 改如愿自己设置的白名单入口;为空时不提供 settings_list、settings_set(见 [SelfConfig])。 */
+    /** 改如意 AI 自己设置的白名单入口;为空时不提供 settings_list、settings_set(见 [SelfConfig])。 */
     selfConfig: com.wangzan101.mika.core.settings.SelfConfig? = null,
     /** 存下的运行记录;给了、而这个对话之前有记过运行的轮次时提供 history_read(查之前几轮读到的东西)。 */
     runRecords: RunRecords? = null,
-    /** 以 root 跑命令(已 root 的手机上用户打开了「允许如愿执行 root 命令」才给);为空时 root 工具不登记。 */
+    /** 以 root 跑命令(已 root 的手机上用户打开了「允许如意 AI 执行 root 命令」才给);为空时 root 工具不登记。 */
     root: RootPort? = null,
     /** 用户配置并启用的通用网页搜索;为空时保持原有浏览器搜索路径。 */
     webSearch: com.wangzan101.mika.core.search.WebSearch? = null,
@@ -206,12 +206,12 @@ fun legacyNames(): LegacyNames =
 /** 读运行记录用的工具声明:改名前记下的旧名也认成现在的工具(动作、能力相同),旧的记录和新的评分一样。 */
 fun recordedTools(): ToolIndex = legacyNames().let { legacy -> ToolIndex(allTools()) { legacy.resolve(it) } }
 
-/** 如愿所有可能提供的工具,按发给模型的顺序。 */
+/** 如意 AI 所有可能提供的工具,按发给模型的顺序。 */
 internal fun allTools(): List<AgentTool> =
     GeneralGroup.tools + PhoneCapability.tools() + WebGroup.tools + SandboxGroup.tools + RootGroup.tools + com.wangzan101.mika.core.calls.callAgentTools
 
-/** 如愿所有可能提供的工具的声明。 */
+/** 如意 AI 所有可能提供的工具的声明。 */
 fun knownTools(): ToolIndex = ToolIndex(allTools())
 
-/** 如愿所有可能提供的工具名(技能文档里提到的工具名据此校验)。 */
+/** 如意 AI 所有可能提供的工具名(技能文档里提到的工具名据此校验)。 */
 fun knownToolNames(): Set<String> = knownTools().names + DO_STEPS_TOOL

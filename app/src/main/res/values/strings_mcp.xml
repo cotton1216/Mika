@@ -43,7 +43,7 @@
     <string name="mcp_cli_install">1. Set up your computer</string>
     <string name="mcp_cli_install_sub">Send the install guide to your computer AI, or follow it on the computer yourself.</string>
     <string name="mcp_copy_install">Copy install guide</string>
-    <string name="mcp_cli_install_prompt">Follow https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md to install 如愿 CLI or the Skill for this agent. Use the connection method selected on the phone: USB uses authorized ADB; Wi-Fi/private VPN uses the HTTP address and a private token file. Run connect to verify the connection. With only the Skill, use its bundled script. Do not submit phone tasks or print tokens in the conversation.</string>
+    <string name="mcp_cli_install_prompt">Follow https://github.com/wangzan101/Mika/blob/main/docs/agent-quickstart.en.md to install 如意 AI CLI or the Skill for this agent. Use the connection method selected on the phone: USB uses authorized ADB; Wi-Fi/private VPN uses the HTTP address and a private token file. Run connect to verify the connection. With only the Skill, use its bundled script. Do not submit phone tasks or print tokens in the conversation.</string>
     <string name="mcp_cli_connect">2. Connect the phone</string>
     <string name="mcp_cli_connect_sub">Run on your computer over USB or paired wireless debugging. connect verifies the connection. With only the Skill, ask the agent to run its bundled client.</string>
     <string name="mcp_copy_command">Copy command</string>
@@ -56,7 +56,7 @@
     <string name="mcp_usb_client">3. Configure your MCP client</string>
     <string name="mcp_usb_client_sub">The start command prints the address and token on the computer. Add them to your client and check that the request time above updates.</string>
     <string name="mcp_copy_instructions">Copy setup instructions</string>
-    <string name="mcp_usb_client_instructions">Add a Streamable HTTP MCP server at http://127.0.0.1:%1$d/mcp on this computer. Set the Authorization header to Bearer followed by the token printed by the 如愿 start command. Do not print the token in the conversation. Connect or refresh the tool list and check that the request time on the phone updates. Guide: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
+    <string name="mcp_usb_client_instructions">Add a Streamable HTTP MCP server at http://127.0.0.1:%1$d/mcp on this computer. Set the Authorization header to Bearer followed by the token printed by the 如意 AI start command. Do not print the token in the conversation. Connect or refresh the tool list and check that the request time on the phone updates. Guide: https://github.com/wangzan101/Mika/blob/main/docs/mcp.en.md</string>
     <string name="mcp_network_enable">Allow this network connection</string>
     <string name="mcp_network_enable_action">Enable network access</string>
     <string name="mcp_network_address_step">1. Choose a reachable address</string>

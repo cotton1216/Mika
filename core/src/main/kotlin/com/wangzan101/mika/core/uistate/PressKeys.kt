@@ -2,7 +2,7 @@ package com.wangzan101.mika.core.uistate
 
 /**
  * press_key 只放行导航和编辑键。音量、电源/休眠/唤醒、Home、最近任务、搜索/助手、相机、媒体键
- * 都作用于整台手机而不是如愿的屏幕,一律拒绝。外壳进程注入按键时再查一遍同一张表。
+ * 都作用于整台手机而不是如意 AI 的屏幕,一律拒绝。外壳进程注入按键时再查一遍同一张表。
  */
 object PressKeys {
     val BY_NAME: Map<String, Int> = linkedMapOf(

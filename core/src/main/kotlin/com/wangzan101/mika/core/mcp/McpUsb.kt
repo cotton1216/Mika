@@ -45,7 +45,7 @@ object McpUsb {
     /**
      * 电脑经 USB 调试跑的脚本(`adb shell sh <scriptPath>`,关掉时末尾加 `off`)。不带任何口令或令牌,可以一直放着。
      * 打开:先跑一次「用电脑启动」的脚本 [helperScript](手机助手不在就起,在就说一句),
-     * 再以 shell 身份起如愿的前台服务 [component]、动作 [onAction],等到这次开机的连接信息文件 [infoPath] 写好,把它打出来。
+     * 再以 shell 身份起如意 AI 的前台服务 [component]、动作 [onAction],等到这次开机的连接信息文件 [infoPath] 写好,把它打出来。
      * 关掉:起同一服务、动作 [offAction],等连接信息文件被删掉(令牌随之作废)。
      * 不是 shell 身份时不跑:服务只收持有 shell 级权限的调用方,普通 App 起不了它。
      */
@@ -53,7 +53,7 @@ object McpUsb {
         val again = "adb shell sh $scriptPath"
         return """
             |#!/system/bin/sh
-            |# Written by 如愿. Lets AI tools on a computer use 如愿 over USB: $again   (turn off: $again off)
+            |# Written by 如意 AI. Lets AI tools on a computer use 如意 AI over USB: $again   (turn off: $again off)
             |if [ "${'$'}(id -u)" != "2000" ]; then
             |  echo "Run this from a computer over USB: $again"
             |  exit 1
@@ -65,7 +65,7 @@ object McpUsb {
             |  i=0
             |  while [ -f "${'$'}info" ]; do
             |    i=${'$'}((i + 1))
-            |    if [ ${'$'}i -gt 10 ]; then echo "如愿 did not confirm. Open 如愿 > Settings > Computer access (MCP) and turn off USB there."; exit 1; fi
+            |    if [ ${'$'}i -gt 10 ]; then echo "如意 AI did not confirm. Open 如意 AI > Settings > Computer access (MCP) and turn off USB there."; exit 1; fi
             |    sleep 1
             |  done
             |  echo "Computer access over USB is off. The old token no longer works."
@@ -76,11 +76,11 @@ object McpUsb {
             |fi
             |boot=${'$'}(settings get global boot_count 2>/dev/null)
             |out=${'$'}(am start-foreground-service -n ${quote(component)} -a ${quote(onAction)} 2>&1)
-            |case "${'$'}out" in *rror*|*xception*) echo "${'$'}out"; echo "Is 如愿 installed and up to date?"; exit 1 ;; esac
+            |case "${'$'}out" in *rror*|*xception*) echo "${'$'}out"; echo "Is 如意 AI installed and up to date?"; exit 1 ;; esac
             |i=0
             |until grep -q "\"boot\": *\"${'$'}boot\"" "${'$'}info" 2>/dev/null; do
             |  i=${'$'}((i + 1))
-            |  if [ ${'$'}i -gt 15 ]; then echo "如愿 did not open the connection. Open 如愿 > Settings > Computer access (MCP) to see why, then run this again."; exit 1; fi
+            |  if [ ${'$'}i -gt 15 ]; then echo "如意 AI did not open the connection. Open 如意 AI > Settings > Computer access (MCP) to see why, then run this again."; exit 1; fi
             |  sleep 1
             |done
             |echo "Computer access over USB is on. On the computer, run: ${forward(port)}"

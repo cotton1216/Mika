@@ -13,8 +13,8 @@ val gitHash: String = runCatching {
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
 // 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
-val ruyiVersionName = "0.1.51"
-val ruyiVersionCode = 52
+val ruyiVersionName = "0.1.52"
+val ruyiVersionCode = 53
 
 // 更新 feed 地址由构建注入：debug 默认本地，release/perf 必须由 -PupdateFeedUrl 指定。
 // 生产地址形如 https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json，本地联调指向本地静态文件服务。
@@ -69,7 +69,7 @@ android {
 
     // 发布用的包(perf、release)按架构再出一份:除了全架构包,另出只带 arm64-v8a 原生库的小包。
     // 两个包代码、资源、版本号、签名都一样,只差 lib/ 下的其他架构;各自是完整 APK,不是一起安装的拆分包。
-    // 产物:如愿-universal-<类型>.apk、如愿-arm64-v8a-<类型>.apk。拆分对所有构建类型生效,
+    // 产物:如意 AI-universal-<类型>.apk、如意 AI-arm64-v8a-<类型>.apk。拆分对所有构建类型生效,
     // 所以只在这次构建要出 perf/release 包时打开,单独构建调试包时产物仍是 app-debug.apk。
     splits {
         abi {
@@ -98,7 +98,7 @@ android {
         // 真机验收时并排安装,保留发行版和用户数据;默认构建标识不变。
         if (providers.gradleProperty("devInstall").isPresent) getByName("debug") {
             applicationIdSuffix = ".dev"
-            resValue("string", "app_name", "Mika Dev")
+            resValue("string", "app_name", "如意 AI Dev")
         }
         // 看流畅度用的包:和发布版一样不可调试(调试包不做预先编译,界面慢好几倍,手感不作数),
         // 用本机调试签名,能直接覆盖调试包、保留数据;可被性能工具采样。./gradlew :app:assemblePerf
@@ -112,7 +112,7 @@ android {
         // 原包和数据都不动。./gradlew :app:assemblePerf -PsideInstall
         if (providers.gradleProperty("sideInstall").isPresent) getByName("perf") {
             applicationIdSuffix = ".perf"
-            resValue("string", "app_name", "如愿 测试版")
+            resValue("string", "app_name", "如意 AI 测试版")
         }
         // 本地日志检查包：并排安装，允许 adb run-as，首次启动即记录详细 Trace。
         create("logs") {
@@ -121,7 +121,7 @@ android {
             versionNameSuffix = "-logs"
             isDebuggable = true
             isProfileable = false
-            resValue("string", "app_name", "如愿 Logs")
+            resValue("string", "app_name", "如意 AI Logs")
             buildConfigField("boolean", "ADB_LOGS", "true")
             matchingFallbacks += "release"
         }
@@ -182,7 +182,7 @@ tasks.withType<Test>().configureEach {
     inputs.file(rootProject.file("licenses/THIRD_PARTY_NOTICES.md")).withPropertyName("thirdPartyNotices")
 }
 
-// 发布包文件名带上品牌、版本与架构：如愿-0.1.40-arm64-v8a-release.apk / 如愿-0.1.40-universal-release.apk。
+// 发布包文件名带上品牌、版本与架构：如意 AI-0.1.40-arm64-v8a-release.apk / 如意 AI-0.1.40-universal-release.apk。
 // 调试包保持 app-debug.apk 不变，脚本与真机验收流程仍按原名引用。
 androidComponents {
     onVariants { variant ->
@@ -199,7 +199,7 @@ androidComponents {
                 ?.identifier
                 ?: "universal"
             (output as com.android.build.api.variant.impl.VariantOutputImpl)
-                .outputFileName.set("如愿-$ruyiVersionName-$abi-${variant.buildType}.apk")
+                .outputFileName.set("如意 AI-$ruyiVersionName-$abi-${variant.buildType}.apk")
         }
     }
 }

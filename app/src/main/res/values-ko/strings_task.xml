@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notif_channel_prepare">백그라운드 준비</string>
-    <string name="notif_preparing">Mika가 준비 중이에요</string>
-    <string name="notif_result_title">如愿 작업 결과</string>
+    <string name="notif_preparing">如意 AI가 준비 중이에요</string>
+    <string name="notif_result_title">如意 AI 작업 결과</string>
     <string name="parallel_second_display_failed">두 번째 가상 화면을 만들지 못해서 지금은 작업을 하나씩만 실행해요</string>
     <string name="parallel_needs_14">여러 작업을 동시에 실행하려면 Android 14 이상이 필요해요</string>
     <string name="parallel_low_ram">이 휴대전화는 메모리가 적어서 작업을 하나씩 실행해요</string>
     <string name="skill_suspended">이 스킬이 최근에 잘 동작하지 않아서 일시 중지했어요</string>
     <string name="skill_verified">스킬이 잘 동작해서 이제 정식으로 사용해요: %1$s</string>
-    <string name="skill_learned">Mika가 스킬을 배웠어요: %1$s</string>
-    <string name="skill_app_draft">Mika가 %1$s에 대해 몇 가지 사실을 적어 두었어요. 검토해 주세요</string>
-    <string name="skill_app_revised">Mika가 %1$s에 대한 노트를 수정했어요. 검토해 주세요</string>
+    <string name="skill_learned">如意 AI가 스킬을 배웠어요: %1$s</string>
+    <string name="skill_app_draft">如意 AI가 %1$s에 대해 몇 가지 사실을 적어 두었어요. 검토해 주세요</string>
+    <string name="skill_app_revised">如意 AI가 %1$s에 대한 노트를 수정했어요. 검토해 주세요</string>
     <string name="recovered_result">복구된 작업 결과</string>
     <string name="recover_delivery_failed">지난 작업은 끝났지만 결과 알림을 보내지 못했어요. 채팅을 확인하세요.</string>
     <string name="recover_maybe_delivered">지난 결과가 이미 전달됐을 수 있어요. 두 번 하지 않도록 채팅을 먼저 확인하세요.</string>
@@ -21,7 +21,7 @@
     <string name="gate_finish_app">“%1$s”에서 직접 처리해야 해요. 끝나면 계속을 누르세요</string>
     <string name="gate_finish_unknown">방금 연 앱에서 직접 처리해야 해요. 끝나면 계속을 누르세요</string>
     <string name="gate_moved_away">이 앱을 직접 열었어요. 끝나면 계속을 누르세요</string>
-    <string name="gate_move_back_failed">앱을 如愿 화면으로 되돌리지 못했어요. 계속을 눌러 다시 시도하세요</string>
+    <string name="gate_move_back_failed">앱을 如意 AI 화면으로 되돌리지 못했어요. 계속을 눌러 다시 시도하세요</string>
     <string name="gate_shell_down">휴대전화 제어 연결이 끊겼어요. 다시 연결되면 계속을 누르세요 (또는 설정에서 해결하세요)</string>
     <plurals name="queue_ahead">
         <item quantity="other">대기 중: 앞에 작업 %1$d개</item>
@@ -30,19 +30,19 @@
     <string name="fail_model_untested">메인 모델이 아직 %1$s에서 테스트를 통과하지 못했어요. 설정 › 모델 › %1$s에서 “다시 테스트”를 눌러 확인하세요.</string>
     <string name="fail_no_web">이 기기에서는 웹을 쓸 수 없어서 조건 확인을 실행할 수 없어요</string>
     <string name="task_waiting_display">대기 중: 다른 작업이 끝나면 시작해요</string>
-    <string name="task_no_phone_helper">휴대전화 제어가 준비되지 않았어요. Mika에서 “휴대전화 제어 설정”을 마치세요. 웹과 파일 작업은 영향이 없어요.</string>
-    <string name="task_no_a11y">Mika의 접근성 서비스가 꺼져 있어요. 시스템 설정의 접근성에서 Mika를 켜세요.</string>
-    <string name="task_a11y_not_running">Mika의 접근성 서비스는 켜져 있지만 Android가 아직 연결하지 않았어요. 시스템 설정의 접근성에서 Mika를 껐다가 다시 켜세요. Android가 차단하면 먼저 如愿 앱 정보에서 제한된 설정을 허용하세요.</string>
+    <string name="task_no_phone_helper">휴대전화 제어가 준비되지 않았어요. 如意 AI에서 “휴대전화 제어 설정”을 마치세요. 웹과 파일 작업은 영향이 없어요.</string>
+    <string name="task_no_a11y">如意 AI의 접근성 서비스가 꺼져 있어요. 시스템 설정의 접근성에서 如意 AI를 켜세요.</string>
+    <string name="task_a11y_not_running">如意 AI의 접근성 서비스는 켜져 있지만 Android가 아직 연결하지 않았어요. 시스템 설정의 접근성에서 如意 AI를 껐다가 다시 켜세요. Android가 차단하면 먼저 如意 AI 앱 정보에서 제한된 설정을 허용하세요.</string>
     <string name="task_error">작업 오류: %1$s</string>
-    <string name="task_app_blocked">“%1$s”이(가) 비활성화되어 있어서 Mika가 읽거나 조작할 수 없어요. 설정 › 앱 접근에서 허용한 뒤 다시 시도하세요.</string>
+    <string name="task_app_blocked">“%1$s”이(가) 비활성화되어 있어서 如意 AI가 읽거나 조작할 수 없어요. 설정 › 앱 접근에서 허용한 뒤 다시 시도하세요.</string>
     <string name="task_app_this_app">이 앱</string>
     <string name="task_app_access_unavailable">앱 접근 설정을 읽을 수 없어요. 설정 › 앱 접근에서 초기화한 뒤 다시 시도하세요.</string>
-    <string name="task_app_protected">이 화면은 직접 처리해야 해요. Mika가 자동으로 할 수 없어요.</string>
+    <string name="task_app_protected">이 화면은 직접 처리해야 해요. 如意 AI가 자동으로 할 수 없어요.</string>
     <string name="task_app_unverified">어떤 앱이 앞에 있는지 확인하지 못해서 더 이상 진행하지 않았어요. 다시 시도하거나 대상 앱을 먼저 여세요.</string>
     <string name="task_condition_interrupted">조건 확인이 중단됐어요</string>
     <string name="task_check_unfinished">예약된 확인이 끝나지 않았어요: %1$s</string>
     <string name="task_may_make_sound">이 앱에서 소리가 날 수 있어요</string>
-    <string name="task_notif_title">如愿: %1$s</string>
+    <string name="task_notif_title">如意 AI: %1$s</string>
     <plurals name="task_active">
         <item quantity="other">작업 %1$d개 실행 중</item>
     </plurals>
@@ -63,8 +63,8 @@
     <string name="task_not_done">작업을 끝내지 못했어요</string>
     <string name="task_stopped">작업 중지됨</string>
     <string name="task_stopped_body">이 작업을 중지했어요</string>
-    <string name="gate_user_on_page">페이지를 사용 중이라 Mika가 멈췄어요</string>
-    <string name="task_no_phone_helper_usb">휴대전화 도우미가 멈췄어요(보통 휴대전화를 재부팅한 뒤에 생겨요). Mika를 열고 USB 시작 명령을 다시 실행하세요. “휴대전화 제어 설정”에서 명령을 복사할 수 있어요. 웹과 파일 작업은 영향이 없어요.</string>
+    <string name="gate_user_on_page">페이지를 사용 중이라 如意 AI가 멈췄어요</string>
+    <string name="task_no_phone_helper_usb">휴대전화 도우미가 멈췄어요(보통 휴대전화를 재부팅한 뒤에 생겨요). 如意 AI를 열고 USB 시작 명령을 다시 실행하세요. “휴대전화 제어 설정”에서 명령을 복사할 수 있어요. 웹과 파일 작업은 영향이 없어요.</string>
     <string name="drawer_screens">백그라운드 화면</string>
     <string name="screens_title">백그라운드 화면</string>
     <string name="screens_empty">지금 실행 중인 작업이 없어요.</string>

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">一部のログイン情報が残っている可能性があります。すべて消去するには「すべてログアウト」を使ってください。</string>
-    <string name="web_challenged_note">このサイトで、如愿 は最近 CAPTCHA かアクセスのブロックにぶつかりました。繰り返し起こる場合は、このサイトのデータ(Cookie とウェブストレージ)を消去して、もう一度ログインしてください。</string>
-    <string name="web_data_note">ウェブサイトのログインデータは、このスマホの 如愿 の専用フォルダにだけ保存され、追加の暗号化はされません。システムのブラウザと同じレベルの保護です。</string>
+    <string name="web_challenged_note">このサイトで、如意 AI は最近 CAPTCHA かアクセスのブロックにぶつかりました。繰り返し起こる場合は、このサイトのデータ(Cookie とウェブストレージ)を消去して、もう一度ログインしてください。</string>
+    <string name="web_data_note">ウェブサイトのログインデータは、このスマホの 如意 AI の専用フォルダにだけ保存され、追加の暗号化はされません。システムのブラウザと同じレベルの保護です。</string>
     <string name="web_none">まだ訪れたサイトはありません</string>
-    <string name="web_none_sub">如愿 が作業したサイトや、ここでログインしたサイトが表示されます</string>
-    <string name="web_signed_in_by_you">如愿 の中でログイン済み</string>
+    <string name="web_none_sub">如意 AI が作業したサイトや、ここでログインしたサイトが表示されます</string>
+    <string name="web_signed_in_by_you">如意 AI の中でログイン済み</string>
     <string name="web_challenged">確認またはブロックにぶつかりました</string>
     <string name="web_last_visit">最終訪問 %1$s</string>
     <string name="web_manage">管理</string>
     <string name="web_logout_all_title">すべてログアウトしてウェブデータを消去</string>
-    <string name="web_you_signed_in">このサイトには、如愿 の中であなたがログインしました。</string>
-    <string name="web_mika_visited">如愿 はこのサイトを訪れました。</string>
+    <string name="web_you_signed_in">このサイトには、如意 AI の中であなたがログインしました。</string>
+    <string name="web_mika_visited">如意 AI はこのサイトを訪れました。</string>
     <string name="web_open_login">ログインページを開く</string>
     <string name="web_cleared">%1$s の Cookie とウェブストレージを消去しました。もう一度ログインが必要です。一部のデータが残っている可能性があります。すべて消去するには「すべてログアウト」を使ってください。</string>
     <string name="web_signed_out">%1$s からログアウトしました。%2$s</string>
     <string name="web_clear_site">このサイトのデータを消去</string>
     <string name="web_sign_out_site">このサイトからログアウト</string>
     <string name="web_logout_all_q">すべてログアウトして、ウェブデータを消去しますか？</string>
-    <string name="web_logout_all_body">内蔵ブラウザのすべてのサイトからログアウトし、如愿 に保存されているそれらのウェブデータを消去します。如愿 がそれらのサイトを使うときは、もう一度ログインが必要です。</string>
+    <string name="web_logout_all_body">内蔵ブラウザのすべてのサイトからログアウトし、如意 AI に保存されているそれらのウェブデータを消去します。如意 AI がそれらのサイトを使うときは、もう一度ログインが必要です。</string>
     <string name="web_logged_out_all">すべてログアウトして、ウェブデータを消去しました。</string>
     <string name="web_logout_all">すべてログアウト</string>
     <string name="date_pattern_md_compact">M月d日</string>
-    <string name="web_takeover_login">如愿 のブラウザでログインしてから、「完了」をタップしてください</string>
-    <string name="web_takeover_waiting">如愿 があなたを待っています: %1$s</string>
+    <string name="web_takeover_login">如意 AI のブラウザでログインしてから、「完了」をタップしてください</string>
+    <string name="web_takeover_waiting">如意 AI があなたを待っています: %1$s</string>
     <string name="web_reason_security">セキュリティ確認</string>
     <!-- 任务结束后留在后台运行的那一页 -->
     <string name="kept_notif_title">バックグラウンドで動作中のウェブページ</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">ページがクラッシュ</string>
     <string name="kept_reason_user">あなたが閉じました</string>
     <string name="kept_reason_replaced">別のページが残されました</string>
-    <string name="kept_reason_app_exit">如愿 が終了</string>
+    <string name="kept_reason_app_exit">如意 AI が終了</string>
     <string name="kept_chat_sub">1 つのウェブページがバックグラウンドで動作中</string>
     <string name="kept_capsule">バックグラウンドのページが動作中</string>
     <string name="kept_card_title">バックグラウンドのページ</string>

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">قد تبقى بعض جلسات تسجيل الدخول؛ استخدم «تسجيل الخروج من الكل» لمسح كل شيء.</string>
-    <string name="web_challenged_note">واجه 如愿 مؤخرًا اختبار CAPTCHA أو حظر وصول على هذا الموقع. إذا تكرر ذلك، فامسح بيانات هذا الموقع (ملفات تعريف الارتباط ومساحة تخزين الويب) وسجّل الدخول مجددًا.</string>
-    <string name="web_data_note">تُخزَّن بيانات تسجيل الدخول إلى المواقع في المجلد الخاص بـMika على هذا الهاتف فقط، من دون تشفير إضافي — وبمستوى الحماية نفسه الذي يوفّره متصفح النظام.</string>
+    <string name="web_challenged_note">واجه 如意 AI مؤخرًا اختبار CAPTCHA أو حظر وصول على هذا الموقع. إذا تكرر ذلك، فامسح بيانات هذا الموقع (ملفات تعريف الارتباط ومساحة تخزين الويب) وسجّل الدخول مجددًا.</string>
+    <string name="web_data_note">تُخزَّن بيانات تسجيل الدخول إلى المواقع في المجلد الخاص بـ如意 AI على هذا الهاتف فقط، من دون تشفير إضافي — وبمستوى الحماية نفسه الذي يوفّره متصفح النظام.</string>
     <string name="web_none">لم تتم زيارة أي مواقع بعد</string>
-    <string name="web_none_sub">تظهر المواقع هنا بعد أن يعمل عليها 如愿 أو بعد تسجيل الدخول إليها من هنا</string>
-    <string name="web_signed_in_by_you">تم تسجيل الدخول داخل 如愿</string>
+    <string name="web_none_sub">تظهر المواقع هنا بعد أن يعمل عليها 如意 AI أو بعد تسجيل الدخول إليها من هنا</string>
+    <string name="web_signed_in_by_you">تم تسجيل الدخول داخل 如意 AI</string>
     <string name="web_challenged">واجه اختبارًا أو حظرًا</string>
     <string name="web_last_visit">آخر زيارة %1$s</string>
     <string name="web_manage">إدارة</string>
     <string name="web_logout_all_title">تسجيل الخروج من الكل ومسح بيانات الويب</string>
-    <string name="web_you_signed_in">سجّلت الدخول إلى هذا الموقع داخل 如愿.</string>
-    <string name="web_mika_visited">زار 如愿 هذا الموقع.</string>
+    <string name="web_you_signed_in">سجّلت الدخول إلى هذا الموقع داخل 如意 AI.</string>
+    <string name="web_mika_visited">زار 如意 AI هذا الموقع.</string>
     <string name="web_open_login">فتح صفحة تسجيل الدخول</string>
     <string name="web_cleared">مُسحت ملفات تعريف الارتباط ومساحة تخزين الويب لـ%1$s؛ ستحتاج إلى تسجيل الدخول مجددًا. قد تبقى بعض البيانات؛ استخدم «تسجيل الخروج من الكل» لمسح كل شيء.</string>
     <string name="web_signed_out">تم تسجيل الخروج من %1$s. %2$s</string>
     <string name="web_clear_site">مسح بيانات هذا الموقع</string>
     <string name="web_sign_out_site">تسجيل الخروج من هذا الموقع</string>
     <string name="web_logout_all_q">هل تريد تسجيل الخروج من الكل ومسح بيانات الويب؟</string>
-    <string name="web_logout_all_body">يؤدي ذلك إلى تسجيل الخروج من كل المواقع في المتصفح المضمّن ومسح بيانات الويب الخاصة بها والمخزنة في 如愿. سيحتاج 如愿 إلى تسجيل الدخول مجددًا عند استخدام تلك المواقع.</string>
+    <string name="web_logout_all_body">يؤدي ذلك إلى تسجيل الخروج من كل المواقع في المتصفح المضمّن ومسح بيانات الويب الخاصة بها والمخزنة في 如意 AI. سيحتاج 如意 AI إلى تسجيل الدخول مجددًا عند استخدام تلك المواقع.</string>
     <string name="web_logged_out_all">تم تسجيل الخروج من الكل ومسح بيانات الويب.</string>
     <string name="web_logout_all">تسجيل الخروج من الكل</string>
     <string name="date_pattern_md_compact">MMM d</string>
-    <string name="web_takeover_login">سجّل الدخول في متصفح 如愿، ثم انقر على «تم»</string>
-    <string name="web_takeover_waiting">如愿 بانتظارك: %1$s</string>
+    <string name="web_takeover_login">سجّل الدخول في متصفح 如意 AI، ثم انقر على «تم»</string>
+    <string name="web_takeover_waiting">如意 AI بانتظارك: %1$s</string>
     <string name="web_reason_security">فحص أمني</string>
     <!-- 任务结束后留在后台运行的那一页 -->
     <string name="kept_notif_title">صفحة ويب تعمل في الخلفية</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">تعطّلت الصفحة</string>
     <string name="kept_reason_user">أغلقتها أنت</string>
     <string name="kept_reason_replaced">تم الإبقاء على صفحة أخرى</string>
-    <string name="kept_reason_app_exit">أُغلق 如愿</string>
+    <string name="kept_reason_app_exit">أُغلق 如意 AI</string>
     <string name="kept_chat_sub">صفحة ويب واحدة تعمل في الخلفية</string>
     <string name="kept_capsule">صفحة تعمل في الخلفية</string>
     <string name="kept_card_title">صفحة في الخلفية</string>

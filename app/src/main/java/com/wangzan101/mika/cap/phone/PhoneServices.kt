@@ -12,7 +12,7 @@ import com.wangzan101.mika.core.shell.BuiltinShellControl
 import com.wangzan101.mika.settings.RecoverySettings
 
 /**
- * 手机能力在如愿进程里的服务,由 App 建一份、经 [Owner] 给出:内置助手(交接落点、配对与看门狗、
+ * 手机能力在如意 AI 进程里的服务,由 App 建一份、经 [Owner] 给出:内置助手(交接落点、配对与看门狗、
  * 自动恢复与授权)、任务和启动恢复共用的那条 shell 连接、配对流程、「去设置」提示。
  * 助手进程(HelperMain、ShellService)跑在 shell 身份下,没有 App 对象,不经这里。
  */

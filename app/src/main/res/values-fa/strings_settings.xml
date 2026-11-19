@@ -2,7 +2,7 @@
 <resources>
     <string name="language_title">زبان</string>
     <string name="language_system">پیروی از زبان سیستم</string>
-    <string name="language_system_detail">اگر 如愿 از زبان سیستم پشتیبانی کند از آن استفاده می‌کند؛ در غیر این صورت انگلیسی نمایش داده می‌شود</string>
+    <string name="language_system_detail">اگر 如意 AI از زبان سیستم پشتیبانی کند از آن استفاده می‌کند؛ در غیر این صورت انگلیسی نمایش داده می‌شود</string>
 
 
 
@@ -17,7 +17,7 @@
     <string name="settings_basic">عمومی</string>
     <string name="settings_language_appearance">زبان و ظاهر</string>
     <string name="settings_personal_start">باز کردن دستیار شخصی هنگام راه‌اندازی</string>
-    <string name="settings_personal_start_sub">استفاده از دستیار شخصی به عنوان نخستین صفحه میکا</string>
+    <string name="settings_personal_start_sub">استفاده از دستیار شخصی به عنوان نخستین صفحه 如意 AI</string>
     <string name="settings_model">مدل</string>
     <string name="settings_model_sub">مدل‌ها، ارائه‌دهندگان و مصرف توکن</string>
     <string name="settings_not_set">تنظیم نشده</string>
@@ -48,7 +48,7 @@
     <string name="settings_recovery">بازیابی و تعمیر</string>
     <string name="settings_developer_group">توسعه‌دهنده</string>
     <string name="settings_developer">گزینه‌های توسعه‌دهنده</string>
-    <string name="settings_about">دربارهٔ 如愿</string>
+    <string name="settings_about">دربارهٔ 如意 AI</string>
     <string name="pill_unsupported">پشتیبانی نمی‌شود</string>
     <string name="pill_available">آماده</string>
     <string name="pill_needs_attention">نیازمند توجه</string>
@@ -58,7 +58,7 @@
     <string name="settings_all_ready_detail">مدل تنظیم شده · کنترل گوشی آماده است</string>
     <string name="settings_status">وضعیت</string>
     <string name="settings_a11y">سرویس دسترس‌پذیری</string>
-    <string name="settings_a11y_sub">صفحهٔ مجازی 如愿 را می‌خواند و کنترل می‌کند</string>
+    <string name="settings_a11y_sub">صفحهٔ مجازی 如意 AI را می‌خواند و کنترل می‌کند</string>
     <string name="settings_notif_progress_sub">اعلان‌های پیشرفت و موارد نیازمند توجه شما</string>
     <string name="settings_system_version">نسخهٔ سیستم</string>
     <string name="settings_android_focus">اندروید %1$s · در اندروید ۱۲ و ۱۳، کار پس‌زمینه ممکن است تمرکز صفحه را تغییر دهد؛ اندروید ۱۴ یا بالاتر توصیه می‌شود</string>
@@ -70,7 +70,7 @@
     <string name="settings_keep_on">روشن نگه داشتن صفحه</string>
     <string name="settings_keep_on_sub">هنگام اجرای کار صفحه روشن می‌ماند (در صورت عدم استفاده ممکن است کم‌نور شود) و سپس به حالت عادی برمی‌گردد</string>
     <string name="settings_mute">بی‌صدا کردن برنامهٔ در حال استفاده</string>
-    <string name="settings_mute_sub">برنامه‌هایی که 如愿 استفاده می‌کند بی‌صدا می‌مانند؛ وقتی کنترل را به دست بگیرید صدا برمی‌گردد</string>
+    <string name="settings_mute_sub">برنامه‌هایی که 如意 AI استفاده می‌کند بی‌صدا می‌مانند؛ وقتی کنترل را به دست بگیرید صدا برمی‌گردد</string>
     <string name="settings_pace">سرعت انجام کار</string>
     <string name="settings_pace_fast">سریع</string>
     <string name="settings_pace_fast_detail">بدون مکث بین مراحل؛ متن یک‌جا وارد می‌شود</string>
@@ -87,14 +87,14 @@
     </plurals>
     <string name="capsule_settings_title">کپسول شناور</string>
     <string name="capsule_settings_sub">هنگام استفاده از برنامه‌های دیگر، پیشرفت کار را روی صفحه ببینید</string>
-    <string name="capsule_settings_foot">کپسول با سرویس دسترس‌پذیری فعال 如愿 نمایش داده می‌شود و به مجوز اضافی نیاز ندارد. اگر سرویس خاموش باشد یا نتواند کپسول را نمایش دهد، همچنان اعلان دریافت می‌کنید.</string>
-    <string name="capsule_settings_background">بعضی گوشی‌ها برنامه‌ها را در پس‌زمینه می‌بندند. اگر کپسول ناپدید شد، در تنظیمات سیستم اجازهٔ اجرا در پس‌زمینه و شروع خودکار را به 如愿 بدهید.</string>
+    <string name="capsule_settings_foot">کپسول با سرویس دسترس‌پذیری فعال 如意 AI نمایش داده می‌شود و به مجوز اضافی نیاز ندارد. اگر سرویس خاموش باشد یا نتواند کپسول را نمایش دهد، همچنان اعلان دریافت می‌کنید.</string>
+    <string name="capsule_settings_background">بعضی گوشی‌ها برنامه‌ها را در پس‌زمینه می‌بندند. اگر کپسول ناپدید شد، در تنظیمات سیستم اجازهٔ اجرا در پس‌زمینه و شروع خودکار را به 如意 AI بدهید.</string>
     <string name="capsule_mode_off">خاموش</string>
     <string name="capsule_mode_tasks">هنگام انجام کار</string>
     <string name="capsule_mode_always">همیشه</string>
     <string name="capsule_mode_off_detail">فقط اعلان‌ها</string>
     <string name="capsule_mode_tasks_detail">هنگام اجرای کار یا انتظار برای شما ظاهر می‌شود و چند ثانیه پس از آن ناپدید می‌شود</string>
-    <string name="capsule_mode_always_detail">حتی بدون کار، نماد 如愿 را روی صفحه نگه می‌دارد</string>
+    <string name="capsule_mode_always_detail">حتی بدون کار، نماد 如意 AI را روی صفحه نگه می‌دارد</string>
     <string name="capsule_idle_opacity">میزان وضوح در حالت غیرفعال</string>
     <string name="capsule_idle_opacity_detail">پس از چند ثانیه بدون لمس اعمال می‌شود؛ موارد نیازمند توجه شما کاملاً قابل مشاهده می‌مانند</string>
     <string name="capsule_card_size">اندازهٔ کارت</string>
@@ -111,14 +111,14 @@
     </plurals>
     <string name="routes_clear_all">پاک کردن همه</string>
     <string name="routes_clear_title">همهٔ مسیرهای ذخیره‌شده پاک شوند؟</string>
-    <string name="routes_clear_body">پس از پاک کردن، 如愿 دفعهٔ بعد مراحل را دوباره قدم‌به‌قدم پیدا می‌کند. سایر تنظیمات تغییری نمی‌کنند.</string>
+    <string name="routes_clear_body">پس از پاک کردن، 如意 AI دفعهٔ بعد مراحل را دوباره قدم‌به‌قدم پیدا می‌کند. سایر تنظیمات تغییری نمی‌کنند.</string>
     <string name="clear">پاک کردن</string>
     <string name="sandbox_proxy_off">%1$s · پس از روشن شدن دسترسی شبکه استفاده می‌شود</string>
     <string name="net_proxy">پروکسی شبکه</string>
     <string name="net_proxy_row_sub">برای درخواست‌های مدل، به‌روزرسانی‌ها، مرورگر داخلی و دستورها</string>
-    <string name="net_proxy_hint">برای درخواست‌های مدل 如愿 (گفتگو، فهرست مدل‌ها و ورود به حساب)، دانلود به‌روزرسانی، مرورگر داخلی و دستورهای محیط فایل‌ها و پردازش، هنگامی که دسترسی شبکهٔ آن روشن است، استفاده می‌شود. نشانی‌های همین گوشی یا شبکهٔ محلی شما (localhost، ‎192.168.x.x، ‎10.x.x.x و نام‌های پایان‌یافته به ‎.local) همیشه مستقیم متصل می‌شوند تا مدل‌های محلی کار کنند. می‌تواند شامل user:password@ باشد که به‌صورت رمزگذاری‌شده در این گوشی ذخیره می‌شود. برای اتصال مستقیم خالی بگذارید.</string>
+    <string name="net_proxy_hint">برای درخواست‌های مدل 如意 AI (گفتگو، فهرست مدل‌ها و ورود به حساب)، دانلود به‌روزرسانی، مرورگر داخلی و دستورهای محیط فایل‌ها و پردازش، هنگامی که دسترسی شبکهٔ آن روشن است، استفاده می‌شود. نشانی‌های همین گوشی یا شبکهٔ محلی شما (localhost، ‎192.168.x.x، ‎10.x.x.x و نام‌های پایان‌یافته به ‎.local) همیشه مستقیم متصل می‌شوند تا مدل‌های محلی کار کنند. می‌تواند شامل user:password@ باشد که به‌صورت رمزگذاری‌شده در این گوشی ذخیره می‌شود. برای اتصال مستقیم خالی بگذارید.</string>
     <string name="net_proxy_invalid">به شکل http://host:port وارد کنید (socks5، socks5h و https نیز پشتیبانی می‌شوند). در صورت نیاز می‌توانید user:password@ را پیش از نام میزبان قرار دهید.</string>
-    <string name="net_proxy_container_only">پروکسی‌های https:// فقط برای دستورهای محیط فایل‌ها و پردازش استفاده می‌شوند و اتصال‌های خود 如愿 مستقیم می‌مانند. برای پوشش همهٔ اتصال‌ها از http:// یا socks5:// استفاده کنید.</string>
+    <string name="net_proxy_container_only">پروکسی‌های https:// فقط برای دستورهای محیط فایل‌ها و پردازش استفاده می‌شوند و اتصال‌های خود 如意 AI مستقیم می‌مانند. برای پوشش همهٔ اتصال‌ها از http:// یا socks5:// استفاده کنید.</string>
     <string name="net_proxy_browser_unsupported">WebView این گوشی نمی‌تواند از پروکسی جداگانه استفاده کند، بنابراین مرورگر داخلی مستقیم متصل می‌شود.</string>
     <string name="net_proxy_browser_socks_auth">مرورگر داخلی نمی‌تواند از پروکسی SOCKS نیازمند نام کاربری و گذرواژه استفاده کند، بنابراین مستقیم متصل می‌شود.</string>
     <string name="net_proxy_unreachable">اتصال به پروکسی شبکه ممکن نشد یا پروکسی درخواست را منتقل نکرد. بررسی کنید پروکسی فعال باشد و نشانی آن در تنظیمات › پروکسی شبکه درست باشد.</string>
@@ -166,7 +166,7 @@
     <string name="skin_blur_strong">زیاد</string>
     <string name="skin_accent_follow">رنگ تأکیدی از تصویر</string>
     <string name="skin_accent_follow_sub">اگر تصویر رنگ غالبی داشته باشد، به جای رنگ تأکیدی بالا از آن استفاده می‌شود</string>
-    <string name="settings_self_config">اجازه به 如愿 برای تغییر تنظیمات خودش</string>
+    <string name="settings_self_config">اجازه به 如意 AI برای تغییر تنظیمات خودش</string>
     <string name="settings_self_config_sub">در حالت روشن، کارها یک ابزار برای خواندن و تغییر این ترجیحات دارند (سرعت، بی‌صدا کردن، کپسول، ظاهر، رنگ تأکیدی و روشن ماندن صفحه). مدل‌ها، کلیدهای API، شبکهٔ محیط اجرا و موارد حذف داده هرگز شامل آن نیستند</string>
     <string name="settings_step_limit">محدودیت مراحل هر کار</string>
     <string name="settings_step_limit_sub">خاموش یعنی بدون محدودیت. با رسیدن به محدودیت، کار متوقف می‌شود و محل توقف را اعلام می‌کند.</string>
@@ -176,7 +176,7 @@
     <string name="settings_step_limit_invalid">یک عدد صحیح از ۱ تا ۵۰۰ وارد کنید.</string>
     <string name="mcp_servers_title">سرورهای MCP</string>
     <string name="mcp_servers_empty">سرور MCP اضافه نشده است</string>
-    <string name="mcp_servers_empty_sub">یک سرور MCP خارجی اضافه کنید تا ابزارهای آن در اختیار 如愿 قرار گیرند.</string>
+    <string name="mcp_servers_empty_sub">یک سرور MCP خارجی اضافه کنید تا ابزارهای آن در اختیار 如意 AI قرار گیرند.</string>
     <string name="mcp_servers_add">افزودن سرور</string>
     <string name="mcp_servers_edit">ویرایش سرور</string>
     <string name="mcp_servers_name">نام</string>
@@ -211,9 +211,9 @@
     <string name="mcp_tools_expand_hint">برای دیدن توضیح کامل روی یک ابزار بزنید</string>
     <string name="mcp_servers_refresh_all">آزمون همه</string>
     <string name="mcp_servers_allowlist">ابزارهای مجاز (با ویرگول جدا کنید؛ خالی یعنی همه)</string>
-    <string name="quit_title">خروج کامل از 如愿</string>
+    <string name="quit_title">خروج کامل از 如意 AI</string>
     <string name="quit_row_sub">کارهای پس‌زمینه را متوقف و کپسول شناور را پنهان می‌کند</string>
-    <string name="quit_confirm_body">کارهای در حال اجرا متوقف می‌شوند و کپسول شناور و اعلان‌ها ناپدید می‌شوند. با باز کردن دوبارهٔ 如愿 همه‌چیز برمی‌گردد.</string>
+    <string name="quit_confirm_body">کارهای در حال اجرا متوقف می‌شوند و کپسول شناور و اعلان‌ها ناپدید می‌شوند. با باز کردن دوبارهٔ 如意 AI همه‌چیز برمی‌گردد.</string>
     <string name="quit_confirm_action">خروج</string>
     <string name="settings_task_token_budget">سقف توکن برای هر کار</string>
     <string name="settings_task_token_budget_sub">فقط توکن‌های ورودی و خروجی گزارش‌شده توسط ارائه‌دهنده حساب می‌شوند. با رسیدن به سقف، درخواست دیگری ارسال نمی‌شود. درخواست در حال اجرا ممکن است مصرف را از سقف بگذراند؛ تماس‌های بدون مصرف گزارش‌شده صفر حساب می‌شوند.</string>

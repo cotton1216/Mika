@@ -8,7 +8,7 @@
     <string name="usage_title">토큰 사용량</string>
     <string name="usage_none">아직 없음</string>
     <string name="usage_empty_title">이 기간의 사용량이 없어요</string>
-    <string name="usage_empty_body">Mika에게 일을 시키면 사용한 토큰이 여기에 기록돼요.</string>
+    <string name="usage_empty_body">如意 AI에게 일을 시키면 사용한 토큰이 여기에 기록돼요.</string>
     <string name="usage_note">수치는 제공업체가 보고한 값이며 이 휴대전화에만 저장돼요.</string>
     <string name="usage_total">합계</string>
     <string name="usage_trend">추이</string>

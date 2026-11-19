@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="a11y_service_description">این مجوز سیستم به 如愿 اجازه می‌دهد محتوای هر صفحه را بخواند و با آن کار کند. 如愿 از این مجوز فقط در صفحهٔ مجازی خودش برای انجام کارهایی که به آن می‌سپارید استفاده می‌کند و تنها وقتی کاری را در صفحهٔ اصلی به آن بسپارید، روی آن صفحه عمل می‌کند.</string>
+    <string name="a11y_service_description">این مجوز سیستم به 如意 AI اجازه می‌دهد محتوای هر صفحه را بخواند و با آن کار کند. 如意 AI از این مجوز فقط در صفحهٔ مجازی خودش برای انجام کارهایی که به آن می‌سپارید استفاده می‌کند و تنها وقتی کاری را در صفحهٔ اصلی به آن بسپارید، روی آن صفحه عمل می‌کند.</string>
     <string name="channel_attention">به توجه شما نیاز دارد</string>
     <string name="takeover_title">به توجه شما نیاز دارد</string>
     <string name="takeover_title_reason">به توجه شما نیاز دارد: %1$s</string>
@@ -13,15 +13,15 @@
     <string name="takeover_handed_over_hint">برنامه اکنون در صفحهٔ اصلی شما باز است. پس از پایان کار روی «تمام شد» بزنید؛ اگر خودتان همهٔ کار را انجام داده‌اید، «خودم انجام دادم» را انتخاب کنید.</string>
     <string name="takeover_web_busy">ورود به یک وب‌سایت در تنظیمات باز است. ابتدا در آنجا روی «تمام شد» و سپس روی «خودم انجام می‌دهم» بزنید.</string>
     <string name="takeover_move_to_main_failed">انتقال برنامه به صفحهٔ اصلی ممکن نشد. برای تلاش دوباره روی «خودم انجام می‌دهم» بزنید.</string>
-    <string name="takeover_move_back_failed">بازگرداندن برنامه به صفحهٔ 如愿 ممکن نشد. دوباره تلاش کنید.</string>
+    <string name="takeover_move_back_failed">بازگرداندن برنامه به صفحهٔ 如意 AI ممکن نشد. دوباره تلاش کنید.</string>
     <string name="action_take_over">خودم انجام می‌دهم</string>
     <string name="action_hand_back">تمام شد</string>
     <string name="action_finished_myself">خودم انجام دادم</string>
     <string name="action_skip">رد کردن</string>
     <string name="action_cancel_task">لغو کار</string>
     <string name="input_title">به پاسخ شما نیاز دارد</string>
-    <string name="no_answer_note">اگر تا %1$d دقیقه پاسخی ندهید، 如愿 بدون پاسخ ادامه می‌دهد.</string>
-    <string name="input_too_late">دیر شد: پس از %1$d دقیقه 如愿 بدون پاسخ ادامه داد.</string>
+    <string name="no_answer_note">اگر تا %1$d دقیقه پاسخی ندهید، 如意 AI بدون پاسخ ادامه می‌دهد.</string>
+    <string name="input_too_late">دیر شد: پس از %1$d دقیقه 如意 AI بدون پاسخ ادامه داد.</string>
     <string name="action_approve">تأیید</string>
     <string name="action_decline">رد کردن</string>
     <string name="confirmation_locked_hint">برای دیدن گیرنده و محتوا، قفل را باز کنید</string>
@@ -128,7 +128,7 @@
     <string name="terminal_close_confirm">بستن</string>
     <string name="terminal_retry">باز کردن دوباره</string>
     <string name="terminal_stop">توقف</string>
-    <string name="terminal_task_running">如愿 در همین فضای کاری در حال کار است؛ تغییرات هر دو طرف ممکن است تداخل ایجاد کند.</string>
+    <string name="terminal_task_running">如意 AI در همین فضای کاری در حال کار است؛ تغییرات هر دو طرف ممکن است تداخل ایجاد کند.</string>
     <string name="terminal_copy_all">کپی همه</string>
     <string name="terminal_copied">کپی شد</string>
     <string name="personal_replay_title">صفحه تلفن</string>

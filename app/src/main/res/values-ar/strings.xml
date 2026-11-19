@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="a11y_service_description">يتيح هذا الإذن للنظام لـ 如愿 قراءة ما يظهر على أي شاشة والتفاعل معه. لا تستخدم 如愿 هذا الإذن إلا على شاشتها الافتراضية لتنفيذ المهام التي تطلبها منها، ولا تعمل على شاشتك الرئيسية إلا عندما تسند إليها مهمة عليها.</string>
+    <string name="a11y_service_description">يتيح هذا الإذن للنظام لـ 如意 AI قراءة ما يظهر على أي شاشة والتفاعل معه. لا تستخدم 如意 AI هذا الإذن إلا على شاشتها الافتراضية لتنفيذ المهام التي تطلبها منها، ولا تعمل على شاشتك الرئيسية إلا عندما تسند إليها مهمة عليها.</string>
     <string name="channel_attention">يتطلب انتباهك</string>
     <string name="takeover_title">يتطلب انتباهك</string>
     <string name="takeover_title_reason">يتطلب انتباهك: %1$s</string>
@@ -12,15 +12,15 @@
     <string name="takeover_handed_over_hint">أصبح التطبيق الآن على شاشتك الرئيسية. انقر على «تم» عند الانتهاء؛ وإذا كنت قد أنجزت كل شيء بنفسك، فانقر على «أنجزته بنفسي».</string>
     <string name="takeover_web_busy">صفحة تسجيل الدخول إلى موقع مفتوحة في الإعدادات. انقر على «تم» هناك أولاً، ثم انقر على «سأتولى الأمر».</string>
     <string name="takeover_move_to_main_failed">تعذر نقل التطبيق إلى الشاشة الرئيسية. انقر على «سأتولى الأمر» للمحاولة مجدداً.</string>
-    <string name="takeover_move_back_failed">تعذر إعادة التطبيق إلى شاشة 如愿. حاول مجدداً.</string>
+    <string name="takeover_move_back_failed">تعذر إعادة التطبيق إلى شاشة 如意 AI. حاول مجدداً.</string>
     <string name="action_take_over">سأتولى الأمر</string>
     <string name="action_hand_back">تم</string>
     <string name="action_finished_myself">أنجزته بنفسي</string>
     <string name="action_skip">تخطي</string>
     <string name="action_cancel_task">إلغاء المهمة</string>
     <string name="input_title">نحتاج إلى إجابتك</string>
-    <string name="no_answer_note">إذا لم تصل إجابة خلال %1$d دقيقة، فستتابع 如愿 من دونها.</string>
-    <string name="input_too_late">فات الأوان: تابعت 如愿 من دون إجابة بعد %1$d دقيقة.</string>
+    <string name="no_answer_note">إذا لم تصل إجابة خلال %1$d دقيقة، فستتابع 如意 AI من دونها.</string>
+    <string name="input_too_late">فات الأوان: تابعت 如意 AI من دون إجابة بعد %1$d دقيقة.</string>
     <string name="action_approve">موافقة</string>
     <string name="action_decline">رفض</string>
     <string name="confirmation_locked_hint">أزل القفل للاطلاع على المستلِم والمحتوى</string>
@@ -127,7 +127,7 @@
     <string name="terminal_close_confirm">إغلاق</string>
     <string name="terminal_retry">فتح مرة أخرى</string>
     <string name="terminal_stop">إيقاف</string>
-    <string name="terminal_task_running">يعمل 如愿 أيضاً في مساحة العمل هذه؛ قد تتعارض التغييرات من الجانبين.</string>
+    <string name="terminal_task_running">يعمل 如意 AI أيضاً في مساحة العمل هذه؛ قد تتعارض التغييرات من الجانبين.</string>
     <string name="terminal_copy_all">نسخ الكل</string>
     <string name="terminal_copied">تم النسخ</string>
     <string name="personal_replay_title">شاشة الهاتف</string>

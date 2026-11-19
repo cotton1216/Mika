@@ -336,10 +336,10 @@ class RemoteAccount(
         registerWithAccountToken(accountToken, account, null)
 
     /**
-     * 用**如愿 App 那次登录拿到的 AI-Server `access_token`** 登录：先在中继换成账号会话
+     * 用**如意 AI App 那次登录拿到的 AI-Server `access_token`** 登录：先在中继换成账号会话
      * （[RemoteServerApi.loginWithAiServerToken]），再把本机注册成 client 设备。
      *
-     * 这是「一个登录」的落点：如愿登录已经花掉了那枚一次性授权码，远程控制不再自己发起
+     * 这是「一个登录」的落点：如意 AI 登录已经花掉了那枚一次性授权码，远程控制不再自己发起
      * 授权，只复用同一张账号票。中继读的是同一个 AI-Server profile，所以设备挂在同一个
      * 账号下，桌面上看到的就是同一个人。
      */

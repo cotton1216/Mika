@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">الميكروفون غير متاح. قد يكون تطبيق آخر يستخدمه</string>
     <string name="voice_hold_to_talk">اضغط مطولًا للتحدث</string>
     <string name="voice_mic_blocked_title">ما زال الميكروفون غير متاح</string>
-    <string name="voice_mic_blocked_body">تم السماح بالتسجيل بالفعل، لكن 如愿 ما زالت غير قادرة على التسجيل. تحقّق من تفعيل مفتاح الوصول إلى الميكروفون في الإعدادات السريعة (Android 12 والإصدارات الأحدث)، ومن عدم إيقاف ميكروفون 如愿 في مدير الأذونات بالنظام. قد يكون تطبيق آخر يستخدم الميكروفون أيضًا.</string>
+    <string name="voice_mic_blocked_body">تم السماح بالتسجيل بالفعل، لكن 如意 AI ما زالت غير قادرة على التسجيل. تحقّق من تفعيل مفتاح الوصول إلى الميكروفون في الإعدادات السريعة (Android 12 والإصدارات الأحدث)، ومن عدم إيقاف ميكروفون 如意 AI في مدير الأذونات بالنظام. قد يكون تطبيق آخر يستخدم الميكروفون أيضًا.</string>
     <string name="voice_provider_failed">تعذّر تحويل الكلام إلى نص: %1$s</string>
     <string name="voice_unavailable_title">الإدخال الصوتي غير جاهز</string>
     <string name="voice_unavailable_no_engine">لا يتضمن هذا الهاتف ميزة مدمجة للتعرّف على الكلام، ولم يتم اختيار نموذج لتحويل الكلام إلى نص. اختر نموذجًا صوتيًا من أحد المزوّدين ضمن الإعدادات › النماذج › تحويل الكلام إلى نص لتفعيل الميزة.</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">أُزيل المزوّد الخاص بنموذج الكلام المحدد. اختر مزوّدًا آخر ضمن الإعدادات › النماذج › تحويل الكلام إلى نص.</string>
     <string name="voice_unavailable_off">ميزة تحويل الكلام إلى نص متوقفة. اختر واحدة ضمن الإعدادات › النماذج › تحويل الكلام إلى نص.</string>
     <string name="voice_go_pick">اختيار</string>
-    <string name="voice_permission_title">تحتاج 如愿 إلى الميكروفون</string>
-    <string name="voice_permission_body">لكي تسمعك 如愿 عند الضغط مطولًا للتحدث، يلزمها تسجيل الصوت. سبق أن رُفض الإذن، لذا لن يطلب الهاتف الإذن مجددًا. فعّل الميكروفون في صفحة أذونات 如愿 ضمن إعدادات النظام.</string>
+    <string name="voice_permission_title">تحتاج 如意 AI إلى الميكروفون</string>
+    <string name="voice_permission_body">لكي تسمعك 如意 AI عند الضغط مطولًا للتحدث، يلزمها تسجيل الصوت. سبق أن رُفض الإذن، لذا لن يطلب الهاتف الإذن مجددًا. فعّل الميكروفون في صفحة أذونات 如意 AI ضمن إعدادات النظام.</string>
     <string name="voice_permission_open">فتح الإعدادات</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">تحدث</string>
     <string name="capsule_voice_send">إرسال</string>
-    <string name="capsule_voice_answer_title">الإجابة على 如愿</string>
+    <string name="capsule_voice_answer_title">الإجابة على 如意 AI</string>
     <string name="capsule_voice_continue_title">متابعة «%1$s»</string>
     <string name="capsule_voice_cancel">إلغاء</string>
     <string name="capsule_voice_edit">تعديل</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">تم إبلاغ المهمة: %1$s</string>
     <string name="capsule_voice_answered">تمت الإجابة: %1$s</string>
     <string name="capsule_voice_sent">تم الإرسال: %1$s</string>
-    <string name="capsule_voice_need_mic">انقر للسماح للميكروفون في 如愿</string>
+    <string name="capsule_voice_need_mic">انقر للسماح للميكروفون في 如意 AI</string>
     <string name="capsule_voice_not_ready">الإدخال الصوتي غير جاهز · انقر</string>
-    <string name="capsule_voice_open">فتح 如愿</string>
+    <string name="capsule_voice_open">فتح 如意 AI</string>
 </resources>

@@ -3,12 +3,12 @@ package com.wangzan101.mika.cap.phone.a11y
 import android.view.accessibility.AccessibilityEvent
 
 /**
- * 判 Agent 的一个动作是不是让一个 App 开到了用户的主屏上。App 不是从自己在如愿屏上的页面、而是从后台
- * (服务、通知的跳转、系统的选择器、跨用户的转交)打开另一个 App 时,系统按默认放到主屏;如愿的屏上看不出变化,
- * 模型会以为没点上、一遍遍再点。认出来就挪回如愿的屏(见 AndroidScreen)。
+ * 判 Agent 的一个动作是不是让一个 App 开到了用户的主屏上。App 不是从自己在如意 AI 屏上的页面、而是从后台
+ * (服务、通知的跳转、系统的选择器、跨用户的转交)打开另一个 App 时,系统按默认放到主屏;如意 AI 的屏上看不出变化,
+ * 模型会以为没点上、一遍遍再点。认出来就挪回如意 AI 的屏(见 AndroidScreen)。
  *
  * 只看动作开始之后一小段时间里主屏最上面换上来的任务(内置助手记下的,见 MainScreenLog)。不算:
- * 不在这段时间里的;桌面、最近任务一类的页面,如愿自己,桌面 App([excluded]);从别的屏挪过来的(接管、别的任务的接管);
+ * 不在这段时间里的;桌面、最近任务一类的页面,如意 AI 自己,桌面 App([excluded]);从别的屏挪过来的(接管、别的任务的接管);
  * 此刻已不在主屏上的;这段时间里用户在主屏上点过东西,或先回过桌面再从桌面/通知栏打开(当作用户自己开的);
  * 动作之前就在主屏最上面的那个任务又回到最上面(挪走开出来的那个后露出来的)。
  * 动作之前主屏最上面的任务里换了页面:是用户正在用的那个 App 被打开了,开在了用户眼前,不去动它([InUse])。
@@ -36,7 +36,7 @@ internal object MainScreenSpill {
     data class Tap(val at: Long, val packageName: String?)
 
     sealed interface Verdict { val arrival: Arrival }
-    /** 动作开到主屏上的:挪回如愿的屏。 */
+    /** 动作开到主屏上的:挪回如意 AI 的屏。 */
     data class PullBack(override val arrival: Arrival) : Verdict
     /** 开到了用户正在主屏上用着的那个 App 里:不动它,告诉模型。 */
     data class InUse(override val arrival: Arrival) : Verdict
@@ -75,7 +75,7 @@ internal object MainScreenSpill {
     }
 
     enum class Handling {
-        /** 挪回如愿的屏(只挪任务,打开它的仍是原来那个 App)。 */
+        /** 挪回如意 AI 的屏(只挪任务,打开它的仍是原来那个 App)。 */
         Move,
         /** 系统在问用户打开哪一个:不挪,留给用户在自己屏上选,任务等着。 */
         LeaveForUser,
@@ -83,7 +83,7 @@ internal object MainScreenSpill {
 
     /**
      * 开到主屏上的这个怎么办:系统包的窗口,而且是系统的选择器、或窗口里的选项对得上装了两份的 App([optionsMatch]),
-     * 就是在问打开哪一个,留给用户;其余挪回。如愿从不替别的 App 重新打开它。
+     * 就是在问打开哪一个,留给用户;其余挪回。如意 AI 从不替别的 App 重新打开它。
      */
     fun handling(systemPackage: Boolean, systemPicker: Boolean, optionsMatch: Boolean): Handling =
         if (systemPackage && (systemPicker || optionsMatch)) Handling.LeaveForUser else Handling.Move
@@ -114,7 +114,7 @@ internal object MainScreenSpill {
 
     /**
      * 这个包是不是系统的账号登录服务:在认证器[authenticators]里,自己又没有桌面图标([hasLauncher] 为 false)。
-     * 这种包冒到主屏上的只会是加账号、登录、验证一类页面,要用户亲手做,整屏、没有密码框也不能挪到如愿的屏上。
+     * 这种包冒到主屏上的只会是加账号、登录、验证一类页面,要用户亲手做,整屏、没有密码框也不能挪到如意 AI 的屏上。
      * 有桌面图标的认证器包(同步联系人的聊天 App、邮箱 App)只是顺带登记了账号,它的页面照常按别的判据走。纯逻辑。
      */
     fun authenticatorUi(pkg: String, authenticators: Set<String>, hasLauncher: Boolean): Boolean =

@@ -138,7 +138,7 @@ class LegacySseMcpEndpoint private constructor(
             http: OkHttpClient = OkHttpClient(),
             headers: Map<String, String> = emptyMap(),
             timeoutSec: Int = 60,
-            clientName: String = "如愿",
+            clientName: String = "如意 AI",
             clientVersion: String = "1",
             protocolVersion: String = PROTOCOL_VERSION,
         ): Result<LegacySseMcpEndpoint> = runCatching {

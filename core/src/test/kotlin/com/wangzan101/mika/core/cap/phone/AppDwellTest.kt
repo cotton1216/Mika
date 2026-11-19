@@ -95,7 +95,7 @@ class AppDwellTest {
         val stopped = ex.tap(t)
         assertEquals("page_limit", stopped.error())
         assertTrue(stopped.content["message"].toString(), stopped.content["message"].toString().contains("ask_user"))
-        assertTrue(stopped.content["message"].toString().contains("如愿 reached its per-task app screen budget"))
+        assertTrue(stopped.content["message"].toString().contains("如意 AI reached its per-task app screen budget"))
         val budget = stopped.content["navigationBudget"] as JsonObject
         assertEquals(JsonPrimitive("app_screens"), budget["scope"])
         assertEquals(JsonPrimitive("com.slow"), budget["target"])

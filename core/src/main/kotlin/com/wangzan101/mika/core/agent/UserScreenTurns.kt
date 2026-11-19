@@ -56,7 +56,7 @@ internal class UserScreenTurns(
         return turns.map { t -> t.copy(userText = one(t.userText), steers = t.steers.map(::one)) }
     }
 
-    /** 回答里带着屏幕时(如愿问你时双击了胶囊):换成一段文字,截图要看用回看工具。 */
+    /** 回答里带着屏幕时(如意 AI 问你时双击了胶囊):换成一段文字,截图要看用回看工具。 */
     suspend fun asText(raw: String): String {
         val r = render(raw) ?: return raw
         return (listOf(r.said) + r.details.map { it.second }).joinToString("\n\n")

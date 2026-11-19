@@ -203,7 +203,7 @@ fun ChatScreen(
     voice: VoiceSource? = null,
     /** 「还不能语音输入」里的「去选」。 */
     openSpeechModel: () -> Unit = {},
-    /** 输入框里还没发出的字，交给「教如愿」预填，不会自己开始。 */
+    /** 输入框里还没发出的字，交给「教如意 AI」预填，不会自己开始。 */
     onOpenTeach: (String) -> Unit = {},
     /** 首页推荐任务。不传时用本机保存的那一份;测试传入单独的存储,避免改到用户的数据。 */
     recommendations: RecommendedTaskStore? = null,
@@ -651,7 +651,7 @@ private fun LazyListState.nearTail(thresholdPx: Int): Boolean {
 
 // ---------- 空对话 ----------
 
-/** 问候、一句「想让如愿做什么？」和推荐任务。点一条把提示词填进输入框,改好了再发;一条都没有时不显示列表。 */
+/** 问候、一句「想让如意 AI 做什么？」和推荐任务。点一条把提示词填进输入框,改好了再发;一条都没有时不显示列表。 */
 @Composable
 private fun EmptyState(conversation: String?, tasks: List<RecommendedTask>, onPick: (String) -> Unit) {
     val c = MikaTheme.colors
@@ -869,7 +869,7 @@ private fun FinishedReply(text: String, key: String) {
 }
 
 /**
- * 如愿的一段回答:长按弹出复制 / 引用 / 选择文字(见 [MessageArea]),复制、引用的是去掉 Markdown 符号的纯文字;
+ * 如意 AI 的一段回答:长按弹出复制 / 引用 / 选择文字(见 [MessageArea]),复制、引用的是去掉 Markdown 符号的纯文字;
  * [modifier] 是回答的底,抬起的那张是同样的字放在白卡上。选择文字时选区的把手在单独的弹出窗口里,拖把手不会带出侧栏。
  */
 @Composable
@@ -894,7 +894,7 @@ private fun InterruptedReply(text: String) {
     }
 }
 
-/** 如愿回答的底:很淡的灰,左下尾角。 */
+/** 如意 AI 回答的底:很淡的灰,左下尾角。 */
 @Composable
 private fun Modifier.answerSurface(): Modifier =
     background(MikaTheme.colors.answer, MikaShapes.AnswerBubble).padding(horizontal = 14.dp, vertical = 12.dp)
@@ -1355,7 +1355,7 @@ private fun TextLink(text: String, onClick: () -> Unit) {
     Text(text, Modifier.clip(MikaShapes.Pill).clickable(onClick = onClick).padding(4.dp), style = MikaType.Caption, color = MikaTheme.colors.ink3)
 }
 
-/** 导出到「下载/如愿」的文件:小卡片,名字、大小和存放处;点了能看的在 App 里打开([FileViewer]),其余交给系统里能打开它的 App。 */
+/** 导出到「下载/如意 AI」的文件:小卡片,名字、大小和存放处;点了能看的在 App 里打开([FileViewer]),其余交给系统里能打开它的 App。 */
 @Composable
 private fun FileCards(files: List<SharedFile>) {
     val context = LocalContext.current
@@ -1420,7 +1420,7 @@ internal fun Composer(
     attachPanel: (@Composable () -> Unit)? = null,
     /** 附件已启用但此刻不能加(任务在跑、插话模式):「＋」还在,点了提示改切队列。 */
     attachBlocked: Boolean = false,
-    /** 「＋」面板里的「教如愿」。点了先收起面板。 */
+    /** 「＋」面板里的「教如意 AI」。点了先收起面板。 */
     onTeach: (() -> Unit)? = null,
     attachments: List<PendingAttachment> = emptyList(),
     importing: Boolean = false,

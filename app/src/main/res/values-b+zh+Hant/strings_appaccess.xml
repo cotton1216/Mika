@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">應用程式存取</string>
     <string name="appaccess_row_sub">按應用程式設定禁用和螢幕分享許可</string>
-    <string name="appaccess_intro">選擇允許如愿透過標準手機工具讀取和操作的應用程式。Shell 命令、沙箱和電腦連接（MCP）不受此設定限制。</string>
+    <string name="appaccess_intro">選擇允許如意 AI 透過標準手機工具讀取和操作的應用程式。Shell 命令、沙箱和電腦連接（MCP）不受此設定限制。</string>
     <string name="appaccess_privacy">分類會把應用程式名稱和套件名稱傳給 AI 模型；點「重新整理應用程式清單」時會先詢問你。</string>
     <string name="appaccess_unavailable">應用程式存取設定無法讀取，標準手機存取已暫停。重設會清掉已儲存的權限和分類。</string>
     <string name="appaccess_reset">重設應用程式存取</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">取消</string>
 
     <string name="appaccess_recommend_title">建議禁用金融交易應用程式</string>
-    <string name="appaccess_recommend_body">這些應用程式會被辨識為金融交易類，而如愿現在仍能自動操作它們。可以逐個禁用，或一次全部禁用。</string>
+    <string name="appaccess_recommend_body">這些應用程式會被辨識為金融交易類，而如意 AI 現在仍能自動操作它們。可以逐個禁用，或一次全部禁用。</string>
     <string name="appaccess_recommend_empty">沒有需要禁用的應用程式。</string>
     <string name="appaccess_block">禁用</string>
     <string name="appaccess_block_all">全部禁用</string>

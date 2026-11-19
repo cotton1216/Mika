@@ -98,8 +98,10 @@ import com.xxt.zl.ai.ruyiremote.ui.components.GlyphMenu
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphMore
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphChevron
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphCheckCircle
+import com.xxt.zl.ai.ruyiremote.ui.components.GlyphClose
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphCopy
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphPlus
+import com.xxt.zl.ai.ruyiremote.ui.components.GlyphRefresh
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphSend
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphShare
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphSpark
@@ -334,15 +336,20 @@ fun ChatScreen(
 
                 items(state.rows) { row ->
                     when (row) {
-                        is UserRow -> UserMessage(row, loadImage)
+                        is UserRow -> UserMessage(row, loadImage, onResend = { chat.resend(row) })
                         is AssistantRow -> AssistantMessage(
                             row = row,
                             changedModel = modelChanges[row.key],
                             loadImage = loadImage,
                             onQuote = { text -> draft = quoteIntoDraft(draft, text) },
                             onShareConversation = { shareAnchorKey = row.key },
+                            onRetry = { chat.retryLastTurn() },
                         )
-                        is NoticeRow -> NoticeLine(row)
+                        is NoticeRow -> NoticeLine(
+                            row = row,
+                            // 「本轮已停止」「达到长度上限」不是故障，给重试等于诱导用户重复花钱。
+                            onRetry = if (row.isError) ({ chat.retryLastTurn() }) else null,
+                        )
                         is ToolRow -> {
                             val waitingFor = when {
                                 state.approvals.any { it.callId != null && it.callId == row.callId } -> "批准"
@@ -581,10 +588,15 @@ private fun ModelPicker(
             Box(Modifier.align(Alignment.CenterHorizontally).size(width = 36.dp, height = 4.dp)
                 .clip(RoundedCornerShape(2.dp)).background(p.hairline))
             Row(
-                Modifier.fillMaxWidth().padding(start = 20.dp, end = 16.dp, top = 14.dp, bottom = 6.dp),
+                Modifier.fillMaxWidth().padding(start = 8.dp, end = 16.dp, top = 14.dp, bottom = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Column(Modifier.weight(1f)) {
+                // 面板从底部升起、遮住大半屏，返回键之外还得有个明确的关法：
+                // 左上角关闭是全屏浮层的通用位置，点遮罩仍是同一条路径（onClose）。
+                GlyphAction(label = "关闭模型选择", onClick = onClose) {
+                    GlyphClose(size = 16.dp, tint = p.textSecondary)
+                }
+                Column(Modifier.weight(1f).padding(start = 4.dp)) {
                     Text("选择模型", style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold, color = p.text)
                     Text(
@@ -957,7 +969,11 @@ private fun Modifier.floatShadow(p: RuyiPalette, shape: Shape) =
 /* ------------------------------------------------------------------ 消息 */
 
 @Composable
-private fun UserMessage(row: UserRow, loadImage: suspend (MessageImage) -> ByteArray) {
+private fun UserMessage(
+    row: UserRow,
+    loadImage: suspend (MessageImage) -> ByteArray,
+    onResend: () -> Unit,
+) {
     val p = LocalRuyiPalette.current
     val imageShape = RoundedCornerShape(16.dp)
     Column(
@@ -997,12 +1013,19 @@ private fun UserMessage(row: UserRow, loadImage: suspend (MessageImage) -> ByteA
                 color = p.textTertiary,
             )
 
-            PromptPhase.Failed -> Text(
-                row.error ?: "发送失败",
-                style = MaterialTheme.typography.labelSmall,
-                color = p.danger,
-                textAlign = TextAlign.End,
-            )
+            PromptPhase.Failed -> Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Text(
+                    row.error ?: "发送失败",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = p.danger,
+                    textAlign = TextAlign.End,
+                )
+                // 这一条根本没送到 Host：重发不会产生重复消息，代价最低，所以在原处给按钮。
+                RetryButton(label = "重新发送", onClick = onResend)
+            }
 
             PromptPhase.Sent -> Unit
         }
@@ -1023,6 +1046,7 @@ private fun AssistantMessage(
     loadImage: suspend (MessageImage) -> ByteArray,
     onQuote: (String) -> Unit,
     onShareConversation: () -> Unit,
+    onRetry: () -> Unit,
 ) {
     val p = LocalRuyiPalette.current
     val imageShape = RoundedCornerShape(16.dp)
@@ -1055,7 +1079,14 @@ private fun AssistantMessage(
             MarkdownContent(text = row.text, modifier = Modifier.fillMaxWidth())
         }
         if (row.interrupted) {
-            Text("输出被中断", style = MaterialTheme.typography.labelSmall, color = p.danger)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Text("输出被中断", style = MaterialTheme.typography.labelSmall, color = p.danger)
+                // 已发出去的那一轮只能整轮重来：核心层没有 retry，重发 prompt 是唯一路径。
+                RetryButton(label = "重试", onClick = onRetry)
+            }
         }
         // 流式过程中给动作没有意义（复制到一半的答案），完成后才出现。
         if (!row.streaming && row.text.isNotBlank()) {
@@ -1272,17 +1303,47 @@ private fun GlyphAction(label: String, onClick: () -> Unit, content: @Composable
 }
 
 @Composable
-private fun NoticeLine(row: NoticeRow) {
+private fun NoticeLine(row: NoticeRow, onRetry: (() -> Unit)? = null) {
     val p = LocalRuyiPalette.current
-    Text(
-        row.text,
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Space.xl),
-        style = MaterialTheme.typography.labelSmall,
-        color = if (row.isError) p.danger else p.textTertiary,
-        textAlign = TextAlign.Center,
-    )
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            row.text,
+            style = MaterialTheme.typography.labelSmall,
+            color = if (row.isError) p.danger else p.textTertiary,
+            textAlign = TextAlign.Center,
+        )
+        if (onRetry != null) RetryButton(label = "重试", onClick = onRetry)
+    }
+}
+
+/**
+ * 「重试」胶囊。
+ *
+ * 用带文字的胶囊而不是纯图标：失败提示本身就是一行小字，旁边再放一个没有标签的
+ * 圆形按钮，读起来像装饰。刷新图标加「重试」两个字，一眼知道按了会发生什么。
+ */
+@Composable
+private fun RetryButton(label: String, onClick: () -> Unit) {
+    val p = LocalRuyiPalette.current
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(50))
+            .background(p.hairline.copy(alpha = 0.45f))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+            .semantics { contentDescription = label; role = Role.Button },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        GlyphRefresh(size = 13.dp, tint = p.textSecondary)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = p.textSecondary)
+    }
 }
 
 @Composable

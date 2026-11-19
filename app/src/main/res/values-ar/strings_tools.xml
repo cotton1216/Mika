@@ -65,8 +65,8 @@
     <string name="tool_tap">نقر</string>
     <string name="tool_type">كتابة نص</string>
     <string name="tool_clear">مسح الحقل</string>
-    <string name="tool_mika_status">عرض حالة Mika</string>
-    <string name="tool_mika_open_screen">فتح صفحة Mika</string>
+    <string name="tool_mika_status">عرض حالة 如意 AI</string>
+    <string name="tool_mika_open_screen">فتح صفحة 如意 AI</string>
     <string name="tool_mika_open_file">فتح ملف</string>
     <string name="tool_mika_notify">إرسال إشعار</string>
     <string name="tool_mika_copy">نسخ النص</string>

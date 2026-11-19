@@ -136,7 +136,7 @@ internal object SetTimer : PhoneTool {
     }
 }
 
-/** 在如愿的屏上打开时钟的闹钟列表:核对、删除、改闹钟都在那一页上操作。 */
+/** 在如意 AI 的屏上打开时钟的闹钟列表:核对、删除、改闹钟都在那一页上操作。 */
 internal object ShowAlarms : PhoneTool {
     override val verb = Verb.ShowAlarms
     override val label = "查看闹钟"

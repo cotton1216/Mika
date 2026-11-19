@@ -9,7 +9,7 @@ import android.provider.Settings
 import android.telecom.TelecomManager
 import com.wangzan101.mika.shell.IMikaShell
 
-/** Only modifies 如愿's own Telecom registration and single app-op; never changes the dialer. */
+/** Only modifies 如意 AI's own Telecom registration and single app-op; never changes the dialer. */
 internal class CallTelecomAccess(private val context: Context) {
     private val telecom get() = context.getSystemService(TelecomManager::class.java)
     private val journal = context.getSharedPreferences("mika_call_access", Context.MODE_PRIVATE)
@@ -36,7 +36,7 @@ internal class CallTelecomAccess(private val context: Context) {
 
     fun prepare(shell: IMikaShell): String? {
         if (!supported) return "电话伴侣模式需要 Android 12 及以上、主用户及运营商通话功能"
-        if (!hasPhonePermissions()) return "请在如愿的系统权限中允许电话权限"
+        if (!hasPhonePermissions()) return "请在如意 AI 的系统权限中允许电话权限"
         val original = readOp(shell) ?: return "无法读回电话权限状态"
         val systemDialer = runCatching { telecom?.defaultDialerPackage }.getOrNull()
             ?: return "无法读回系统默认拨号器"
@@ -49,7 +49,7 @@ internal class CallTelecomAccess(private val context: Context) {
                 return change.appOpsFailureMessage
             }
         } else if (!managePermission()) {
-            return "此系统不允许如愿管理运营商通话"
+            return "此系统不允许如意 AI 管理运营商通话"
         }
         // No public API lists this test override. Reuse external setup when the allow was
         // already granted independently; only remove a registration made by this runtime.

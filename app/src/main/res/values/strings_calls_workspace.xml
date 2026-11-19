@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">No preferred SIM</string>
     <string name="calls_task_back_to_edit">Back to editing</string>
     <string name="calls_task_confirm_dial">Confirm and dial</string>
-    <string name="calls_task_confirm_note">如愿 uses this brief for this call. Dialing uses the selected SIM and may incur carrier and realtime voice charges.</string>
+    <string name="calls_task_confirm_note">如意 AI uses this brief for this call. Dialing uses the selected SIM and may incur carrier and realtime voice charges.</string>
     <string name="calls_task_constraints">What must not be promised</string>
     <string name="calls_task_context">Additional context</string>
     <string name="calls_task_filled">Added</string>

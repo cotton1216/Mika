@@ -19,8 +19,8 @@
     <string name="relay_unpair">게이트웨이 페어링 해제</string>
     <string name="relay_unpair_body">이 휴대전화와 게이트웨이의 연결을 끊어요. 인터넷 연결이 필요해요. 휴대전화 액세스 토큰은 그대로 유지돼요.</string>
     <string name="relay_failed">완료하지 못했어요. 게이트웨이 주소, 인터넷 연결, 페어링 코드를 확인하세요. 페어링 해제에 실패했다면 접속은 꺼진 상태예요. 다시 시도하거나 게이트웨이에서 이 휴대전화를 취소하세요.</string>
-    <string name="relay_notif_body">원격 접속이 켜져 있어요. Mika를 열어 게이트웨이 연결을 확인하세요.</string>
-    <string name="relay_incompatible">Mika와 게이트웨이를 서로 맞는 버전으로 업데이트하세요</string>
+    <string name="relay_notif_body">원격 접속이 켜져 있어요. 如意 AI를 열어 게이트웨이 연결을 확인하세요.</string>
+    <string name="relay_incompatible">如意 AI와 게이트웨이를 서로 맞는 버전으로 업데이트하세요</string>
     <string name="relay_copy_gateway">게이트웨이 주소 복사</string>
     <string name="relay_cli_help">액세스 토큰을 컴퓨터의 파일로 저장한 다음, 위의 연결 명령을 실행하세요.</string>
     <string name="relay_intro">게이트웨이는 보통 Wi-Fi / LAN으로 보내는 CLI와 MCP 요청을 원격으로 휴대전화에 전달해요. 페어링하기 전에 직접 운영하는 공개 서버에 배포하세요.</string>

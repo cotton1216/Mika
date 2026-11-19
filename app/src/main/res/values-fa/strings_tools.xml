@@ -65,8 +65,8 @@
     <string name="tool_tap">لمس</string>
     <string name="tool_type">وارد کردن متن</string>
     <string name="tool_clear">پاک کردن کادر</string>
-    <string name="tool_mika_status">مشاهدهٔ وضعیت میکا</string>
-    <string name="tool_mika_open_screen">باز کردن یک صفحهٔ میکا</string>
+    <string name="tool_mika_status">مشاهدهٔ وضعیت 如意 AI</string>
+    <string name="tool_mika_open_screen">باز کردن یک صفحهٔ 如意 AI</string>
     <string name="tool_mika_open_file">باز کردن یک فایل</string>
     <string name="tool_mika_notify">ارسال اعلان</string>
     <string name="tool_mika_copy">کپی کردن متن</string>

@@ -347,18 +347,18 @@ class McpServerStore(
                 StdioMcpEndpoint.connect(
                     serverId = config.id, command = argv, launcher = launcher, workspace = workspace,
                     timeoutSec = config.timeoutSec,
-                    clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
+                    clientName = "如意 AI", clientVersion = BuildConfig.VERSION_NAME,
                 ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
             }
             "http-sse" -> LegacySseMcpEndpoint.connect(
                 serverId = config.id, url = config.url, http = http,
                 headers = headers, timeoutSec = config.timeoutSec,
-                clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
+                clientName = "如意 AI", clientVersion = BuildConfig.VERSION_NAME,
             ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
             else -> HttpMcpEndpoint.connect(
                 serverId = config.id, url = config.url, http = http,
                 headers = headers, timeoutSec = config.timeoutSec,
-                clientName = "如愿", clientVersion = BuildConfig.VERSION_NAME,
+                clientName = "如意 AI", clientVersion = BuildConfig.VERSION_NAME,
             ).map { it as com.wangzan101.mika.core.cap.mcp.McpEndpoint }
         }
     } catch (e: CancellationException) {
@@ -449,9 +449,9 @@ class McpServerStore(
         McpHealth(false, e.message ?: e.javaClass.simpleName, emptyList(), System.currentTimeMillis())
 
     private fun oauthPage(ok: Boolean): String = if (ok) {
-        "<html><body><h3>如愿: 登录成功</h3><p>Sign-in complete. You can return to 如愿.</p></body></html>"
+        "<html><body><h3>如意 AI: 登录成功</h3><p>Sign-in complete. You can return to 如意 AI.</p></body></html>"
     } else {
-        "<html><body><h3>如愿: 登录失败</h3><p>Sign-in failed. Return to 如愿 and try again.</p></body></html>"
+        "<html><body><h3>如意 AI: 登录失败</h3><p>Sign-in failed. Return to 如意 AI and try again.</p></body></html>"
     }
 
     private fun loadServers(): List<McpServerConfig> = runCatching {

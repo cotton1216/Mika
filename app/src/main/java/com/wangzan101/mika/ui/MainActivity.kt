@@ -282,7 +282,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        // 用户先前点了「完全退出」:打开如愿就回来,胶囊和退出时略过的启动工作在这里补上
+        // 用户先前点了「完全退出」:打开如意 AI 就回来,胶囊和退出时略过的启动工作在这里补上
         com.wangzan101.mika.quit.MikaQuit.resume(this)
         monitor.start()
         // 每次打开都悄悄查一次新版本(两分钟内连着打开的只查一次),失败不吭声
@@ -414,11 +414,11 @@ internal fun <T> firstThatStarts(candidates: List<T>, start: (T) -> Boolean): Bo
 private data class SharedDraftRequest(val draft: SharedDraft, val serial: Long, val inCurrentConversation: Boolean = false)
 
 /**
- * 如愿 App 的两个顶级模块。
+ * 如意 AI App 的两个顶级模块。
  *
- * [Ruyuan] 是 AI 对话(如愿), [Ruyi] 是远程电脑(如意)。远程控制不再是左侧抽屉里
+ * [Ruyuan] 是 AI 对话(Chat), [Ruyi] 是远程电脑(Remote)。远程控制不再是左侧抽屉里
  * 的一页,而是和对话平级的入口:顶部两个 Tab 切换,「进太深回不去」直接变成点 Tab
- * 切回来,不再依赖返回键或「返回如愿」箭头。
+ * 切回来,不再依赖返回键或「返回如意 AI」箭头。
  */
 private enum class RootTab { Ruyuan, Ruyi }
 
@@ -448,7 +448,7 @@ private fun MikaRoot(
     var focusedCallHistoryId by remember { mutableStateOf<String?>(null) }
     val personalStart = remember { FeatureFlags.get(context).personalStart() }
     val nav = rememberNavStack(if (personalStart && requestedConversation == null) Route.Personal else Route.Chat)
-    // 顶部双 Tab:如愿(对话)｜如意(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
+    // 顶部双 Tab:Chat(对话)｜Remote(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
     var selectedTab by rememberSaveable { mutableStateOf(RootTab.Ruyuan) }
     // 悬浮球点击时递增,通知远程抽屉(如意 Tab)把它自己收起来;0 为初始值。
     var closeRemoteDrawer by rememberSaveable { mutableStateOf(0) }
@@ -458,7 +458,7 @@ private fun MikaRoot(
     var setupRepair by rememberSaveable { mutableStateOf(false) }
     // 首次上手正在走哪一步;为空时不在上手流程里。配置模型页从哪儿来就回哪儿去
     var onboarding by rememberSaveable { mutableStateOf<OnboardingStep?>(null) }
-    // 这次进登录页是「如意」里点「回如愿登录」来的:登录完要回如意,而且**已经登录过也别自动跳走** ——
+    // 这次进登录页是「如意」里点「回如意 AI 登录」来的:登录完要回如意,而且**已经登录过也别自动跳走** ——
     // 中继不可达时登录是成功的、只有注册失败,自动跳走会让用户落回对话页、永远走不到重新授权那一步。
     // 账号票只在内存里传一次、不落盘(RuyiSignIn 的约定),所以「重试注册」在技术上不成立,重新授权是唯一出路。
     var ruyiLoginForRemote by rememberSaveable { mutableStateOf(false) }
@@ -591,7 +591,7 @@ private fun MikaRoot(
     }
     val phoneSetupNeeded by phoneSetup.needed.collectAsState()
     // 页面有自己的返回处理时(设置页里的子页、侧栏)由它们先接;这里只管退回上一页
-    // 二级页面的返回只在「如愿」Tab 里处理;「如意」Tab 的返回交给 RemoteScreen 内部(它自己有一整条栈)。
+    // 二级页面的返回只在 Chat Tab 里处理;Remote Tab 的返回交给 RemoteScreen 内部(它自己有一整条栈)。
     BackHandler(enabled = selectedTab == RootTab.Ruyuan && nav.canGoBack) { nav.back() }
     val back: () -> Unit = { nav.back() }
     // 聊天页离开组合树时保留列表位置和输入内容，返回设置页等子页面后原样恢复。
@@ -608,9 +608,9 @@ private fun MikaRoot(
             }
             // 内容区:顶部胶囊显示时消费状态栏 inset(胶囊已避让状态栏),隐藏时让各页面自己留白。
             Box(Modifier.weight(1f).then(if (showTopNav) Modifier.consumeWindowInsets(WindowInsets.statusBars) else Modifier)) {
-            // 如愿(对话) —— 先组合:它的常驻 BackHandler(侧栏)先注册、优先级更低;
-            // 如意(远程电脑)放在其后组合,让它的 active 门控 BackHandler 后注册,
-            // 如意 Tab 选中时优先吃掉返回键,抽屉展开按返回能收起而非退出 App。
+            // Chat(对话) —— 先组合:它的常驻 BackHandler(侧栏)先注册、优先级更低;
+            // Remote(远程电脑)放在其后组合,让它的 active 门控 BackHandler 后注册,
+            // Remote Tab 选中时优先吃掉返回键,抽屉展开按返回能收起而非退出 App。
             // 渲染层级由 tabContent 的 zIndex 独立控制,调换组合顺序不影响视觉。
             Box(Modifier.fillMaxSize().tabContent(selectedTab == RootTab.Ruyuan)) {
                 when (nav.current) {
@@ -620,12 +620,12 @@ private fun MikaRoot(
                     }
                     Route.RuyiLogin -> RuyiLoginScreen(
                         store,
-                        // 「回如愿登录」这条路上,用户本来就是登录着的 —— 让他停在这一页,
+                        // 「回如意 AI 登录」这条路上,用户本来就是登录着的 —— 让他停在这一页,
                         // 点一次「账号登录」重新授权,远程控制那边才会重新注册。
                         autoAdvance = !ruyiLoginForRemote,
                         onSignedIn = {
                             if (ruyiLoginForRemote) {
-                                // 登录页留在如愿的栈里会把下次切回来又推出来,先归位再回如意
+                                // 登录页留在如意 AI 的栈里会把下次切回来又推出来,先归位再回如意
                                 ruyiLoginForRemote = false
                                 nav.reset()
                                 selectedTab = RootTab.Ruyi
@@ -885,8 +885,8 @@ private fun MikaRoot(
                     onBack = { selectedTab = RootTab.Ruyuan },
                     active = selectedTab == RootTab.Ruyi,
                     closeDrawerRequest = closeRemoteDrawer,
-                    // 如意的登录由如愿统一负责（RemoteScreen 里 showSso=false），所以
-                    // 「回如愿登录」得切回如愿 Tab 再落到如意账号那一页 —— 只切 Tab
+                    // 如意的登录由如意 AI 统一负责（RemoteScreen 里 showSso=false），所以
+                    // 「回如意 AI 登录」得切回如意 AI Tab 再落到如意账号那一页 —— 只切 Tab
                     // 会停在对话页，用户还得自己翻设置找登录入口。
                     onBackToHostSignIn = {
                         // 标记来路:登录页要停住(autoAdvance=false)、注册成功后才回如意
@@ -899,7 +899,7 @@ private fun MikaRoot(
             }
         }
     }
-        // 悬浮球只在主界面(如愿对话/如意远程两个顶层 Tab 已就绪)显示;
+        // 悬浮球只在主界面(Chat/Remote 两个顶层 Tab 已就绪)显示;
         // 登录页、上手引导(欢迎/配置模型/手机操作)等页面还没有这两个 Tab,不显示。
         if (nav.current == Route.Chat || nav.current == Route.Personal) {
             FloatingDock(
@@ -931,7 +931,7 @@ private fun Modifier.tabContent(visible: Boolean): Modifier =
             }
         )
 
-/** 顶部悬浮导航胶囊:如愿(对话)｜如意(远程电脑)。玻璃圆角底 + 阴影,选中项实心高亮。 */
+/** 顶部悬浮导航胶囊:Chat(对话)｜Remote(远程电脑)。玻璃圆角底 + 阴影,选中项实心高亮。 */
 @Composable
 private fun RootFloatingNav(selected: RootTab, onSelect: (RootTab) -> Unit) {
     val c = MikaTheme.colors
@@ -944,8 +944,8 @@ private fun RootFloatingNav(selected: RootTab, onSelect: (RootTab) -> Unit) {
             .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RootNavItem(MikaIcons.Message, "如愿", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
-        RootNavItem(MikaIcons.Desktop, "如意", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }
+        RootNavItem(MikaIcons.Message, "Chat", selected == RootTab.Ruyuan) { onSelect(RootTab.Ruyuan) }
+        RootNavItem(MikaIcons.Desktop, "Remote", selected == RootTab.Ruyi) { onSelect(RootTab.Ruyi) }
     }
 }
 
@@ -972,7 +972,7 @@ private fun RootNavItem(icon: ImageVector, label: String, selected: Boolean, onC
 }
 
 /**
- * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开横向平铺弹出「如愿 / 如意」两个菜单项,
+ * 可拖拽的悬浮导航球:平时是一个蓝色小球,点开横向平铺弹出「Chat / Remote」两个菜单项,
  * 点空白处收起;按住拖动可移到任意位置。平铺朝屏幕内侧展开(球在右半屏朝左排、左半屏朝右排),
  * 因此按钮能贴到左右边缘;展开用 spring + 错峰 + 缩放,手感更丝滑。
  */
@@ -1009,7 +1009,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
     val topSafePx = with(density) { 20.dp.roundToPx() }
     // 底部要避开聊天输入栏:导航栏 inset + 输入框玻璃条及其上下留白,悬浮球默认落在输入框上方。
     val bottomReservePx = WindowInsets.navigationBars.getBottom(density) + with(density) { 76.dp.roundToPx() }
-    // 横向平铺:两个菜单项与球心同高、朝屏幕内侧一字排开(球 → 如意 → 如愿)。
+    // 横向平铺:两个菜单项与球心同高、朝屏幕内侧一字排开(球 → Remote → Chat)。
     // 满间距时总长 = 球半径 26 + 间距 32×2 + 按钮宽 84×2 = 258dp。
     // 纵向只按按钮半高 + 边距即可(按钮与球心同高,不再上下错开)。
     val flatReachY = itemH / 2 + edgePx
@@ -1041,8 +1041,8 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
         }
 
         val items = listOf(
-            Triple(MikaIcons.Message, "如愿", RootTab.Ruyuan),
-            Triple(MikaIcons.Desktop, "如意", RootTab.Ruyi),
+            Triple(MikaIcons.Message, "Chat", RootTab.Ruyuan),
+            Triple(MikaIcons.Desktop, "Remote", RootTab.Ruyi),
         )
         // 每个菜单项一条独立 spring 进度,展开时依次错峰、收起时同步淡出。
         val anims = remember { items.map { Animatable(0f) } }
@@ -1061,7 +1061,7 @@ private fun FloatingDock(selected: RootTab, onSelect: (RootTab) -> Unit, onBallC
                 }
             }
         }
-        // 横向平铺:与球心同高、朝内侧一字排开;如意(items[1])靠球、如愿(items[0])靠外。
+        // 横向平铺:与球心同高、朝内侧一字排开;Remote(items[1])靠球、Chat(items[0])靠外。
         items.forEachIndexed { index, (icon, label, tab) ->
             val p = anims[index].value
             val slot = if (index == 0) 1 else 0

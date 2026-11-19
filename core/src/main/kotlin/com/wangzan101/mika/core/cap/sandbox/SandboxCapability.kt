@@ -94,7 +94,7 @@ internal class SandboxCapability(
         const val PREPARING = "The environment is still being set up in the background. The first tool call waits for it (up to about two minutes); if it is still not ready, the tool says so."
 
         const val NETWORK_ON = "on. The user allowed the sandbox to use the network; anything you send out leaves the phone, so only fetch what the task needs."
-        const val NETWORK_OFF = "off. Commands cannot reach the internet (no pip/npm/apk installs, no downloads). If the task really needs the network, tell the user they can turn on \"Allow scripts to go online\" (允许脚本联网) in 如愿's settings."
+        const val NETWORK_OFF = "off. Commands cannot reach the internet (no pip/npm/apk installs, no downloads). If the task really needs the network, tell the user they can turn on \"Allow scripts to go online\" (允许脚本联网) in 如意 AI's settings."
     }
 }
 

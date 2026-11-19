@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
-/** 一次如意登录的随机值：每次新生成。[redirectUri] 是浏览器授权后跳回如愿的 scheme 回调地址。 */
+/** 一次如意登录的随机值：每次新生成。[redirectUri] 是浏览器授权后跳回如意 AI 的 scheme 回调地址。 */
 data class RuyiAttempt(val state: String, val verifier: String, val redirectUri: String) {
     val challenge: String get() = Pkce.challenge(verifier)
 }

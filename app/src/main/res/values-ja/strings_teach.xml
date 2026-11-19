@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="teach_title">如愿 に教える</string>
-    <string name="teach_menu">如愿 に教える</string>
+    <string name="teach_title">如意 AI に教える</string>
+    <string name="teach_menu">如意 AI に教える</string>
     <string name="teach_goal_label">目標</string>
-    <string name="teach_goal_hint">如愿 に何を覚えてほしいですか。一文で。</string>
+    <string name="teach_goal_hint">如意 AI に何を覚えてほしいですか。一文で。</string>
     <string name="teach_disclosure">「示範を開始」を押したあと、手順はこの端末だけに残します。モデルが設定されている場合、技能の下書きを作るときに目標と手順の要約（パスワード、確認コード、支払い内容は除く）をそのモデルへ送ります。モデルが無いときは端末上で整理するだけで、送信しません。受け入れるまで技能は使われず、試し実行は成功していません。</string>
     <string name="teach_continue">続ける</string>
-    <string name="teach_ready_body">如愿 は見るだけで、端末は操作しません。一時停止、終了、破棄ができます。「示範を開始」を押すまで記録しません。</string>
+    <string name="teach_ready_body">如意 AI は見るだけで、端末は操作しません。一時停止、終了、破棄ができます。「示範を開始」を押すまで記録しません。</string>
     <string name="teach_start">示範を開始</string>
     <string name="teach_learning">学習中</string>
     <string name="teach_paused">一時停止</string>
@@ -30,12 +30,12 @@
     <string name="teach_open_drafts">下書きを見る</string>
     <string name="teach_no_steps">残った手順はありません。</string>
     <string name="teach_blocked_task">いま学習中のため、このタスクは開始しませんでした。</string>
-    <string name="teach_channel">如愿 に教える</string>
+    <string name="teach_channel">如意 AI に教える</string>
     <string name="teach_sensitive_note">機密の入力は保存していません。</string>
     <string name="teach_insufficient_note">画面の情報が足りません。座標の操作ではありません。</string>
-    <string name="teach_notification">如愿 は端末を操作していません。</string>
+    <string name="teach_notification">如意 AI は端末を操作していません。</string>
     <string name="teach_no_visible">「学習中」バーを表示できなかったので、記録は始まっていません。通知の許可は不要です。ユーザー補助のオーバーレイが表示でき、一時停止と終了ができる必要があります。</string>
     <string name="teach_watch_lost">「学習中」バーが消えたので、示範を止めました。これ以上は記録しません。</string>
-    <string name="teach_shelf_expand">如愿 に教えるを表示</string>
-    <string name="teach_shelf_collapse">如愿 に教えるを隠す</string>
+    <string name="teach_shelf_expand">如意 AI に教えるを表示</string>
+    <string name="teach_shelf_collapse">如意 AI に教えるを隠す</string>
 </resources>

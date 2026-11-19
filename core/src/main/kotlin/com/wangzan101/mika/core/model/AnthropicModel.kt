@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap
  *   思考块的 `signature` 连同收到它的地址存在 [Part.Thinking.opaque] 里([SignedThinking]),
  *   带工具调用的回合原样回传给同一个地址(不回传会被服务端拒绝),块的顺序照收到的不变。
  *   签名还和产生它时的系统提示词、工具、前面的消息绑定;这些变了(展开一组工具、压缩历史等)以后,Claude 5.1 起的模型可能
- *   拒绝回传的思考块([STALE_THINKING]),这时按文档的恢复办法去掉思考块再发一次(如愿在这些模型上开思考只会是自适应思考,文档说
+ *   拒绝回传的思考块([STALE_THINKING]),这时按文档的恢复办法去掉思考块再发一次(如意 AI 在这些模型上开思考只会是自适应思考,文档说
  *   自适应思考不要求助手回合以思考块开头;这里把这次带的都去掉,见 [dropStaleThinking]),之后的请求也不再带它们
  *   ([staleThinking])。
  * - 相邻同角色消息合并(Anthropic 要求 user/assistant 交替)。

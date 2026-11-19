@@ -2,7 +2,7 @@
 <resources>
     <string name="appaccess_title">App access</string>
     <string name="appaccess_row_sub">Block apps and screen sharing per app</string>
-    <string name="appaccess_intro">Choose which apps 如愿 may read and operate with standard phone tools. Shell commands, the sandbox and computer access (MCP) are not restricted by this setting.</string>
+    <string name="appaccess_intro">Choose which apps 如意 AI may read and operate with standard phone tools. Shell commands, the sandbox and computer access (MCP) are not restricted by this setting.</string>
     <string name="appaccess_privacy">Categorizing sends app names and package names to the AI model; “Refresh app list” asks you first.</string>
     <string name="appaccess_unavailable">App access settings can’t be read, so standard phone access is paused. Resetting clears the saved permissions and categories.</string>
     <string name="appaccess_reset">Reset app access</string>
@@ -23,7 +23,7 @@
     <string name="appaccess_cancel">Cancel</string>
 
     <string name="appaccess_recommend_title">Recommended to block: finance apps</string>
-    <string name="appaccess_recommend_body">These apps are classified as finance or payments, and 如愿 can still operate them. Block them one by one, or all at once.</string>
+    <string name="appaccess_recommend_body">These apps are classified as finance or payments, and 如意 AI can still operate them. Block them one by one, or all at once.</string>
     <string name="appaccess_recommend_empty">Nothing to block.</string>
     <string name="appaccess_block">Block</string>
     <string name="appaccess_block_all">Block all</string>

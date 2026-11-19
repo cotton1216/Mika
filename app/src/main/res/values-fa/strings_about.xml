@@ -20,7 +20,7 @@
     <string name="about_group">تماس با سازنده</string>
     <string name="about_group_sub">WeChat</string>
     <string name="about_group_sheet_title">تماس با سازنده</string>
-    <string name="about_group_sheet_sub">دربارهٔ نحوهٔ استفاده گفتگو کنید یا ایده بدهید. هنگام افزودن در WeChat، در درخواست خود به Mika اشاره کنید</string>
+    <string name="about_group_sheet_sub">دربارهٔ نحوهٔ استفاده گفتگو کنید یا ایده بدهید. هنگام افزودن در WeChat، در درخواست خود به 如意 AI اشاره کنید</string>
     <string name="about_group_hint">برای ذخیره طولانی فشار دهید · یا در WeChat اسکن کنید</string>
     <string name="about_save_qr">ذخیرهٔ کد QR</string>
     <string name="about_qr_saved">کد QR در گالری ذخیره شد</string>
@@ -31,7 +31,7 @@
     <string name="about_repo_sub">%1$s · از ستاره دادن استقبال می‌کنیم</string>
     <string name="about_guide">راهنما و روش مشارکت</string>
     <string name="about_guide_sub">شروع به کار؛ افزودن دانش برنامه‌ها حتی بدون برنامه‌نویسی</string>
-    <string name="about_data_note">آنچه برای 如愿 می‌فرستید، از جمله پیام‌ها، محتوای صفحه و عکس‌های صفحه، فقط به ارائه‌دهندهٔ مدلی که تنظیم کرده‌اید ارسال می‌شود. 如愿 سرور اختصاصی ندارد و داده‌ای از شما جمع‌آوری نمی‌کند؛ بررسی به‌روزرسانی فقط با سرور انتشار ارتباط برقرار می‌کند.</string>
+    <string name="about_data_note">آنچه برای 如意 AI می‌فرستید، از جمله پیام‌ها، محتوای صفحه و عکس‌های صفحه، فقط به ارائه‌دهندهٔ مدلی که تنظیم کرده‌اید ارسال می‌شود. 如意 AI سرور اختصاصی ندارد و داده‌ای از شما جمع‌آوری نمی‌کند؛ بررسی به‌روزرسانی فقط با سرور انتشار ارتباط برقرار می‌کند.</string>
     <string name="about_license_link">مجوز Apache-2.0</string>
     <string name="about_author">ساختهٔ Wang Zan · © 2026</string>
     <string name="about_license_title">مجوز Apache-2.0</string>
@@ -46,11 +46,11 @@
     <string name="about_update_retry">دانلود دوباره</string>
     <string name="about_update_cancel">حذف دانلود</string>
     <string name="about_update_working">در حال انجام…</string>
-    <string name="about_update_install_hint">پس از دانلود، روی «نصب به‌روزرسانی» بزنید و در نصب‌کنندهٔ سیستم تأیید کنید. ممکن است ابتدا لازم باشد به 如愿 اجازهٔ نصب برنامه‌های ناشناس بدهید.</string>
+    <string name="about_update_install_hint">پس از دانلود، روی «نصب به‌روزرسانی» بزنید و در نصب‌کنندهٔ سیستم تأیید کنید. ممکن است ابتدا لازم باشد به 如意 AI اجازهٔ نصب برنامه‌های ناشناس بدهید.</string>
     <string name="about_update_error">دانلود یا نصب کامل نشد. لطفاً بعداً دوباره تلاش کنید.</string>
     <string name="about_update_bad_file">بستهٔ دانلودشده ناقص است یا با نسخهٔ منتشرشده مطابقت ندارد. بسته حذف شد؛ لطفاً دوباره دانلود کنید.</string>
-    <string name="about_update_not_newer">بستهٔ دانلودشده جدیدتر از 如愿ی نصب‌شده نیست و حذف شد.</string>
-    <string name="about_update_bad_signer">امضای این بسته با 如愿ی نصب‌شده متفاوت است، بنابراین نمی‌تواند آن را به‌روزرسانی کند و حذف شد. اگر 如愿 را خودتان ساخته‌اید، ابتدا آن را حذف و سپس نسخهٔ رسمی را نصب کنید.</string>
+    <string name="about_update_not_newer">بستهٔ دانلودشده جدیدتر از 如意 AIی نصب‌شده نیست و حذف شد.</string>
+    <string name="about_update_bad_signer">امضای این بسته با 如意 AIی نصب‌شده متفاوت است، بنابراین نمی‌تواند آن را به‌روزرسانی کند و حذف شد. اگر 如意 AI را خودتان ساخته‌اید، ابتدا آن را حذف و سپس نسخهٔ رسمی را نصب کنید.</string>
     <string name="about_update_later">بعداً</string>
     <string name="about_no_browser">مرورگری برای باز کردن پیوند موجود نیست</string>
     <string name="about_version">نسخهٔ %1$s</string>
@@ -60,7 +60,7 @@
     <string name="about_current">نسخهٔ فعلی %1$s</string>
     <string name="about_released_on">" · انتشار %1$s"</string>
     <string name="about_released_under">منتشرشده تحت %1$s</string>
-    <string name="issue_body">- دستگاه: %1$s\n- نسخهٔ اندروید: %2$s (SDK %3$d)\n- نسخهٔ 如愿: %4$s (ساخت %5$s)\n\n### چه مشکلی رخ داد\n\n\n### مراحل انجام‌شده\n\n\n### انتظار شما\n\n\n### اطلاعات عیب‌یابی\n(اختیاری) در 如愿 به درباره ← ارسال بازخورد ← کپی اطلاعات عیب‌یابی بروید و سپس آن را اینجا جای‌گذاری کنید\n\n</string>
+    <string name="issue_body">- دستگاه: %1$s\n- نسخهٔ اندروید: %2$s (SDK %3$d)\n- نسخهٔ 如意 AI: %4$s (ساخت %5$s)\n\n### چه مشکلی رخ داد\n\n\n### مراحل انجام‌شده\n\n\n### انتظار شما\n\n\n### اطلاعات عیب‌یابی\n(اختیاری) در 如意 AI به درباره ← ارسال بازخورد ← کپی اطلاعات عیب‌یابی بروید و سپس آن را اینجا جای‌گذاری کنید\n\n</string>
     <string name="licenses_third_party">اجزای شخص ثالث · %1$d</string>
     <string name="licenses_footer">متن کامل مجوزها و اعلامیه‌های حق نشر در فایل LICENSE و پوشهٔ licenses/ مخزن کد منبع، از جمله THIRD_PARTY_NOTICES.md، قرار دارند.</string>
     <string name="diagnostics_copy">کپی اطلاعات عیب‌یابی</string>
@@ -72,10 +72,10 @@
     <string name="diagnostics_copied">کپی شد</string>
     <string name="diagnostics_loading">در حال جمع‌آوری…</string>
     <string name="about_auto_update">به‌روزرسانی خودکار</string>
-    <string name="about_auto_update_confirm_title">نسخهٔ جدید 如愿 آماده است</string>
+    <string name="about_auto_update_confirm_title">نسخهٔ جدید 如意 AI آماده است</string>
     <string name="about_auto_update_confirm_detail">همین حالا %1$s را نصب کنید، یا به‌روزرسانی خودکار را خاموش کنید و در تنظیمات به‌صورت دستی به‌روزرسانی را بررسی کنید.</string>
-    <string name="about_auto_update_detail">نسخه‌های جدید فقط از طریق Wi-Fi در پس‌زمینه دانلود می‌شوند. 如愿 پیش از نصب از شما می‌پرسد.</string>
+    <string name="about_auto_update_detail">نسخه‌های جدید فقط از طریق Wi-Fi در پس‌زمینه دانلود می‌شوند. 如意 AI پیش از نصب از شما می‌پرسد.</string>
     <string name="about_auto_update_disable">خاموش کردن به‌روزرسانی خودکار</string>
     <string name="about_auto_update_now">به‌روزرسانی کن</string>
-    <string name="about_auto_update_ready">如愿 %1$s دانلود شد</string>
+    <string name="about_auto_update_ready">如意 AI %1$s دانلود شد</string>
 </resources>

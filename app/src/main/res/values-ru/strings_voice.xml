@@ -25,7 +25,7 @@
     <string name="voice_mic_unavailable">Микрофон недоступен. Возможно, его использует другое приложение</string>
     <string name="voice_hold_to_talk">Удерживайте, чтобы говорить</string>
     <string name="voice_mic_blocked_title">Микрофон по-прежнему недоступен</string>
-    <string name="voice_mic_blocked_body">Запись уже разрешена, но 如愿 всё равно не может записывать. Проверьте, что переключатель доступа к микрофону в быстрых настройках включён (Android 12 и новее) и что микрофон для 如愿 не отключён в системном менеджере разрешений. Также микрофон может использовать другое приложение.</string>
+    <string name="voice_mic_blocked_body">Запись уже разрешена, но 如意 AI всё равно не может записывать. Проверьте, что переключатель доступа к микрофону в быстрых настройках включён (Android 12 и новее) и что микрофон для 如意 AI не отключён в системном менеджере разрешений. Также микрофон может использовать другое приложение.</string>
     <string name="voice_provider_failed">Не удалось превратить в текст: %1$s</string>
     <string name="voice_unavailable_title">Голосовой ввод не готов</string>
     <string name="voice_unavailable_no_engine">На этом телефоне нет встроенного распознавания речи, и модель для преобразования речи в текст не выбрана. Выберите речевую модель провайдера в разделе «Настройки» › «Модели» › «Распознавание речи», и всё заработает.</string>
@@ -34,13 +34,13 @@
     <string name="voice_unavailable_provider_gone">Провайдер выбранной речевой модели удалён. Выберите другую в разделе «Настройки» › «Модели» › «Распознавание речи».</string>
     <string name="voice_unavailable_off">Распознавание речи выключено. Выберите вариант в разделе «Настройки» › «Модели» › «Распознавание речи».</string>
     <string name="voice_go_pick">Выбрать</string>
-    <string name="voice_permission_title">如愿 нужен микрофон</string>
-    <string name="voice_permission_body">Чтобы слышать вас, пока вы удерживаете кнопку, 如愿 должна записывать звук. Раньше доступ был отклонён, поэтому телефон больше не спросит. Включите микрофон на странице разрешений 如愿 в системных настройках.</string>
+    <string name="voice_permission_title">如意 AI нужен микрофон</string>
+    <string name="voice_permission_body">Чтобы слышать вас, пока вы удерживаете кнопку, 如意 AI должна записывать звук. Раньше доступ был отклонён, поэтому телефон больше не спросит. Включите микрофон на странице разрешений 如意 AI в системных настройках.</string>
     <string name="voice_permission_open">Открыть настройки</string>
     <!-- Floating capsule: long press to talk -->
     <string name="capsule_voice_talk">Говорить</string>
     <string name="capsule_voice_send">Отправить</string>
-    <string name="capsule_voice_answer_title">Ответ 如愿</string>
+    <string name="capsule_voice_answer_title">Ответ 如意 AI</string>
     <string name="capsule_voice_continue_title">Продолжаем «%1$s»</string>
     <string name="capsule_voice_cancel">Отмена</string>
     <string name="capsule_voice_edit">Изменить</string>
@@ -54,7 +54,7 @@
     <string name="capsule_voice_steered">Сказано задаче: %1$s</string>
     <string name="capsule_voice_answered">Ответ: %1$s</string>
     <string name="capsule_voice_sent">Отправлено: %1$s</string>
-    <string name="capsule_voice_need_mic">Нажмите, чтобы разрешить микрофон для 如愿</string>
+    <string name="capsule_voice_need_mic">Нажмите, чтобы разрешить микрофон для 如意 AI</string>
     <string name="capsule_voice_not_ready">Голосовой ввод не готов · нажмите</string>
-    <string name="capsule_voice_open">Открыть 如愿</string>
+    <string name="capsule_voice_open">Открыть 如意 AI</string>
 </resources>

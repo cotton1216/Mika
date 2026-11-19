@@ -52,7 +52,7 @@ class OpenRouterAuthTest {
         assertEquals("http://localhost:4321/auth/callback", url.queryParameter("callback_url"))
         assertEquals(attempt.challenge, url.queryParameter("code_challenge"))
         assertEquals("S256", url.queryParameter("code_challenge_method"))
-        assertEquals("如愿", url.queryParameter("key_label"))
+        assertEquals("如意 AI", url.queryParameter("key_label"))
         assertEquals(attempt.state, url.queryParameter("state"))
         // 校验串本身不出现在授权页地址里
         assertFalse(url.toString().contains(attempt.verifier))

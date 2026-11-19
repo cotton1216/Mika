@@ -24,7 +24,7 @@ sealed interface Part {
      */
     @Serializable data class ToolCall(val id: String, val name: String, val argsJson: String, val opaque: String? = null) : Part
     /**
-     * [reads]:这次结果里读到、记进证据账本的观察(编号与形态);只在如愿内部用(裁剪按观察的形态定怎么缩短,缩短后指回编号),不发给服务商。
+     * [reads]:这次结果里读到、记进证据账本的观察(编号与形态);只在如意 AI 内部用(裁剪按观察的形态定怎么缩短,缩短后指回编号),不发给服务商。
      */
     @Serializable data class ToolResult(val callId: String, val content: String, val isError: Boolean, val reads: List<ReadTag> = emptyList()) : Part
     /**
@@ -37,13 +37,13 @@ sealed interface Part {
 @Serializable
 enum class Role { System, User, Assistant, Tool }
 
-/** 消息是谁写的:[User] 是用户亲口说的(任务原话、任务中途补充的话与照片),[如愿] 是如愿生成的(附注、上下文、工具往返)。 */
+/** 消息是谁写的:[User] 是用户亲口说的(任务原话、任务中途补充的话与照片),[如意 AI] 是如意 AI 生成的(附注、上下文、工具往返)。 */
 @Serializable
 enum class Author { User, Mika }
 
 /**
- * [author] 必须写明(没有默认值):新加的地方要是放进了用户的话或照片,不会被当成如愿的附注裁掉。
- * 只在如愿内部用(压缩时保住用户的话),不发给服务商。
+ * [author] 必须写明(没有默认值):新加的地方要是放进了用户的话或照片,不会被当成如意 AI 的附注裁掉。
+ * 只在如意 AI 内部用(压缩时保住用户的话),不发给服务商。
  */
 @Serializable
 data class Message(val role: Role, val parts: List<Part>, val author: Author)

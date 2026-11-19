@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">Позвонить</string>
     <string name="calls_rules">Правила автоответа</string>
     <string name="calls_setup_credentials">Настройте данные доступа к голосовому сервису Volcengine.</string>
-    <string name="calls_setup_shell">Сначала подключите встроенный помощник 如愿.</string>
+    <string name="calls_setup_shell">Сначала подключите встроенный помощник 如意 AI.</string>
     <string name="calls_sim_clear_preferred">Сбросить выбор SIM</string>
     <string name="calls_sim_preferred">Предпочитаемая SIM: %1$s</string>
     <string name="calls_sim_save_preferred">Использовать эту SIM по умолчанию</string>

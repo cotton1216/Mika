@@ -12,7 +12,7 @@
     <string name="calls_sim_ask_each_time">선호 SIM 없음</string>
     <string name="calls_task_back_to_edit">편집으로 돌아가기</string>
     <string name="calls_task_confirm_dial">확인 후 전화</string>
-    <string name="calls_task_confirm_note">Mika는 이 통화에만 요청을 사용합니다. 선택한 SIM으로 발신하며 통신사 및 실시간 음성 요금이 발생할 수 있습니다.</string>
+    <string name="calls_task_confirm_note">如意 AI는 이 통화에만 요청을 사용합니다. 선택한 SIM으로 발신하며 통신사 및 실시간 음성 요금이 발생할 수 있습니다.</string>
     <string name="calls_task_constraints">약속하면 안 되는 사항</string>
     <string name="calls_task_context">추가 배경</string>
     <string name="calls_task_filled">입력됨</string>

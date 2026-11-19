@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">你好,我是如愿</string>
+    <string name="welcome_title">你好,我是如意 AI</string>
     <string name="welcome_lead">你手機上的私人助理。\n說要做什麼,我在背景替你辦完。</string>
     <string name="welcome_note">開始前需要配一個模型、開啟手機操作,約 3 分鐘</string>
     <string name="welcome_start">開始設定</string>
@@ -16,7 +16,7 @@
     <string name="hide">隱藏</string>
     <string name="show">顯示</string>
     <string name="model_setup_title">設定模型</string>
-    <string name="model_setup_lead">如愿用你自己的模型服務來思考。先連一家服務商，再給每件事選模型。</string>
+    <string name="model_setup_lead">如意 AI 用你自己的模型服務來思考。先連一家服務商，再給每件事選模型。</string>
     <string name="model_setup_onboarding_note">只有主模型必須選，另外兩個可以以後再說。</string>
     <string name="model_kind">介面</string>
     <string name="model_base_url">介面網址</string>
@@ -40,7 +40,7 @@
     <string name="model_url_unencrypted">這個網址不加密，API Key 和對話內容可能被同一網路裡的人看到。</string>
     <string name="model_probe_failed">試著讓 %1$s 呼叫一個工具沒成功：%2$s</string>
     <string name="model_probe_timeout">試著讓 %1$s 呼叫一個工具，%2$d 秒沒有回應</string>
-    <string name="model_probe_no_tools">%1$s 沒有呼叫工具，如愿做事需要會呼叫工具的模型。服務商已儲存，但沒有拿這個模型當主模型。</string>
+    <string name="model_probe_no_tools">%1$s 沒有呼叫工具，如意 AI 做事需要會呼叫工具的模型。服務商已儲存，但沒有拿這個模型當主模型。</string>
     <string name="model_self_hosted_note">127.0.0.1 是這臺手機自己。服務跑在電腦上時，把它換成電腦的區域網路 IP 位址，並讓服務接受區域網路的連線（不只本機）。</string>
     <string name="preset_custom">自定義</string>
     <string name="model_manual_name">模型名</string>
@@ -51,7 +51,7 @@
     <string name="model_manual_note">填了模型名，「測試並儲存」就只用它試呼叫：這家不提供模型列表、列表裡沒有它、列模型出錯都不影響，試呼叫通了才儲存。</string>
     <string name="model_save_untested">不測試，直接儲存</string>
     <string name="model_save_untested_title">不測試就儲存？</string>
-    <string name="model_save_untested_body">如愿會按你填的位址和 Key 存下這家服務商，不列模型、也不試呼叫。如愿做事需要會呼叫工具的模型，沒測過的這一家可能連不通，也可能不會呼叫工具。存下之後可以在服務商頁「重新測試」。</string>
+    <string name="model_save_untested_body">如意 AI 會按你填的位址和 Key 存下這家服務商，不列模型、也不試呼叫。如意 AI 做事需要會呼叫工具的模型，沒測過的這一家可能連不通，也可能不會呼叫工具。存下之後可以在服務商頁「重新測試」。</string>
     <string name="model_save_untested_confirm">仍然儲存</string>
     <string name="model_saved_untested">已存下 %1$s，沒有測試過。它標著「沒測試過」；選一個模型時會先試呼叫，也可以在服務商頁「重新測試」。</string>
     <string name="cap_typed">手填</string>
@@ -62,14 +62,14 @@
     <string name="model_example_grok">例如 grok-4</string>
     <string name="model_probe_not_found">模型「%1$s」不存在。要填服務商的說明文件裡完整的模型 ID（%2$s）。</string>
     <string name="model_probe_not_found_no_list">列不出模型，用「%1$s」試呼叫也說找不到：網址或介面型別可能填錯了，也可能沒有這個模型（模型名%2$s）。</string>
-    <string name="model_probe_no_tools_pick">%1$s 沒有呼叫工具，如愿做事需要會呼叫工具的模型，換一個當主模型。</string>
+    <string name="model_probe_no_tools_pick">%1$s 沒有呼叫工具，如意 AI 做事需要會呼叫工具的模型，換一個當主模型。</string>
     <string name="model_preset_match">這是「%1$s」的官方網址，用它的預設更省事：網址和介面型別都已填好。</string>
     <string name="model_preset_kind_mismatch">介面型別也對不上：「%1$s」用的是 %2$s 介面，這裡選的是 %3$s。</string>
     <string name="model_use_preset">改用「%1$s」預設</string>
     <string name="model_probe_not_available">這個帳號沒開通「%1$s」或沒權限用（服務商說：%2$s）。換一個模型，或到服務商的管理後台開通。</string>
     <string name="model_reason_not_available">這個帳號沒開通或沒權限用這個模型（服務商說：%1$s）</string>
     <string name="model_reason_not_found">服務商那裡沒有這個模型</string>
-    <string name="model_reason_no_tools">它不會呼叫工具，如愿做事需要會呼叫工具的模型</string>
+    <string name="model_reason_no_tools">它不會呼叫工具，如意 AI 做事需要會呼叫工具的模型</string>
     <string name="model_reason_wrong_protocol">它不走你選的介面類型，請求到不了它</string>
     <string name="model_reason_server">伺服器端出錯（%1$s）</string>
     <string name="model_probe_none_usable">服務商已連上，但「%1$s」沒測試通過：%2$s。從列表裡選一個你開通了的模型。</string>

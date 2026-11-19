@@ -24,7 +24,7 @@
     <string name="voice_mic_unavailable">麦克风用不了，可能正被别的 App 占着</string>
     <string name="voice_hold_to_talk">按住说话</string>
     <string name="voice_mic_blocked_title">麦克风还是用不了</string>
-    <string name="voice_mic_blocked_body">已经允许如愿录音，但还是录不到声音。看看快捷设置里的「麦克风使用权限」开关有没有关（安卓 12 起有），再到系统的权限管理里看如愿的麦克风有没有被单独关掉；也可能正被别的应用占用。</string>
+    <string name="voice_mic_blocked_body">已经允许如意 AI 录音，但还是录不到声音。看看快捷设置里的「麦克风使用权限」开关有没有关（安卓 12 起有），再到系统的权限管理里看如意 AI 的麦克风有没有被单独关掉；也可能正被别的应用占用。</string>
     <string name="voice_provider_failed">没能转成文字：%1$s</string>
     <string name="voice_unavailable_title">还不能语音输入</string>
     <string name="voice_unavailable_no_engine">这台手机没有自带的语音识别，也还没选转文字的模型。到「设置 › 模型 › 语音转文字」选一个服务商的语音模型就能用。</string>
@@ -34,12 +34,12 @@
     <string name="voice_unavailable_off">语音转文字设成了不用。到「设置 › 模型 › 语音转文字」选一个就能用。</string>
     <string name="voice_go_pick">去选</string>
     <string name="voice_permission_title">要允许录音才能按住说话</string>
-    <string name="voice_permission_body">按住说话时要录音才能听到你。之前没有允许，手机不会再问了：到系统设置里如愿的权限页，打开「麦克风」就能用。</string>
+    <string name="voice_permission_body">按住说话时要录音才能听到你。之前没有允许，手机不会再问了：到系统设置里如意 AI 的权限页，打开「麦克风」就能用。</string>
     <string name="voice_permission_open">去设置</string>
     <!-- 悬浮胶囊:长按说话 -->
     <string name="capsule_voice_talk">说话</string>
     <string name="capsule_voice_send">发出</string>
-    <string name="capsule_voice_answer_title">回答如愿</string>
+    <string name="capsule_voice_answer_title">回答如意 AI</string>
     <string name="capsule_voice_continue_title">接着「%1$s」说</string>
     <string name="capsule_voice_cancel">取消</string>
     <string name="capsule_voice_edit">改一改</string>
@@ -53,7 +53,7 @@
     <string name="capsule_voice_steered">已插话：%1$s</string>
     <string name="capsule_voice_answered">已回答：%1$s</string>
     <string name="capsule_voice_sent">已发出：%1$s</string>
-    <string name="capsule_voice_need_mic">点这里到如愿允许录音</string>
+    <string name="capsule_voice_need_mic">点这里到如意 AI 允许录音</string>
     <string name="capsule_voice_not_ready">还不能语音输入 · 点这里</string>
-    <string name="capsule_voice_open">打开如愿</string>
+    <string name="capsule_voice_open">打开如意 AI</string>
 </resources>

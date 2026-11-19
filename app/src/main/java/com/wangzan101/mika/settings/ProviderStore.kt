@@ -270,7 +270,7 @@ data class ClientSetup(
 sealed interface ProbeResult {
     /** 模型调用了试用的工具:接口通,也会调用工具。 */
     data object ToolCalled : ProbeResult
-    /** 接口通,模型只回了话、没调用工具:如愿干活靠工具,这个模型当不了主模型。 */
+    /** 接口通,模型只回了话、没调用工具:如意 AI 干活靠工具,这个模型当不了主模型。 */
     data object NoToolCall : ProbeResult
     /** 请求失败;[error] 带着服务端的报错。 */
     data class Failed(val error: ModelError) : ProbeResult

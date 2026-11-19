@@ -99,7 +99,7 @@ internal fun userReason(e: ModelError): String = when (e) {
     is ModelError.ModelNotAvailable ->
         "模型「${e.model.ifEmpty { "当前模型" }}」这个账号没开通或没权限用。去设置 › 模型换一个模型，或到服务商后台开通。"
     is ModelError.ToolsUnsupported ->
-        "模型「${e.model.ifEmpty { "当前模型" }}」不支持调用工具,如愿干活要靠工具。去设置 › 模型换一个会调用工具的模型。"
+        "模型「${e.model.ifEmpty { "当前模型" }}」不支持调用工具,如意 AI 干活要靠工具。去设置 › 模型换一个会调用工具的模型。"
     is ModelError.ContextTooLong -> "对话内容超出了模型的上下文长度,请换用上下文更长的模型,或把任务拆小一些。"
     is ModelError.ContentRefused -> "模型拒绝处理该内容,请调整任务描述或换一个模型。"
     is ModelError.ReasoningEffortRejected ->

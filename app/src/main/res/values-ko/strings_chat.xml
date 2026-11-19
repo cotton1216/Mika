@@ -5,7 +5,7 @@
     <string name="chat_greeting_afternoon">좋은 오후예요</string>
     <string name="chat_greeting_evening">좋은 저녁이에요</string>
     <string name="chat_greeting_night">늦은 시간이네요</string>
-    <string name="chat_empty_prompt">Mika가 무엇을 할까요?</string>
+    <string name="chat_empty_prompt">如意 AI가 무엇을 할까요?</string>
     <string name="chat_slogan">원하시는 대로 — 당신의 개인 비서</string>
     <string name="chat_example_follow">X를 열어 Wang Zan(@wangzan101)을 검색하고 계정을 팔로우해 줘</string>
     <string name="chat_example_alarms">내일 아침 9시 40분, 9시 50분, 10시에 알람을 맞춰 줘</string>
@@ -50,7 +50,7 @@
     </plurals>
     <string name="chat_background_note">백그라운드에서 실행 중이에요. 휴대전화를 계속 쓰세요. 작은 화면을 누르면 확대돼요.</string>
     <string name="chat_placeholder_busy">내용 추가 또는 변경…</string>
-    <string name="chat_placeholder_answer">Mika의 질문에 답하기</string>
+    <string name="chat_placeholder_answer">如意 AI의 질문에 답하기</string>
     <string name="chat_placeholder_more">더 말하기…</string>
     <string name="chat_cannot_start">아직 작업을 시작할 수 없어요</string>
     <string name="chat_missing">부족한 것: %1$s</string>
@@ -62,7 +62,7 @@
     <string name="chat_expand_steps">단계 보기</string>
     <string name="chat_collapse_steps">단계 숨기기</string>
     <string name="chat_view_process">진행 과정 보기</string>
-    <string name="chat_unlock_body">휴대전화가 잠겨 있어요. 잠금을 해제하면 Mika가 이어서 진행해요.</string>
+    <string name="chat_unlock_body">휴대전화가 잠겨 있어요. 잠금을 해제하면 如意 AI가 이어서 진행해요.</string>
     <string name="chat_input_body">%1$s\n옵션을 누르거나 아래에 입력하세요. %2$s</string>
     <string name="chat_refuse">거부</string>
     <string name="chat_allow_once">이번만 허용</string>
@@ -179,11 +179,11 @@
     <string name="attach_album">사진</string>
     <string name="attach_files">파일</string>
     <string name="attach_recent">최근 사진</string>
-    <string name="attach_recent_partial">Mika에게 허용한 사진</string>
+    <string name="attach_recent_partial">如意 AI에게 허용한 사진</string>
     <string name="attach_all">모든 사진</string>
     <string name="attach_change">접근 변경</string>
     <string name="attach_no_photos">아직 사진이 없어요</string>
-    <string name="attach_need_access">여기서 사진을 고르려면 Mika가 사진에 접근하도록 허용하세요</string>
+    <string name="attach_need_access">여기서 사진을 고르려면 如意 AI가 사진에 접근하도록 허용하세요</string>
     <string name="attach_grant">사진 접근 허용</string>
     <string name="attach_grant_hint">위의 “사진”을 눌러 시스템 사진 선택기를 쓸 수도 있어요</string>
     <string name="attach_full">한 번에 첨부는 최대 %1$d개예요</string>
@@ -203,10 +203,10 @@
     <string name="attach_file_and_more">%1$s 외 파일 %2$d개</string>
     <string name="screen_tag">지금 내 화면</string>
     <string name="screen_blocked">캡처하지 못했어요. 이 페이지는 스크린샷을 허용하지 않아요</string>
-    <string name="screen_camera">Mika를 위해 이 화면 캡처</string>
+    <string name="screen_camera">如意 AI를 위해 이 화면 캡처</string>
     <string name="screen_remove">이 스크린샷 삭제</string>
-    <string name="screen_send">지금 화면을 Mika에게 보내기</string>
-    <string name="pip_screen">Mika의 가상 화면</string>
+    <string name="screen_send">지금 화면을 如意 AI에게 보내기</string>
+    <string name="pip_screen">如意 AI의 가상 화면</string>
     <string name="collapse">접기</string>
     <string name="no_app_for_link">이 링크를 열 수 있는 앱이 없어요</string>
     <string name="source_none">이 답변에는 저장된 출처가 없어요</string>
@@ -235,7 +235,7 @@
     <string name="chat_retry_failed">%1$s: 복사하지 못했어요</string>
     <string name="chat_select_hint">텍스트를 길게 눌러 선택하세요</string>
     <string name="chat_quote_remove">인용 삭제</string>
-    <string name="chat_quoting_mika">如愿 인용: %1$s</string>
+    <string name="chat_quoting_mika">如意 AI 인용: %1$s</string>
     <string name="chat_quoting_you">내 말 인용: %1$s</string>
     <string name="chat_edit_message">메시지 수정</string>
     <string name="chat_withdraw_message">메시지 회수</string>

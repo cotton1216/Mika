@@ -21,7 +21,7 @@ class ProxyAddress private constructor(
     val hasCredentials: Boolean get() = user.isNotEmpty()
 
     /**
-     * 如愿自己的连接(调模型、下更新、内置浏览器)能不能走它。https 代理要先和代理本身握 TLS,
+     * 如意 AI 自己的连接(调模型、下更新、内置浏览器)能不能走它。https 代理要先和代理本身握 TLS,
      * 这些连接用的网络库不支持,只有容器里的命令(curl 等)用得上。
      */
     val forApp: Boolean get() = scheme != "https"

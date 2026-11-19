@@ -17,7 +17,7 @@ object ProcRunner {
     const val OUTPUT_LIMIT = 1 shl 20
     const val READ_CHUNK = 64 * 1024
     const val PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    /** 走代理时本机、局域网地址照旧直连(和如愿自己的连接同一套,见 [LocalHosts])。 */
+    /** 走代理时本机、局域网地址照旧直连(和如意 AI 自己的连接同一套,见 [LocalHosts])。 */
     const val NO_PROXY = LocalHosts.NO_PROXY
 
     /**

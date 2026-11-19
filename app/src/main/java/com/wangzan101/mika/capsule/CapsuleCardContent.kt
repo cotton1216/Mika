@@ -181,7 +181,7 @@ interface CardActions {
     fun closeKeptPage() {}
     /** 卡片最底下的「关闭悬浮胶囊」:设置里的开关改成关闭,胶囊和卡片当场收掉(任务照常跑、照常发通知)。 */
     fun hideCapsule() {}
-    /** 空闲卡片上的「教如愿」。 */
+    /** 空闲卡片上的「教如意 AI」。 */
     fun teach() {}
     /** 胶囊卡片里切换「引导 / 排队」。 */
     fun setFollowUpMode(mode: FollowUpMode) {}
@@ -189,7 +189,7 @@ interface CardActions {
     fun askQuit() {}
     /** 退出确认里的「取消」:回到刚才那张卡片。 */
     fun cancelQuit() {}
-    /** 退出确认里的「退出」:真正完全退出如愿。 */
+    /** 退出确认里的「退出」:真正完全退出如意 AI。 */
     fun quit() {}
 }
 
@@ -242,7 +242,7 @@ fun CapsuleCard(
     onQueued: (() -> Unit)? = null,
 ) {
     val field = CapsuleCards.input(card)
-    // 任务还在进行(干活中、如愿问你、等条件)时,停止和对话页一样放在输入框右边,不另占一个按钮
+    // 任务还在进行(干活中、如意 AI 问你、等条件)时,停止和对话页一样放在输入框右边,不另占一个按钮
     val stopKey = CapsuleCards.stopKey(card)
     val h = if (height == Dp.Unspecified) (LocalConfiguration.current.screenHeightDp * CardDocking.SHARE).dp else height
     val report by rememberUpdatedState(onHandle)
@@ -541,7 +541,7 @@ private fun CardFrame(height: Dp, fixed: Boolean = true, content: @Composable Co
     )
 }
 
-/** 标题栏(按着它能拖卡片,见 [CapsuleCard] 的 onHandle):左边如愿图标,中间标题和状态,右边收起。 */
+/** 标题栏(按着它能拖卡片,见 [CapsuleCard] 的 onHandle):左边如意 AI 图标,中间标题和状态,右边收起。 */
 @Composable
 private fun Header(title: String, sub: String, actions: CardActions, handle: Modifier) {
     val c = MikaTheme.colors
@@ -591,7 +591,7 @@ private fun IconButton(icon: ImageVector, label: String, onClick: () -> Unit) {
 
 /**
  * 「完全退出」的确认:标题栏的电源按钮点过后替掉卡片内容。说清楚会发生什么:后台任务停下、胶囊和通知收起,
- * 下次打开如愿就回来。「取消」回到刚才那张卡片,「退出」交给 [CardActions.quit]。
+ * 下次打开如意 AI 就回来。「取消」回到刚才那张卡片,「退出」交给 [CardActions.quit]。
  * 卡片按内容高,最矮和任务卡片一样,最高不超过 [height]。
  */
 @Composable
@@ -631,7 +631,7 @@ private fun Detail(
     val r = card.run
     val sub = listOfNotNull(CapsuleCards.status(r.kind), elapsed(r.startedAt)).joinToString(" · ")
     CardFrame(height, fixed = false) {
-        Header(ScreenCopy.plain(r.run.goal).ifBlank { "如愿" }, sub, actions, handle)
+        Header(ScreenCopy.plain(r.run.goal).ifBlank { "如意 AI" }, sub, actions, handle)
         val screen = preview?.takeIf { CapsuleCards.showsScreen(card.content) }
         // 步骤那段的高度上限 = 小画面的高;还没有画面时按主屏的宽高比算同样的高,画面来了不跳
         val config = LocalConfiguration.current
@@ -754,8 +754,8 @@ internal fun Pinned(content: CardContent?, key: String, actions: CardActions) {
 }
 
 /**
- * 对话卡片:那个对话的来回在中间滚;要你回答、同意时按钮固定在来回下面,再下面是输入框和「回到如愿」。
- * 不带任务时是空闲卡片(标题栏能切新对话)。空闲时「教如愿」收在输入栏上方的箭头里,默认不展开。
+ * 对话卡片:那个对话的来回在中间滚;要你回答、同意时按钮固定在来回下面,再下面是输入框和「回到如意 AI」。
+ * 不带任务时是空闲卡片(标题栏能切新对话)。空闲时「教如意 AI」收在输入栏上方的箭头里,默认不展开。
  */
 @Composable
 private fun ChatCard(
@@ -766,7 +766,7 @@ private fun ChatCard(
     CardFrame(height) {
         if (r == null) IdleHeader(card, actions, handle)
         else Header(
-            ScreenCopy.plain(thread?.title ?: r.run.goal).ifBlank { "如愿" },
+            ScreenCopy.plain(thread?.title ?: r.run.goal).ifBlank { "如意 AI" },
             listOfNotNull(CapsuleCards.status(r.kind), elapsed(r.startedAt)).joinToString(" · "),
             actions, handle,
         )
@@ -783,7 +783,7 @@ private fun ChatCard(
 }
 
 /**
- * 空闲卡片输入栏正上方的「教如愿」:默认只留一个箭头,点开才出现入口,再点收起。
+ * 空闲卡片输入栏正上方的「教如意 AI」:默认只留一个箭头,点开才出现入口,再点收起。
  * 收起时箭头朝上,展开时朝下。学习中的浮层不走这里。
  */
 @Composable
@@ -815,7 +815,7 @@ private fun TeachShelf(onTeach: () -> Unit) {
 }
 
 /**
- * 卡片最底下一行:[primary](「查看过程」「回到如愿」;空闲卡片还没有对话时没有)和灰色的「关闭悬浮胶囊」。
+ * 卡片最底下一行:[primary](「查看过程」「回到如意 AI」;空闲卡片还没有对话时没有)和灰色的「关闭悬浮胶囊」。
  * 右上角的 × 只是收起;想让胶囊不再出现的人在这里关,不用去找设置。
  */
 @Composable

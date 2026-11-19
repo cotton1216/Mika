@@ -21,7 +21,7 @@ object KeptPageCopy {
     /** 还剩 [ms] 自动关时的说法(拼在「…后自动关」里)。 */
     fun closesIn(ms: Long): String = duration(ms)
 
-    /** 关掉的原因;认不出(旧记录、没记下)时按「如愿退出了」说。 */
+    /** 关掉的原因;认不出(旧记录、没记下)时按「如意 AI 退出了」说。 */
     fun reason(wire: String?): String = when (KeptPageClose.of(wire)) {
         KeptPageClose.Expired -> tr(R.string.kept_reason_expired)
         KeptPageClose.Memory -> tr(R.string.kept_reason_memory)
@@ -31,6 +31,6 @@ object KeptPageCopy {
         KeptPageClose.AppExit, null -> tr(R.string.kept_reason_app_exit)
     }
 
-    /** 那一轮下面那句:「后台网页已关闭(原因)」;原因还没记下(刚关、或如愿中途退出过)时不说原因。 */
+    /** 那一轮下面那句:「后台网页已关闭(原因)」;原因还没记下(刚关、或如意 AI 中途退出过)时不说原因。 */
     fun closedNote(wire: String?): String = if (KeptPageClose.of(wire) == null) tr(R.string.kept_closed_plain) else tr(R.string.kept_closed_note, reason(wire))
 }

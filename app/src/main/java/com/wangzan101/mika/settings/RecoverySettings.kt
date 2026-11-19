@@ -27,10 +27,10 @@ class RecoverySettings(private val prefs: SharedPreferences) : RecoveryConsentSt
     val lastRestore: StateFlow<RestoreOutcome?> = _lastRestore.asStateFlow()
 
     private val _lastA11yLoss = MutableStateFlow(readLoss())
-    /** 上一次如愿启动时发现无障碍服务被拿掉或没绑定(诊断信息用)。 */
+    /** 上一次如意 AI 启动时发现无障碍服务被拿掉或没绑定(诊断信息用)。 */
     val lastA11yLoss: StateFlow<A11yLossRecord?> = _lastA11yLoss.asStateFlow()
 
-    /** 如愿的无障碍服务连上过:之后启动时没连上才算问题,从没设置过的不算。 */
+    /** 如意 AI 的无障碍服务连上过:之后启动时没连上才算问题,从没设置过的不算。 */
     var accessibilitySeen: Boolean
         get() = prefs.getBoolean(A11Y_SEEN, false)
         set(v) { if (v != accessibilitySeen) prefs.edit().putBoolean(A11Y_SEEN, v).apply() }

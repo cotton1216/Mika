@@ -65,8 +65,8 @@
     <string name="tool_tap">Ketuk</string>
     <string name="tool_type">Ketik teks</string>
     <string name="tool_clear">Kosongkan kolom</string>
-    <string name="tool_mika_status">Lihat status Mika</string>
-    <string name="tool_mika_open_screen">Buka halaman Mika</string>
+    <string name="tool_mika_status">Lihat status 如意 AI</string>
+    <string name="tool_mika_open_screen">Buka halaman 如意 AI</string>
     <string name="tool_mika_open_file">Buka file</string>
     <string name="tool_mika_notify">Kirim notifikasi</string>
     <string name="tool_mika_copy">Salin teks</string>

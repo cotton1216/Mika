@@ -2,7 +2,7 @@ package com.wangzan101.mika.cap.phone.shell
 
 /**
  * 主屏(0 号屏)上「冒到最上面」的任务的记录,内置助手每看一次任务列表就喂一次([scan])。
- * 只记事实,不判是不是 Agent 的动作引起的(那在如愿一侧,见 MainScreenSpill):
+ * 只记事实,不判是不是 Agent 的动作引起的(那在如意 AI 一侧,见 MainScreenSpill):
  * 主屏最上面换了一个任务记一条;还是那个任务、但它最上面的页面换了也记一条([Arrival.sameTask])。
  * 每条带上这个任务上一次被看到时在哪块屏([Arrival.from],之前没见过为 [NEW]),从别的屏挪过来的(接管)据此认出。
  * 纯逻辑,时钟由调用方给。

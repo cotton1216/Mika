@@ -5,7 +5,7 @@ package com.wangzan101.mika.cap.phone.shell
  *
  * 挪过去以后系统要放一段 TO_BACK 过渡,这期间 TaskInfo.isVisible 仍是 true,不能拿某一次读到的「看得见」当失败,
  * 所以隔 [POLL_MS] 看一次:都看不见了就定下来;还看得见的每隔 [REORDER_EVERY_MS] 再排一次到最后面;
- * 到 [TIMEOUT_MS] 还看得见的不能留在用户眼前,交给退路([Plan.Done.fallback]):挪回如愿的屏随屏关掉,挪不回再直接关掉
+ * 到 [TIMEOUT_MS] 还看得见的不能留在用户眼前,交给退路([Plan.Done.fallback]):挪回如意 AI 的屏随屏关掉,挪不回再直接关掉
  * (和挪过去又出声的同一条路),结果里记成没留下。已经不在主屏的(被别的任务拿去用了,或已经关了)不再管,也不算留下。
  */
 object SettleBehind {

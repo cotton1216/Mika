@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="wechat_notif_title">微信已連線</string>
-    <string name="wechat_notif_body">私聊訊息可以交給如愿執行任務</string>
+    <string name="wechat_notif_body">私聊訊息可以交給如意 AI 執行任務</string>
     <string name="wechat_turn_off">關閉</string>
     <string name="wechat_title">微信</string>
-    <string name="wechat_settings_sub">在微信裡給如愿安排任務</string>
+    <string name="wechat_settings_sub">在微信裡給如意 AI 安排任務</string>
     <string name="wechat_status_disconnected">未連線</string>
     <string name="wechat_status_connecting">連線中</string>
     <string name="wechat_status_connected">已連線</string>
@@ -13,16 +13,16 @@
     <string name="wechat_status_rebind">需要重新綁定</string>
     <string name="wechat_status_waiting">等待掃碼</string>
     <string name="wechat_status_preparing">正在準備</string>
-    <string name="wechat_state_disconnected_detail">綁定後，可以在微信裡直接給如愿安排任務</string>
+    <string name="wechat_state_disconnected_detail">綁定後，可以在微信裡直接給如意 AI 安排任務</string>
     <string name="wechat_state_connecting_detail">正在連線微信…</string>
-    <string name="wechat_state_connected_detail">微信私聊已接入如愿，可以在微信裡安排任務</string>
+    <string name="wechat_state_connected_detail">微信私聊已接入如意 AI，可以在微信裡安排任務</string>
     <string name="wechat_state_paused_detail">已暫停接收微信新訊息和微信任務的自動解鎖</string>
-    <string name="wechat_state_failed_detail">暫時無法接收新訊息，如愿會自動重試</string>
+    <string name="wechat_state_failed_detail">暫時無法接收新訊息，如意 AI 會自動重試</string>
     <string name="wechat_state_rebind_detail">這次登入已失效，請重新掃碼綁定</string>
     <string name="wechat_state_waiting_detail">請在微信中完成授權確認</string>
     <string name="wechat_state_preparing_detail">正在取得 QR Code…</string>
     <string name="wechat_how">怎麼用</string>
-    <string name="wechat_how_body">在微信裡傳送文字或圖片，如愿在手機上執行任務，並把文字和圖片結果傳回微信。不用電腦，也不用另外架伺服器。</string>
+    <string name="wechat_how_body">在微信裡傳送文字或圖片，如意 AI 在手機上執行任務，並把文字和圖片結果傳回微信。不用電腦，也不用另外架伺服器。</string>
     <string name="wechat_bind">掃碼綁定</string>
     <string name="wechat_bind_retry">重新取得 QR Code</string>
     <string name="wechat_login_failed">無法開始微信綁定，請檢查網路後重試。</string>
@@ -36,7 +36,7 @@
     <string name="wechat_allow_unlock">允許微信任務喚醒與解鎖</string>
     <string name="wechat_allow_unlock_sub">僅允許本人綁定微信的私聊任務嘗試喚醒並解鎖這支手機。</string>
     <string name="wechat_allow_unlock_foot">預設關閉，重新綁定後關閉。請先在「%1$s › %2$s」開啟「%3$s」，並在本機儲存鎖定螢幕的 PIN 或密碼（如有）。本開關不會代為開啟該權限，也不會使用微信訊息中的憑證解鎖。</string>
-    <string name="wechat_unlock_failed">微信任務未能喚醒或解鎖手機。請手動解鎖，或檢查如愿微信設定中的喚醒與解鎖授權，以及「設定 › 連接電腦」中的遠端解鎖權限和已儲存憑證。</string>
+    <string name="wechat_unlock_failed">微信任務未能喚醒或解鎖手機。請手動解鎖，或檢查如意 AI 微信設定中的喚醒與解鎖授權，以及「設定 › 連接電腦」中的遠端解鎖權限和已儲存憑證。</string>
     <string name="wechat_bound_account">綁定帳號</string>
     <string name="wechat_current_account">目前微信使用者</string>
     <string name="wechat_message_scope">訊息範圍</string>
@@ -44,16 +44,16 @@
     <string name="wechat_rebind">重新綁定</string>
     <string name="wechat_unbind">解除綁定</string>
     <string name="wechat_unbind_title">解除微信綁定？</string>
-    <string name="wechat_unbind_body">如愿將停止接收微信新訊息，刪除儲存在本機的綁定資訊，並撤銷微信任務的自動解鎖授權。</string>
+    <string name="wechat_unbind_body">如意 AI 將停止接收微信新訊息，刪除儲存在本機的綁定資訊，並撤銷微信任務的自動解鎖授權。</string>
     <string name="wechat_capabilities">首版能力</string>
     <string name="wechat_capability_text">私聊文字、圖片與實際任務</string>
-    <string name="wechat_capability_replies">如愿追問、任務結果與通知</string>
+    <string name="wechat_capability_replies">如意 AI 追問、任務結果與通知</string>
     <string name="wechat_capability_phone">付款確認與手機接管</string>
     <string name="wechat_capability_phone_sub">仍需在手機上完成</string>
     <string name="wechat_capability_later">語音、檔案、群聊、多帳號</string>
     <string name="wechat_supported">支援</string>
     <string name="wechat_phone_only">手機</string>
     <string name="wechat_later">後續</string>
-    <string name="wechat_footer">如愿不架設中繼伺服器，但需要連網；訊息仍經過微信後端，雲端模型按現有設定連網。Bot 憑證使用 Android 金鑰庫加密，只儲存在本機。</string>
-    <string name="wechat_image_receive_failed">如愿未能接收圖片，這則訊息未交給任務處理。請檢查網路後重新傳送，每則訊息最多 8 張圖片，每張不超過 10 MiB。</string>
+    <string name="wechat_footer">如意 AI 不架設中繼伺服器，但需要連網；訊息仍經過微信後端，雲端模型按現有設定連網。Bot 憑證使用 Android 金鑰庫加密，只儲存在本機。</string>
+    <string name="wechat_image_receive_failed">如意 AI 未能接收圖片，這則訊息未交給任務處理。請檢查網路後重新傳送，每則訊息最多 8 張圖片，每張不超過 10 MiB。</string>
 </resources>

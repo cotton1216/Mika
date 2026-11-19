@@ -20,7 +20,7 @@
     <string name="about_group">Contactar con el autor</string>
     <string name="about_group_sub">WeChat</string>
     <string name="about_group_sheet_title">Contactar con el autor</string>
-    <string name="about_group_sheet_sub">Charla sobre el uso o comparte ideas. Al añadirlo en WeChat, menciona Mika en tu solicitud</string>
+    <string name="about_group_sheet_sub">Charla sobre el uso o comparte ideas. Al añadirlo en WeChat, menciona 如意 AI en tu solicitud</string>
     <string name="about_group_hint">Mantén pulsado para guardar · o escanea en WeChat</string>
     <string name="about_save_qr">Guardar código QR</string>
     <string name="about_qr_saved">Código QR guardado en Fotos</string>
@@ -31,7 +31,7 @@
     <string name="about_repo_sub">%1$s · las estrellas son bienvenidas</string>
     <string name="about_guide">Guía y cómo contribuir</string>
     <string name="about_guide_sub">Primeros pasos; añade conocimiento de apps aunque no programes</string>
-    <string name="about_data_note">Lo que le envías a 如愿 (mensajes, contenido de la pantalla y capturas) va solo al proveedor de modelos que configuraste. 如愿 no tiene servidores propios y no recoge ninguno de tus datos; al buscar actualizaciones solo se conecta con el servidor de versiones.</string>
+    <string name="about_data_note">Lo que le envías a 如意 AI (mensajes, contenido de la pantalla y capturas) va solo al proveedor de modelos que configuraste. 如意 AI no tiene servidores propios y no recoge ninguno de tus datos; al buscar actualizaciones solo se conecta con el servidor de versiones.</string>
     <string name="about_license_link">Licencia Apache-2.0</string>
     <string name="about_author">Hecho por Wang Zan · © 2026</string>
     <string name="about_license_title">Licencia Apache-2.0</string>
@@ -46,11 +46,11 @@
     <string name="about_update_retry">Descargar de nuevo</string>
     <string name="about_update_cancel">Eliminar descarga</string>
     <string name="about_update_working">Trabajando…</string>
-    <string name="about_update_install_hint">Cuando se descargue, toca “Instalar actualización” y confirma en el instalador del sistema. Puede que primero tengas que permitir que 如愿 instale apps desconocidas.</string>
+    <string name="about_update_install_hint">Cuando se descargue, toca “Instalar actualización” y confirma en el instalador del sistema. Puede que primero tengas que permitir que 如意 AI instale apps desconocidas.</string>
     <string name="about_update_error">La descarga o la instalación no se completó. Inténtalo de nuevo más tarde.</string>
     <string name="about_update_bad_file">El paquete descargado está incompleto o no coincide con la versión publicada. Se eliminó; descárgalo de nuevo.</string>
-    <string name="about_update_not_newer">El paquete descargado no es más reciente que el 如愿 instalado. Se eliminó.</string>
-    <string name="about_update_bad_signer">Este paquete está firmado de forma distinta al 如愿 instalado, así que no puede actualizarlo. Se eliminó. Si compilaste 如愿 tú mismo, desinstálalo primero y luego instala la versión oficial.</string>
+    <string name="about_update_not_newer">El paquete descargado no es más reciente que el 如意 AI instalado. Se eliminó.</string>
+    <string name="about_update_bad_signer">Este paquete está firmado de forma distinta al 如意 AI instalado, así que no puede actualizarlo. Se eliminó. Si compilaste 如意 AI tú mismo, desinstálalo primero y luego instala la versión oficial.</string>
     <string name="about_update_later">Más tarde</string>
     <string name="about_no_browser">No hay ningún navegador disponible para abrir el enlace</string>
     <string name="about_version">Versión %1$s</string>
@@ -60,7 +60,7 @@
     <string name="about_current">Actual %1$s</string>
     <string name="about_released_on">" · publicada %1$s"</string>
     <string name="about_released_under">Publicado bajo %1$s</string>
-    <string name="issue_body">- Dispositivo: %1$s\n- Versión de Android: %2$s (SDK %3$d)\n- Versión de 如愿: %4$s (compilación %5$s)\n\n### Qué salió mal\n\n\n### Pasos que seguiste\n\n\n### Qué esperabas\n\n\n### Diagnóstico\n(Opcional) En 如愿, abre Acerca de › Enviar comentarios › Copiar diagnóstico y pégalo aquí\n\n</string>
+    <string name="issue_body">- Dispositivo: %1$s\n- Versión de Android: %2$s (SDK %3$d)\n- Versión de 如意 AI: %4$s (compilación %5$s)\n\n### Qué salió mal\n\n\n### Pasos que seguiste\n\n\n### Qué esperabas\n\n\n### Diagnóstico\n(Opcional) En 如意 AI, abre Acerca de › Enviar comentarios › Copiar diagnóstico y pégalo aquí\n\n</string>
     <string name="licenses_third_party">Componentes de terceros · %1$d</string>
     <string name="licenses_footer">Los textos completos de las licencias y los avisos de derechos de autor están en LICENSE y en la carpeta licenses/ (incluido THIRD_PARTY_NOTICES.md) del repositorio de código fuente.</string>
     <string name="diagnostics_copy">Copiar diagnóstico</string>
@@ -74,8 +74,8 @@
     <string name="about_auto_update">Actualización automática</string>
     <string name="about_auto_update_detail">Descarga nuevas versiones en segundo plano solo por Wi-Fi y pide confirmación antes de instalar</string>
     <string name="about_auto_update_disable">Desactivar la actualización automática</string>
-    <string name="about_auto_update_ready">如愿 %1$s descargado</string>
-    <string name="about_auto_update_confirm_title">La nueva versión de 如愿 está lista</string>
+    <string name="about_auto_update_ready">如意 AI %1$s descargado</string>
+    <string name="about_auto_update_confirm_title">La nueva versión de 如意 AI está lista</string>
     <string name="about_auto_update_confirm_detail">Instala %1$s ahora o desactiva las actualizaciones automáticas y búscalas manualmente en Ajustes.</string>
     <string name="about_auto_update_now">Actualizar ahora</string>
 </resources>

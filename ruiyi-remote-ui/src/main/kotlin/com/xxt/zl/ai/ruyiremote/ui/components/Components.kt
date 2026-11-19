@@ -82,7 +82,7 @@ fun DshTopBar(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     onBack: (() -> Unit)? = null,
-    /** 返回按钮的无障碍文案；宿主嵌入时传「返回如愿」之类，让语义更明确。 */
+    /** 返回按钮的无障碍文案；宿主嵌入时传「返回如意 AI」之类，让语义更明确。 */
     backLabel: String = "返回",
     actions: @Composable RowScope.() -> Unit = {},
 ) {

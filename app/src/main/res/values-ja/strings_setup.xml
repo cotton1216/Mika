@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">こんにちは、如愿 です</string>
+    <string name="welcome_title">こんにちは、如意 AI です</string>
     <string name="welcome_lead">スマホの中のあなた専用アシスタントです。\nやってほしいことを伝えてください。バックグラウンドで片付けます。</string>
     <string name="welcome_note">はじめる前に: モデルを設定して、スマホの操作をオンにします。約 3 分かかります。</string>
     <string name="welcome_start">はじめる</string>
@@ -16,7 +16,7 @@
     <string name="hide">非表示</string>
     <string name="show">表示</string>
     <string name="model_setup_title">モデルを設定</string>
-    <string name="model_setup_lead">如愿 は、あなたが用意したモデルのサービスで考えます。まずプロバイダーを接続してから、仕事ごとにモデルを選びます。</string>
+    <string name="model_setup_lead">如意 AI は、あなたが用意したモデルのサービスで考えます。まずプロバイダーを接続してから、仕事ごとにモデルを選びます。</string>
     <string name="model_setup_onboarding_note">必須なのはメインモデルだけです。ほかの 2 つはあとで大丈夫です。</string>
     <string name="model_kind">API の種類</string>
     <string name="model_base_url">ベース URL</string>
@@ -26,7 +26,7 @@
     <string name="model_key_optional">ローカルのサービスでは省略可</string>
     <string name="model_test_save">テストして保存</string>
     <string name="model_testing">テスト中…</string>
-    <string name="model_test_note">如愿 はこのプロバイダーのモデルを一覧にしてから、そのうち 1 つにテスト用のツールを呼び出してもらいます。どちらも成功すると保存されます。</string>
+    <string name="model_test_note">如意 AI はこのプロバイダーのモデルを一覧にしてから、そのうち 1 つにテスト用のツールを呼び出してもらいます。どちらも成功すると保存されます。</string>
     <string name="next">次へ</string>
     <string name="model_failed">接続に失敗しました: %1$s</string>
     <string name="cap_vision">ビジョン</string>
@@ -40,7 +40,7 @@
     <string name="model_url_unencrypted">このアドレスは暗号化されていません。API キーやチャットの内容が、同じネットワークの他の人に見られる可能性があります。</string>
     <string name="model_probe_failed">%1$s にテスト用のツールを呼び出してもらうのに失敗しました: %2$s</string>
     <string name="model_probe_timeout">%1$s はテスト用のツール呼び出しに %2$d 秒以内に応答しませんでした</string>
-    <string name="model_probe_no_tools">%1$s はツールを呼び出しませんでした。如愿 がタスクをこなすには、ツールを呼び出せるモデルが必要です。プロバイダーは保存しましたが、このモデルはメインモデルに設定していません。</string>
+    <string name="model_probe_no_tools">%1$s はツールを呼び出しませんでした。如意 AI がタスクをこなすには、ツールを呼び出せるモデルが必要です。プロバイダーは保存しましたが、このモデルはメインモデルに設定していません。</string>
     <string name="model_self_hosted_note">127.0.0.1 はこのスマホ自身です。サーバーがパソコンで動いている場合は、パソコンのローカルネットワークのアドレスに置き換えて、サーバー自身からだけでなく、ネットワークからの接続も受け付けるようにしてください。</string>
     <string name="preset_custom">カスタム</string>
     <string name="model_manual_name">モデル名</string>
@@ -51,7 +51,7 @@
     <string name="model_manual_note">モデル名を入力すると、「テストして保存」はそのモデルだけを試します。プロバイダーにモデル一覧がない場合や、一覧にそのモデルがない場合、一覧の取得に失敗する場合でも使えます。テスト呼び出しが成功した場合にだけ保存されます。</string>
     <string name="model_save_untested">テストせずに保存</string>
     <string name="model_save_untested_title">テストせずに保存しますか？</string>
-    <string name="model_save_untested_body">如愿 は、入力されたアドレスとキーでこのプロバイダーを保存します。モデルの一覧取得もテスト呼び出しもしません。如愿 がタスクをこなすには、ツールを呼び出せるモデルが必要で、テストしていないモデルは、接続できなかったり、ツールを呼び出せなかったりする可能性があります。あとでプロバイダーのページからテストできます。</string>
+    <string name="model_save_untested_body">如意 AI は、入力されたアドレスとキーでこのプロバイダーを保存します。モデルの一覧取得もテスト呼び出しもしません。如意 AI がタスクをこなすには、ツールを呼び出せるモデルが必要で、テストしていないモデルは、接続できなかったり、ツールを呼び出せなかったりする可能性があります。あとでプロバイダーのページからテストできます。</string>
     <string name="model_save_untested_confirm">保存する</string>
     <string name="model_saved_untested">%1$s をテストせずに保存しました。「未テスト」と表示されています。モデルを選んで確認するか、プロバイダーのページからもう一度テストしてください。</string>
     <string name="cap_typed">手入力</string>
@@ -62,14 +62,14 @@
     <string name="model_example_grok">例: grok-4</string>
     <string name="model_probe_not_found">モデル「%1$s」は存在しません。プロバイダーのドキュメントにある完全なモデル ID を入力してください(%2$s)。</string>
     <string name="model_probe_not_found_no_list">モデルを一覧にできず、「%1$s」でのテスト呼び出しでも見つかりませんでした。アドレスかインターフェースの種類が間違っているか、そのモデルが存在しない可能性が高いです(モデル名の例: %2$s)。</string>
-    <string name="model_probe_no_tools_pick">%1$s はツールを呼び出しませんでした。如愿 がタスクをこなすには、ツールを呼び出せるモデルが必要です。別のメインモデルを選んでください。</string>
+    <string name="model_probe_no_tools_pick">%1$s はツールを呼び出しませんでした。如意 AI がタスクをこなすには、ツールを呼び出せるモデルが必要です。別のメインモデルを選んでください。</string>
     <string name="model_preset_match">これは %1$s の公式のアドレスです。プリセットを使うと、アドレスとインターフェースの種類が自動で入力されます。</string>
     <string name="model_preset_kind_mismatch">インターフェースの種類も合っていません: %1$s は %2$s インターフェースを使いますが、%3$s が選ばれています。</string>
     <string name="model_use_preset">%1$s のプリセットを使う</string>
     <string name="model_probe_not_available">このアカウントでは「%1$s」が有効になっていないか、アクセス権がありません(プロバイダーからの応答: %2$s)。別のモデルを選ぶか、プロバイダーのコンソールで有効にしてください。</string>
     <string name="model_reason_not_available">このアカウントではこのモデルが有効になっていないか、アクセス権がありません(プロバイダーからの応答: %1$s)</string>
     <string name="model_reason_not_found">プロバイダーにそのようなモデルがありません</string>
-    <string name="model_reason_no_tools">ツールを呼び出さず、如愿 にはツールを呼び出せるモデルが必要です</string>
+    <string name="model_reason_no_tools">ツールを呼び出さず、如意 AI にはツールを呼び出せるモデルが必要です</string>
     <string name="model_reason_wrong_protocol">選んだインターフェースの種類では提供されていないため、リクエストが届きません</string>
     <string name="model_reason_server">サーバーがエラーを返しました(%1$s)</string>
     <string name="model_probe_none_usable">プロバイダーには接続できましたが、「%1$s」はテストに通りませんでした: %2$s。一覧から、アカウントで有効になっているモデルを選んでください。</string>

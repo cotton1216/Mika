@@ -90,7 +90,7 @@
     <string name="calls_outgoing_title">拨打电话</string>
     <string name="calls_rules">自动接听规则</string>
     <string name="calls_setup_credentials">请配置火山实时语音凭据。</string>
-    <string name="calls_setup_shell">请先连接如愿内置助手。</string>
+    <string name="calls_setup_shell">请先连接如意 AI 内置助手。</string>
     <string name="calls_sim_clear_preferred">取消默认 SIM</string>
     <string name="calls_sim_preferred">默认拨号 SIM：%1$s</string>
     <string name="calls_sim_save_preferred">设为默认拨号 SIM</string>

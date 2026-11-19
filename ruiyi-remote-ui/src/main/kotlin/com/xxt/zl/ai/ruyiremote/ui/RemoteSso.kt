@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 /**
- * 把「如愿 App 的那一次登录」接到远程控制上，并负责它退出时的收尾。
+ * 把「如意 AI App 的那一次登录」接到远程控制上，并负责它退出时的收尾。
  *
  * 为什么不是再登录一次：AI-Server 的授权码**一次性、60 秒过期**，同一个码换不出两份票。
- * 如愿登录时码已经换成了 AI-Server 的 `access_token`，所以远程控制只能复用这张票 ——
+ * 如意 AI 登录时码已经换成了 AI-Server 的 `access_token`，所以远程控制只能复用这张票 ——
  * 由中继把它换成账号会话，再把本机注册成 client 设备。中继读的是同一个 AI-Server
  * profile（`iamFromToken`），因此和远程自己走一遍授权落到**同一个账号主键**。
  *
@@ -36,7 +36,7 @@ object RemoteSso {
     private const val PREFS = "ruiyi_remote_sso"
     private const val KEY_STATE = "last_state"
 
-    /** 退出联动写入的状态：设备是随如愿退出主动清掉的，不是登录失败。 */
+    /** 退出联动写入的状态：设备是随如意 AI 退出主动清掉的，不是登录失败。 */
     private const val STATE_SIGNED_OUT = "signed_out"
 
     /**
@@ -46,7 +46,7 @@ object RemoteSso {
      * 设备令牌之后如果没人重读，用户切回「如意」看到的还是上一个账号的界面 —— 登录了
      * 不进、退出了不退。这个计数就是这个「重读一次」的信号，由 [RemoteHome] 订阅。
      *
-     * 用同进程的单例而不是宿主回调：如愿和如意在同一个包里、同一个进程，宿主什么都
+     * 用同进程的单例而不是宿主回调：如意 AI 和如意在同一个包里、同一个进程，宿主什么都
      * 不用传；独立如意远程 App 从不调用 [signIn]/[signOut]，计数恒为 0，天然不受影响。
      */
     private val _revisions = MutableStateFlow(0)
@@ -63,12 +63,12 @@ object RemoteSso {
     val state: StateFlow<String?> = _state.asStateFlow()
 
     /**
-     * 用如愿登录拿到的账号票注册本机设备。
+     * 用如意 AI 登录拿到的账号票注册本机设备。
      *
      * [relayBase] 默认取构建期注入的中继地址（与独立 Remote App 一致）；调用方要指到
      * 别的中继时显式传。
      *
-     * 失败时**记下原因再原样抛出**：调用方仍按既有约定兜住异常（如愿模型已经能用，
+     * 失败时**记下原因再原样抛出**：调用方仍按既有约定兜住异常（如意 AI 模型已经能用，
      * 不能因为远程没注册上就打断登录），而界面靠这个标记告诉用户「远程控制没就位」，
      * 不再只有 logcat 知道。
      */
@@ -83,7 +83,7 @@ object RemoteSso {
             clearState(context)
             // 令牌已经落到 Keystore，让常驻的如意会话重读一次，别等重启才认这个登录。
             _revisions.update { it + 1 }
-            Log.i(TAG, "远程控制已随如愿登录注册：device=${user.deviceId}")
+            Log.i(TAG, "远程控制已随如意 AI 登录注册：device=${user.deviceId}")
         } catch (error: Exception) {
             recordState(context, classify(error))
             throw error
@@ -91,7 +91,7 @@ object RemoteSso {
     }
 
     /**
-     * 如愿退出如意账号时调用：吊销本机设备并清掉设备令牌。
+     * 如意 AI 退出如意账号时调用：吊销本机设备并清掉设备令牌。
      *
      * 与 [signIn] 对称 —— 退出联动缺一半的后果不是「少清一点」，而是换号之后仍能连上
      * 上一个账号的电脑。吊销失败不影响本地清理（[RemoteAccount.logout] 内部已兜住），
@@ -109,12 +109,12 @@ object RemoteSso {
         recordState(context, STATE_SIGNED_OUT)
         // 设备令牌已删，让常驻的如意会话退回登录页；否则它会继续显示上一个账号的电脑。
         _revisions.update { it + 1 }
-        Log.i(TAG, "远程控制已随如愿退出注销：revoke=$revokeDevice")
+        Log.i(TAG, "远程控制已随如意 AI 退出注销：revoke=$revokeDevice")
     }
 
     /**
      * 上次联动留下的状态：`unreachable` / `rejected` / `unknown`（注册失败分类），
-     * 或 `signed_out`（随如愿退出主动清除）；一切正常时为 null。
+     * 或 `signed_out`（随如意 AI 退出主动清除）；一切正常时为 null。
      *
      * 只给粗分类，不把服务端错误码或原文交给界面 —— 终端用户看不懂，也不该看到内部错误。
      */

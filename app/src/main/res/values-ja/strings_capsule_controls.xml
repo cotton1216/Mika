@@ -3,9 +3,9 @@
     <string name="capsule_edge_reveal">カプセルを表示</string>
     <string name="capsule_hide_at_edge">画面端で自動的に隠す</string>
     <string name="capsule_hide_fullscreen">全画面でカプセルを非表示</string>
-    <string name="capsule_tile_label">Mikaカプセル</string>
+    <string name="capsule_tile_label">如意 AIカプセル</string>
     <string name="capsule_tile_enabled">クイック設定で利用可能</string>
-    <string name="capsule_tile_setup">Mika を開き、スマートフォン操作を設定してからフローティングカプセルを使ってください。</string>
+    <string name="capsule_tile_setup">如意 AI を開き、スマートフォン操作を設定してからフローティングカプセルを使ってください。</string>
     <string name="pip_size_smaller">プレビューを縮小</string>
     <string name="pip_size_larger">プレビューを拡大</string>
     <string name="pip_size_reset">サイズをリセット</string>

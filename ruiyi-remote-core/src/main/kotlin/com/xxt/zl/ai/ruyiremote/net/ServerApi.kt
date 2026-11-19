@@ -326,7 +326,7 @@ class RemoteServerApi(
      * （`POST /api/v1/auth/iam`，请求体 `{token}`）。
      *
      * 存在的理由只有一个：AI-Server 的授权码一次性、60 秒过期，同一个码换不出两份票。
-     * 如愿 App 的登录已经把码换成了 access_token，远程控制若再走一次授权就是第二个登录页。
+     * 如意 AI App 的登录已经把码换成了 access_token，远程控制若再走一次授权就是第二个登录页。
      * 中继这个入口把同一个 access_token 交给 `iamFromToken` 读 profile，与
      * `/api/v1/auth/aiserver/exchange` 调的是同一个 helper、同一个账号主键，
      * 所以「一个登录、两个用途」不会变成两个账号。

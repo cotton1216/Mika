@@ -35,7 +35,7 @@ import com.wangzan101.mika.ui.components.MikaLogo
  * (浏览器授权 → scheme 回跳 → 换推理 Key → 列出账号下的模型 → 存成服务商、没有主模型时选一个),
  * 全部完成后 [onSignedIn] 进主界面;[onSkip] 暂不登录直接进主界面,以后可在设置 › 模型里登录。
  *
- * [autoAdvance] 为 false 时,**进来就已经登录**不会自动离开 —— 这是「如意」里点「回如愿登录」
+ * [autoAdvance] 为 false 时,**进来就已经登录**不会自动离开 —— 这是「如意」里点「回如意 AI 登录」
  * 的那条路:那边的情况是登录成功、只有中继注册失败,自动离开会立刻弹回对话页,用户连
  * 重新授权的入口都摸不到。账号票按 [com.wangzan101.mika.core.oauth.RuyiSignIn] 的约定只走内存
  * 不落盘,所以「用旧票重试注册」不成立,重新登录一次是唯一出路。

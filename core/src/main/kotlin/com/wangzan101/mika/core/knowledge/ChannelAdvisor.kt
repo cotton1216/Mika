@@ -3,8 +3,8 @@ package com.wangzan101.mika.core.knowledge
 import com.wangzan101.mika.core.net.UrlHost
 
 /**
- * 选渠道用的事实:已装的包名、在如愿里登录着的站点主机名、内置浏览器能不能用、
- * 最近在如愿里碰到过人机验证或访问拦截的站点主机名。
+ * 选渠道用的事实:已装的包名、在如意 AI 里登录着的站点主机名、内置浏览器能不能用、
+ * 最近在如意 AI 里碰到过人机验证或访问拦截的站点主机名。
  */
 data class ChannelFacts(
     val installed: Set<String>,
@@ -20,7 +20,7 @@ object ChannelAdvisor {
     private const val MAX_CHANNELS = 3
 
     /**
-     * 例:「可用渠道:小红书 — App:已安装(com.xingin.xhs),有 App 做法;网页:xiaohongshu.com,有网页做法,在如愿里登录过(m.xiaohongshu.com)」。
+     * 例:「可用渠道:小红书 — App:已安装(com.xingin.xhs),有 App 做法;网页:xiaohongshu.com,有网页做法,在如意 AI 里登录过(m.xiaohongshu.com)」。
      * [entries] 按匹配顺序,只取前 [MAX_CHANNELS] 个渠道。没有可说的为 null。
      */
     fun line(entries: List<KnowledgeEntry>, skills: GuideCatalog?, facts: ChannelFacts): String? {
@@ -43,7 +43,7 @@ object ChannelAdvisor {
             val challenged = ofSite(facts.challengedSites)
             val notes = listOfNotNull(
                 "known way to do it on the web".takeIf { skills?.hasRoute(name, "browser") == true },
-                loggedIn?.let { "signed in within 如愿 ($it)" },
+                loggedIn?.let { "signed in within 如意 AI ($it)" },
                 challenged?.let { "recently hit a verification or block here ($it); the user can clear this site's data in settings" },
             )
             (listOf("web: $d") + notes).joinToString(", ")

@@ -44,17 +44,17 @@
     <string name="selfcheck_advice_too_old">系统低于安卓 12,手机操作用不了;聊天、网页和沙箱照常能用。</string>
     <string name="selfcheck_advice_no_wireless">系统里没有无线调试,可以改用电脑经 USB 启动手机操作。</string>
     <string name="selfcheck_advice_phone_unavailable">这个环境不能操作手机里的 App(没有开发者选项和无线调试);聊天、网页、文件和计算照常可用。</string>
-    <string name="selfcheck_advice_a11y_off">无障碍没开:在设置 › 手机操作里打开如愿的无障碍。</string>
-    <string name="selfcheck_advice_a11y_restart">无障碍开着却没在运行:在系统设置里把如愿的无障碍关掉再打开。</string>
+    <string name="selfcheck_advice_a11y_off">无障碍没开:在设置 › 手机操作里打开如意 AI 的无障碍。</string>
+    <string name="selfcheck_advice_a11y_restart">无障碍开着却没在运行:在系统设置里把如意 AI 的无障碍关掉再打开。</string>
     <string name="selfcheck_advice_notifications">通知没允许,看不到任务进度和「需要你」的提醒。</string>
-    <string name="selfcheck_advice_battery">电池受限制,如愿在后台可能被停掉;可以在「恢复与修复」里放开。</string>
+    <string name="selfcheck_advice_battery">电池受限制,如意 AI 在后台可能被停掉;可以在「恢复与修复」里放开。</string>
     <string name="selfcheck_advice_setup">内置助手没在运行:先在设置 › 手机操作里完成设置,再查一次。</string>
-    <string name="selfcheck_advice_display">建不了如愿的虚拟屏。重新连接内置助手后再试;还不行请反馈给我们。</string>
-    <string name="selfcheck_advice_focus">如愿的虚拟屏没有自己的焦点,如愿在后台操作时你屏幕上的输入焦点可能短暂丢失,不影响使用。</string>
-    <string name="selfcheck_advice_launch">页面没能开到如愿的虚拟屏上,请反馈给我们。</string>
-    <string name="selfcheck_advice_on_main">系统设置开到了你的屏幕上,而不是如愿的虚拟屏,请反馈给我们。</string>
+    <string name="selfcheck_advice_display">建不了如意 AI 的虚拟屏。重新连接内置助手后再试;还不行请反馈给我们。</string>
+    <string name="selfcheck_advice_focus">如意 AI 的虚拟屏没有自己的焦点,如意 AI 在后台操作时你屏幕上的输入焦点可能短暂丢失,不影响使用。</string>
+    <string name="selfcheck_advice_launch">页面没能开到如意 AI 的虚拟屏上,请反馈给我们。</string>
+    <string name="selfcheck_advice_on_main">系统设置开到了你的屏幕上,而不是如意 AI 的虚拟屏,请反馈给我们。</string>
     <string name="selfcheck_advice_settings_in_use">系统设置正开在你的屏幕上,这一步没去打开它。关掉系统设置后再查一次。</string>
-    <string name="selfcheck_advice_read">读不到页面上的控件。把如愿的无障碍关掉再打开,再查一次。</string>
+    <string name="selfcheck_advice_read">读不到页面上的控件。把如意 AI 的无障碍关掉再打开,再查一次。</string>
     <string name="selfcheck_advice_blank">虚拟屏的画面是一片黑或一片空,请反馈给我们。</string>
     <string name="selfcheck_advice_action">有的操作没生效(见报告),请反馈给我们。</string>
     <string name="selfcheck_advice_frames">虚拟屏的画面过一会儿就不动了,任务可能卡住,请反馈给我们。</string>
@@ -69,8 +69,8 @@
     <string name="selfcheck_advice_out_of_time">整次自检的时间用完了,这一项没来得及查。</string>
     <string name="selfcheck_advice_cancelled">已取消。</string>
 
-    <string name="selfcheck_target_title">如愿自检页</string>
-    <string name="selfcheck_target_note">这是如愿自己的测试页。兼容性自检在这里点按和打字,不会操作你的其他 App。</string>
+    <string name="selfcheck_target_title">如意 AI 自检页</string>
+    <string name="selfcheck_target_note">这是如意 AI 自己的测试页。兼容性自检在这里点按和打字,不会操作你的其他 App。</string>
     <string name="selfcheck_target_taps">点了 %1$d 次</string>
     <string name="selfcheck_target_button">点我</string>
     <string name="selfcheck_target_input">在这里打字</string>

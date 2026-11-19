@@ -238,7 +238,7 @@ class HelperHandoffTest {
         // 等 setsid 生效再返回,并说清结果和怎么确认
         assertTrue(script.contains("\nsleep 2\n"))
         assertTrue(script.contains("if pidof 'com.wangzan101.mika:helper' >/dev/null 2>&1; then"))
-        assertTrue(script.contains("如愿 helper starting... Open 如愿 to confirm"))
+        assertTrue(script.contains("如意 AI helper starting... Open 如意 AI to confirm"))
         assertTrue(script.contains("adb shell sh /sdcard/Android/data/com.wangzan101.mika/files/usb-start.sh"))
         assertTrue(script.endsWith("fi\n"))
     }

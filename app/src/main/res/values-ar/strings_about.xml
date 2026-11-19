@@ -20,7 +20,7 @@
     <string name="about_group">التواصل مع المطوّر</string>
     <string name="about_group_sub">WeChat</string>
     <string name="about_group_sheet_title">التواصل مع المطوّر</string>
-    <string name="about_group_sheet_sub">ناقش طريقة الاستخدام أو شارك أفكارك. عند الإضافة عبر WeChat، اذكر Mika في طلبك</string>
+    <string name="about_group_sheet_sub">ناقش طريقة الاستخدام أو شارك أفكارك. عند الإضافة عبر WeChat، اذكر 如意 AI في طلبك</string>
     <string name="about_group_hint">اضغط مطولاً للحفظ · أو امسح الرمز في WeChat</string>
     <string name="about_save_qr">حفظ رمز QR</string>
     <string name="about_qr_saved">تم حفظ رمز QR في الصور</string>
@@ -31,7 +31,7 @@
     <string name="about_repo_sub">%1$s · نرحب بنجوم GitHub</string>
     <string name="about_guide">الدليل والمساهمة</string>
     <string name="about_guide_sub">البدء؛ أضف معرفة بالتطبيق حتى دون كتابة شيفرة</string>
-    <string name="about_data_note">كل ما ترسله إلى 如愿 — الرسائل ومحتوى الشاشة ولقطات الشاشة — يُرسل فقط إلى موفر النموذج الذي أعددته. لا تملك 如愿 خوادم خاصة بها ولا تجمع أي بيانات عنك؛ ولا يتصل التحقق من التحديثات إلا بخادم الإصدارات.</string>
+    <string name="about_data_note">كل ما ترسله إلى 如意 AI — الرسائل ومحتوى الشاشة ولقطات الشاشة — يُرسل فقط إلى موفر النموذج الذي أعددته. لا تملك 如意 AI خوادم خاصة بها ولا تجمع أي بيانات عنك؛ ولا يتصل التحقق من التحديثات إلا بخادم الإصدارات.</string>
     <string name="about_license_link">ترخيص Apache-2.0</string>
     <string name="about_author">من إعداد Wang Zan · © 2026</string>
     <string name="about_license_title">ترخيص Apache-2.0</string>
@@ -46,11 +46,11 @@
     <string name="about_update_retry">إعادة التنزيل</string>
     <string name="about_update_cancel">حذف التنزيل</string>
     <string name="about_update_working">جارٍ العمل…</string>
-    <string name="about_update_install_hint">بعد التنزيل، انقر على «تثبيت التحديث» وأكّد ذلك في أداة تثبيت النظام. قد تحتاج أولاً إلى السماح لـ 如愿 بتثبيت تطبيقات غير معروفة.</string>
+    <string name="about_update_install_hint">بعد التنزيل، انقر على «تثبيت التحديث» وأكّد ذلك في أداة تثبيت النظام. قد تحتاج أولاً إلى السماح لـ 如意 AI بتثبيت تطبيقات غير معروفة.</string>
     <string name="about_update_error">لم يكتمل التنزيل أو التثبيت. يُرجى المحاولة مجدداً لاحقاً.</string>
     <string name="about_update_bad_file">الحزمة التي تم تنزيلها غير مكتملة أو لا تطابق الإصدار. حُذفت؛ يُرجى تنزيلها مجدداً.</string>
-    <string name="about_update_not_newer">الحزمة التي تم تنزيلها ليست أحدث من 如愿 المثبتة. حُذفت.</string>
-    <string name="about_update_bad_signer">وُقّعت هذه الحزمة بطريقة مختلفة عن 如愿 المثبتة، لذا لا يمكنها تحديثها. حُذفت. إذا أنشأت 如愿 بنفسك، فأزل تثبيتها أولاً ثم ثبّت الإصدار الرسمي.</string>
+    <string name="about_update_not_newer">الحزمة التي تم تنزيلها ليست أحدث من 如意 AI المثبتة. حُذفت.</string>
+    <string name="about_update_bad_signer">وُقّعت هذه الحزمة بطريقة مختلفة عن 如意 AI المثبتة، لذا لا يمكنها تحديثها. حُذفت. إذا أنشأت 如意 AI بنفسك، فأزل تثبيتها أولاً ثم ثبّت الإصدار الرسمي.</string>
     <string name="about_update_later">لاحقاً</string>
     <string name="about_no_browser">لا يتوفر متصفح لفتح الرابط</string>
     <string name="about_version">الإصدار %1$s</string>
@@ -60,7 +60,7 @@
     <string name="about_current">الحالي %1$s</string>
     <string name="about_released_on">" · صدر في %1$s"</string>
     <string name="about_released_under">صدر بموجب %1$s</string>
-    <string name="issue_body">- الجهاز: %1$s\n- إصدار Android: %2$s (SDK %3$d)\n- إصدار 如愿: %4$s (البنية %5$s)\n\n### ما المشكلة؟\n\n\n### خطوات إعادة المشكلة\n\n\n### ما الذي توقعته؟\n\n\n### معلومات التشخيص\n(اختياري) في 如愿، افتح «حول» › «إرسال ملاحظات» › «نسخ معلومات التشخيص»، ثم ألصقها هنا\n\n</string>
+    <string name="issue_body">- الجهاز: %1$s\n- إصدار Android: %2$s (SDK %3$d)\n- إصدار 如意 AI: %4$s (البنية %5$s)\n\n### ما المشكلة؟\n\n\n### خطوات إعادة المشكلة\n\n\n### ما الذي توقعته؟\n\n\n### معلومات التشخيص\n(اختياري) في 如意 AI، افتح «حول» › «إرسال ملاحظات» › «نسخ معلومات التشخيص»، ثم ألصقها هنا\n\n</string>
     <string name="licenses_third_party">مكونات الجهات الخارجية · %1$d</string>
     <string name="licenses_footer">توجد النصوص الكاملة للتراخيص وإشعارات حقوق النشر في LICENSE ومجلد licenses/ (بما في ذلك THIRD_PARTY_NOTICES.md) في مستودع المصدر.</string>
     <string name="diagnostics_copy">نسخ معلومات التشخيص</string>
@@ -74,8 +74,8 @@
     <string name="about_auto_update">التحديث التلقائي</string>
     <string name="about_auto_update_detail">تنزيل الإصدارات الجديدة في الخلفية عبر Wi-Fi فقط وطلب التأكيد قبل التثبيت</string>
     <string name="about_auto_update_disable">إيقاف التحديث التلقائي</string>
-    <string name="about_auto_update_ready">تم تنزيل 如愿 %1$s</string>
-    <string name="about_auto_update_confirm_title">الإصدار الجديد من 如愿 جاهز</string>
+    <string name="about_auto_update_ready">تم تنزيل 如意 AI %1$s</string>
+    <string name="about_auto_update_confirm_title">الإصدار الجديد من 如意 AI جاهز</string>
     <string name="about_auto_update_confirm_detail">ثبّت %1$s الآن، أو أوقف التحديث التلقائي وتحقق يدوياً في الإعدادات.</string>
     <string name="about_auto_update_now">حدّث الآن</string>
 </resources>

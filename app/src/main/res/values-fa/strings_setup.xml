@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">سلام، من 如愿 هستم</string>
+    <string name="welcome_title">سلام، من 如意 AI هستم</string>
     <string name="welcome_lead">دستیار شخصی شما در گوشی.\nبگویید چه کاری انجام دهم تا آن را در پس‌زمینه انجام دهم.</string>
     <string name="welcome_note">پیش از شروع، یک مدل تنظیم کنید و کنترل گوشی را روشن کنید. حدود ۳ دقیقه طول می‌کشد.</string>
     <string name="welcome_start">شروع</string>
@@ -16,7 +16,7 @@
     <string name="hide">پنهان کردن</string>
     <string name="show">نمایش</string>
     <string name="model_setup_title">تنظیم مدل</string>
-    <string name="model_setup_lead">如愿 با سرویس مدل شما فکر می‌کند. ابتدا یک ارائه‌دهنده متصل کنید، سپس برای هر نقش یک مدل انتخاب کنید.</string>
+    <string name="model_setup_lead">如意 AI با سرویس مدل شما فکر می‌کند. ابتدا یک ارائه‌دهنده متصل کنید، سپس برای هر نقش یک مدل انتخاب کنید.</string>
     <string name="model_setup_onboarding_note">فقط مدل اصلی لازم است؛ دو مدل دیگر را می‌توانید بعداً تنظیم کنید.</string>
     <string name="model_kind">نوع API</string>
     <string name="model_base_url">نشانی پایه</string>
@@ -26,7 +26,7 @@
     <string name="model_key_optional">برای سرویس‌های محلی اختیاری است</string>
     <string name="model_test_save">آزمون و ذخیره</string>
     <string name="model_testing">در حال آزمون…</string>
-    <string name="model_test_note">如愿 فهرست مدل‌های این ارائه‌دهنده را می‌گیرد و از یکی از آن‌ها می‌خواهد ابزار آزمایشی را فراخوانی کند؛ اگر هر دو موفق باشند، آن را ذخیره می‌کند.</string>
+    <string name="model_test_note">如意 AI فهرست مدل‌های این ارائه‌دهنده را می‌گیرد و از یکی از آن‌ها می‌خواهد ابزار آزمایشی را فراخوانی کند؛ اگر هر دو موفق باشند، آن را ذخیره می‌کند.</string>
     <string name="next">بعدی</string>
     <string name="model_failed">اتصال ناموفق بود: %1$s</string>
     <string name="cap_vision">بینایی</string>
@@ -40,7 +40,7 @@
     <string name="model_url_unencrypted">این نشانی رمزگذاری نشده است؛ دیگران در شبکه ممکن است کلید API و گفتگوهای شما را ببینند.</string>
     <string name="model_probe_failed">درخواست فراخوانی ابزار آزمایشی از %1$s ناموفق بود: %2$s</string>
     <string name="model_probe_timeout">%1$s ظرف %2$d ثانیه به فراخوانی ابزار آزمایشی پاسخ نداد</string>
-    <string name="model_probe_no_tools">%1$s ابزار را فراخوانی نکرد. 如愿 برای انجام کارها به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند. ارائه‌دهنده ذخیره شد، اما این مدل به‌عنوان مدل اصلی تنظیم نشد.</string>
+    <string name="model_probe_no_tools">%1$s ابزار را فراخوانی نکرد. 如意 AI برای انجام کارها به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند. ارائه‌دهنده ذخیره شد، اما این مدل به‌عنوان مدل اصلی تنظیم نشد.</string>
     <string name="model_self_hosted_note">نشانی 127.0.0.1 به همین گوشی اشاره دارد. اگر سرور روی رایانهٔ شما اجرا می‌شود، آن را با نشانی شبکهٔ محلی رایانه جایگزین کنید و سرور را طوری تنظیم کنید که اتصال‌های شبکه را نیز بپذیرد.</string>
     <string name="preset_custom">سفارشی</string>
     <string name="model_manual_name">نام مدل</string>
@@ -51,7 +51,7 @@
     <string name="model_manual_note">وقتی نام مدل وارد شود، «آزمون و ذخیره» فقط همان مدل را امتحان می‌کند؛ حتی اگر ارائه‌دهنده فهرست مدل نداشته باشد، مدل در فهرست نباشد یا دریافت فهرست ناموفق شود. فقط در صورت موفقیت آزمون ذخیره می‌شود.</string>
     <string name="model_save_untested">ذخیره بدون آزمون</string>
     <string name="model_save_untested_title">بدون آزمون ذخیره شود؟</string>
-    <string name="model_save_untested_body">如愿 این ارائه‌دهنده را با نشانی و کلید واردشده، بدون دریافت فهرست مدل‌ها یا اجرای درخواست آزمایشی ذخیره می‌کند. 如愿 به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند؛ مدل آزمایش‌نشده ممکن است متصل نشود یا ابزارها را فراخوانی نکند. می‌توانید بعداً آن را از صفحهٔ ارائه‌دهنده آزمایش کنید.</string>
+    <string name="model_save_untested_body">如意 AI این ارائه‌دهنده را با نشانی و کلید واردشده، بدون دریافت فهرست مدل‌ها یا اجرای درخواست آزمایشی ذخیره می‌کند. 如意 AI به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند؛ مدل آزمایش‌نشده ممکن است متصل نشود یا ابزارها را فراخوانی نکند. می‌توانید بعداً آن را از صفحهٔ ارائه‌دهنده آزمایش کنید.</string>
     <string name="model_save_untested_confirm">با این حال ذخیره کن</string>
     <string name="model_saved_untested">%1$s بدون آزمون ذخیره شد و آزمایش‌نشده علامت خورد؛ برای بررسی، مدلی انتخاب کنید یا از صفحهٔ ارائه‌دهنده دوباره آن را آزمایش کنید.</string>
     <string name="cap_typed">دستی واردشده</string>
@@ -62,14 +62,14 @@
     <string name="model_example_grok">مثلاً grok-4</string>
     <string name="model_probe_not_found">مدل «%1$s» وجود ندارد. شناسهٔ کامل مدل را از مستندات ارائه‌دهنده وارد کنید (%2$s).</string>
     <string name="model_probe_not_found_no_list">دریافت فهرست مدل‌ها ممکن نشد و درخواست آزمایشی برای «%1$s» نیز پیدا نشد؛ احتمالاً نشانی یا نوع رابط نادرست است یا چنین مدلی وجود ندارد (نمونهٔ نام مدل: %2$s).</string>
-    <string name="model_probe_no_tools_pick">%1$s ابزار را فراخوانی نکرد. 如愿 برای انجام کارها به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند؛ مدل اصلی دیگری انتخاب کنید.</string>
+    <string name="model_probe_no_tools_pick">%1$s ابزار را فراخوانی نکرد. 如意 AI برای انجام کارها به مدلی نیاز دارد که بتواند ابزارها را فراخوانی کند؛ مدل اصلی دیگری انتخاب کنید.</string>
     <string name="model_preset_match">این نشانی رسمی %1$s است. تنظیم آمادهٔ آن، نشانی و نوع رابط را برای شما وارد می‌کند.</string>
     <string name="model_preset_kind_mismatch">نوع رابط نیز مطابقت ندارد: %1$s از رابط %2$s استفاده می‌کند، اما %3$s انتخاب شده است.</string>
     <string name="model_use_preset">استفاده از تنظیم آمادهٔ %1$s</string>
     <string name="model_probe_not_available">این حساب «%1$s» را فعال نکرده یا به آن دسترسی ندارد (پیام ارائه‌دهنده: %2$s). مدل دیگری انتخاب کنید یا آن را در کنسول ارائه‌دهنده فعال کنید.</string>
     <string name="model_reason_not_available">این حساب مدل را فعال نکرده یا به آن دسترسی ندارد (پیام ارائه‌دهنده: %1$s)</string>
     <string name="model_reason_not_found">ارائه‌دهنده چنین مدلی ندارد</string>
-    <string name="model_reason_no_tools">ابزارها را فراخوانی نمی‌کند و 如愿 به مدلی با قابلیت فراخوانی ابزار نیاز دارد</string>
+    <string name="model_reason_no_tools">ابزارها را فراخوانی نمی‌کند و 如意 AI به مدلی با قابلیت فراخوانی ابزار نیاز دارد</string>
     <string name="model_reason_wrong_protocol">از طریق نوع رابط انتخاب‌شده ارائه نمی‌شود، بنابراین درخواست به آن نمی‌رسد</string>
     <string name="model_reason_server">سرور خطا برگرداند (%1$s)</string>
     <string name="model_probe_none_usable">ارائه‌دهنده متصل است، اما «%1$s» آزمون را نگذرانده است: %2$s. مدلی را که در حساب شما فعال است از فهرست انتخاب کنید.</string>

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="web_logout_partial">ممکن است ورود به برخی سایت‌ها باقی مانده باشد؛ برای پاک کردن همه‌چیز از «خروج از همه» استفاده کنید.</string>
-    <string name="web_challenged_note">如愿 اخیراً در این سایت با CAPTCHA یا مسدود شدن دسترسی روبه‌رو شده است. اگر این مشکل ادامه دارد، داده‌های سایت (کوکی‌ها و فضای ذخیره‌سازی وب) را پاک کنید و دوباره وارد شوید.</string>
-    <string name="web_data_note">اطلاعات ورود به وب‌سایت‌ها فقط در پوشهٔ خصوصی 如愿 در این گوشی و بدون رمزگذاری اضافی ذخیره می‌شود؛ همانند محافظت مرورگر سیستم.</string>
+    <string name="web_challenged_note">如意 AI اخیراً در این سایت با CAPTCHA یا مسدود شدن دسترسی روبه‌رو شده است. اگر این مشکل ادامه دارد، داده‌های سایت (کوکی‌ها و فضای ذخیره‌سازی وب) را پاک کنید و دوباره وارد شوید.</string>
+    <string name="web_data_note">اطلاعات ورود به وب‌سایت‌ها فقط در پوشهٔ خصوصی 如意 AI در این گوشی و بدون رمزگذاری اضافی ذخیره می‌شود؛ همانند محافظت مرورگر سیستم.</string>
     <string name="web_none">هنوز از سایتی بازدید نشده است</string>
-    <string name="web_none_sub">پس از کار 如愿 با سایت‌ها یا ورود شما در این بخش، سایت‌ها اینجا نمایش داده می‌شوند</string>
-    <string name="web_signed_in_by_you">ورود در 如愿</string>
+    <string name="web_none_sub">پس از کار 如意 AI با سایت‌ها یا ورود شما در این بخش، سایت‌ها اینجا نمایش داده می‌شوند</string>
+    <string name="web_signed_in_by_you">ورود در 如意 AI</string>
     <string name="web_challenged">برخورد با بررسی امنیتی یا مسدودیت</string>
     <string name="web_last_visit">آخرین بازدید: %1$s</string>
     <string name="web_manage">مدیریت</string>
     <string name="web_logout_all_title">خروج از همهٔ سایت‌ها و پاک کردن داده‌های وب</string>
-    <string name="web_you_signed_in">شما در 如愿 وارد این سایت شده‌اید.</string>
-    <string name="web_mika_visited">如愿 از این سایت بازدید کرده است.</string>
+    <string name="web_you_signed_in">شما در 如意 AI وارد این سایت شده‌اید.</string>
+    <string name="web_mika_visited">如意 AI از این سایت بازدید کرده است.</string>
     <string name="web_open_login">باز کردن صفحهٔ ورود</string>
     <string name="web_cleared">کوکی‌ها و فضای ذخیره‌سازی وب %1$s پاک شد؛ باید دوباره وارد شوید. ممکن است برخی داده‌ها باقی مانده باشند؛ برای پاک کردن همه‌چیز از «خروج از همه» استفاده کنید.</string>
     <string name="web_signed_out">از %1$s خارج شدید. %2$s</string>
     <string name="web_clear_site">پاک کردن داده‌های این سایت</string>
     <string name="web_sign_out_site">خروج از این سایت</string>
     <string name="web_logout_all_q">از همهٔ سایت‌ها خارج شوید و داده‌های وب پاک شوند؟</string>
-    <string name="web_logout_all_body">از همهٔ سایت‌های مرورگر داخلی خارج می‌شود و داده‌های وب آن‌ها را که در 如愿 ذخیره شده‌اند پاک می‌کند. 如愿 برای استفادهٔ دوباره از این سایت‌ها باید وارد شود.</string>
+    <string name="web_logout_all_body">از همهٔ سایت‌های مرورگر داخلی خارج می‌شود و داده‌های وب آن‌ها را که در 如意 AI ذخیره شده‌اند پاک می‌کند. 如意 AI برای استفادهٔ دوباره از این سایت‌ها باید وارد شود.</string>
     <string name="web_logged_out_all">از همهٔ سایت‌ها خارج شدید و داده‌های وب پاک شدند.</string>
     <string name="web_logout_all">خروج از همه</string>
     <string name="date_pattern_md_compact">MMM d</string>
-    <string name="web_takeover_login">در مرورگر 如愿 وارد شوید، سپس روی «تمام شد» بزنید</string>
-    <string name="web_takeover_waiting">如愿 منتظر شماست: %1$s</string>
+    <string name="web_takeover_login">در مرورگر 如意 AI وارد شوید، سپس روی «تمام شد» بزنید</string>
+    <string name="web_takeover_waiting">如意 AI منتظر شماست: %1$s</string>
     <string name="web_reason_security">بررسی امنیتی</string>
     <!-- 任务结束后留在后台运行的那一页 -->
     <string name="kept_notif_title">صفحهٔ وب در پس‌زمینه در حال اجراست</string>
@@ -39,7 +39,7 @@
     <string name="kept_reason_crashed">صفحه دچار خطا شد</string>
     <string name="kept_reason_user">شما آن را بستید</string>
     <string name="kept_reason_replaced">صفحهٔ دیگری نگه داشته شد</string>
-    <string name="kept_reason_app_exit">如愿 بسته شد</string>
+    <string name="kept_reason_app_exit">如意 AI بسته شد</string>
     <string name="kept_chat_sub">یک صفحهٔ وب در پس‌زمینه در حال اجراست</string>
     <string name="kept_capsule">صفحهٔ پس‌زمینه در حال اجراست</string>
     <string name="kept_card_title">صفحهٔ پس‌زمینه</string>

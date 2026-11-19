@@ -67,7 +67,7 @@ class BuiltinShellManager(context: Context, private val hub: HelperHub, private 
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    /** 已 root 的手机上「用 root 启动手机助手」「允许如愿执行 root 命令」两个开关;变了就让看门狗按新的情况再试。 */
+    /** 已 root 的手机上「用 root 启动手机助手」「允许如意 AI 执行 root 命令」两个开关;变了就让看门狗按新的情况再试。 */
     val root = RootControl(app, scope) { engine.rootChanged() }
 
     private val platform: AndroidPlatform by lazy {
@@ -252,7 +252,7 @@ class BuiltinShellManager(context: Context, private val hub: HelperHub, private 
         override suspend fun launchHelper() {
             launchStage("preparing")
             val tls = AndroidAdb.tls(AndroidAdb.identity(app))
-            // 助手每次交接前都核对如愿的签名
+            // 助手每次交接前都核对如意 AI 的签名
             val command = HelperHandoff.command(app.applicationInfo.sourceDir, app.packageName, Process.myUid(), ownCertPin(app))
             launchStage("adb_connecting")
             val connection = connect(tls)

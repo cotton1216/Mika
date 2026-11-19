@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">如愿 reminder</string>
+    <string name="trigger_reminder">如意 AI reminder</string>
     <string name="trigger_not_started_body">A scheduled task couldn’t start. Check it on the Scheduled tasks page and run it again.</string>
     <string name="trigger_start_failed">Failed to start</string>
     <string name="trigger_not_started">Scheduled task didn’t start</string>
-    <string name="trigger_interrupted_body">A scheduled task was interrupted and its result can’t be confirmed. Check what actually happened first; 如愿 won’t repeat it automatically.</string>
+    <string name="trigger_interrupted_body">A scheduled task was interrupted and its result can’t be confirmed. Check what actually happened first; 如意 AI won’t repeat it automatically.</string>
     <string name="trigger_unconfirmed">Scheduled task result needs checking</string>
     <string name="trigger_unlock_failed">The scheduled task couldn’t wake or unlock the phone. Unlock it before the next run, or check “Allow remote wake and unlock” and the saved screen-lock credential under Settings › Connect a computer.</string>
     <string name="trigger_alarm_title">Scheduled tasks need the “Alarms &amp; reminders” permission</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">Without this permission, scheduled tasks may run late or not at all. You only need to turn it on once.</string>
     <string name="plans_running_n">Active %1$d</string>
     <string name="plans_stopped_n">Off %1$d</string>
-    <string name="plans_empty">No scheduled tasks yet\nTap + to create one, or tell 如愿 in a chat when to remind you or do something for you.</string>
+    <string name="plans_empty">No scheduled tasks yet\nTap + to create one, or tell 如意 AI in a chat when to remind you or do something for you.</string>
     <string name="plans_none_running">No active scheduled tasks</string>
     <string name="plans_none_stopped">No scheduled tasks turned off</string>
     <string name="plans_footer">Use + to create a task yourself, or say “every day at 8…” or “tell me when the price drops” in a chat; results go back to that chat. Timed runs may be affected by battery saving; turning off or deleting only affects future runs.</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">New scheduled task</string>
     <string name="plans_task_mode">Run a task</string>
     <string name="plans_reminder_mode">Reminder only</string>
-    <string name="plans_content_task">What should 如愿 do?</string>
+    <string name="plans_content_task">What should 如意 AI do?</string>
     <string name="plans_content_reminder">Reminder text</string>
     <string name="plans_repeat_interval">Interval</string>
     <string name="plans_repeat_weekly">Weekly</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">On change</string>
     <string name="plans_notify_each">Every time</string>
     <string name="plans_cooldown_minutes">Minimum minutes between runs (optional)</string>
-    <string name="plans_when_idle">Run only while 如愿 is idle</string>
+    <string name="plans_when_idle">Run only while 如意 AI is idle</string>
     <string name="plans_enabled">Enabled</string>
     <string name="plans_error_content">Enter a task or reminder</string>
     <string name="plans_error_content_long">Use at most 4,000 characters, or 2,000 for a reminder</string>

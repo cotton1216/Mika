@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_self_operate">Izinkan Mika mengoperasikan layarnya sendiri</string>
-    <string name="settings_self_operate_sub">Buka halaman dan file Mika; bertanya sebelum membuka tautan di browser Anda</string>
+    <string name="settings_self_operate">Izinkan 如意 AI mengoperasikan layarnya sendiri</string>
+    <string name="settings_self_operate_sub">Buka halaman dan file 如意 AI; bertanya sebelum membuka tautan di browser Anda</string>
     <string name="settings_pip_operate">Operasikan tampilan kecil secara langsung</string>
     <string name="settings_pip_operate_sub">Ketuk dan geser di jendela kecil untuk mengontrol layar</string>
     <string name="settings_external_schedule">Izinkan skrip membuat tugas terjadwal</string>
     <string name="settings_external_schedule_sub">Terima permintaan tugas dari aplikasi lain lewat broadcast; maksimal beberapa per menit, ditandai dibuat oleh skrip</string>
-    <string name="self_notify_channel">Tindakan Mika</string>
-    <string name="self_notify_channel_desc">Apa yang dibuka Mika atau diminta Anda lihat</string>
+    <string name="self_notify_channel">Tindakan 如意 AI</string>
+    <string name="self_notify_channel_desc">Apa yang dibuka 如意 AI atau diminta Anda lihat</string>
     <string name="self_notify_open">Lihat</string>
-    <string name="self_screen_notice">Mika ingin menunjukkan %1$s</string>
-    <string name="self_file_notice">Mika punya file untuk Anda lihat</string>
+    <string name="self_screen_notice">如意 AI ingin menunjukkan %1$s</string>
+    <string name="self_file_notice">如意 AI punya file untuk Anda lihat</string>
     <string name="self_file_failed">Tidak dapat membuka file itu</string>
-    <string name="self_consent_open">Mika ingin membuka halaman ini di browser Anda. Izinkan?\n%1$s</string>
-    <string name="self_consent_search">Mika ingin mencari “%1$s” di browser Anda. Izinkan?</string>
-    <string name="self_consent_login">Mika ingin membuka %1$s agar Anda dapat masuk. Izinkan?</string>
+    <string name="self_consent_open">如意 AI ingin membuka halaman ini di browser Anda. Izinkan?\n%1$s</string>
+    <string name="self_consent_search">如意 AI ingin mencari “%1$s” di browser Anda. Izinkan?</string>
+    <string name="self_consent_login">如意 AI ingin membuka %1$s agar Anda dapat masuk. Izinkan?</string>
     <string name="self_consent_replace">Ini akan menggantikan halaman yang sedang Anda buka.</string>
     <string name="self_consent_allow">Buka</string>
     <string name="self_consent_deny">Jangan buka</string>

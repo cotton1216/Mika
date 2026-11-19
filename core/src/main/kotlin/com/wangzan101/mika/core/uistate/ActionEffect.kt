@@ -101,7 +101,7 @@ data class Readback(val text: String?, val secret: Boolean, val matches: Boolean
 /**
  * 判效果用的、来自端口的事实:[changed] 端口在动作里核实的变没变;[switchedTo] 端口看到前台换成的 App;
  * [verified] 输入写完当场读回一致;[loading] 端口说页面还没静下来(网络、导航还在途);
- * [onUserScreen] 动作让这个 App 开到了用户的主屏上、留在那里(用户正用着它),如愿的屏上看不出变化也不是没点上。
+ * [onUserScreen] 动作让这个 App 开到了用户的主屏上、留在那里(用户正用着它),如意 AI 的屏上看不出变化也不是没点上。
  */
 data class PortFacts(
     val changed: Boolean? = null,
@@ -190,7 +190,7 @@ data class ActionEffect(
         ): ActionEffect? {
             // 端口自己看到前台换了 App:以它为准(两次读可能都在切换之前或之后)
             port.switchedTo?.let { return ActionEffect(EffectKind.PlaceChanged, NewPlace(it, "app", buildJsonObject { put("package", it) }), frame = frame) }
-            // 开到了用户的主屏上:换了地方,只是不在如愿的屏上
+            // 开到了用户的主屏上:换了地方,只是不在如意 AI 的屏上
             port.onUserScreen?.let {
                 return ActionEffect(EffectKind.PlaceChanged, NewPlace(it, "app", buildJsonObject { put("package", it); put("onUserScreen", true) }), frame = frame)
             }

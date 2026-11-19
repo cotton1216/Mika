@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trigger_reminder">如愿提醒</string>
+    <string name="trigger_reminder">如意 AI 提醒</string>
     <string name="trigger_not_started_body">定時任務未能啟動。請在定時任務頁檢視並重新執行。</string>
     <string name="trigger_start_failed">啟動失敗</string>
     <string name="trigger_not_started">定時任務未啟動</string>
-    <string name="trigger_interrupted_body">定時任務執行中斷，結果還不能確認。請先檢視實際情況；如愿不會自動重複操作。</string>
+    <string name="trigger_interrupted_body">定時任務執行中斷，結果還不能確認。請先檢視實際情況；如意 AI 不會自動重複操作。</string>
     <string name="trigger_unconfirmed">定時任務結果待確認</string>
     <string name="trigger_unlock_failed">定時任務無法喚醒或解鎖手機。請在下次執行先手動解鎖，或在「設定 › 連接電腦」中檢查「允許遠端喚醒螢幕與解鎖」及已儲存的螢幕鎖定憑證。</string>
     <string name="trigger_alarm_title">定時任務需要「鬧鐘和提醒」權限</string>
@@ -13,7 +13,7 @@
     <string name="plans_alarm_body">沒有這個權限,定時任務到點可能不準時,甚至不會啟動。開一次就行。</string>
     <string name="plans_running_n">進行中 %1$d</string>
     <string name="plans_stopped_n">已停用 %1$d</string>
-    <string name="plans_empty">還沒有定時任務\n點右上角 + 新建，或在對話裡告訴如愿什麼時候提醒你、什麼時候幫你做事。</string>
+    <string name="plans_empty">還沒有定時任務\n點右上角 + 新建，或在對話裡告訴如意 AI 什麼時候提醒你、什麼時候幫你做事。</string>
     <string name="plans_none_running">沒有進行中的定時任務</string>
     <string name="plans_none_stopped">沒有已停用的定時任務</string>
     <string name="plans_footer">可以點右上角 + 自己新建，也可以在對話裡說「每天 8 點…」「降價了告訴我」，結果會發回建它的那個對話。定時觸發可能受系統省電影響；停用或刪除隻影響後續觸發。</string>
@@ -28,7 +28,7 @@
     <string name="plans_add">新建定時任務</string>
     <string name="plans_task_mode">執行任務</string>
     <string name="plans_reminder_mode">僅提醒</string>
-    <string name="plans_content_task">要讓如愿做什麼？</string>
+    <string name="plans_content_task">要讓如意 AI 做什麼？</string>
     <string name="plans_content_reminder">提醒內容</string>
     <string name="plans_repeat_interval">間隔</string>
     <string name="plans_repeat_weekly">每週</string>
@@ -39,7 +39,7 @@
     <string name="plans_notify_change">條件剛滿足時</string>
     <string name="plans_notify_each">每次滿足時</string>
     <string name="plans_cooldown_minutes">兩次執行至少間隔多少分鐘（可選）</string>
-    <string name="plans_when_idle">僅在如愿閒置時執行</string>
+    <string name="plans_when_idle">僅在如意 AI 閒置時執行</string>
     <string name="plans_enabled">啟用</string>
     <string name="plans_error_content">請輸入任務或提醒內容</string>
     <string name="plans_error_content_long">任務最多 4,000 個字元，提醒最多 2,000 個字元</string>

@@ -19,7 +19,7 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonArray
 import kotlinx.serialization.json.putJsonObject
 
-/** 电脑能用的工具:只给高层的「把事交给如愿」,具体怎么做由手机上的如愿自己决定。 */
+/** 电脑能用的工具:只给高层的「把事交给如意 AI」,具体怎么做由手机上的如意 AI 自己决定。 */
 class McpTaskTools(
     private val service: RemoteTaskService,
     device: DeviceAccess? = null,
@@ -35,7 +35,7 @@ class McpTaskTools(
     data class Tool(val name: String, val description: String, val schema: JsonObject, val readOnly: Boolean)
 
     val tools: List<Tool> = listOf(
-        Tool(RUN, "Hand 如愿 a task to do on the Android phone. 如愿 runs its own agent on the phone (apps, web, files) " +
+        Tool(RUN, "Hand 如意 AI a task to do on the Android phone. 如意 AI runs its own agent on the phone (apps, web, files) " +
             "and records the task in a conversation the user can see in the app. Returns a task_id right away; " +
             "follow it with mika_wait_task. Payments and confirmations are never approved over MCP.",
             schema(required = listOf("goal")) {
@@ -46,7 +46,7 @@ class McpTaskTools(
                 }
                 putJsonObject("conversation") {
                     put("type", "string")
-                    put("description", "Optional: continue a conversation returned by an earlier task so 如愿 keeps its context.")
+                    put("description", "Optional: continue a conversation returned by an earlier task so 如意 AI keeps its context.")
                 }
             }, readOnly = false),
         Tool(STATUS, "Current state of a task: status, latest progress note, the question it is waiting on, or the final answer.",
@@ -60,7 +60,7 @@ class McpTaskTools(
                     put("description", "Longest wait in seconds.")
                 }
             }, readOnly = true),
-        Tool(ANSWER, "Answer the question 如愿 asked in this task (status waiting_for_answer). " +
+        Tool(ANSWER, "Answer the question 如意 AI asked in this task (status waiting_for_answer). " +
             "Cannot approve payments, confirmations or steps handed to the user; those stay on the phone.",
             schema(required = listOf("task_id", "text")) {
                 taskIdProp()
@@ -156,7 +156,7 @@ class McpTaskTools(
         RemoteStatus.describe(task).forEach { (k, v) -> put(k, v) }
         when (RemoteStatus.of(task.state)) {
             RemoteStatus.WAITING_ON_PHONE -> put("note", ON_PHONE_NOTE)
-            RemoteStatus.WAITING_FOR_ANSWER -> put("note", "如愿 is asking a question. Reply with mika_answer; the user can also answer on the phone.")
+            RemoteStatus.WAITING_FOR_ANSWER -> put("note", "如意 AI is asking a question. Reply with mika_answer; the user can also answer on the phone.")
         }
     }
 
@@ -191,7 +191,7 @@ class McpTaskTools(
         const val MAX_GOAL = RemoteTaskService.MAX_GOAL
         const val MAX_ANSWER = RemoteTaskService.MAX_ANSWER
         private const val ON_PHONE_NOTE = "This step needs the user on the phone and cannot be answered over MCP. " +
-            "如愿 has shown its usual notification there; keep waiting with mika_wait_task or cancel the task."
+            "如意 AI has shown its usual notification there; keep waiting with mika_wait_task or cancel the task."
 
         fun newConversation(): String = RemoteTaskService.newConversation()
         fun isConversation(id: String): Boolean = RemoteTaskService.isConversation(id)

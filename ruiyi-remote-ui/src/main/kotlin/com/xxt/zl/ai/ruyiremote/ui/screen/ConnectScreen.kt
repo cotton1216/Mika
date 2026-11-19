@@ -67,7 +67,7 @@ fun ConnectScreen(
     signIn: SignInController,
     onOpenAlternatives: () -> Unit,
     /**
-     * 回宿主（如愿）走如意账号登录。为 null 时不渲染这个入口 —— 独立 App 自己就是根，
+     * 回宿主（如意 AI）走如意账号登录。为 null 时不渲染这个入口 —— 独立 App 自己就是根，
      * 没有「别处」可回。
      */
     onBackToHostSignIn: (() -> Unit)? = null,
@@ -76,7 +76,7 @@ fun ConnectScreen(
     val context = LocalContext.current
     var code by remember { mutableStateOf("") }
     val failure = session.phase as? AccountPhase.Failed
-    // 宿主（如愿）那次联动留下的状态：注册失败，或随如愿退出被主动清除。两个场景
+    // 宿主（如意 AI）那次联动留下的状态：注册失败，或随如意 AI 退出被主动清除。两个场景
     // 都要说明白 —— 这一屏没有如意账号入口（宿主传了 showSso=false），不写清楚
     // 用户只会觉得「明明登录过，怎么又要登录」。独立 App 不写这个标记，天然不显示。
     //
@@ -131,13 +131,13 @@ fun ConnectScreen(
 
                 ssoState?.let { state ->
                     NoticeBar(ssoStateText(state))
-                    // 提示说「回如愿登录一次」，那就得有一条能真的回去的路：这一屏没有
+                    // 提示说「回如意 AI 登录一次」，那就得有一条能真的回去的路：这一屏没有
                     // 如意账号入口（宿主传了 showSso=false），只有配对码和账号密码。
                     // 光写文字等于让用户自己去翻设置。
                     if (onBackToHostSignIn != null) {
                         Spacer(Modifier.height(Space.m))
                         GhostButton(
-                            text = "回如愿登录",
+                            text = "回如意 AI 登录",
                             onClick = onBackToHostSignIn,
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -361,13 +361,13 @@ private fun SsoCard(signIn: SignInController) {
 /**
  * 把 [RemoteSso.lastState] 的粗分类翻成人话。
  *
- * 关键是**指向同一件事**：恢复登录只有一条路 —— 回如愿用如意账号登录一次，这里
+ * 关键是**指向同一件事**：恢复登录只有一条路 —— 回如意 AI 用如意账号登录一次，这里
  * 会自动重新注册。不要写成「在这里登录」：这一屏没有如意账号入口，那会把用户引到
  * 配对码/账号密码那条岔路，等于制造第二个登录。
  */
 private fun ssoStateText(state: String): String = when (state) {
-    "signed_out" -> "已随如愿退出而清除本机登录。回到如愿用如意账号登录一次，这里会自动恢复。"
-    "unreachable" -> "上次随如愿登录自动注册未完成：连不上中继。回到如愿重新登录一次即可恢复。"
-    "rejected" -> "上次随如愿登录自动注册未完成：账号校验没通过。回到如愿重新登录一次即可恢复。"
-    else -> "上次随如愿登录自动注册未完成。回到如愿重新登录一次即可恢复。"
+    "signed_out" -> "已随如意 AI 退出而清除本机登录。回到如意 AI 用如意账号登录一次，这里会自动恢复。"
+    "unreachable" -> "上次随如意 AI 登录自动注册未完成：连不上中继。回到如意 AI 重新登录一次即可恢复。"
+    "rejected" -> "上次随如意 AI 登录自动注册未完成：账号校验没通过。回到如意 AI 重新登录一次即可恢复。"
+    else -> "上次随如意 AI 登录自动注册未完成。回到如意 AI 重新登录一次即可恢复。"
 }

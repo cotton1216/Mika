@@ -47,6 +47,7 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.okhttp)
+    implementation(libs.androidsvg)
     implementation(libs.bouncycastle)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.core)

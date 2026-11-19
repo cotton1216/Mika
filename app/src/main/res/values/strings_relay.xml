@@ -19,8 +19,8 @@
     <string name="relay_unpair">Unpair gateway</string>
     <string name="relay_unpair_body">Disconnect this phone from the gateway. An internet connection is required. The phone access token stays unchanged.</string>
     <string name="relay_failed">Couldn’t finish. Check the gateway address, internet connection and pairing code. If unpairing failed, access is off; retry or revoke the phone on the gateway.</string>
-    <string name="relay_notif_body">Remote access is enabled. Open 如愿 to check the gateway connection.</string>
-    <string name="relay_incompatible">Update 如愿 and the gateway to matching versions</string>
+    <string name="relay_notif_body">Remote access is enabled. Open 如意 AI to check the gateway connection.</string>
+    <string name="relay_incompatible">Update 如意 AI and the gateway to matching versions</string>
     <string name="relay_copy_gateway">Copy gateway address</string>
     <string name="relay_cli_help">Save the access token to a file on your computer, then run the connection command above.</string>
     <string name="relay_intro">The gateway forwards the CLI and MCP requests normally sent over Wi-Fi / LAN to your phone for remote access. Deploy it on your own public server before pairing.</string>

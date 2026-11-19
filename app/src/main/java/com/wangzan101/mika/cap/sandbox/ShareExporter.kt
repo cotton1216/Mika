@@ -21,12 +21,12 @@ import java.security.MessageDigest
 
 class FileTooLarge(val bytes: Long) : Exception("file is larger than ${ShareRules.MAX_BYTES shr 20} MB")
 
-/** 把工作区里的文件存到手机的「下载/如愿」(MediaStore,不需要存储权限)。 */
+/** 把工作区里的文件存到手机的「下载/如意 AI」(MediaStore,不需要存储权限)。 */
 class ShareExporter(private val context: Context) {
     /**
      * [file] 已过关口核实(不跟随链接打开一次,按句柄确认在它自己的工作区里、是普通文件、只有一个硬链接);
      * 这里再看大小不超过 100 MB,然后从这同一个句柄复制。检查之后被换成链接或别的文件也读不到外面的东西。
-     * 返回导出的文件,其中 savedAs 是 "Download/如愿/<实际名字>"(重名时系统加序号);不会把如愿的私有路径交出去。
+     * 返回导出的文件,其中 savedAs 是 "Download/如愿/<实际名字>"(重名时系统加序号);不会把如意 AI 的私有路径交出去。
      */
     suspend fun export(file: GatedFile, requestedName: String): SharedFile = withContext(Dispatchers.IO) {
         if (!ShareRules.plainName(requestedName)) throw SandboxError("invalid_arguments", "name: must be a plain file name", recoverable = true)
@@ -75,7 +75,7 @@ class ShareExporter(private val context: Context) {
     }
 
     /**
-     * 删掉本 App 在「下载/如愿」里留下的、没写完的条目(写到一半进程被杀会留下 IS_PENDING 的空壳)。启动时调用。
+     * 删掉本 App 在「下载/如意 AI」里留下的、没写完的条目(写到一半进程被杀会留下 IS_PENDING 的空壳)。启动时调用。
      */
     fun cleanPending() {
         val resolver = context.contentResolver

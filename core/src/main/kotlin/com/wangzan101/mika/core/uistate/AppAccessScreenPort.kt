@@ -24,7 +24,7 @@ class AppAccessScreenPort(
     private val windowToken: (() -> Long)? = null,
     private val clock: () -> Long = { System.nanoTime() / 1_000_000 },
 ) : ScreenPort {
-    /** 上一次核对通过时的窗口计数、名单版本、是否在保护如愿自己的界面、时刻。 */
+    /** 上一次核对通过时的窗口计数、名单版本、是否在保护如意 AI 自己的界面、时刻。 */
     private class Verified(val token: Long, val revision: Long, val guarded: Boolean, val at: Long)
 
     @Volatile private var verified: Verified? = null

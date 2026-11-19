@@ -64,7 +64,7 @@ data class DiagnosticsSnapshot(
         val appCopies: String? = null,
         /** 配对钥匙在这个进程里的状况(没用过、读回、新建、读不出及原因);读不到为 null。 */
         val adbKey: String? = null,
-        /** 这个进程里最近一次任务结束时如愿屏上的 App 留下、关掉了几个(只有个数,不列包名);还没有过为 null。 */
+        /** 这个进程里最近一次任务结束时如意 AI 屏上的 App 留下、关掉了几个(只有个数,不列包名);还没有过为 null。 */
         val appsAfterTask: String? = null,
         /** 最近启动助手到达的固定阶段;这次进程还没启动过为 null。 */
         val helperLaunchStage: String? = null,
@@ -75,12 +75,12 @@ data class DiagnosticsSnapshot(
     data class Recovery(
         val consent: RecoveryConsent,
         val writeSecureSettings: Boolean,
-        /** 系统电池优化里如愿是不是不受限制;读不到为 null。 */
+        /** 系统电池优化里如意 AI 是不是不受限制;读不到为 null。 */
         val ignoringBatteryOptimizations: Boolean?,
         val lastRestore: String?,
-        /** 内置助手在如愿被杀后把它拉起来的记录(助手交接时报来);没有为 null。 */
+        /** 内置助手在如意 AI 被杀后把它拉起来的记录(助手交接时报来);没有为 null。 */
         val helperRestores: HelperRestoreReport? = null,
-        /** 上一次如愿启动时发现无障碍服务被拿掉或没绑定;没有为 null。 */
+        /** 上一次如意 AI 启动时发现无障碍服务被拿掉或没绑定;没有为 null。 */
         val lastA11yLoss: A11yLossRecord? = null,
     )
 
@@ -122,7 +122,7 @@ data class DiagnosticsSnapshot(
 
 /** 把 [DiagnosticsSnapshot] 写成一段纯文本:分段顺序固定,英文键,发到微信或 GitHub 都好读。最后整段再过一遍脱敏。 */
 object Diagnostics {
-    const val HEADER = "如愿诊断信息 / 如愿 diagnostics"
+    const val HEADER = "如意 AI 诊断信息 / 如意 AI diagnostics"
 
     fun render(s: DiagnosticsSnapshot): String = sanitize(buildString {
         appendLine(HEADER)

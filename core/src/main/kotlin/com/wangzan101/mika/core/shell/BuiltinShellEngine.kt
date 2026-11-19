@@ -83,7 +83,7 @@ object BuiltinShellFailures {
 
 /**
  * 内置助手的状态与看门狗。[helper] 有值就是助手的 Binder 在手(Running);
- * 没有时:如愿自己起得来(用户打开了「用 root 启动」且能用,或配过对)就先等 [graceMs](还活着的助手会在如愿进程起来后自己交接),
+ * 没有时:如意 AI 自己起得来(用户打开了「用 root 启动」且能用,或配过对)就先等 [graceMs](还活着的助手会在如意 AI 进程起来后自己交接),
  * 再起一个:先经 su(见 [BuiltinShellPlatform.rootStart]),不行或没打开再经 adbd;失败按 [backoff] 重试。
  * su 拒绝或不回话时记下来,不再自己去问,等用户点重试。
  * 要起助手时无线调试关着,有 [autoOn] 就先替用户打开(条件和停下的规矩见 [WirelessDebuggingAutoOn])。
@@ -125,7 +125,7 @@ class BuiltinShellEngine(
 
     override val rootStart: Boolean get() = platform.rootStart() == RootStart.Ready
 
-    /** 如愿自己起得来助手:经 su(打开了且能用)或经已配对的无线调试。 */
+    /** 如意 AI 自己起得来助手:经 su(打开了且能用)或经已配对的无线调试。 */
     private fun selfStart(): Boolean = rootStart || platform.paired()
 
     private fun initialStatus(): BuiltinShellStatus = when {
@@ -137,7 +137,7 @@ class BuiltinShellEngine(
     }
 
     /**
-     * 如愿自己起不来、手里也没有助手时的状态:打开了「用 root 启动」却用不了就说为什么;
+     * 如意 AI 自己起不来、手里也没有助手时的状态:打开了「用 root 启动」却用不了就说为什么;
      * 电脑起过的助手停了就照实说;否则就是还没设置。
      */
     private fun idleStatus(): BuiltinShellStatus {
@@ -187,7 +187,7 @@ class BuiltinShellEngine(
 
     /**
      * 「用 root 启动」的开关或 su 的答复变了(用户在设置、引导页里打开、关掉、重新授权):助手不在就按新的情况从头再试;
-     * 如愿自己起不来了就照实改状态。
+     * 如意 AI 自己起不来了就照实改状态。
      */
     fun rootChanged() {
         if (helper.value != null) return
@@ -200,7 +200,7 @@ class BuiltinShellEngine(
 
     /**
      * 无线调试开关变了:刚打开就从头再试。关掉时只改状态,不马上替用户打开(用户可能是亲手关的),等要用助手时再说。
-     * 如愿自己正在写这个开关时不跟着动:系统可能马上拨回去,由写的那一边判断。
+     * 如意 AI 自己正在写这个开关时不跟着动:系统可能马上拨回去,由写的那一边判断。
      */
     fun wirelessDebuggingChanged() {
         // 经 su 起助手不看无线调试

@@ -93,7 +93,7 @@ class StringResourcesTest {
         }
     }
 
-    /** 不用汉字的语言里不该留着没翻的中文;日语本来就用汉字,不查。品牌名「如愿」不算没翻的中文。 */
+    /** 不用汉字的语言里不该留着没翻的中文;日语本来就用汉字,不查。品牌名「如意 AI」不算没翻的中文。 */
     @Test
     fun otherLanguagesHaveNoChineseLeftOver() {
         val cjk = Regex("[\\u4e00-\\u9fff]")
@@ -127,7 +127,7 @@ class StringResourcesTest {
 
     private companion object {
         /** 品牌名:改成中文品牌后,它算正常文案,不算没翻的中文。 */
-        const val BRAND = "如愿"
+        const val BRAND = "如意 AI"
     }
 
     @Test

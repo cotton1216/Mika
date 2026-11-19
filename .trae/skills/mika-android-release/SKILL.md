@@ -1,9 +1,9 @@
 ---
 name: mika-android-release
-description: 一键发布「如愿(Mika)」安卓包：按环境（dev/prod）读版本 → 构建(注入 feed 地址) → 签名校验 → ossutil 上传 OSS → apphub 台账登记 → 生成并发布静态 feed。当用户说「发布新版本 / 发版 / 打包发布 Mika / 上传到 apphub / 让客户端能更新 / 本地联调发一版」时使用。**环境必填**，生产与开发两条链路完全隔离。
+description: 一键发布「如意 AI(Mika)」安卓包：按环境（dev/prod）读版本 → 构建(注入 feed 地址) → 签名校验 → ossutil 上传 OSS → apphub 台账登记 → 生成并发布静态 feed。当用户说「发布新版本 / 发版 / 打包发布 Mika / 上传到 apphub / 让客户端能更新 / 本地联调发一版」时使用。**环境必填**，生产与开发两条链路完全隔离。
 ---
 
-# 如愿(Mika) 安卓发布
+# 如意 AI(Mika) 安卓发布
 
 一条命令完成「构建 → 签名校验 → 传 OSS → apphub 台账登记 → 生成并发布静态 feed → 回读」。**必须先选环境**，环境一次决定构建类型、签名要求、OSS 落点、默认渠道状态、目标库和 feed 地址——不存在「忘记选环境」的默认路径。
 
@@ -255,7 +255,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | `OSS_PUBLIC_BASE` | `https://oss-chuangxin.thchengtay.com` | 下载域名 |
 | `OSSUTIL` | `ossutil` | ossutil 可执行文件 |
 | `OSS_CONFIG_FILE` | 无（默认 `~/.ossutilconfig`） | 非默认位置的 ossutil 配置，脚本转成 `--config-file` |
-| `APP_NAME` | `如愿` | 应用显示名 |
+| `APP_NAME` | `如意 AI` | 应用显示名 |
 | `MIKA_ROOT` | 当前目录 | 项目根 |
 | `MIKA_RELEASE_ENV` | 无 | 等价于 `--env`，命令行优先 |
 | `MIKA_ACCOUNT` | 无 | 等价于 `--account` |

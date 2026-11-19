@@ -65,8 +65,8 @@
     <string name="tool_tap">Tocar</string>
     <string name="tool_type">Digitar texto</string>
     <string name="tool_clear">Limpar campo</string>
-    <string name="tool_mika_status">Ver o estado do Mika</string>
-    <string name="tool_mika_open_screen">Abrir uma página do Mika</string>
+    <string name="tool_mika_status">Ver o estado do 如意 AI</string>
+    <string name="tool_mika_open_screen">Abrir uma página do 如意 AI</string>
     <string name="tool_mika_open_file">Abrir um arquivo</string>
     <string name="tool_mika_notify">Enviar uma notificação</string>
     <string name="tool_mika_copy">Copiar texto</string>

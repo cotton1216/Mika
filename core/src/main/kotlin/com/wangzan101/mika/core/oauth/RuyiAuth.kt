@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
-/** 一次如意登录的随机值:每次新生成。[redirectUri] 是浏览器授权后跳回如愿的 scheme 回调地址。 */
+/** 一次如意登录的随机值:每次新生成。[redirectUri] 是浏览器授权后跳回如意 AI 的 scheme 回调地址。 */
 data class RuyiAttempt(val state: String, val verifier: String, val redirectUri: String) {
     val challenge: String get() = Pkce.challenge(verifier)
 }
@@ -39,7 +39,7 @@ data class RuyiSignIn(val key: RuyiKey, val accessToken: String)
 
 /**
  * 用如意账号登录(AI-Server 桌面的同一套协议):在浏览器里打开授权页,用户在如意/统一账号里登录后,带着 `code`
- * 经 scheme 回调回到如愿,再用 `code` 和校验串换账号 JWT,列出账号下的推理 Key,取第一把 active 的。之后这把 Key
+ * 经 scheme 回调回到如意 AI,再用 `code` 和校验串换账号 JWT,列出账号下的推理 Key,取第一把 active 的。之后这把 Key
  * 和手动填 Key 的服务商一样用(列模型、调用都走 [API_BASE])。
  *
  * 回调地址是 [CALLBACK_URI](`ruyiai://auth2/callback`,须在 IAM 里登记),授权码经 URL 片段(`#code=…&state=…`)回传。
@@ -54,7 +54,7 @@ class RuyiAuth(
 ) {
     private val json = Json { ignoreUnknownKeys = true }
 
-    /** 一次登录的随机值:回调地址固定是 [CALLBACK_URI](浏览器授权后跳这个 scheme 唤起如愿)。 */
+    /** 一次登录的随机值:回调地址固定是 [CALLBACK_URI](浏览器授权后跳这个 scheme 唤起如意 AI)。 */
     fun newAttempt() = RuyiAttempt(Pkce.state(), Pkce.verifier(), CALLBACK_URI)
 
     /** 授权页地址:回调地址、S256 校验、state、client_id(白名单二元组的标识)。 */
@@ -184,7 +184,7 @@ class RuyiAuth(
         const val HOST = "ai.thchengtay.com"
         /** 换到的 Key 调用的接口根(OpenAI 兼容)。 */
         const val API_BASE = "https://ai.thchengtay.com/aiserver/v1"
-        /** 浏览器授权后跳回如愿的 scheme 回调地址:须和 IAM 里 aiserver client 登记的回调一致。 */
+        /** 浏览器授权后跳回如意 AI 的 scheme 回调地址:须和 IAM 里 aiserver client 登记的回调一致。 */
         const val CALLBACK_URI = "ruyiai://auth2/callback"
         /** 客户端标识(非凭据):与回调地址组成白名单二元组,服务端精确匹配。命名规范 `<产品>-<平台>`。 */
         const val CLIENT_ID = "ruyi-android"

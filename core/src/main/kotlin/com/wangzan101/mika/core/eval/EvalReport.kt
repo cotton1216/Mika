@@ -160,7 +160,7 @@ object EvalReport {
         val st = RunStats.of(rows.map { it.second })
         sb.appendLine("## 运行小结")
         sb.appendLine()
-        sb.appendLine("按运行记录算(${rows.size} 题):时间从如愿开始处理算起,读、操作按执行入口给的种类分,批里的子步不重复计。")
+        sb.appendLine("按运行记录算(${rows.size} 题):时间从如意 AI 开始处理算起,读、操作按执行入口给的种类分,批里的子步不重复计。")
         sb.appendLine()
         sb.appendLine("| 指标 | 值 |")
         sb.appendLine("|---|---|")

@@ -94,7 +94,7 @@ class Replayer(
                         return ReplayOutcome.StoppedForConfirmation(i)
                     }
                     "target_unresolved" -> return diverged("cannot tell which element the tap would hit", seen)
-                    "own_app" -> return diverged("it acts on 如愿 itself", seen)
+                    "own_app" -> return diverged("it acts on 如意 AI itself", seen)
                     // #217:非 Ui/无人值守来源回放到付款步,审批策略自动拒绝——这轮永远等
                     // 不来同意,不是「等确认」,交还模型向用户说明后按未完成收尾。
                     "approval_unavailable" -> return diverged(

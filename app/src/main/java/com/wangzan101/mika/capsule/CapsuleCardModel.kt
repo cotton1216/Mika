@@ -57,7 +57,7 @@ sealed interface CardView {
     data class Kept(val page: KeptPage) : CardView
 }
 
-/** 卡片底部输入框里的话交给谁:插话给在跑的任务、回答如愿的提问、同一个对话接着说、空闲时开始说。 */
+/** 卡片底部输入框里的话交给谁:插话给在跑的任务、回答如意 AI 的提问、同一个对话接着说、空闲时开始说。 */
 enum class CardInputKind { Steer, Answer, Continue, Start }
 
 data class CardInput(val hint: String, val kind: CardInputKind)
@@ -76,7 +76,7 @@ sealed interface CardContent {
     /** 要你同意一次花钱的操作(只能同意这一次):和对话页的确认卡片同一套字和编号 [key]。 */
     data class Confirm(val title: String, val body: String, val key: Int) : CardContent
 
-    /** 如愿问你:给了 [options] 就列成按钮;没有选项的回答在如愿里打字(卡片里的输入下一步再做)。 */
+    /** 如意 AI 问你:给了 [options] 就列成按钮;没有选项的回答在如意 AI 里打字(卡片里的输入下一步再做)。 */
     data class Question(val prompt: String, val options: List<String>) : CardContent
 
     /** 等条件:为什么停;[resumable] 时给「继续」。 */
@@ -94,7 +94,7 @@ object CapsuleCards {
     val QUEUED_AHEAD: String get() = tr(R.string.card_queued_ahead)
 
     /**
-     * 展开时显示哪一件(只一件,没有列表,也不在卡片里切换;同时有别的事,到如愿的对话页看):
+     * 展开时显示哪一件(只一件,没有列表,也不在卡片里切换;同时有别的事,到如意 AI 的对话页看):
      * 先是刚在卡片里发了话的那个对话([follow])的任务(进行中的优先),好让用户在卡片里看到回答;
      * 否则按 [runs] 的先后取第一件——[CapsuleModel.cardRuns] 已排成要你处理(接管、同意、回答)在前,再是进行中的,
      * 最后是刚结束、还没消失的;一件都没有时,任务结束后留下的那一页还在后台运行([kept])就是它的卡片,
@@ -150,7 +150,7 @@ object CapsuleCards {
         is CardView.Kept -> card.page.conversationId
     }
 
-    /** 任务还在进行(干活中、如愿问你、等条件)时输入框右边的停止键停哪件;别的时候为 null。 */
+    /** 任务还在进行(干活中、如意 AI 问你、等条件)时输入框右边的停止键停哪件;别的时候为 null。 */
     fun stopKey(card: CardView): String? {
         val (run, content) = when (card) {
             is CardView.Detail -> card.run to card.content
@@ -210,7 +210,7 @@ object CapsuleCards {
         CapsuleKind.Failed -> tr(R.string.capsule_failed)
         CapsuleKind.Cancelled -> tr(R.string.capsule_stopped)
         CapsuleKind.KeptPage -> tr(R.string.kept_capsule)
-        CapsuleKind.Idle -> "如愿"
+        CapsuleKind.Idle -> "如意 AI"
     }
 
     /** 这种内容旁边放不放虚拟屏小画面(还要那件事真有画面):干活中、要你接管、等条件时放。 */
