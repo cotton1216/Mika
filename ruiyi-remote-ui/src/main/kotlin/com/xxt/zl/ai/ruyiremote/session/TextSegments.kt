@@ -185,6 +185,8 @@ data class MarkdownInline(
     val bold: Boolean = false,
     val code: Boolean = false,
     val url: String? = null,
+    /** T15：![alt](path) 里的相对路径；http(s) 图片与非法路径不填，按普通文本处理。 */
+    val imagePath: String? = null,
 )
 
 fun isSafeMarkdownUrl(url: String): Boolean {
@@ -194,6 +196,19 @@ fun isSafeMarkdownUrl(url: String): Boolean {
         (uri.scheme.equals("http", true) || uri.scheme.equals("https", true)) &&
             !uri.host.isNullOrBlank() && uri.rawUserInfo == null
     }.getOrDefault(false)
+}
+
+/**
+ * T15：判断 ![](path) 的 path 是否是可从会话工作区读取的相对图片路径。
+ * 只放行以常见图片扩展名结尾的简单相对路径，拒绝绝对路径、盘符、反斜杠与 `..`，
+ * 防止把 Markdown 变成任意路径探测。host 侧仍会做真正的越界校验。
+ */
+fun isWorkspaceImagePath(path: String): Boolean {
+    if (path.isEmpty() || path.length > 512) return false
+    if (path.any { it.isWhitespace() || it.isISOControl() } || '\\' in path || ':' in path) return false
+    if (path.startsWith("/") || path.contains("..")) return false
+    val lower = path.lowercase()
+    return listOf(".png", ".jpg", ".jpeg", ".webp", ".gif").any { lower.endsWith(it) }
 }
 
 fun parseMarkdownInline(text: String): List<MarkdownInline> = parseInline(text, false, 0)
@@ -260,6 +275,24 @@ private fun parseInline(text: String, bold: Boolean, depth: Int): List<MarkdownI
                     result += parseInline(text.substring(index + 2, end), true, depth + 1)
                     index = end + 2
                 } else { plain.append(delimiter); index += 2 }
+            }
+            // T15：![alt](path) —— 相对路径作为工作区图片加载；http(s) 图片仍按普通链接，
+            // 不自动下载外部资源（与 MarkdownContent 的纯本地约束一致）。
+            text.startsWith("![", index) -> {
+                val labelEnd = text.indexOf("](", index + 2)
+                val urlEnd = if (labelEnd >= 0) linkEnd(text, labelEnd + 2) else -1
+                if (urlEnd >= 0) {
+                    val raw = text.substring(labelEnd + 2, urlEnd).trim().removePrefix("<").removeSuffix(">").trim()
+                    val label = text.substring(index + 2, labelEnd)
+                    flush()
+                    if (raw.isNotEmpty() && !isSafeMarkdownUrl(raw) && isWorkspaceImagePath(raw)) {
+                        result += MarkdownInline(label, bold, imagePath = raw)
+                    } else {
+                        // http(s) 或不合法的路径：保留可读的 alt 文字，不显示机器格式。
+                        result += listOf(MarkdownInline(label, bold))
+                    }
+                    index = urlEnd + 1
+                } else { plain.append(text[index]); index++ }
             }
             text[index] == '[' && (index == 0 || text[index - 1] != '!') -> {
                 val labelEnd = text.indexOf("](", index + 1)

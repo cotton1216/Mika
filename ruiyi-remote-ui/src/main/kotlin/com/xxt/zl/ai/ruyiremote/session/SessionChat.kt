@@ -190,6 +190,10 @@ class SessionApi(@Volatile private var transport: HarnessTransport) {
 
     suspend fun loadImage(sessionId: String, image: MessageImage): ByteArray = loadSessionImage(transport, sessionId, image)
 
+    /** T15：按工作区相对路径读 markdown 图片（![](file.png) 这类无附件引用的图）。 */
+    suspend fun loadWorkspaceImage(sessionId: String, path: String): ByteArray =
+        loadWorkspaceImage(transport, sessionId, path)
+
     fun hostEvents(): Flow<JsonElement> = transport.stream("\$events", JsonObject(emptyMap()))
 
     suspend fun respondApproval(clientId: String, eventId: String, decision: ApprovalDecision) {
@@ -777,6 +781,12 @@ class SessionChatController(
     suspend fun loadImage(image: MessageImage): ByteArray {
         val session = _state.value.openSession ?: throw AttachmentException("会话已关闭")
         return api.loadImage(session.id, image)
+    }
+
+    /** T15：按工作区相对路径读图，供 markdown 里的 ![](path) 使用。 */
+    suspend fun loadWorkspaceImage(path: String): ByteArray {
+        val session = _state.value.openSession ?: throw AttachmentException("会话已关闭")
+        return api.loadWorkspaceImage(session.id, path)
     }
 
     fun send(text: String, images: List<PromptImage> = emptyList()): Boolean {

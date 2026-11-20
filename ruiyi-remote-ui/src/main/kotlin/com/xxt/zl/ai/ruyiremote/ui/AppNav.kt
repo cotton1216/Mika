@@ -41,21 +41,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import com.xxt.zl.ai.ruyiremote.account.HostConnection
 import com.xxt.zl.ai.ruyiremote.account.RemoteHost
 import com.xxt.zl.ai.ruyiremote.channel.HarnessTunnel
 import com.xxt.zl.ai.ruyiremote.session.ChatState
+import com.xxt.zl.ai.ruyiremote.session.FolderView
+import com.xxt.zl.ai.ruyiremote.session.GroupTimelineController
 import com.xxt.zl.ai.ruyiremote.session.RemoteJobsController
 import com.xxt.zl.ai.ruyiremote.session.SessionApi
 import com.xxt.zl.ai.ruyiremote.session.SessionChatController
 import com.xxt.zl.ai.ruyiremote.session.SessionSnapshotStore
 import com.xxt.zl.ai.ruyiremote.session.SessionSummary
+import com.xxt.zl.ai.ruyiremote.session.GroupDimension
+import com.xxt.zl.ai.ruyiremote.session.SharedPrefsFolderStore
+import com.xxt.zl.ai.ruyiremote.session.SharedPrefsGroupDimensionStore
 import com.xxt.zl.ai.ruyiremote.session.SharedPrefsSessionSnapshotStore
 import com.xxt.zl.ai.ruyiremote.session.sessionSnapshotNamespace
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphMonitor
 import com.xxt.zl.ai.ruyiremote.ui.screen.AlternateSignInScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.ChatScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.ConnectScreen
+import com.xxt.zl.ai.ruyiremote.ui.screen.GroupChatScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HomeScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HostDetailScreen
 import com.xxt.zl.ai.ruyiremote.ui.screen.HostWorkspaceScreen
@@ -135,8 +142,45 @@ fun DshApp(
     }
     val chat = rememberChatController(connection, snapshotStore, snapshotNamespace)
     val jobs = rememberJobsController(connection)
+    // T16 群合并时间线控制器：跟随连接生命周期（重连换新控制器，页面 LaunchedEffect
+    // 会以导航传入的成员重新 open）。抽屉关掉不销毁——进群聊页后抽屉就没了。
+    val groupTimeline = rememberGroupTimelineController(connection)
     val chatState = rememberChatState(chat)
     val currentChat = (stack.lastOrNull() as? Screen.Chat)
+    val currentGroupChat = (stack.lastOrNull() as? Screen.GroupChat)
+
+    // 会话分组的文件夹视图：和会话快照同一套「中继 + 主机」隔离口径，但落在独立
+    // prefs 文件（T11 的 dsh_remote_folder）。切主机时 namespace 变化 → 重新读取
+    // 那台电脑的文件夹，杜绝把上一台的分类显示到这一台。
+    val folderStore = remember { SharedPrefsFolderStore(context) }
+    var folderView by remember { mutableStateOf(FolderView()) }
+    val folderScope = rememberCoroutineScope()
+    LaunchedEffect(snapshotNamespace) {
+        folderView = folderStore.read(snapshotNamespace) ?: FolderView()
+    }
+    // 折叠是本地元数据，点击即更新 UI（乐观），写回失败不影响当前展示；下次读取
+    // 会以磁盘为准。写操作只在内存里改 collapsed，不碰会话归属（本期无管理 UI）。
+    val toggleFolder: (String) -> Unit = { folderId ->
+        val next = folderView.copy(
+            folders = folderView.folders.map { folder ->
+                if (folder.id == folderId) folder.copy(collapsed = !folder.collapsed) else folder
+            },
+        )
+        folderView = next
+        folderScope.launch { folderStore.write(snapshotNamespace, next) }
+    }
+
+    // T13 分组维度：与文件夹同一套「中继 + 主机」隔离，落独立 prefs（dsh_remote_group_dimension）。
+    // 切主机时 namespace 变化 → 重新读取那台电脑上次选的维度，默认 DAY 兼容老用户。
+    val dimensionStore = remember { SharedPrefsGroupDimensionStore(context) }
+    var dimension by remember { mutableStateOf(GroupDimension.DAY) }
+    LaunchedEffect(snapshotNamespace) {
+        dimension = dimensionStore.read(snapshotNamespace)
+    }
+    val selectDimension: (GroupDimension) -> Unit = { next ->
+        dimension = next
+        folderScope.launch { dimensionStore.write(snapshotNamespace, next) }
+    }
 
     /**
      * 打开某条会话。
@@ -154,6 +198,19 @@ fun DshApp(
             } else {
                 stack.add(Screen.Chat(hostId, summary))
             }
+        }
+    }
+
+    /**
+     * T16：抽屉「按群」分组下点群头进群聊页。members 是这一群当前的成员会话快照，
+     * 由 GroupBlock.items 原样带过去，控制器再按 title 解析成员名。
+     */
+    val openGroup: (String, List<com.xxt.zl.ai.ruyiremote.session.SessionSummary>) -> Unit = { group, members ->
+        val hostId = session.connectedHost?.id
+        if (hostId != null && !switching) {
+            forward = true
+            drawerOpen = false
+            stack.add(Screen.GroupChat(hostId, group, members))
         }
     }
 
@@ -193,11 +250,13 @@ fun DshApp(
         }
     }
 
-    // 掉线：Chat 已经没有数据源，退回上一层。Workspace 保留：它能在断开态显示
-    // 重试与主机入口，比把用户直接弹回电脑列表更接近他刚才的位置。
+    // 掉线：Chat / GroupChat 已经没有数据源，退回上一层。Workspace 保留：它能在断开态
+    // 显示重试与主机入口，比把用户直接弹回电脑列表更接近他刚才的位置。
     LaunchedEffect(connection, connectingHostId) {
         if (connection == null && connectingHostId == null) {
-            while (stack.isNotEmpty() && stack.last() is Screen.Chat) {
+            while (stack.isNotEmpty() &&
+                (stack.last() is Screen.Chat || stack.last() is Screen.GroupChat)
+            ) {
                 stack.removeAt(stack.lastIndex)
             }
         }
@@ -290,6 +349,11 @@ fun DshApp(
                         switching = switching,
                         transportNotice = session.transportNotice,
                         chat = if (connected) chat else null,
+                        // 与抽屉共享同一份文件夹与维度状态，两页切换保持一致。
+                        folderView = folderView,
+                        dimension = dimension,
+                        onToggleFolder = toggleFolder,
+                        onSelectDimension = selectDimension,
                         onOpenDrawer = { drawerOpen = true },
                         onRetryConnect = retryConnectFor(
                             hostId = screen.hostId,
@@ -298,6 +362,12 @@ fun DshApp(
                             connect = session::connect,
                         ),
                         onSelectSession = { summary -> push(Screen.Chat(screen.hostId, summary)) },
+                        onOpenGroup = { group, members ->
+                            if (!switching) {
+                                drawerOpen = false
+                                stack.add(Screen.GroupChat(screen.hostId, group, members))
+                            }
+                        },
                     )
                 }
 
@@ -322,6 +392,17 @@ fun DshApp(
                         ?: session.connectedHost?.takeIf { it.id == screen.hostId }?.name
                         ?: "这台电脑",
                     onOpenDrawer = { drawerOpen = true },
+                )
+
+                is Screen.GroupChat -> GroupChatScreen(
+                    // 与 Chat 同理：只把属于这条群所在主机的控制器交出去。
+                    controller = groupTimeline.takeIf { session.connectedHost?.id == screen.hostId },
+                    group = screen.group,
+                    members = screen.members,
+                    hostName = session.hosts.firstOrNull { it.id == screen.hostId }?.name
+                        ?: session.connectedHost?.takeIf { it.id == screen.hostId }?.name
+                        ?: "这台电脑",
+                    onBack = pop,
                 )
 
                 Screen.Settings -> SettingsScreen(session = session, onBack = pop)
@@ -352,10 +433,15 @@ fun DshApp(
                 sessions = sessions,
                 sessionsLoading = switching || chatState?.sessionsLoading == true,
                 sessionsError = if (switching) null else chatState?.sessionsError,
+                folderView = folderView,
+                onToggleFolder = toggleFolder,
+                dimension = dimension,
+                onSelectDimension = selectDimension,
                 switching = switching,
                 currentSessionId = visibleChat?.summary?.id,
                 onRefreshSessions = { if (!switching) chat?.loadSessions() },
                 onSelectSession = openChat,
+                onOpenGroup = openGroup,
                 onNewSession = {
                     if (!switching) chat?.createSession(onOpened = openChat)
                 },
@@ -500,6 +586,23 @@ private fun rememberJobsController(connection: HostConnection?): RemoteJobsContr
     val controller = remember(connection) {
         connection?.let { c ->
             RemoteJobsController(HarnessTunnel(c.rpc, c.capabilities), scope)
+        }
+    }
+    DisposableEffect(controller) { onDispose { controller?.stop() } }
+    return controller
+}
+
+/**
+ * T16 群合并时间线控制器：与 jobs 一样跟随连接生命周期，抽屉开关不决定它的生死。
+ * 重连会换连接对象 → 新控制器；群聊页的 LaunchedEffect 键里带 controller，会重新
+ * open 当前群，不会把旧控制器的时间线留在页面上。
+ */
+@Composable
+private fun rememberGroupTimelineController(connection: HostConnection?): GroupTimelineController? {
+    val scope = rememberCoroutineScope()
+    val controller = remember(connection) {
+        connection?.let { c ->
+            GroupTimelineController(SessionApi(HarnessTunnel(c.rpc, c.capabilities)), scope)
         }
     }
     DisposableEffect(controller) { onDispose { controller?.stop() } }

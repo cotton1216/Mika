@@ -1,6 +1,7 @@
 package com.xxt.zl.ai.ruyiremote.ui.components
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.util.LruCache
 import androidx.compose.foundation.Image
@@ -68,14 +69,18 @@ import kotlin.math.roundToInt
  * 不执行脚本、不引用外部资源。解析不了就降级回原来的代码块，不会变成空白。
  */
 @Composable
-fun MarkdownContent(text: String, modifier: Modifier = Modifier) {
+fun MarkdownContent(
+    text: String,
+    modifier: Modifier = Modifier,
+    onLoadImage: (suspend (String) -> ByteArray)? = null,
+) {
     val blocks = remember(text) { parseMarkdown(text) }
     val p = LocalRuyiPalette.current
     SelectionContainer {
         Column(modifier, verticalArrangement = Arrangement.spacedBy(Space.s)) {
             blocks.forEach { block ->
                 when (block) {
-                    is MarkdownBlock.Paragraph -> MarkdownText(block.text)
+                    is MarkdownBlock.Paragraph -> MarkdownText(block.text, onLoadImage = onLoadImage)
                     is MarkdownBlock.Heading -> MarkdownText(
                         block.text,
                         style = when (block.level) {
@@ -84,19 +89,20 @@ fun MarkdownContent(text: String, modifier: Modifier = Modifier) {
                             else -> MaterialTheme.typography.titleMedium
                         },
                         modifier = Modifier.padding(top = Space.xs),
+                        onLoadImage = onLoadImage,
                     )
                     is MarkdownBlock.ListItem -> Row(
                         Modifier.padding(start = (block.depth.coerceAtMost(6) * 12).dp),
                         horizontalArrangement = Arrangement.spacedBy(Space.s),
                     ) {
                         Text(block.marker, color = p.textSecondary, style = MaterialTheme.typography.bodyLarge)
-                        MarkdownText(block.text, Modifier.weight(1f))
+                        MarkdownText(block.text, Modifier.weight(1f), onLoadImage = onLoadImage)
                     }
                     is MarkdownBlock.Quote -> Row(
                         Modifier.fillMaxWidth().background(p.cardPressed, RoundedCornerShape(8.dp)),
                     ) {
                         Text("│", color = p.accent, modifier = Modifier.padding(start = Space.s, top = Space.s))
-                        MarkdownText(block.text, Modifier.weight(1f).padding(Space.s))
+                        MarkdownText(block.text, Modifier.weight(1f).padding(Space.s), onLoadImage = onLoadImage)
                     }
                     is MarkdownBlock.Code ->
                         if (block.looksLikeSvg()) SvgContent(block) else MarkdownCodeBlock(block)
@@ -113,38 +119,124 @@ private fun MarkdownText(
     modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
     textAlign: TextAlign = TextAlign.Start,
+    onLoadImage: (suspend (String) -> ByteArray)? = null,
 ) {
     val p = LocalRuyiPalette.current
     val uriHandler = LocalUriHandler.current
     val spans = remember(text) { parseMarkdownInline(text) }
-    val annotated = remember(spans, p, uriHandler) {
-        buildAnnotatedString {
-            spans.forEach { span ->
-                val spanStyle = SpanStyle(
-                    fontWeight = if (span.bold) FontWeight.Bold else null,
-                    fontFamily = if (span.code) Mono else null,
-                    background = if (span.code) p.cardPressed else androidx.compose.ui.graphics.Color.Unspecified,
-                )
-                withStyle(spanStyle) {
-                    val url = span.url
-                    if (url != null && isSafeMarkdownUrl(url)) {
-                        withLink(
-                            LinkAnnotation.Url(
-                                url,
-                                styles = TextLinkStyles(SpanStyle(color = p.accent, textDecoration = TextDecoration.Underline)),
-                                linkInteractionListener = {
-                                    // 浏览器可能未安装；无可处理的应用时保留当前阅读页面。
-                                    runCatching { if (isSafeMarkdownUrl(url)) uriHandler.openUri(url) }
-                                },
-                            ),
-                        ) { append(span.text) }
-                    } else append(span.text)
+    // 没有可用 loader 或这段文字没有图片时，走原来的纯文本路径（零额外布局）。
+    val hasImage = onLoadImage != null && spans.any { it.imagePath != null }
+    if (!hasImage) {
+        val annotated = remember(spans, p, uriHandler) {
+            buildAnnotatedString {
+                spans.forEach { span -> appendStyledSpan(span, p, uriHandler) }
+            }
+        }
+        Text(annotated, modifier = modifier, style = style, color = p.onBubbleAssistant, textAlign = textAlign)
+        return
+    }
+
+    // 有图片：按 imagePath 把 spans 切成文字段/图片段，图片单独一行异步加载。
+    // 先把连续的文字 span 合并成段，避免在 @Composable 里用局部函数调 Text。
+    data class Run(val text: List<com.xxt.zl.ai.ruyiremote.session.MarkdownInline>, val imagePath: String?)
+    val runs = mutableListOf<Run>()
+    var buf = mutableListOf<com.xxt.zl.ai.ruyiremote.session.MarkdownInline>()
+    spans.forEach { span ->
+        val path = span.imagePath
+        if (path == null) {
+            buf += span
+        } else {
+            if (buf.isNotEmpty()) { runs += Run(buf.toList(), null); buf = mutableListOf() }
+            runs += Run(emptyList(), path)
+        }
+    }
+    if (buf.isNotEmpty()) runs += Run(buf.toList(), null)
+
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(Space.s)) {
+        runs.forEach { run ->
+            val path = run.imagePath
+            if (path == null) {
+                val annotated = buildAnnotatedString {
+                    run.text.forEach { appendStyledSpan(it, p, uriHandler) }
                 }
+                Text(annotated, style = style, color = p.onBubbleAssistant, textAlign = textAlign)
+            } else {
+                // run.text 为空，图片 alt 取原 span 的文本。
+                val alt = spans.firstOrNull { it.imagePath == path }?.text ?: "图片"
+                WorkspaceImage(path = path, alt = alt, load = onLoadImage!!)
             }
         }
     }
-    Text(annotated, modifier = modifier, style = style, color = p.onBubbleAssistant, textAlign = textAlign)
 }
+
+private fun AnnotatedString.Builder.appendStyledSpan(
+    span: com.xxt.zl.ai.ruyiremote.session.MarkdownInline,
+    p: com.xxt.zl.ai.ruyiremote.ui.theme.RuyiPalette,
+    uriHandler: androidx.compose.ui.platform.UriHandler,
+) {
+    val spanStyle = SpanStyle(
+        fontWeight = if (span.bold) FontWeight.Bold else null,
+        fontFamily = if (span.code) Mono else null,
+        background = if (span.code) p.cardPressed else androidx.compose.ui.graphics.Color.Unspecified,
+    )
+    withStyle(spanStyle) {
+        val url = span.url
+        if (url != null && isSafeMarkdownUrl(url)) {
+            withLink(
+                LinkAnnotation.Url(
+                    url,
+                    styles = TextLinkStyles(SpanStyle(color = p.accent, textDecoration = TextDecoration.Underline)),
+                    linkInteractionListener = {
+                        runCatching { if (isSafeMarkdownUrl(url)) uriHandler.openUri(url) }
+                    },
+                ),
+            ) { append(span.text) }
+        } else append(span.text)
+    }
+}
+
+/** T15：工作区图片异步加载，失败时降级显示 alt 文字（不留空白、不崩溃）。 */
+@Composable
+private fun WorkspaceImage(
+    path: String,
+    alt: String,
+    load: suspend (String) -> ByteArray,
+) {
+    val p = LocalRuyiPalette.current
+    val state by produceState<WsImg>(WsImg.Loading, path, load) {
+        value = withContext(Dispatchers.IO) {
+            runCatching { load(path) }
+                .mapCatching { bytes -> WsImg.Ready(decodeWorkspaceBitmap(bytes)) }
+                .getOrElse { error ->
+                    android.util.Log.w("MarkdownContent", "工作区图片加载失败: $path", error)
+                    WsImg.Failed
+                }
+        }
+    }
+    when (val s = state) {
+        is WsImg.Loading -> Box(
+            Modifier.fillMaxWidth().height(88.dp).clip(RoundedCornerShape(12.dp)).background(p.cardPressed),
+        )
+        is WsImg.Failed -> Text(alt, style = MaterialTheme.typography.bodySmall, color = p.textSecondary)
+        is WsImg.Ready -> Image(
+            bitmap = s.bitmap.asImageBitmap(),
+            contentDescription = alt,
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp))
+                .border(1.dp, p.hairline, RoundedCornerShape(12.dp)),
+            contentScale = ContentScale.FillWidth,
+        )
+    }
+}
+
+private sealed interface WsImg {
+    data object Loading : WsImg
+    data object Failed : WsImg
+    data class Ready(val bitmap: Bitmap) : WsImg
+}
+
+/** 把工作区图片字节解成非空 Bitmap；失败抛异常由上层 runCatching 兜底。 */
+private fun decodeWorkspaceBitmap(bytes: ByteArray): Bitmap =
+    BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: throw IllegalArgumentException("图片解码失败")
 
 @Composable
 private fun MarkdownCodeBlock(block: MarkdownBlock.Code) {

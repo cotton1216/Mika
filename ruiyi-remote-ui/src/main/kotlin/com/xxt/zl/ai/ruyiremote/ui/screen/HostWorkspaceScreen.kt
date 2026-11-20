@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,8 +31,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.xxt.zl.ai.ruyiremote.session.ChatState
+import com.xxt.zl.ai.ruyiremote.session.FolderView
+import com.xxt.zl.ai.ruyiremote.session.GroupDimension
 import com.xxt.zl.ai.ruyiremote.session.SessionChatController
 import com.xxt.zl.ai.ruyiremote.session.SessionSummary
+import com.xxt.zl.ai.ruyiremote.session.groupSessions
 import com.xxt.zl.ai.ruyiremote.ui.components.EmptyState
 import com.xxt.zl.ai.ruyiremote.ui.components.GhostButton
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphMenu
@@ -38,14 +43,11 @@ import com.xxt.zl.ai.ruyiremote.ui.components.GlyphPlus
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphRefresh
 import com.xxt.zl.ai.ruyiremote.ui.components.InlineError
 import com.xxt.zl.ai.ruyiremote.ui.components.NoticeBar
-import com.xxt.zl.ai.ruyiremote.ui.components.Pill
 import com.xxt.zl.ai.ruyiremote.ui.components.PressableCircle
 import com.xxt.zl.ai.ruyiremote.ui.components.SkeletonRow
 import com.xxt.zl.ai.ruyiremote.ui.components.TypingDots
-import com.xxt.zl.ai.ruyiremote.ui.formatWhen
 import com.xxt.zl.ai.ruyiremote.ui.screenFrame
 import com.xxt.zl.ai.ruyiremote.ui.theme.LocalRuyiPalette
-import com.xxt.zl.ai.ruyiremote.ui.theme.Mono
 import com.xxt.zl.ai.ruyiremote.ui.theme.Space
 
 /**
@@ -66,9 +68,14 @@ fun HostWorkspaceScreen(
     switching: Boolean,
     transportNotice: String?,
     chat: SessionChatController?,
+    folderView: FolderView,
+    dimension: GroupDimension,
+    onToggleFolder: (String) -> Unit,
+    onSelectDimension: (GroupDimension) -> Unit,
     onOpenDrawer: () -> Unit,
     onRetryConnect: (() -> Unit)?,
     onSelectSession: (SessionSummary) -> Unit,
+    onOpenGroup: (String, List<SessionSummary>) -> Unit,
 ) {
     val p = LocalRuyiPalette.current
     val state: ChatState? = chat?.state?.collectAsState()?.value
@@ -132,7 +139,12 @@ fun HostWorkspaceScreen(
             else -> ConnectedBody(
                 chat = chat,
                 state = state,
+                folderView = folderView,
+                dimension = dimension,
+                onToggleFolder = onToggleFolder,
+                onSelectDimension = onSelectDimension,
                 onSelectSession = onSelectSession,
+                onOpenGroup = onOpenGroup,
             )
         }
     }
@@ -191,10 +203,18 @@ private fun DisconnectedBody(
 private fun ConnectedBody(
     chat: SessionChatController,
     state: ChatState,
+    folderView: FolderView,
+    dimension: GroupDimension,
+    onToggleFolder: (String) -> Unit,
+    onSelectDimension: (GroupDimension) -> Unit,
     onSelectSession: (SessionSummary) -> Unit,
+    onOpenGroup: (String, List<SessionSummary>) -> Unit,
 ) {
     val p = LocalRuyiPalette.current
     val sessions = state.sessions
+    // 分组块的折叠态是本地 UI 状态；切维度时重置，避免把上一维度的折叠状态带过来。
+    // 文件夹折叠仍走 RemoteFolder.collapsed（由上层持久化）。
+    var collapsedKeys by remember(dimension) { mutableStateOf<Set<String>>(emptySet()) }
     Column(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(horizontal = Space.page)) {
             Row(
@@ -238,6 +258,11 @@ private fun ConnectedBody(
             else Text("${sessions.size} 条", style = MaterialTheme.typography.labelSmall, color = p.textTertiary)
         }
         Spacer(Modifier.height(Space.s))
+        // 与抽屉共享同一维度状态：在任一页切换，另一页跟着变。
+        Box(Modifier.padding(horizontal = Space.page)) {
+            DimensionSwitcher(dimension = dimension, onSelect = onSelectDimension)
+        }
+        Spacer(Modifier.height(Space.s))
 
         when {
             state.sessionsLoading && sessions.isEmpty() -> Column(Modifier.padding(horizontal = Space.page)) {
@@ -249,71 +274,30 @@ private fun ConnectedBody(
                 body = "点上面的「新建会话」，或直接在电脑上继续原来的会话。",
             )
 
-            else -> LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(
-                    start = Space.page,
-                    end = Space.page,
-                    top = Space.xs,
-                    bottom = Space.xxxl,
-                ),
-                verticalArrangement = Arrangement.spacedBy(Space.s),
-            ) {
-                items(sessions, key = { it.id }) { session ->
-                    WorkspaceSessionRow(session = session, onClick = { onSelectSession(session) })
+            else -> {
+                // 与抽屉同一套分组：每条会话恰好落一个块（文件夹常驻顶层，其余按维度分桶）。
+                val blocks = groupSessions(sessions, folderView, System.currentTimeMillis(), dimension)
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(
+                        start = Space.page,
+                        end = Space.page,
+                        top = Space.xs,
+                        bottom = Space.xxxl,
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    groupedSessionItems(
+                        blocks = blocks,
+                        collapsedKeys = collapsedKeys,
+                        onToggleKey = { key -> collapsedKeys = toggleKey(collapsedKeys, key) },
+                        currentSessionId = null,
+                        onToggleFolder = onToggleFolder,
+                        onSelect = onSelectSession,
+                        onOpenGroup = onOpenGroup,
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun WorkspaceSessionRow(session: SessionSummary, onClick: () -> Unit) {
-    val p = LocalRuyiPalette.current
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(p.card)
-            .clickable(onClick = onClick)
-            .padding(horizontal = Space.l, vertical = Space.m),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    session.displayTitle,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = p.text,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f, fill = false),
-                )
-                if (session.running) {
-                    Spacer(Modifier.width(Space.s))
-                    Pill("运行中", p.success)
-                } else if (session.blank) {
-                    Spacer(Modifier.width(Space.s))
-                    Pill("空会话", p.textTertiary)
-                }
-            }
-            session.cwd?.takeIf { it.isNotBlank() }?.let {
-                Text(
-                    it,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = p.textTertiary,
-                    fontFamily = Mono,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        }
-        Spacer(Modifier.width(Space.s))
-        Text(
-            formatWhen(session.updatedAt),
-            style = MaterialTheme.typography.labelSmall,
-            color = p.textTertiary,
-            maxLines = 1,
-        )
     }
 }

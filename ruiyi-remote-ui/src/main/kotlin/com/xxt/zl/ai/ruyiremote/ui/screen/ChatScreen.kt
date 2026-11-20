@@ -193,6 +193,8 @@ fun ChatScreen(
         val inline = image.data
         if (inline != null) decodeImageData(inline) else chat.loadImage(image)
     }
+    // T15：markdown 正文里的 ![](path) 按会话工作区相对路径读图。
+    val loadWorkspaceImage: suspend (String) -> ByteArray = { path -> chat.loadWorkspaceImage(path) }
 
     // 进入会话时确保打开的是这一条（从列表点进来时控制器里已经是它）。
     // 键里带上 chat：自动重连会换一个新的控制器，那时必须重新打开同一条会话。
@@ -341,6 +343,7 @@ fun ChatScreen(
                             row = row,
                             changedModel = modelChanges[row.key],
                             loadImage = loadImage,
+                            loadWorkspaceImage = loadWorkspaceImage,
                             onQuote = { text -> draft = quoteIntoDraft(draft, text) },
                             onShareConversation = { shareAnchorKey = row.key },
                             onRetry = { chat.retryLastTurn() },
@@ -1044,6 +1047,7 @@ private fun AssistantMessage(
     row: AssistantRow,
     changedModel: String?,
     loadImage: suspend (MessageImage) -> ByteArray,
+    loadWorkspaceImage: suspend (String) -> ByteArray,
     onQuote: (String) -> Unit,
     onShareConversation: () -> Unit,
     onRetry: () -> Unit,
@@ -1076,7 +1080,11 @@ private fun AssistantMessage(
         if (row.text.isBlank() && row.streaming && row.reasoning.isBlank()) {
             Box(Modifier.padding(vertical = 8.dp)) { TypingDots(color = p.textTertiary) }
         } else if (row.text.isNotBlank()) {
-            MarkdownContent(text = row.text, modifier = Modifier.fillMaxWidth())
+            MarkdownContent(
+                text = row.text,
+                modifier = Modifier.fillMaxWidth(),
+                onLoadImage = loadWorkspaceImage,
+            )
         }
         if (row.interrupted) {
             Row(

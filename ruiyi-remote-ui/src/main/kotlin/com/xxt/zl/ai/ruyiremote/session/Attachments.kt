@@ -135,6 +135,42 @@ suspend fun loadSessionImage(transport: HarnessTransport, sessionId: String, ima
     return decodeImageData(result.attachmentText("data") ?: throw AttachmentException("图片已失效或不可读取"))
 }
 
+/**
+ * 从会话工作区按相对路径读图片（T15）。用于消息正文里 `![alt](file.png)` 这类
+ * 没有协议附件引用的图片——agent 把图写到工作区后只在文本里留了路径。
+ *
+ * 走 `workspaceFiles/readBytes`（已在 harness remote 白名单，host/relay 零改动），
+ * 桥接层把二进制转成 `value.data` 的 base64。路径必须简单相对文件名，防止遍历；
+ * 真正的越界校验由 host 的 `verifyWorkspacePathContainment` 负责。
+ */
+suspend fun loadWorkspaceImage(
+    transport: HarnessTransport,
+    sessionId: String,
+    path: String,
+): ByteArray {
+    val clean = path.trim().removePrefix("<").removeSuffix(">").trim()
+    if (clean.isEmpty() || clean.any { it.isISOControl() } ||
+        clean.startsWith("/") || clean.startsWith("\\") ||
+        clean.contains("..") || '\\' in clean || ':' in clean
+    ) {
+        throw AttachmentException("图片路径不是合法的相对文件名")
+    }
+    // HarnessTunnel.call 内部已把 args 塞进 payload.args；这里必须直接给顶层字段，
+    // 不能再包一层 args，否则 host 的 requestArgs 取不到 workspaceFileScopeId。
+    // host 的 readBytes 对 length 参数有 2 MiB 硬上限（2097152），超过直接报
+    // "N bytes exceed the 2097152 byte cap"；bridge 入口虽放行 4 MiB，但底层 host 更严。
+    val length = 2 * 1024 * 1024
+    val result = transport.call("workspaceFiles/readBytes", buildJsonObject {
+        put("workspaceFileScopeId", sessionId)
+        put("path", clean)
+        put("range", buildJsonObject { put("offset", 0); put("length", length) })
+    }) as? JsonObject ?: throw AttachmentException("Host 未返回工作区图片数据")
+    // HarnessTunnel.call 已剥掉 {ok,value} 外层，这里 result 就是 readBytes 的 value
+    // （形如 {offset, eof, bytes, data}）；桥接层把二进制转成了 base64 的 data。
+    val data = result.attachmentText("data") ?: throw AttachmentException("工作区图片数据为空")
+    return decodeImageData(data)
+}
+
 fun uploadedFilesPrompt(text: String, files: List<UploadedFile>): String {
     if (files.isEmpty()) return text
     val refs = files.joinToString(" ") { file ->

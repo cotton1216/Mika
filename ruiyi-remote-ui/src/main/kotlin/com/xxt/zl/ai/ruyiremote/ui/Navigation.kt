@@ -42,6 +42,19 @@ sealed interface Screen {
     /** 单个会话的对话。 */
     data class Chat(val hostId: String, val summary: SessionSummary) : Screen
 
+    /**
+     * T16 群聊页：同一小通 Bot 群的成员会话合并视图。
+     *
+     * [members] 是打开时抽屉里这一群的全部成员会话快照——群成员识别靠 title
+     * 「成员名 · 群名」，控制器据此把各成员最近消息合并成单一时间线。A 路线是
+     * 「进入即刷新」的本地视图，不是真正的群房间，也不做实时推送。
+     */
+    data class GroupChat(
+        val hostId: String,
+        val group: String,
+        val members: List<SessionSummary>,
+    ) : Screen
+
     /** 账号、中继地址、后台保活、退出登录。 */
     data object Settings : Screen
 }

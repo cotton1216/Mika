@@ -54,10 +54,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.xxt.zl.ai.ruyiremote.account.RemoteHost
+import com.xxt.zl.ai.ruyiremote.session.FolderView
+import com.xxt.zl.ai.ruyiremote.session.GroupDimension
+import com.xxt.zl.ai.ruyiremote.session.RemoteFolder
 import com.xxt.zl.ai.ruyiremote.session.RemoteJob
 import com.xxt.zl.ai.ruyiremote.session.RemoteJobsController
 import com.xxt.zl.ai.ruyiremote.session.RemoteJobsState
 import com.xxt.zl.ai.ruyiremote.session.SessionSummary
+import com.xxt.zl.ai.ruyiremote.session.groupSessions
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphChevron
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphPlus
 import com.xxt.zl.ai.ruyiremote.ui.components.GlyphRefresh
@@ -68,7 +72,6 @@ import com.xxt.zl.ai.ruyiremote.ui.components.RemoteJobsPanel
 import com.xxt.zl.ai.ruyiremote.ui.components.SkeletonRow
 import com.xxt.zl.ai.ruyiremote.ui.components.StatusDot
 import com.xxt.zl.ai.ruyiremote.ui.components.TypingDots
-import com.xxt.zl.ai.ruyiremote.ui.formatWhen
 import com.xxt.zl.ai.ruyiremote.ui.theme.RuyiPalette
 import com.xxt.zl.ai.ruyiremote.ui.theme.LocalRuyiPalette
 import com.xxt.zl.ai.ruyiremote.ui.theme.Space
@@ -110,10 +113,15 @@ fun SessionDrawer(
     sessions: List<SessionSummary>,
     sessionsLoading: Boolean,
     sessionsError: String?,
+    folderView: FolderView,
+    onToggleFolder: (String) -> Unit,
+    dimension: GroupDimension,
+    onSelectDimension: (GroupDimension) -> Unit,
     switching: Boolean,
     currentSessionId: String?,
     onRefreshSessions: () -> Unit,
     onSelectSession: (SessionSummary) -> Unit,
+    onOpenGroup: (String, List<SessionSummary>) -> Unit,
     onNewSession: () -> Unit,
     jobs: RemoteJobsController?,
     jobsSessionId: String?,
@@ -264,9 +272,14 @@ fun SessionDrawer(
                     sessions = sessions,
                     loading = sessionsLoading,
                     error = sessionsError,
+                    folderView = folderView,
+                    onToggleFolder = onToggleFolder,
+                    dimension = dimension,
+                    onSelectDimension = onSelectDimension,
                     currentSessionId = currentSessionId,
                     onRefresh = onRefreshSessions,
                     onSelect = onSelectSession,
+                    onOpenGroup = onOpenGroup,
                     onNew = onNewSession,
                     onOpenAll = onOpenAllSessions,
                     jobsSessionTitle = jobsSessionTitle,
@@ -552,9 +565,14 @@ private fun ColumnScope.SessionsTab(
     sessions: List<SessionSummary>,
     loading: Boolean,
     error: String?,
+    folderView: FolderView,
+    onToggleFolder: (String) -> Unit,
+    dimension: GroupDimension,
+    onSelectDimension: (GroupDimension) -> Unit,
     currentSessionId: String?,
     onRefresh: () -> Unit,
     onSelect: (SessionSummary) -> Unit,
+    onOpenGroup: (String, List<SessionSummary>) -> Unit,
     onNew: () -> Unit,
     onOpenAll: (() -> Unit)?,
     jobsSessionTitle: String?,
@@ -569,6 +587,10 @@ private fun ColumnScope.SessionsTab(
     // 「首屏定位」和「同机刷新」。
     val listState = remember { LazyListState() }
     var anchoredHost by remember { mutableStateOf<String?>(null) }
+    // 维度块的折叠态：本地 UI 状态，按块 key（day-TODAY / status-RUNNING / cwd-xxx）记录。
+    // 切电脑（hostKey）或切维度时重置——桶是动态的、折叠是一次性查看行为，不落盘，
+    // 免得把上一台或上一种维度的折叠状态污染到当前列表。文件夹折叠仍走 RemoteFolder.collapsed。
+    var collapsedKeys by remember(hostKey, dimension) { mutableStateOf<Set<String>>(emptySet()) }
     LaunchedEffect(hostKey, sessions.isEmpty()) {
         if (hostKey == null || sessions.isEmpty()) return@LaunchedEffect
         if (anchoredHost != hostKey) {
@@ -679,6 +701,11 @@ private fun ColumnScope.SessionsTab(
     Spacer(Modifier.height(6.dp))
     error?.let { InlineError(it, retryLabel = "重新读取", onRetry = onRefresh) }
 
+    // 分组维度切换：一行四档（天/状态/目录/群）。当前档高亮，点选即回调上层落盘。
+    // 文件夹块在所有维度下常驻顶层，不受这里影响。
+    DimensionSwitcher(dimension = dimension, onSelect = onSelectDimension)
+    Spacer(Modifier.height(6.dp))
+
     when {
         loading && sessions.isEmpty() -> Column {
             repeat(3) { SkeletonRow() }
@@ -692,16 +719,23 @@ private fun ColumnScope.SessionsTab(
             Text("点上面的「新建会话」，或直接在电脑上继续原来的会话。", style = MaterialTheme.typography.bodySmall, color = p.textSecondary)
         }
 
-        else -> LazyColumn(
-            Modifier.weight(1f),
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            items(sessions.sortedByDescending { it.updatedAt }, key = { it.id }) { session ->
-                SessionRow(
-                    session = session,
-                    selected = session.id == currentSessionId,
-                    onClick = { onSelect(session) },
+        else -> {
+            // 每条会话恰好落在一个块里：有文件夹进文件夹块（常驻顶层），其余按所选维度分桶。
+            // now 每次重组取一次；跨过 0 点后下一次重组自然归到新的一天。
+            val blocks = groupSessions(sessions, folderView, System.currentTimeMillis(), dimension)
+            LazyColumn(
+                Modifier.weight(1f),
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                groupedSessionItems(
+                    blocks = blocks,
+                    collapsedKeys = collapsedKeys,
+                    onToggleKey = { key -> collapsedKeys = toggleKey(collapsedKeys, key) },
+                    currentSessionId = currentSessionId,
+                    onToggleFolder = onToggleFolder,
+                    onSelect = onSelect,
+                    onOpenGroup = onOpenGroup,
                 )
             }
         }
@@ -718,44 +752,6 @@ private fun ColumnScope.SessionsTab(
     }
 }
 
-@Composable
-private fun SessionRow(session: SessionSummary, selected: Boolean, onClick: () -> Unit) {
-    val p = LocalRuyiPalette.current
-    Row(
-        Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp))
-            .background(if (selected) p.bubbleUserSoft else Color.Transparent)
-            .clickable(onClick = onClick)
-            .semantics { contentDescription = "打开 ${session.displayTitle}"; role = Role.Button }
-            .padding(horizontal = 12.dp, vertical = 11.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        if (session.running) {
-            Box(Modifier.size(7.dp).background(p.success, CircleShape))
-            Spacer(Modifier.width(8.dp))
-        }
-        Column(Modifier.weight(1f)) {
-            Text(
-                session.displayTitle,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-                color = p.text,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Text(
-                when {
-                    session.running -> "运行中 · ${formatWhen(session.updatedAt)}"
-                    session.blank -> "空会话"
-                    else -> formatWhen(session.updatedAt)
-                },
-                style = MaterialTheme.typography.labelSmall,
-                color = p.textTertiary,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-    }
-}
 
 /* ------------------------------------------------------------------ 后台任务 */
 
