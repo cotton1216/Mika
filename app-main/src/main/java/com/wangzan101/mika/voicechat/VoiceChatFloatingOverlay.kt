@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.SystemClock
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
@@ -52,6 +54,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -59,8 +62,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -77,7 +84,9 @@ import com.wangzan101.mika.ui.theme.MikaIcons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.PI
 import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /**
  * 全局语音通话浮窗状态管理器
@@ -107,6 +116,10 @@ class VoiceChatFloatingState(
         private set
 
     var isMinimized by mutableStateOf(false)
+
+    /** 全屏数字人态;仅在通话中存在。与 isMinimized 互斥。 */
+    var isFullscreen by mutableStateOf(false)
+        private set
 
     var callStartRealtime by mutableLongStateOf(0L)
         private set
@@ -165,6 +178,7 @@ class VoiceChatFloatingState(
         controller = null
         isActive = false
         isMinimized = false
+        isFullscreen = false
         VoiceChatService.stop(context)
         scope.launch {
             ctrl?.stop()
@@ -180,7 +194,20 @@ class VoiceChatFloatingState(
     /** 收起/展开通话,同步决定应用外浮窗是否需要接手。 */
     fun minimize(minimized: Boolean) {
         isMinimized = minimized
+        isFullscreen = false
         syncOutside()
+    }
+
+    /** 展开全屏数字人;全屏与贴边胶囊互斥。 */
+    fun openFullscreen() {
+        isFullscreen = true
+        isMinimized = false
+        syncOutside()
+    }
+
+    /** 退出全屏,回到普通面板。 */
+    fun closeFullscreen() {
+        isFullscreen = false
     }
 
     /** 按当前通话状态和前后台重新决定应用外浮窗显不显示。 */
@@ -285,6 +312,22 @@ fun VoiceChatFloatingOverlay(
         // 切回前台拆掉应用外窗口后不会触发重组,应用内浮窗就再也回不来。
         val outsideShowing by floatingState.outside.showing.collectAsState()
         if (outsideShowing) return@BoxWithConstraints
+
+        if (floatingState.isFullscreen) {
+            // ============ 4. 全屏数字人态 ============
+            BackHandler { floatingState.closeFullscreen() }
+            VoiceAvatarFullscreen(
+                state = state,
+                muted = muted,
+                speaker = speaker,
+                elapsedSeconds = elapsedSeconds,
+                onMute = { controller.setMuted(!muted) },
+                onSpeaker = { controller.setSpeaker(it) },
+                onHangUp = { floatingState.hangUp() },
+                onExitFullscreen = { floatingState.closeFullscreen() },
+            )
+            return@BoxWithConstraints
+        }
 
         if (floatingState.isMinimized) {
             // ============ 1. 贴边可拖拽胶囊态 ============
@@ -394,6 +437,22 @@ fun VoiceChatFloatingOverlay(
                                     color = Color(0xFF111827),
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.SemiBold,
+                                )
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0x1A000000))
+                                    .clickable { floatingState.openFullscreen() },
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Icon(
+                                    imageVector = MikaIcons.Expand,
+                                    contentDescription = "展开全屏数字人",
+                                    tint = Color(0xFF374151),
+                                    modifier = Modifier.size(16.dp),
                                 )
                             }
 
@@ -527,61 +586,53 @@ internal fun CallGreenIndicator(aiSpeaking: Boolean) {
     }
 }
 
-/** 轻量精简版的珍珠光晕动效 */
+/** 浮窗版多彩呼吸灯:与全屏同款,尺寸和亮度按浅色面板调低,免得在毛玻璃底上发白。 */
 @Composable
 private fun MiniPearlBall(speaking: Boolean, listening: Boolean) {
-    val breathe = rememberInfiniteTransition(label = "miniPearl")
-    val pulse by breathe.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.12f,
-        animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
-        label = "miniPulse",
+    val spirit = remember { Animatable(0f) }
+    val speed by animateFloatAsState(
+        targetValue = if (speaking) 1.9f else if (listening) 1.2f else 0.8f,
+        animationSpec = tween(600),
+        label = "miniSpiritSpeed",
     )
-    val scale = if (speaking || listening) pulse else 1f
+    LaunchedEffect(speed) {
+        while (true) {
+            withFrameNanos { }
+            spirit.snapTo((spirit.value + 0.004f * speed) % 1f)
+        }
+    }
+    val t = spirit.value
+    val breath = (sin(t * 2 * PI).toFloat() + 1f) / 2f
+    val glow = if (speaking) 0.85f else 0.6f
 
     Box(contentAlignment = Alignment.Center, modifier = Modifier.size(110.dp)) {
-        Box(
-            modifier = Modifier
-                .scale(scale * 1.15f)
-                .size(100.dp)
-                .blur(20.dp)
-                .clip(CircleShape)
-                .background(
-                    Brush.radialGradient(
-                        listOf(
-                            if (speaking) Color(0x664C8BF5) else Color(0x5534D399),
-                            Color(0x00FFFFFF),
-                        ),
-                    ),
-                ),
-        )
-        Box(
-            modifier = Modifier
-                .scale(scale)
-                .size(80.dp)
-                .clip(CircleShape)
-                .background(
-                    Brush.linearGradient(
-                        colors = listOf(
-                            Color(0xFFFFFFFF),
-                            Color(0xFFF3F6FC),
-                            Color(0xFFE2E9F5),
-                        ),
-                    ),
-                ),
-        )
-        Canvas(modifier = Modifier.scale(scale).size(80.dp)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val center = this.center
+            val base = size.minDimension / 2f
+
+            // 外圈彩虹光晕;浅色底上不用叠加混合,否则会一片死白
             drawCircle(
-                brush = Brush.sweepGradient(
-                    listOf(
-                        Color(0x00FFFFFF), Color(0x33C7D9FF), Color(0x0000FFFF),
-                        Color(0x33FFE7C7), Color(0x00FFFFFF),
-                    ),
-                    center = center,
-                ),
-                radius = size.minDimension / 2,
+                brush = Brush.sweepGradient(hueCycle(t, 0f), center = center),
+                radius = base * (0.8f + 0.08f * breath),
                 center = center,
-                alpha = 0.85f,
+                alpha = (0.5f + 0.3f * breath) * glow,
+            )
+            // 内层再叠一圈错开 1/3 色相的光,交叠出流动的多彩色
+            drawCircle(
+                brush = Brush.sweepGradient(hueCycle(t, 0.33f), center = center),
+                radius = base * (0.62f + 0.06f * breath),
+                center = center,
+                alpha = (0.42f + 0.26f * breath) * glow,
+            )
+            // 灯芯:中心散开的白光,呼吸时最亮
+            drawCircle(
+                brush = Brush.radialGradient(
+                    listOf(Color.White.copy(alpha = 0.85f * (0.35f + 0.65f * breath)), Color(0x00FFFFFF)),
+                    center = center,
+                    radius = base * 0.62f,
+                ),
+                radius = base * 0.66f,
+                center = center,
             )
         }
     }
@@ -693,3 +744,274 @@ private fun floatingStatusLine(state: VoiceChatState, muted: Boolean): String = 
         null -> "通话已结束"
     }
 }
+
+/** 全屏数字人:占位形象 + 会话字幕 + 通话控件。 */
+@Composable
+private fun VoiceAvatarFullscreen(
+    state: VoiceChatState,
+    muted: Boolean,
+    speaker: Boolean,
+    elapsedSeconds: Long,
+    onMute: () -> Unit,
+    onSpeaker: (Boolean) -> Unit,
+    onHangUp: () -> Unit,
+    onExitFullscreen: () -> Unit,
+) {
+    val speaking = state.phase == VoiceChatPhase.SPEAKING
+    val listening = state.phase == VoiceChatPhase.LISTENING
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    listOf(Color(0xFFF6F9FF), Color(0xFFEAF1FC), Color(0xFFF4F7FD)),
+                ),
+            ),
+    ) {
+        // 顶部导航
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, top = 52.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CallGreenIndicator(aiSpeaking = speaking)
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "%02d:%02d".format(elapsedSeconds / 60, elapsedSeconds % 60),
+                fontSize = 14.sp,
+                color = Color(0xFF6B7280),
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "如意 AI 语音",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF111827),
+            )
+            Spacer(Modifier.weight(1f))
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(Color(0x14000000))
+                    .clickable(onClick = onExitFullscreen),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = MikaIcons.Back,
+                    contentDescription = "退出全屏",
+                    tint = Color(0xFF374151),
+                    modifier = Modifier.size(16.dp),
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(Modifier.weight(0.28f))
+            AvatarPlaceholder(speaking = speaking, listening = listening)
+            Spacer(Modifier.height(28.dp))
+            Text(
+                text = floatingStatusLine(state, muted),
+                fontSize = 13.sp,
+                color = Color(0xFF9AA3B2),
+            )
+            Spacer(Modifier.height(10.dp))
+            Text(
+                text = state.partial.ifBlank { state.lastAssistantReply }.ifBlank { "随时对我说…" },
+                fontSize = 17.sp,
+                lineHeight = 26.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF1F2937),
+                textAlign = TextAlign.Center,
+                maxLines = 4,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(Modifier.weight(0.42f))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FloatingCallButton(
+                    label = if (muted) "取消静音" else "静音",
+                    background = if (muted) Color(0xFF1F2937) else Color.White,
+                    tint = if (muted) Color.White else Color(0xFF374151),
+                    icon = if (muted) MikaIcons.Sound else MikaIcons.Mute,
+                    onClick = onMute,
+                )
+                FloatingCallButton(
+                    label = "挂断",
+                    background = Color(0xFFEF4444),
+                    tint = Color.White,
+                    icon = MikaIcons.HandsetDown,
+                    size = 62.dp,
+                    onClick = onHangUp,
+                )
+                SpeakerSegment(
+                    speaker = speaker,
+                    onSelect = onSpeaker,
+                )
+            }
+
+            state.errorDetail?.takeIf { it.isNotBlank() }?.let { err ->
+                Spacer(Modifier.height(14.dp))
+                Text(
+                    text = err,
+                    fontSize = 12.sp,
+                    color = Color(0xFFDC2626),
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
+                )
+            }
+            Spacer(Modifier.height(48.dp))
+        }
+    }
+}
+
+/** 数字人占位形象:多姿多彩的呼吸灯,颜色缓慢流转,明暗随呼吸起伏。 */
+@Composable
+private fun AvatarPlaceholder(speaking: Boolean, listening: Boolean) {
+    val spirit = remember { Animatable(0f) }
+    val speed by animateFloatAsState(
+        targetValue = if (speaking) 1.9f else if (listening) 1.2f else 0.8f,
+        animationSpec = tween(600),
+        label = "spiritSpeed",
+    )
+    LaunchedEffect(speed) {
+        // 每帧推进一小段,按当前速率换算成「圈数」
+        while (true) {
+            withFrameNanos { }
+            spirit.snapTo((spirit.value + 0.004f * speed) % 1f)
+        }
+    }
+    val t = spirit.value
+    val breath = (sin(t * 2 * PI).toFloat() + 1f) / 2f
+    val glow = if (speaking) 1f else 0.66f
+
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(300.dp)) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val center = this.center
+            val base = size.minDimension / 2f
+
+            // 1. 外圈彩色光晕:整圈彩虹随相位缓慢转色,随呼吸胀缩,叠加出通亮的灯感
+            drawCircle(
+                brush = Brush.sweepGradient(
+                    hueCycle(t, 0f),
+                    center = center,
+                ),
+                radius = base * (0.58f + 0.14f * breath),
+                center = center,
+                alpha = (0.5f + 0.4f * breath) * glow,
+                blendMode = BlendMode.Plus,
+            )
+
+            // 2. 中层:换个起点再叠一层彩虹,转速稍慢,两层交叠出流动的多彩色
+            drawCircle(
+                brush = Brush.sweepGradient(
+                    hueCycle(t, 0.33f),
+                    center = center,
+                ),
+                radius = base * (0.44f + 0.1f * breath),
+                center = center,
+                alpha = (0.42f + 0.34f * breath) * glow,
+                blendMode = BlendMode.Plus,
+            )
+
+            // 3. 灯芯:随呼吸明灭的白光,让人一眼看出它正在「呼吸」
+            drawCircle(
+                brush = Brush.radialGradient(
+                    listOf(
+                        Color.White.copy(alpha = 0.92f * (0.3f + 0.7f * breath)),
+                        Color(0x00FFFFFF),
+                    ),
+                    center = center.copy(x = center.x - base * 0.1f, y = center.y - base * 0.14f),
+                    radius = base * 0.46f,
+                ),
+                radius = base * 0.5f,
+                center = center,
+            )
+        }
+
+        // 4. 中间的人像剪影:随呼吸轻微起伏
+        Icon(
+            imageVector = MikaIcons.Person,
+            contentDescription = null,
+            tint = Color.White.copy(alpha = 0.9f),
+            modifier = Modifier
+                .size(62.dp)
+                .scale(1f + 0.05f * breath),
+        )
+
+        if (speaking) {
+            AvatarWaveform(modifier = Modifier.align(Alignment.BottomCenter).offset(y = 34.dp))
+        } else if (listening) {
+            Text(
+                text = "在听…",
+                fontSize = 12.sp,
+                color = Color(0xFF9AA3B2),
+                modifier = Modifier.align(Alignment.BottomCenter).offset(y = 34.dp),
+            )
+        }
+    }
+}
+
+/** 彩虹循环色:按相位 [t] 在整条色环上取色,首尾同色,无缝衔接。 */
+private fun hueCycle(t: Float, offset: Float): List<Color> {
+    val steps = 12
+    return (0..steps).map { i ->
+        val hue = ((t + offset + i / steps.toFloat()) % 1f) * 360f
+        Color.hsv(hue, 0.72f, 1f)
+    }
+}
+
+/** 波纹轮换色:紫、粉、青,让三圈扩散互不同色。 */
+private fun rippleColor(index: Int): Color = when (index % 3) {
+    0 -> Color(0xFF9B5BFF)
+    1 -> Color(0xFFFF5B9B)
+    else -> Color(0xFF5BE3C0)
+}
+
+/** 说话时的一排声波,颜色沿横向渐变。 */
+@Composable
+private fun AvatarWaveform(modifier: Modifier = Modifier) {
+    val transition = rememberInfiniteTransition(label = "waveform")
+    val bars = listOf(300, 480, 380, 540, 340).mapIndexed { index, duration ->
+        transition.animateFloat(
+            initialValue = 0.25f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(duration), RepeatMode.Reverse),
+            label = "bar$index",
+        )
+    }
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        bars.forEachIndexed { index, amplitude ->
+            Box(
+                modifier = Modifier
+                    .width(4.dp)
+                    .height((8 + 20 * amplitude.value).dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(
+                                rippleColor(index).copy(alpha = 0.95f),
+                                rippleColor(index + 1).copy(alpha = 0.55f),
+                            ),
+                        ),
+                    ),
+            )
+        }
+    }
+}
+

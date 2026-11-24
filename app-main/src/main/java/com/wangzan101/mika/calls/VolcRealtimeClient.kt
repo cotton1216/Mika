@@ -1,5 +1,6 @@
 package com.wangzan101.mika.calls
 
+import com.wangzan101.mika.BuildConfig
 import com.wangzan101.mika.calls.VolcRealtimeProtocol.string
 import java.io.IOException
 import java.util.UUID
@@ -157,6 +158,10 @@ class VolcRealtimeSession internal constructor(
     private var muted = false
     private var currentUserItem: String? = null
     private var userText = StringBuilder()
+    /** 上一句已 completed:此后到达的残余 delta 一律丢弃,直到下一次 started 开新句。 */
+    private var userTurnClosed = false
+    /** 临时诊断开关:默认关闭,排查「同一句话重复显示」时手动打开。排查结束后连同上面那段日志一起删除。 */
+    private val asrFrameLogging = false
     private var audioActive = false
     private var audioId: String? = null
     private var interruptedAudioId: String? = null
@@ -281,17 +286,36 @@ class VolcRealtimeSession internal constructor(
         }
         if (phase != Phase.ACTIVE) return
         val responseId = frame.string("response_id")?.takeIf { it.isNotBlank() }
+        // 临时诊断:仅 debug 包打印用户识别相关帧,用于定位「同一句话重复显示」。
+        // 排查结束后删除。单元测试跑在 JVM 上,android.util.Log 未实现,所以开关默认关闭。
+        if (asrFrameLogging && BuildConfig.DEBUG && type?.contains("input_audio_transcription") == true) {
+            android.util.Log.d(
+                "MikaAsrDebug",
+                "type=$type itemId=${frame.string("item_id")} delta=${frame.string("delta")} " +
+                    "transcript=${frame.string("transcript")} text=${frame.string("text")}",
+            )
+        }
         when (type) {
             VolcRealtimeProtocol.INPUT_AUDIO_COMMITTED -> publish(VolcRealtimeEvent.InputAudioCommitted)
             VolcRealtimeProtocol.USER_STARTED -> {
+                // 新一句一律清空累积:部分版本 started 不带 item_id,
+                // 若只在 item_id 变化时重置,上一句残文会被拼到下一句前面,界面上就像逐句重复。
                 currentUserItem = frame.string("item_id")?.takeIf { it.isNotEmpty() }
                 userText = StringBuilder()
+                userTurnClosed = false
                 interruptAudio()
                 publish(VolcRealtimeEvent.UserSpeaking)
             }
             VolcRealtimeProtocol.USER_DELTA -> {
                 val itemId = frame.string("item_id")?.takeIf { it.isNotEmpty() }
-                if (itemId != null && itemId != currentUserItem) {
+                // 上一句已收尾:此时来的 delta 不可能是上一句的延续(延续已被 completed 定格),
+                // 要么是新一句的开头、要么是上一句的残余尾巴。两种都以它重建缓冲,
+                // 绝不能拼到已清空的累积后面重新演一遍整段话。
+                if (userTurnClosed) {
+                    userTurnClosed = false
+                    currentUserItem = itemId
+                    userText = StringBuilder()
+                } else if (itemId != null && itemId != currentUserItem) {
                     currentUserItem = itemId
                     userText = StringBuilder()
                 }
@@ -322,6 +346,8 @@ class VolcRealtimeSession internal constructor(
                 val transcript = explicitFinal ?: userText.toString()
                 currentUserItem = null
                 userText = StringBuilder()
+                // 收尾:直到下一次 started 之前,再来的 delta 都是上一句的尾巴。
+                userTurnClosed = true
                 if (transcript.isNotBlank()) publish(VolcRealtimeEvent.UserTranscript(
                     transcript.take(MAX_TRANSCRIPT_CHARS),
                     isFinal = true,
@@ -333,6 +359,7 @@ class VolcRealtimeSession internal constructor(
             VolcRealtimeProtocol.USER_FAILED -> {
                 currentUserItem = null
                 userText = StringBuilder()
+                userTurnClosed = true
                 publish(VolcRealtimeEvent.UserSpeechEnded)
                 publish(VolcRealtimeEvent.UserTranscriptionFailed)
             }

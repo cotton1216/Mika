@@ -239,6 +239,19 @@ object MikaIcons {
         "M16.2 8.4 a5.1 5.1 0 0 1 0 7.2 M19.2 5.4 a9.2 9.2 0 0 1 0 13.2",
     )
 
+    /** 全屏:四角向外的箭头。 */
+    val Expand = stroke(
+        "expand",
+        "M9 4 H4 v5 M15 4 h5 v5 M20 15 v5 h-5 M9 20 H4 v-5",
+    )
+
+    /** 数字人占位:人像剪影。 */
+    val Person = filled(
+        "person",
+        "M12 12 a4.2 4.2 0 1 0 0 -8.4 a4.2 4.2 0 0 0 0 8.4 z",
+        "M4.6 20.4 c0 -4 3.3 -6.6 7.4 -6.6 s7.4 2.6 7.4 6.6 z",
+    )
+
     /** 实心:挂断(听筒横过来)。 */
     val HandsetDown = filled(
         "handset-down",
