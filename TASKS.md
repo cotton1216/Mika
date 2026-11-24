@@ -20,3 +20,4 @@
 | T15 | 手机端 Markdown 图片按工作区路径拉图（修手抄报不显示；零协议改动） | done（代码 + 6 单测 + 全量 26/26 + 编译通过；dev 包已装机，真机手抄报由文本变真实图片已验；未提交） | [docs/tasks/T15-markdown-workspace-image.md](docs/tasks/T15-markdown-workspace-image.md) | 2026-11-19 |
 | T16 | 群聊合并时间线 MVP（同群多成员会话合并成单一时间线 + 发言人 + 发给谁；零协议，本地合并非实时房间） | done（代码 + 10 单测 + 全量 36/36 + 编译通过；dev 包已装机，真机 6 成员合并/发言人/目标切换已验；未提交） | [docs/tasks/T16-group-merged-timeline.md](docs/tasks/T16-group-merged-timeline.md) | 2026-11-19 |
 | T17 | 群聊体验补齐（发给谁下拉选 + 不指定成员广播全体 + 全会话页同维度分组 + 群聊页图片/SVG/MD 富文本补齐 + 多群专家诊断） | 代码完成 + 单测 43/43 + 编译通过（dev APK 就绪）；下拉/广播/全会话页分组此前已装机见效果，**富文本补齐 + 全会话页精确复验待设备恢复后装机**；未提交 | [docs/tasks/T17-group-chat-polish.md](docs/tasks/T17-group-chat-polish.md) | 2026-11-19 |
+| T18 | 豆包实时全双工语音对话接入与模块目录重构规范化（升版 0.1.54/55 双通道发布） | done | [docs/tasks/T18-voice-chat-realtime.md](docs/tasks/T18-voice-chat-realtime.md) | 2026-11-24 |
