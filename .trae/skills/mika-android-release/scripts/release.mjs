@@ -336,11 +336,10 @@ const UPDATE_FEED_URL = trimEndSlash(
   String(args['feed-url'] || process.env.UPDATE_FEED_URL || profile.defaultFeedUrl).trim()
 );
 const FEED_PUBLISHER = String(process.env.FEED_PUBLISHER || join(SKILL_DIR, 'feed-publish.mjs'));
-// 默认与 desktop manifest-switch 同一台机器（desktop web 根所在主机，遵从 ~/.ssh/config 别名）。
-const FEED_SERVER = String(process.env.FEED_SERVER || 'xxt1175').trim();
-// feed 落在 desktop 站点的 web 根（nginx 只对 /desktop/xxt/ 前缀开放对外访问；
-// 早先尝试的 /www/wwwroot/xxt-desktop/ruyi/ 公网 404，已弃用）。
-const FEED_ROOT = String(process.env.FEED_ROOT || '/www/wwwroot/xxt-desktop/desktop/xxt').trim();
+// 默认与 desktop 站点 web 根所在主机一致（xxtva，遵从 ~/.ssh/config 别名）。
+const FEED_SERVER = String(process.env.FEED_SERVER || 'xxtva').trim();
+// feed 落在 desktop 站点的 web 根（/opt/desktop-deploy/www/desktop/xxt）。
+const FEED_ROOT = String(process.env.FEED_ROOT || '/opt/desktop-deploy/www/desktop/xxt').trim();
 const FEED_REL = String(process.env.FEED_REL || 'ruyi/android/latest.json').trim();
 const FEED_SKIP_UPLOAD = Boolean(args['feed-skip-upload']) || process.env.FEED_SKIP_UPLOAD === '1';
 
