@@ -84,7 +84,7 @@ if (!['generate', 'validate', 'rollback', 'show'].includes(CMD)) {
 const SERVER = String(args.server || '').trim();
 // desktop 站点 web 根：nginx 只对 /desktop/xxt/ 前缀开放对外访问。
 // 早先的 /www/wwwroot/xxt-desktop（公网 /ruyi/...）实测 404，已弃用。
-const ROOT = String(args.root || '/www/wwwroot/xxt-desktop/desktop/xxt').trim();
+const ROOT = String(args.root || '/opt/desktop-deploy/www/desktop/xxt').trim();
 const REL = String(args.rel || 'ruyi/android/latest.json').trim();
 const VERIFY_URL = String(args['verify-url'] || '').trim();
 

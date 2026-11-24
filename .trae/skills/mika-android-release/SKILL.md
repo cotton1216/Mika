@@ -7,6 +7,41 @@ description: 一键发布「如意 AI(Mika)」安卓包：按环境（dev/prod�
 
 一条命令完成「构建 → 签名校验 → 传 OSS → apphub 台账登记 → 生成并发布静态 feed → 回读」。**必须先选环境**，环境一次决定构建类型、签名要求、OSS 落点、默认渠道状态、目标库和 feed 地址——不存在「忘记选环境」的默认路径。
 
+## 照抄即用：常规生产发版清单（每次发版按这 6 步走，不要重新分析）
+
+固定事实（已在脚本内固化为默认值，无需传参、无需再查）：
+
+- 项目根：`/Users/binny/workspace-sdd/mcp-demo/dsh/mika/Mika`，分支 `ruyuan`
+- 版本唯一事实源：`app-main/build.gradle.kts` 的 `ruyiVersionName` / `ruyiVersionCode`（两行同时 +1）
+- 模块名：`app-main`（不是 `app`）；签名文件 `app-main/release-signing.properties`，期望 `CN=Yuan AI`
+- feed 主机：`xxtva`，根 `/opt/desktop-deploy/www/desktop/xxt`，文件 `ruyi/android/latest.json`
+- 生产账号文件：`~/.config/apphub/agents/agent-01.env`（只有它拥有 `com.zl.ruyiai.yuan`）
+- JDK：`/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`；ossutil：`/Users/binny/.local/bin`
+- **双通道必须都发**：静态 feed（新客户端）+ Apphub（老客户端引导），不要用 `--skip-apphub`
+
+```bash
+cd /Users/binny/workspace-sdd/mcp-demo/dsh/mika/Mika
+export PATH="/Users/binny/.local/bin:$PATH"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+SCRIPT=.trae/skills/mika-android-release/scripts/release.mjs
+```
+
+1. **看改动、提交代码**：`git status` 确认待发内容；`git add -A && git commit`（Conventional Commit）。
+2. **升版本**：编辑 `app-main/build.gradle.kts`，`ruyiVersionName` 与 `ruyiVersionCode` 各 +1（如 `0.1.55`/`56` → `0.1.56`/`57`）。
+3. **预演（无副作用）**：`node "$SCRIPT" --env prod --account agent-01 --dry-run --changelog "本次更新说明"`
+4. **正式发布（双通道）**：`node "$SCRIPT" --env prod --account agent-01 --yes --changelog "本次更新说明"`
+   —— 一条命令内完成：Gradle 构建 → `CN=Yuan AI` 校验 → 传 OSS → Apphub `official/published` 登记 → feed 原子发布 → HTTP 回读。
+5. **回读验证两条渠道**：
+   ```bash
+   curl -s --noproxy '*' https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json
+   curl -s --noproxy '*' 'https://ai.thchengtay.com/apphub/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official'
+   ```
+   两处 `version` / `versionName` 与 `versionCode` 都要等于新版本。
+6. **落档**：在 `docs/tasks/` 里补记本次版本（操作人、Commit ID、版本号、APK 直链 + sha256、双通道回读结果）。
+
+退出码含义：0 成功 / 1 用法错误 / 2 配置或闸门未过 / 3 构建失败 / 4 上传失败 / 5 登记失败 / 6 feed 发布失败。中途失败时按「只成功到哪一步」如实汇报，不要声称已完整发布。
+
+
 ## 更新事实源：静态 feed，不是 apphub（先读这段）
 
 客户端检查更新只读一份**静态 feed** `latest.json`（托管在 desktop 同域固定 URL），不再请求 apphub 的 `/api/v1/update/check`。两者的分工：
@@ -60,7 +95,7 @@ feed 字段（android 专用扁平结构）：
 | 构建任务 | `:app-main:assemblePerf -PsideInstall -PupdateFeedUrl=<feed>` | `:app-main:assembleRelease -PupdateFeedUrl=<feed>` |
 | 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan` |
 | 签名 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
-| 产物目录 | `app/build/outputs/apk/perf/` | `app/build/outputs/apk/release/` |
+| 产物目录 | `app-main/build/outputs/apk/perf/` | `app-main/build/outputs/apk/release/` |
 | OSS 前缀 | `ai/ruyi/android/dev` | `ai/ruyi/android` |
 | 默认渠道 / 状态 | `beta` / `draft`（入库不对外） | `official` / `published`（对外生效） |
 | 账号来源 | `APPHUB_USERNAME` / `APPHUB_PASSWORD` | `APPHUB_PROD_USERNAME` / `APPHUB_PROD_PASSWORD` → `--account` 账号文件 → `APPHUB_*` 回落 |
@@ -103,21 +138,22 @@ feed 字段（android 专用扁平结构）：
      `ListObjects`（排查时列举）。本机现用账号已验证四者可用。
    - dev 也可以完全不碰 OSS：用 `--url` 指向本地静态服务
    - 凭证缺失时脚本在**构建之前**就退出（避免白等一次 gradle 构建），`--dry-run` 会先打印检测结果
-3. **gradlew 可构建**（项目根有 `gradlew`；`app/build.gradle.kts` 是版本唯一事实源）
-4. **prod 额外要求 `app/release-signing.properties` 存在**（该文件 gitignored，新工作树不会带过来）
+3. **gradlew 可构建**（项目根有 `gradlew`；`app-main/build.gradle.kts` 是版本唯一事实源；模块已从 `app` 重命名为 `app-main`）
+4. **prod 额外要求 `app-main/release-signing.properties` 存在**（该文件 gitignored，新工作树不会带过来）
    - 缺失时 Gradle 静默回退调试签名，脚本会在构建后用 `apksigner` 拦下
-5. **prod 发布 feed 需要能 SSH 到 desktop web 所在机器**（默认 `xxt@10.10.117.5`，可用 `FEED_SERVER` 覆盖）
-   - 免密登录（ssh key 已配），web 根默认 `/www/wwwroot/xxt-desktop/desktop/xxt`（nginx 只 serve `/desktop/xxt/` 前缀；早先的 `/www/wwwroot/xxt-desktop` 公网 404 已弃用），feed 落在 `ruyi/android/latest.json`
+5. **prod 发布 feed 需要能 SSH 到 desktop web 所在机器**（默认别名 `xxtva`，可用 `FEED_SERVER` 覆盖；禁止裸 IP，一律用 `~/.ssh/config` 里的 Host 别名）
+   - 免密登录（ssh key 已配），web 根默认 `/opt/desktop-deploy/www/desktop/xxt`（nginx 只 serve `/desktop/xxt/` 前缀），feed 落在 `ruyi/android/latest.json`
+   - 旧主机 `xxt@10.10.117.5:/www/wwwroot/xxt-desktop/...` 已废弃，公网 404，不要再用来发 feed
    - 服务端 `ruyi/android/` 目录须存在（脚本会 `mkdir -p`，但 web 根要对运行用户可写）
    - 只想本地核对、不碰线上时用 `--feed-skip-upload`（prod 也会跳过上传，只生成 `.local/feed/latest.json`）
 
 ## 版本事实源
 
-版本号**只改一处**：`app/build.gradle.kts` 顶部
+版本号**只改一处**：`app-main/build.gradle.kts` 顶部
 
 ```kotlin
-val ruyiVersionName = "0.1.50"
-val ruyiVersionCode = 51
+val ruyiVersionName = "0.1.55"
+val ruyiVersionCode = 56
 ```
 
 脚本从这两行 + `applicationId` 自动读取，不手动传版本号。`applicationId` 读的是 `defaultConfig` 的值（`com.zl.ruyiai.yuan`），dev 的 `.perf` 后缀只影响安装包名，不改变 appKey。
@@ -200,7 +236,7 @@ node "$FEED" validate --out .local/feed/latest.json --verify-url https://ai.thch
 
 # 回滚线上 feed 到上一次的备份（latest.json.bak）
 node "$FEED" rollback --dry-run                                   # 先看动作
-node "$FEED" rollback --server xxt@10.10.117.5 --root /www/wwwroot/xxt-desktop/desktop/xxt --rel ruyi/android/latest.json
+node "$FEED" rollback --server xxtva --root /opt/desktop-deploy/www/desktop/xxt --rel ruyi/android/latest.json
 ```
 
 上传前脚本会把线上旧 feed 备份为 `latest.json.bak`，stage 校验失败或 HTTP 回读不一致时自动回滚。
@@ -261,8 +297,8 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | `MIKA_ACCOUNT` | 无 | 等价于 `--account` |
 | `UPDATE_FEED_URL` | dev 本地 / prod 公网 | feed 地址，等价于 `--feed-url`，优先级低于命令行 |
 | `FEED_PUBLISHER` | 脚本同目录 `feed-publish.mjs` | feed 生成/上传脚本位置 |
-| `FEED_SERVER` | `xxt@10.10.117.5` | feed 上传目标 SSH（desktop web 根所在机器） |
-| `FEED_ROOT` | `/www/wwwroot/xxt-desktop/desktop/xxt` | desktop 站点 web 根（nginx 只 serve `/desktop/xxt/`） |
+| `FEED_SERVER` | `xxtva` | feed 上传目标 SSH（desktop web 根所在机器，用 `~/.ssh/config` 别名） |
+| `FEED_ROOT` | `/opt/desktop-deploy/www/desktop/xxt` | desktop 站点 web 根（nginx 只 serve `/desktop/xxt/`） |
 | `FEED_REL` | `ruyi/android/latest.json` | feed 相对 web 根路径 |
 | `FEED_SKIP_UPLOAD` | 无 | 设 `1` 等价于 `--feed-skip-upload` |
 | `MIKA_PUBLISHED_AT` | 当前时间 | 覆盖 feed 的 `publishedAt`（复现/测试用） |
@@ -274,7 +310,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 - 登记进 apphub 的直链：`https://oss-chuangxin.thchengtay.com/<对象键>`
 - app-version-hub **不托管 APK 二进制**，只登记「元数据 + 直链」；上传由 ossutil 完成
 - dev 与 prod 物理分目录，`--force` 覆盖只可能影响同环境同版本号
-- **feed 直链（客户端唯一消费）**：`https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json`，落到 desktop 站点 web 根 `/www/wwwroot/xxt-desktop/desktop/xxt/ruyi/android/latest.json`
+- **feed 直链（客户端唯一消费）**：`https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json`，落到 `xxtva` 的 web 根 `/opt/desktop-deploy/www/desktop/xxt/ruyi/android/latest.json`
 - feed 里的 `download.url` 与 apphub 台账直链、OSS 对象键同源（`OSS_PUBLIC_BASE/<对象键>`）；feed 的 size/sha256 由 `feed-publish.mjs` 从本地 APK 现算，与直链内容一致
 - feed 上传走 stage 临时文件 + 原子 mv；上传前旧 feed 备份为 `latest.json.bak`，失败自动回滚
 
@@ -286,7 +322,7 @@ node "$SCRIPT" --env prod --abi arm64-v8a --yes --changelog "…"
 | `prod 环境必须提供 APPHUB_PROD_BASE_URL` | 生产域名不内置在仓库里。设成 `https://<PUBLIC_DOMAIN>/apphub`（带前缀） |
 | `prod 发布会向生产库登记…请追加 --yes` | 闸门生效。先 `--dry-run` 核对，再加 `--yes` |
 | `prod 环境的下载直链不能是本机/内网地址` | `--url` 传了 localhost 或内网 IP。改用对外存储，或切 `--env dev` |
-| `签名不符：期望 CN=Yuan AI` | `app/release-signing.properties` 缺失 → Gradle 回退调试签名。补齐签名文件后重跑（新工作树常见） |
+| `签名不符：期望 CN=Yuan AI` | `app-main/release-signing.properties` 缺失 → Gradle 回退调试签名。补齐签名文件后重跑（新工作树常见） |
 | `找不到 apksigner` | 设 `APKSIGNER=/path/to/apksigner` 或 `ANDROID_HOME` |
 | `缺少 APPHUB_PROD_USERNAME / APPHUB_PROD_PASSWORD` | prod 账号未注入。注意别拿本地库的口令打生产库（两边是两套库两套口令） |
 | ossutil `region must be set` / `Invalid signing region` | `OSS_REGION` 与 `OSS_ENDPOINT` 要和桶地域一致（cn-hangzhou） |

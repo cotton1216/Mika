@@ -51,8 +51,8 @@
  *   UPDATE_FEED_URL   feed 对外地址并注入 APK；dev 默认 http://127.0.0.1:3100/ruyi/android/latest.json，
  *                     prod 默认 https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json
  *   FEED_PUBLISHER    feed-publish.mjs 路径，默认本脚本同目录
- *   FEED_SERVER       feed 上传目标 ssh（仅 prod 上传用），默认与 desktop manifest-switch 同机
- *   FEED_ROOT         desktop web 根，默认 /www/wwwroot/xxt-desktop
+ *   FEED_SERVER       feed 上传目标 ssh（仅 prod 上传用），默认 xxtva
+ *   FEED_ROOT         desktop web 根，默认 /opt/desktop-deploy/www/desktop/xxt
  *   FEED_REL          feed 相对 web 根的路径，默认 ruyi/android/latest.json
  *   FEED_SKIP_UPLOAD  设 1 时 prod 只生成 feed 不上传（先本地核对用）
  *
@@ -399,7 +399,7 @@ function verifySigning(apkPath) {
   if (!signer) {
     fail(
       'prod 环境必须校验签名，但找不到 apksigner。请设置 APKSIGNER 或 ANDROID_HOME。\n' +
-        '    原因：app/release-signing.properties 缺失时 Gradle 会静默回退调试签名，装不上正式包。',
+        '    原因：app-main/release-signing.properties 缺失时 Gradle 会静默回退调试签名，装不上正式包。',
       2
     );
   }
@@ -412,7 +412,7 @@ function verifySigning(apkPath) {
   }
   if (!out.includes(`CN=${expectedCn}`)) {
     fail(
-      `签名不符：期望 CN=${expectedCn}。这通常是 app/release-signing.properties 缺失导致的调试签名回退。\n` +
+      `签名不符：期望 CN=${expectedCn}。这通常是 app-main/release-signing.properties 缺失导致的调试签名回退。\n` +
         `    实际输出：\n${out.trim()}`,
       2
     );
