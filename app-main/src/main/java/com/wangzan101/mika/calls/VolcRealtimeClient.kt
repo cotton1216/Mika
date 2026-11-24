@@ -35,13 +35,17 @@ class VolcRealtimeCredentials(apiKey: String = "", appId: String = "", accessKey
 
     internal fun applyHeaders(builder: Request.Builder) {
         if (!valid) throw VolcRealtimeException(VolcRealtimeException.Kind.AUTH)
-        // 资源标识、AppKey、请求 ID 两种鉴权方式都要带,少一个服务端只会回"凭据或服务权限无效"
-        builder.header("X-Api-Resource-Id", VolcRealtimeProtocol.RESOURCE)
-            .header("X-Api-App-Key", VolcRealtimeProtocol.LEGACY_APP_KEY)
-            .header("X-Api-Request-Id", UUID.randomUUID().toString())
-        if (usesApiKey) builder.header("X-Api-Key", apiKey)
-        else builder.header("X-Api-App-Id", appId)
-            .header("X-Api-Access-Key", accessKey)
+        // 只带鉴权必需的头:资源标识只在 AppId/AccessKey 模式下需要,
+        // API Key 模式带资源标识反而会被服务端判定为凭据与资源不匹配。
+        builder.header("X-Api-Request-Id", UUID.randomUUID().toString())
+        if (usesApiKey) {
+            builder.header("X-Api-Key", apiKey)
+        } else {
+            builder.header("X-Api-Resource-Id", VolcRealtimeProtocol.RESOURCE)
+                .header("X-Api-App-Key", VolcRealtimeProtocol.LEGACY_APP_KEY)
+                .header("X-Api-App-Id", appId)
+                .header("X-Api-Access-Key", accessKey)
+        }
     }
 
     private fun isHeaderValue(value: String): Boolean = value.isNotEmpty() && value.length <= 1024 &&
@@ -292,11 +296,26 @@ class VolcRealtimeSession internal constructor(
                     userText = StringBuilder()
                 }
                 val delta = frame.string("delta") ?: return
-                val remaining = MAX_TRANSCRIPT_CHARS - userText.length
-                if (remaining > 0 && delta.isNotEmpty()) {
-                    userText.append(delta, 0, minOf(remaining, delta.length))
-                    publish(VolcRealtimeEvent.UserTranscript(userText.toString(), isFinal = false))
+                val current = userText.toString()
+                if (current.isNotEmpty() && delta.startsWith(current)) {
+                    userText.setLength(0)
+                    userText.append(delta.take(MAX_TRANSCRIPT_CHARS))
+                } else {
+                    var overlap = 0
+                    val maxOverlap = minOf(current.length, delta.length)
+                    for (len in maxOverlap downTo 1) {
+                        if (current.endsWith(delta.substring(0, len))) {
+                            overlap = len
+                            break
+                        }
+                    }
+                    val appendText = if (overlap > 0) delta.substring(overlap) else delta
+                    val remaining = MAX_TRANSCRIPT_CHARS - userText.length
+                    if (remaining > 0 && appendText.isNotEmpty()) {
+                        userText.append(appendText, 0, minOf(remaining, appendText.length))
+                    }
                 }
+                publish(VolcRealtimeEvent.UserTranscript(userText.toString(), isFinal = false))
             }
             VolcRealtimeProtocol.USER_COMPLETED -> {
                 val explicitFinal = (frame.string("transcript") ?: frame.string("text"))?.takeIf { it.isNotBlank() }

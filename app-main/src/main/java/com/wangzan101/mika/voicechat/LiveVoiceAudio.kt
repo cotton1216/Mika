@@ -2,11 +2,13 @@ package com.wangzan101.mika.voicechat
 
 import android.annotation.SuppressLint
 import android.media.AudioAttributes
+import android.media.AudioDeviceInfo
 import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioRecord
 import android.media.AudioTrack
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.ParcelFileDescriptor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -105,7 +107,7 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
 
         runCatching {
             audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-            audioManager.isSpeakerphoneOn = speaker
+            setSpeaker(speaker)
         }
         recorder = mic
         track = player
@@ -160,7 +162,23 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
     }
 
     fun setSpeaker(on: Boolean) {
-        runCatching { audioManager.isSpeakerphoneOn = on }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val targetType = if (on) AudioDeviceInfo.TYPE_BUILTIN_SPEAKER else AudioDeviceInfo.TYPE_BUILTIN_EARPIECE
+            val device = audioManager.availableCommunicationDevices.firstOrNull { it.type == targetType }
+            if (device != null) {
+                runCatching { audioManager.setCommunicationDevice(device) }
+            } else {
+                runCatching {
+                    @Suppress("DEPRECATION")
+                    audioManager.isSpeakerphoneOn = on
+                }
+            }
+        } else {
+            runCatching {
+                @Suppress("DEPRECATION")
+                audioManager.isSpeakerphoneOn = on
+            }
+        }
     }
 
     fun close() {
@@ -173,8 +191,14 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
         track = null
         runCatching { pipe?.close() }
         pipe = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            runCatching { audioManager.clearCommunicationDevice() }
+        }
         runCatching { audioManager.mode = AudioManager.MODE_NORMAL }
-        runCatching { audioManager.isSpeakerphoneOn = false }
+        runCatching {
+            @Suppress("DEPRECATION")
+            audioManager.isSpeakerphoneOn = false
+        }
         val jobs = listOfNotNull(captureJob, playbackJob)
         captureJob = null
         playbackJob = null

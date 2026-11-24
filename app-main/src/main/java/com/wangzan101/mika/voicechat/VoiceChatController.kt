@@ -93,7 +93,12 @@ class VoiceChatController(
                     if (read == 0) continue
                     position += read
                     if (position == frame.size) {
-                        if (!opened.sendPcm16(frame)) break
+                        // 静音时丢弃这一帧:既不上送服务端,也不让它攒着解除静音后一次性补发
+                        if (!_muted.value) {
+                            if (!opened.sendPcm16(frame)) break
+                        } else {
+                            java.util.Arrays.fill(frame, 0)
+                        }
                         position = 0
                     }
                 }
@@ -175,8 +180,15 @@ class VoiceChatController(
 
     fun setMuted(muted: Boolean) {
         _muted.value = muted
-        session?.setMuted(muted)
-        update { it.copy(userSpeaking = !muted) }
+        val opened = session
+        // 本地已经停发麦克风了;再通知服务端,让它别等这段静音超时。失败不拦用户操作,只记下来。
+        val accepted = opened?.setMuted(muted) ?: false
+        update {
+            it.copy(
+                userSpeaking = !muted,
+                errorDetail = if (opened != null && !accepted) "静音状态未同步到服务端" else it.errorDetail,
+            )
+        }
     }
 
     fun setSpeaker(on: Boolean) {

@@ -28,9 +28,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import com.wangzan101.mika.voicechat.VoiceChatFloatingState
+import com.wangzan101.mika.voicechat.VoiceChatFloatingOverlay
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.wangzan101.mika.confirm.ConfirmationNotifier
@@ -49,6 +52,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wangzan101.mika.cap.phone.a11y.ScreenAccessibility
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -446,7 +451,31 @@ private fun MikaRoot(
     onRemoteCallbackConsumed: () -> Unit,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val voiceFloatingState = remember { VoiceChatFloatingState(context, scope) }
+    val micPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            voiceFloatingState.startCall(
+                onRequestPermission = {},
+                onOpenSettings = { context.startActivity(VoiceSettingsActivity.intent(context)) },
+            )
+        }
+    }
+    val startVoiceCall = {
+        voiceFloatingState.startCall(
+            onRequestPermission = { micPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO) },
+            onOpenSettings = { context.startActivity(VoiceSettingsActivity.intent(context)) },
+        )
+    }
     var focusedCallHistoryId by remember { mutableStateOf<String?>(null) }
+    // 应用外通话浮窗:通话中离开如意 AI(或把通话收成胶囊)时,用无障碍浮层在桌面上显示通话胶囊与面板
+    val accessibilityService by ScreenAccessibility.instance.collectAsStateWithLifecycle()
+    val appForeground by (context.applicationContext as MikaApp).foreground.visible.collectAsStateWithLifecycle()
+    LaunchedEffect(voiceFloatingState, accessibilityService, appForeground, voiceFloatingState.isMinimized) {
+        voiceFloatingState.syncOutside()
+    }
     val personalStart = remember { FeatureFlags.get(context).personalStart() }
     val nav = rememberNavStack(if (personalStart && requestedConversation == null) Route.Personal else Route.Chat)
     // 顶部双 Tab:Chat(对话)｜Remote(远程电脑)。远程控制从抽屉里的一页提升为平级入口。
@@ -731,6 +760,7 @@ private fun MikaRoot(
                                             app.teach.prefill(hint)
                                             nav.push(Route.Teach)
                                         },
+                                        onStartVoiceCall = startVoiceCall,
                                     )
                                 }
                                 var installUpdate by remember { mutableStateOf<ReleaseInfo?>(null) }
@@ -912,6 +942,12 @@ private fun MikaRoot(
                 onBallClick = { closeRemoteDrawer++ },
             )
         }
+
+        // 全局语音通话浮窗:贯穿对话与远程,未通话为常驻绿色电话悬浮球,通话中最小化为贴边胶囊,点击展开为通话面板
+        VoiceChatFloatingOverlay(
+            floatingState = voiceFloatingState,
+            onStartCall = startVoiceCall,
+        )
     }
 }
 

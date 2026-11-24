@@ -207,6 +207,8 @@ fun ChatScreen(
     onOpenTeach: (String) -> Unit = {},
     /** 首页推荐任务。不传时用本机保存的那一份;测试传入单独的存储,避免改到用户的数据。 */
     recommendations: RecommendedTaskStore? = null,
+    /** 开启或展开全局语音通话浮窗。 */
+    onStartVoiceCall: () -> Unit = {},
 ) {
     val recommendationStore = recommendations
         ?: (LocalContext.current.applicationContext as? MikaApp)?.recommendedTasks
@@ -432,10 +434,8 @@ fun ChatScreen(
                     BarIconButton(
                         MikaIcons.Handset, stringResource(R.string.voice_call_open),
                         {
-                            // 实时语音是独立的豆包会话:不进当前对话,也不需要先有对话
-                            context.startActivity(
-                                com.wangzan101.mika.voicechat.VoiceChatActivity.intent(context),
-                            )
+                            // 开启或展开全局语音通话浮窗 (可在对话与远程无缝穿透)
+                            onStartVoiceCall()
                         },
                     )
                     BarIconButton(MikaIcons.Paperclip, stringResource(R.string.file_library_title), onOpenFiles)
