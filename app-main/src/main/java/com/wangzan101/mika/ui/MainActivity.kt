@@ -946,7 +946,6 @@ private fun MikaRoot(
         VoiceChatFloatingOverlay(
             floatingState = voiceFloatingState,
             onStartCall = startVoiceCall,
-            inForeground = appForeground,
         )
     }
 }

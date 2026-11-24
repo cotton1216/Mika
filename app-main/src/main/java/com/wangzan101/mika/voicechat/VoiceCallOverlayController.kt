@@ -82,23 +82,19 @@ class VoiceCallOverlayController(
     val showing = MutableStateFlow(false)
 
     /**
-     * 该不该显示:通话进行中,且(如意 AI 不在前台 或 用户把它收成了胶囊 或 外面已经展开)。
-     * 在外面点开胶囊后 isMinimized 变 false,靠 expandedOutside 记住「外面正在展开」,
-     * 这样点开瞬间不会判成「不该显示」而拆窗。
+     * 该不该显示:通话进行中且如意 AI 不在前台。
+     * 前台时由应用内浮窗独占,应用外一律不建窗,否则内外两套胶囊会同时出现。
+     * expandedOutside 只用来记住「外面已经展开」,让点开胶囊那一刻不判成关闭。
      */
     fun sync(floating: VoiceChatFloatingState) {
         val alive = floating.isActive && floating.controller != null
         if (!floating.isMinimized && window != null) expandedOutside = true
-        // 回到前台且外面已展开:应用内面板接管,外面让位
-        if (!alive || (foreground.visible.value && expandedOutside)) {
+        // 回到前台:应用内面板接管,外面无条件让位
+        if (!alive || foreground.visible.value) {
             close()
             return
         }
-        val wanted = !foreground.visible.value || floating.isMinimized || expandedOutside
-        if (!wanted) {
-            close()
-            return
-        }
+        // 到这儿必然是「通话中且不在前台」,外面应该显示
         val service = ScreenAccessibility.instance.value ?: run {
             close()
             return

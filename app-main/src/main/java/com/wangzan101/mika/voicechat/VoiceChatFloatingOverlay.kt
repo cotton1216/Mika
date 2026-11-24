@@ -189,7 +189,6 @@ fun VoiceChatFloatingOverlay(
     floatingState: VoiceChatFloatingState,
     onStartCall: () -> Unit,
     modifier: Modifier = Modifier,
-    inForeground: Boolean = true,
 ) {
     val controller = floatingState.controller
     val inCall = floatingState.isActive && controller != null
@@ -267,9 +266,9 @@ fun VoiceChatFloatingOverlay(
             }
         }
 
-        // 应用外的胶囊/面板只在「不在前台」时才有资格顶替应用内浮窗;
-        // 如意 AI 在前台时永远自己画,避免两边互相让位导致谁都不显示。
-        if (!inForeground && floatingState.outsideShowing) return@BoxWithConstraints
+        // 同一个通话只允许一套控件:应用外已显示(即不在前台)时,应用内不再画。
+        // 应用外那侧的显示条件本身就限定为「不在前台」,所以前台时这里恒为 false,不会两边都空。
+        if (floatingState.outsideShowing) return@BoxWithConstraints
 
         if (floatingState.isMinimized) {
             // ============ 1. 贴边可拖拽胶囊态 ============
