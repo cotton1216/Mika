@@ -5,7 +5,13 @@
 - **操作人**：AI（Trae）
 - **原代码负责人**：Mika 移动端团队既有作者
 - **提交日期**：2026-11-24
-- **Commit ID**：`afe3da1a`、`6b05341b`
+- **Commit ID**：`afe3da1a`、`6b05341b`、`779ae3fc`
+
+## 后续版本 0.1.55 / code56（2026-11-24）
+- **Commit**：`779ae3fc`
+- **内容**：全屏数字人态（多彩呼吸灯占位形象、声波纹、字幕与通话控件）；浮窗与小胶囊改用同款呼吸灯；修复同一句话重复显示（completed 后残余 delta 不再拼进已清空累积）。
+- **验证**：`:app-main:compileReleaseKotlin` 通过；生产签名 CN=Yuan AI 校验通过。
+- **双通道发布**：APK `https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.1.55-universal.apk`（133,219,241 B，sha256 `6d32eedfe423…bd2`）；静态 feed 与 Apphub 均回读 0.1.55/56。
 
 ## 目标与交付范围
 1. **模块结构规范重命名**：`app/` → `app-main/`，`core/` → `lib-core/`，`ruiyi-remote/` → `app-ruyi-remote/`，`ruiyi-remote-core/` → `lib-ruyi-remote-core/`，`ruiyi-remote-ui/` → `lib-ruyi-remote-ui/`。
