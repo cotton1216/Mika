@@ -470,10 +470,9 @@ private fun MikaRoot(
         )
     }
     var focusedCallHistoryId by remember { mutableStateOf<String?>(null) }
-    // 应用外通话浮窗:通话中离开如意 AI(或把通话收成胶囊)时,用无障碍浮层在桌面上显示通话胶囊与面板
+    // 应用外通话浮窗:通话中离开如意 AI 时,用无障碍浮层在桌面上显示通话胶囊与面板
     val accessibilityService by ScreenAccessibility.instance.collectAsStateWithLifecycle()
-    val appForeground by (context.applicationContext as MikaApp).foreground.visible.collectAsStateWithLifecycle()
-    LaunchedEffect(voiceFloatingState, accessibilityService, appForeground, voiceFloatingState.isMinimized) {
+    LaunchedEffect(voiceFloatingState, accessibilityService) {
         voiceFloatingState.syncOutside()
     }
     val personalStart = remember { FeatureFlags.get(context).personalStart() }

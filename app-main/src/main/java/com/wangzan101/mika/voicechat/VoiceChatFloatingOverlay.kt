@@ -91,6 +91,15 @@ class VoiceChatFloatingState(
         (context.applicationContext as MikaApp).foreground,
     )
 
+    init {
+        // 前后台切换必须在这里直接订阅,不能靠界面里 collectAsStateWithLifecycle:
+        // 那个只在 Activity 处于 STARTED 以上时才收集,一进后台就停,恰好收不到「进入后台」这一跳,
+        // 应用外胶囊永远建不出来。
+        scope.launch {
+            (context.applicationContext as MikaApp).foreground.visible.collect { syncOutside() }
+        }
+    }
+
     var controller by mutableStateOf<VoiceChatController?>(null)
         private set
 
