@@ -375,6 +375,16 @@ const APPHUB_CLI = String(
     '/Users/binny/workspace-sdd/mcp-demo/dsh/app-version-hub/scripts/apphub-publish.mjs'
 );
 
+// as 主机的镜像台账：维护「全量版本」（beta 调试包 + official 正式包）。
+// prod 发版时把同一个正式 APK 再登记一份到这里；地址/账号独立于主渠道，缺失则跳过并告警。
+const MIRROR_APPHUB_BASE_URL = trimEndSlash(String(process.env.MIRROR_APPHUB_BASE_URL || 'https://apps.kfxh.work'));
+const MIRROR_APPHUB_USERNAME = String(
+  process.env.MIRROR_APPHUB_USERNAME || accountEnv.APPHUB_USERNAME || process.env.APPHUB_USERNAME || ''
+).trim();
+const MIRROR_APPHUB_PASSWORD = String(
+  process.env.MIRROR_APPHUB_PASSWORD || accountEnv.APPHUB_PASSWORD || process.env.APPHUB_PASSWORD || ''
+).trim();
+
 // ---------------------------------------------------------------------------
 // 从 build.gradle.kts 读版本事实源（applicationId / versionName / versionCode）
 // ---------------------------------------------------------------------------
@@ -555,6 +565,9 @@ if (DRY_RUN) {
     );
   }
   console.log(`DRY 台账：${SKIP_APPHUB ? '跳过（--skip-apphub），本次只发 feed' : `apphub app:ensure + publish（version=${meta.versionName} code=${meta.versionCode}）`}`);
+  if (!SKIP_APPHUB && ENV_NAME === 'prod') {
+    console.log(`DRY 镜像台账：同一 APK 再登记到 ${MIRROR_APPHUB_BASE_URL}（${CHANNEL}/${STATUS}）`);
+  }
 if (!profile.publishFeed) {
   console.log(`DRY feed：跳过（${ENV_NAME} 环境不改动客户端更新源）`);
 } else {
@@ -621,22 +634,20 @@ if (URL_OVERRIDE) {
 // ⚠️ 桥接版这次必须发：存量用户手机上的旧客户端只读 apphub /api/v1/update/check，不认识静态 feed。
 //    这一步 + 下面的 publish 是老客户端升级到「读 feed 的新版」的唯一引导渠道。
 //    桥接完成、存量老客户端清零后，用 --skip-apphub 跳过这两步，之后只发 feed。
-if (SKIP_APPHUB) {
-  log('登记', 'apphub 登记=跳过（--skip-apphub）：桥接已完成，本次只发 feed，不写台账');
-} else {
-  log('登记', 'apphub app:ensure');
+function registerToApphub({ baseUrl, username, password, label }) {
+  log('登记', `apphub app:ensure（${label}）`);
   sh(
     `node "${APPHUB_CLI}" app:ensure --key ${meta.appKey} --name "${APP_NAME}" --platforms android`,
     {
       cwd: ROOT,
-      env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
+      env: { ...process.env, APPHUB_BASE_URL: baseUrl, APPHUB_USERNAME: username, APPHUB_PASSWORD: password },
     }
   );
 
   // 5) 登记版本（--code 用 build.gradle 的 versionCode，单一事实源；--file 算 sha256/size）
   // ⚠️ 桥接版这次必须发：与第 6 步 feed 发布同期，把老客户端引导到读 feed 的新版。
   //    两者必须用同一 versionCode、同一直链，否则老用户升级链会断。
-  log('登记', 'apphub publish');
+  log('登记', `apphub publish（${label} ${CHANNEL}/${STATUS}）`);
   sh(
     `node "${APPHUB_CLI}" publish ` +
       `--key ${meta.appKey} --platform android --version ${meta.versionName} ` +
@@ -645,9 +656,33 @@ if (SKIP_APPHUB) {
       `--min-supported ${MIN_SUPPORTED} --changelog "${CHANGELOG}"`,
     {
       cwd: ROOT,
-      env: { ...process.env, APPHUB_BASE_URL, APPHUB_USERNAME, APPHUB_PASSWORD },
+      env: { ...process.env, APPHUB_BASE_URL: baseUrl, APPHUB_USERNAME: username, APPHUB_PASSWORD: password },
     }
   );
+}
+
+if (SKIP_APPHUB) {
+  log('登记', 'apphub 登记=跳过（--skip-apphub）：桥接已完成，本次只发 feed，不写台账');
+} else {
+  registerToApphub({ baseUrl: APPHUB_BASE_URL, username: APPHUB_USERNAME, password: APPHUB_PASSWORD, label: '主渠道' });
+
+  // 4b) as 主机是「全量版本」台账：同一正式 APK 再登记一份 official，方便直接在那儿查/装。
+  //     只在 prod（正式包）做；beta 环境本来就写 as 的 beta 渠道，不重复。
+  if (ENV_NAME === 'prod') {
+    if (!MIRROR_APPHUB_USERNAME || !MIRROR_APPHUB_PASSWORD) {
+      fail(
+        `镜像台账（${MIRROR_APPHUB_BASE_URL}）缺少账号。用 MIRROR_APPHUB_USERNAME / MIRROR_APPHUB_PASSWORD 指定，\n` +
+          '    或保证 --account 指向的账号文件里有该库的可用账号。不允许静默跳过，否则 as 渠道会停在旧版本。',
+        5
+      );
+    }
+    registerToApphub({
+      baseUrl: MIRROR_APPHUB_BASE_URL,
+      username: MIRROR_APPHUB_USERNAME,
+      password: MIRROR_APPHUB_PASSWORD,
+      label: `镜像 ${MIRROR_APPHUB_BASE_URL}`,
+    });
+  }
 }
 
 // 6) 生成并发布静态 feed（新客户端的更新事实源；上一步 apphub 服务存量老客户端的引导升级，两者缺一不可）

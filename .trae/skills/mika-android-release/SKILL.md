@@ -18,7 +18,9 @@ description: 一键发布「如意 AI(Mika)」安卓包：按环境（dev/prod�
 - 生产账号文件：`~/.config/apphub/agents/agent-01.env`（只有它拥有 `com.zl.ruyiai.yuan`）
 - JDK：`/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`；ossutil：`/Users/binny/.local/bin`
 - **双通道必须都发**：静态 feed（新客户端）+ Apphub（老客户端引导），不要用 `--skip-apphub`
+- **正式发版实际落三处台账**：`--env prod` 会登记 `ai.thchengtay.com/apphub` 与镜像台账 `apps.kfxh.work` 各一份 official
 - **自用调试版**单独走 `--env beta`（见下节），只登记 as 主机的 beta 渠道，不动 feed
+- **渠道分工**：as（`apps.kfxh.work`）是全量台账，同时维护 beta 与 official；`ai.thchengtay.com` 的 apphub 与静态 feed 只维护 release
 
 ```bash
 cd /Users/binny/workspace-sdd/mcp-demo/dsh/mika/Mika
@@ -32,12 +34,13 @@ SCRIPT=.trae/skills/mika-android-release/scripts/release.mjs
 3. **预演（无副作用）**：`node "$SCRIPT" --env prod --account agent-01 --dry-run --changelog "本次更新说明"`
 4. **正式发布（双通道）**：`node "$SCRIPT" --env prod --account agent-01 --yes --changelog "本次更新说明"`
    —— 一条命令内完成：Gradle 构建 → `CN=Yuan AI` 校验 → 传 OSS → Apphub `official/published` 登记 → feed 原子发布 → HTTP 回读。
-5. **回读验证两条渠道**：
+5. **回读验证三处渠道**：
    ```bash
    curl -s --noproxy '*' https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json
    curl -s --noproxy '*' 'https://ai.thchengtay.com/apphub/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official'
+   curl -s --noproxy '*' 'https://apps.kfxh.work/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=official'
    ```
-   两处 `version` / `versionName` 与 `versionCode` 都要等于新版本。
+   三处 `version` / `versionName` 与 `versionCode` 都要等于新版本。
 6. **落档**：在 `docs/tasks/` 里补记本次版本（操作人、Commit ID、版本号、APK 直链 + sha256、双通道回读结果）。
 
 退出码含义：0 成功 / 1 用法错误 / 2 配置或闸门未过 / 3 构建失败 / 4 上传失败 / 5 登记失败 / 6 feed 发布失败。中途失败时按「只成功到哪一步」如实汇报，不要声称已完整发布。
@@ -64,7 +67,9 @@ node .trae/skills/mika-android-release/scripts/release.mjs --env beta --account 
 curl -s --noproxy '*' 'https://apps.kfxh.work/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=beta'
 ```
 
-注意：as 库的 official 渠道停在 0.1.51，那是历史遗留，**不是线上真实版本**；线上以 `ai.thchengtay.com` 为准。
+注意：as 库 `official` 与 `beta` 都由本脚本维护（prod 写 official、beta 环境写 beta）。
+历史遗留注意：as 的 official 曾长期停在 0.1.51，2026-11-25 已补齐到 0.1.55/56 并纳入 prod 自动登记。
+若 as 目标账号缺失，prod 会直接失败而不是静默跳过（防止镜像台账再次落后）。
 beta 版走独立版本号（与正式版同步 +1 也可），避免同 code 重复登记冲突。
 
 
