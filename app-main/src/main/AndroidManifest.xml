@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- 通话功能:拨号、读通话状态,以及安卓 13+ 的「通话助手」框架(伴侣角色经 shell 授予)。 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -192,6 +193,12 @@
             android:name=".voicechat.VoiceSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.Mika" />
+
+        <!-- 语音通话后台保活:通话期间挂前台服务,让麦克风在如意 AI 离开前台后仍可采集。 -->
+        <service
+            android:name="com.wangzan101.mika.voicechat.VoiceChatService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
 
         <!-- 如意远程后台保活:右侧远程功能接入期间用前台服务托住中继 socket;进程重启后随登录状态自己停。 -->
         <service
