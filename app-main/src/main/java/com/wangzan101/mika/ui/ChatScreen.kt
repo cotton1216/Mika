@@ -207,8 +207,6 @@ fun ChatScreen(
     onOpenTeach: (String) -> Unit = {},
     /** 首页推荐任务。不传时用本机保存的那一份;测试传入单独的存储,避免改到用户的数据。 */
     recommendations: RecommendedTaskStore? = null,
-    /** 开启或展开全局语音通话浮窗。 */
-    onStartVoiceCall: () -> Unit = {},
 ) {
     val recommendationStore = recommendations
         ?: (LocalContext.current.applicationContext as? MikaApp)?.recommendedTasks
@@ -431,13 +429,7 @@ fun ChatScreen(
                 // 别的对话里还有任务在跑(并行时):菜单上一个小圆点,侧栏「进行中」里能切过去
                 leftBadge = others.isNotEmpty(),
                 right = {
-                    BarIconButton(
-                        MikaIcons.Handset, stringResource(R.string.voice_call_open),
-                        {
-                            // 开启或展开全局语音通话浮窗 (可在对话与远程无缝穿透)
-                            onStartVoiceCall()
-                        },
-                    )
+                    // 语音通话已由全局悬浮球承载,顶栏不再重复放电话入口
                     BarIconButton(MikaIcons.Paperclip, stringResource(R.string.file_library_title), onOpenFiles)
                     BarIconButton(MikaIcons.New, stringResource(R.string.chat_new), { vm.newConversation() }, enabled = vm.canSwitch())
                 },

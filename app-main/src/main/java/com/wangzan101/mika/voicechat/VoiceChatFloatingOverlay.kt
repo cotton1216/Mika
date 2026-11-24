@@ -28,7 +28,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -86,7 +88,6 @@ class VoiceChatFloatingState(
 ) {
     /** 应用外浮窗(通话中、如意 AI 不在前台时由无障碍浮层显示)。 */
     internal val outside = VoiceCallOverlayController(
-        context,
         (context.applicationContext as MikaApp).foreground,
     )
 
@@ -137,6 +138,8 @@ class VoiceChatFloatingState(
         isActive = true
         isMinimized = false
         callStartRealtime = SystemClock.elapsedRealtime()
+        // 先挂前台服务再开采集:没有它,切到别的 App 时系统会立刻掐断麦克风
+        VoiceChatService.start(context)
 
         scope.launch {
             newController.start()
@@ -149,6 +152,7 @@ class VoiceChatFloatingState(
         controller = null
         isActive = false
         isMinimized = false
+        VoiceChatService.stop(context)
         scope.launch {
             ctrl?.stop()
         }
@@ -185,6 +189,7 @@ fun VoiceChatFloatingOverlay(
     floatingState: VoiceChatFloatingState,
     onStartCall: () -> Unit,
     modifier: Modifier = Modifier,
+    inForeground: Boolean = true,
 ) {
     val controller = floatingState.controller
     val inCall = floatingState.isActive && controller != null
@@ -198,8 +203,9 @@ fun VoiceChatFloatingOverlay(
         val bottomBoundPx = maxH - with(density) { 130.dp.toPx() }
 
         // 记录悬浮位置（松手自动微吸边，在三态间平滑继承位置）
-        var offsetX by remember { mutableFloatStateOf(maxW - with(density) { 52.dp.toPx() } - marginPx) }
-        var offsetY by remember { mutableFloatStateOf(with(density) { 120.dp.toPx() }) }
+        // 默认落在左侧、屏幕高度约 62% 处:避开顶栏与底部输入区,拇指够得到
+        var offsetX by remember { mutableFloatStateOf(marginPx) }
+        var offsetY by remember { mutableFloatStateOf((maxH * 0.62f).coerceIn(topBoundPx, bottomBoundPx)) }
 
         if (!inCall) {
             // ============ 0. 未通话态：常驻独立绿色电话悬浮球 ============
@@ -261,7 +267,9 @@ fun VoiceChatFloatingOverlay(
             }
         }
 
-        if (floatingState.outsideShowing) return@BoxWithConstraints
+        // 应用外的胶囊/面板只在「不在前台」时才有资格顶替应用内浮窗;
+        // 如意 AI 在前台时永远自己画,避免两边互相让位导致谁都不显示。
+        if (!inForeground && floatingState.outsideShowing) return@BoxWithConstraints
 
         if (floatingState.isMinimized) {
             // ============ 1. 贴边可拖拽胶囊态 ============
@@ -447,7 +455,7 @@ fun VoiceChatFloatingOverlay(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             FloatingCallButton(
-                                label = if (muted) "开麦" else "静音",
+                                label = if (muted) "取消静音" else "静音",
                                 background = if (muted) Color(0xFF1F2937) else Color.White,
                                 tint = if (muted) Color.White else Color(0xFF374151),
                                 icon = if (muted) MikaIcons.Sound else MikaIcons.Mute,
@@ -461,13 +469,9 @@ fun VoiceChatFloatingOverlay(
                                 size = 62.dp,
                                 onClick = { floatingState.hangUp() },
                             )
-                            FloatingCallButton(
-                                label = if (speaker) "听筒" else "免提",
-                                background = if (speaker) Color(0xFF1F2937) else Color.White,
-                                tint = if (speaker) Color.White else Color(0xFF374151),
-                                // 按「当前用什么听」换图标:外放是带声波的喇叭,听筒是贴耳的小听筒
-                                icon = if (speaker) MikaIcons.Speaker else MikaIcons.Earpiece,
-                                onClick = { controller.setSpeaker(!speaker) },
+                            SpeakerSegment(
+                                speaker = speaker,
+                                onSelect = { controller.setSpeaker(it) },
                             )
                         }
                     }
@@ -565,6 +569,64 @@ private fun MiniPearlBall(speaking: Boolean, listening: Boolean) {
                 alpha = 0.85f,
             )
         }
+    }
+}
+
+/**
+ * 听筒 / 外放两段式选择:整体尺寸与静音按钮一致(50dp 圆 + 下方标签)。
+ * 圆形一半放听筒、一半放外放,当前生效的那半用绿色高亮,下方文字跟着显示当前项。
+ */
+@Composable
+internal fun SpeakerSegment(
+    speaker: Boolean,
+    onSelect: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(
+            modifier = modifier
+                .shadow(4.dp, CircleShape)
+                .clip(CircleShape)
+                .background(Color.White)
+                .size(50.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SpeakerSegmentHalf(
+                label = "听筒",
+                icon = MikaIcons.Earpiece,
+                selected = !speaker,
+                onClick = { onSelect(false) },
+            )
+            SpeakerSegmentHalf(
+                label = "外放",
+                icon = MikaIcons.Speaker,
+                selected = speaker,
+                onClick = { onSelect(true) },
+            )
+        }
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(text = if (speaker) "外放" else "听筒", color = Color(0xFF6B7280), fontSize = 11.sp)
+    }
+}
+
+/** 圆的一半:半圆点击区,选中时铺满绿色。必须在 [androidx.compose.foundation.layout.RowScope] 里用。 */
+@Composable
+private fun RowScope.SpeakerSegmentHalf(
+    label: String,
+    icon: ImageVector,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val tint = if (selected) Color.White else Color(0xFF6B7280)
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .background(if (selected) Color(0xFF10B981) else Color.Transparent)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(imageVector = icon, contentDescription = label, tint = tint, modifier = Modifier.size(18.dp))
     }
 }
 

@@ -219,7 +219,7 @@ private fun VoiceChatScreen(
                     label = if (muted) "取消静音" else "静音",
                     background = if (muted) Color(0xFF1F2937) else Color.White,
                     tint = if (muted) Color.White else Color(0xFF374151),
-                    icon = MikaIcons.Mute,
+                    icon = if (muted) MikaIcons.Sound else MikaIcons.Mute,
                     onClick = { controller.setMuted(!muted) },
                 )
                 CallButton(
@@ -230,12 +230,9 @@ private fun VoiceChatScreen(
                     size = 76.dp,
                     onClick = onHangup,
                 )
-                CallButton(
-                    label = if (speaker) "听筒" else "免提",
-                    background = if (speaker) Color(0xFF1F2937) else Color.White,
-                    tint = if (speaker) Color.White else Color(0xFF374151),
-                    icon = MikaIcons.Sound,
-                    onClick = { controller.setSpeaker(!speaker) },
+                SpeakerSegment(
+                    speaker = speaker,
+                    onSelect = { controller.setSpeaker(it) },
                 )
             }
         }

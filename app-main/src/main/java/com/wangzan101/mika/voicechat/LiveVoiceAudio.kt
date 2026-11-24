@@ -33,6 +33,8 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
     private var captureJob: Job? = null
     private var playbackJob: Job? = null
     private val closed = AtomicBoolean(true)
+    /** 用户静音了如意 AI 的朗读;下行音频照收但不送到喇叭。 */
+    private val playbackMuted = AtomicBoolean(false)
 
     /** 上行:写端给采集线程,读端给实时语音;读不到会一直等,所以采集一停就是 -1 结尾。 */
     lateinit var capture: InputStream
@@ -138,6 +140,8 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
                 while (isActive && !closed.get()) {
                     val read = playSource.read(buffer)
                     if (read <= 0) break
+                    // 静音如意 AI 时照读不写:管道不会堵,恢复后也不会把静音期间的旧声音补播出来
+                    if (playbackMuted.get()) continue
                     var offset = 0
                     while (offset < read && isActive) {
                         val written = player.write(buffer, offset, read - offset)
@@ -159,6 +163,15 @@ internal class LiveVoiceAudio(private val audioManager: AudioManager) {
         runCatching { track?.pause() }
         runCatching { track?.flush() }
         runCatching { track?.play() }
+    }
+
+    /**
+     * 静音如意 AI 的朗读:不光把已经排进管道的声丢掉,还会按住新写进来的音频。
+     * 解除静音再放行,保证静音期间不会有声音漏出来。
+     */
+    fun setPlaybackMuted(muted: Boolean) {
+        playbackMuted.set(muted)
+        flushPlayback()
     }
 
     fun setSpeaker(on: Boolean) {

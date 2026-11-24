@@ -1,6 +1,5 @@
 package com.wangzan101.mika.voicechat
 
-import android.content.Context
 import android.graphics.Rect
 import android.os.SystemClock
 import android.view.Gravity
@@ -54,27 +53,48 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * 只在主线程用;只由 [VoiceChatFloatingState] 驱动,不自己发起或结束通话。
  */
 class VoiceCallOverlayController(
-    private val context: Context,
     private val foreground: AppForeground,
 ) {
+    /**
+     * 整个通话期只挂一个窗口,胶囊态与面板态共用它:窗口按内容自适应大小,
+     * 形态切换只改 [expanded] 让 Compose 重画,不再拆窗重建。
+     */
     private var window: OverlayWindow? = null
+    /**
+     * 当前窗口是不是展开的面板(否则是胶囊)。窗口的尺寸是 WRAP_CONTENT、跟着内容走,
+     * 所以形态切换只改这份状态让 Compose 重画,绝不拆除重建窗口——
+     * 在胶囊自己的点击回调里移除包含它的窗口,系统会判定为异常窗口操作,新窗口加不上,
+     * 表现就是胶囊消失而面板不出现。
+     */
+    private val expanded = MutableStateFlow(false)
     private var windowOn: OverlayHost? = null
-    /** 胶囊所在的边和位置(屏幕像素),展开成面板时沿用同一处,收起再回来不跳。 */
-    private var side = Gravity.RIGHT
+    /** 用户是在应用外把胶囊点开的:回前台时才需要交还应用内。 */
+    private var expandedOutside = false
+    /** 窗口停在屏幕的哪一边,以及对应的边距和纵向偏移(屏幕像素)。 */
+    private var side = Gravity.LEFT
     private var offset = 0
     private var placedY = 0
-    private val collapseBar = Rect(0, 0, 0, 56)
+    private var placed = false
+    /** 面板窗口顶部那条可拖动区;宽度在按到时按窗口实际宽度生成。 */
+    private val panelDragBar = Rect(0, 0, 0, 56)
 
     /** 浮窗此刻真的显示在屏幕上;应用内的浮窗据此让开,避免两个通话控件同时出现。 */
     val showing = MutableStateFlow(false)
 
     /**
-     * 该不该显示:通话进行中,且(如意 AI 不在前台 或 用户把它收成了胶囊)。
-     * 在应用内看面板时不需要应用外的对话框。
+     * 该不该显示:通话进行中,且(如意 AI 不在前台 或 用户把它收成了胶囊 或 外面已经展开)。
+     * 在外面点开胶囊后 isMinimized 变 false,靠 expandedOutside 记住「外面正在展开」,
+     * 这样点开瞬间不会判成「不该显示」而拆窗。
      */
     fun sync(floating: VoiceChatFloatingState) {
-        val wanted = floating.isActive && floating.controller != null &&
-            (!foreground.visible.value || floating.isMinimized)
+        val alive = floating.isActive && floating.controller != null
+        if (!floating.isMinimized && window != null) expandedOutside = true
+        // 回到前台且外面已展开:应用内面板接管,外面让位
+        if (!alive || (foreground.visible.value && expandedOutside)) {
+            close()
+            return
+        }
+        val wanted = !foreground.visible.value || floating.isMinimized || expandedOutside
         if (!wanted) {
             close()
             return
@@ -84,61 +104,86 @@ class VoiceCallOverlayController(
             return
         }
         val overlays = service.overlays()
-        if (window != null && windowOn === overlays) {
-            syncDragMode(floating.isMinimized)
-            place()
-            return
-        }
-        close()
-        open(overlays, floating)
-    }
-
-    private fun open(overlays: OverlayHost, floating: VoiceChatFloatingState) {
-        val area = overlays.area()
-        val ball = overlays.open(OverlayPlacement(Gravity.TOP or side, offset, placedY)) {
-            VoiceCallOverlayContent(floating)
-        } ?: return
-        window = ball
+        if (windowOn !== overlays) close()
         windowOn = overlays
-        ball.onResize(::place)
-        syncDragMode(floating.isMinimized)
-        // 初始位置:沿用上次的边,纵向默认靠在安全区偏上的位置
-        if (placedY == 0) placedY = area.insetTop + (area.height * 0.28f).toInt()
-        place()
+        if (!placed) {
+            // 默认落在左侧中下段,拇指够得到;用户拖过之后沿用拖到的位置
+            val area = overlays.area()
+            side = Gravity.LEFT
+            offset = (area.width * 0.04f).toInt()
+            placedY = area.insetTop + (area.height * 0.55f).toInt()
+            placed = true
+        }
+        val wantExpanded = !floating.isMinimized
+        if (window == null || expanded.value != wantExpanded) create(overlays, floating, wantExpanded)
+        window?.let(::place)
         showing.value = true
     }
 
-    /** 收起成胶囊时整个窗口都能拖;展开面板时只让顶部那条能拖,别处点击照常给按钮。 */
-    private fun syncDragMode(minimized: Boolean) {
-        window?.draggable(object : OverlayDrag {
-            override fun start() = Unit
-
-            override fun move(dx: Float, dy: Float) {
-                windowOn?.let { dragTo(it, dx.toInt(), dy.toInt()) }
+    /** 建窗口(只在没有时建一次)并把形态切到 [wantExpanded];窗口按内容自适应,换形态不拆窗。 */
+    private fun create(overlays: OverlayHost, floating: VoiceChatFloatingState, wantExpanded: Boolean) {
+        if (window == null) {
+            val w = overlays.open(OverlayPlacement(Gravity.TOP or side, offset, placedY)) {
+                val isExpanded by expanded.collectAsState()
+                if (isExpanded) VoiceCallPanelContent(floating, onCollapse = { floating.minimize(true) })
+                else VoiceCallPillContent(floating)
             }
-
-            override fun end(dx: Float, dy: Float) {
-                windowOn?.let { dragTo(it, dx.toInt(), dy.toInt()) }
+            if (w == null) {
+                expanded.value = false
+                showing.value = false
+                return
             }
-        }, if (minimized) null else collapseBar)
+            w.onResize { place(w) }
+            window = w
+        }
+        expanded.value = wantExpanded
+        // 可拖动区随形态变:胶囊整窗可拖,面板只让顶部那条拖
+        window?.draggable(dragHandler(overlays, window!!), if (wantExpanded) panelDragBar else null)
     }
 
-    private fun dragTo(overlays: OverlayHost, dx: Int, dy: Int) {
-        val w = window ?: return
+    /**
+     * 拖动回调:OverlayDrag 给的 dx/dy 是「相对按下那一刻」的累计位移,
+     * 所以每次都要从按下时记下的锚点重算,不能把位移累加到当前位置上,否则窗口会越拖越远。
+     */
+    private fun dragHandler(overlays: OverlayHost, w: OverlayWindow) = object : OverlayDrag {
+        private var startSide = Gravity.RIGHT
+        private var startOffset = 0
+        private var startY = 0
+
+        override fun start() {
+            startSide = side
+            startOffset = offset
+            startY = placedY
+        }
+
+        override fun move(dx: Float, dy: Float) = moveTo(overlays, w, startSide, startOffset, startY, dx.toInt(), dy.toInt())
+
+        override fun end(dx: Float, dy: Float) = moveTo(overlays, w, startSide, startOffset, startY, dx.toInt(), dy.toInt())
+    }
+
+    private fun moveTo(
+        overlays: OverlayHost,
+        w: OverlayWindow,
+        fromSide: Int,
+        fromOffset: Int,
+        fromY: Int,
+        dx: Int,
+        dy: Int,
+    ) {
         val area = overlays.area()
         val width = w.width.takeIf { it > 0 } ?: return
         val height = w.height.takeIf { it > 0 } ?: return
-        val left = (if (side == Gravity.RIGHT) area.width - offset - width else offset) + dx
-        val top = placedY + dy
+        val fromLeft = if (fromSide == Gravity.RIGHT) area.width - fromOffset - width else fromOffset
+        val left = fromLeft + dx
+        val top = fromY + dy
         side = if (left + width / 2 < area.width / 2) Gravity.LEFT else Gravity.RIGHT
         offset = if (side == Gravity.LEFT) left else area.width - left - width
         offset = offset.coerceIn(0, maxOf(0, area.width - width))
         placedY = top.coerceIn(area.insetTop, maxOf(area.insetTop, area.height - area.insetBottom - height))
-        place()
+        place(w)
     }
 
-    private fun place() {
-        val w = window ?: return
+    private fun place(w: OverlayWindow) {
         val area = (windowOn ?: return).area()
         val height = w.height.takeIf { it > 0 } ?: 0
         placedY = placedY.coerceIn(area.insetTop, maxOf(area.insetTop, area.height - area.insetBottom - height))
@@ -150,18 +195,48 @@ class VoiceCallOverlayController(
         showing.value = false
         window?.close()
         window = null
+        expanded.value = false
         windowOn = null
+        expandedOutside = false
     }
 }
 
 /**
- * 应用外浮窗的内容:收起时是一枚通话胶囊(呼吸点 + 计时 + 电话),点开是通话面板;
- * 面板点顶部那条可以拖动(浮层窗口只让那条拖动,别处的点击照常给按钮)。
+ * 应用外胶囊窗口的内容:呼吸点 + 计时 + 电话,点一下展开成面板。
  */
 @Composable
-private fun VoiceCallOverlayContent(floating: VoiceChatFloatingState) {
-    val controller = floating.controller
-    if (controller == null) return
+private fun VoiceCallPillContent(floating: VoiceChatFloatingState) {
+    val controller = floating.controller ?: return
+    val state by controller.state.collectAsState()
+    val muted by controller.muted.collectAsState()
+    val clock = rememberCallClock(floating)
+
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(Color(0xF0181F2E))
+            .clickable { floating.minimize(false) }
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        CallGreenIndicator(aiSpeaking = state.aiSpeaking)
+        Text(clock, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Medium)
+        Icon(
+            imageVector = MikaIcons.Handset,
+            contentDescription = "展开语音通话",
+            tint = if (muted) Color(0xFFEF4444) else Color(0xFF34D399),
+            modifier = Modifier.size(15.dp),
+        )
+    }
+}
+
+/**
+ * 应用外面板窗口的内容:字幕、静音、挂断、听筒/外放。
+ */
+@Composable
+private fun VoiceCallPanelContent(floating: VoiceChatFloatingState, onCollapse: () -> Unit) {
+    val controller = floating.controller ?: return
 
     val state by controller.state.collectAsState()
     val muted by controller.muted.collectAsState()
@@ -175,36 +250,7 @@ private fun VoiceCallOverlayContent(floating: VoiceChatFloatingState) {
         }
     }
 
-    var elapsedSeconds by remember { mutableLongStateOf(0L) }
-    LaunchedEffect(floating.callStartRealtime) {
-        while (floating.isActive) {
-            elapsedSeconds = (SystemClock.elapsedRealtime() - floating.callStartRealtime) / 1000
-            delay(1000)
-        }
-    }
-    val clock = "%02d:%02d".format(elapsedSeconds / 60, elapsedSeconds % 60)
-
-    if (floating.isMinimized) {
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color(0xF0181F2E))
-                .clickable { floating.minimize(false) }
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            CallGreenIndicator(aiSpeaking = state.aiSpeaking)
-            Text(clock, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Medium)
-            Icon(
-                imageVector = MikaIcons.Handset,
-                contentDescription = "展开语音通话",
-                tint = if (muted) Color(0xFFEF4444) else Color(0xFF34D399),
-                modifier = Modifier.size(15.dp),
-            )
-        }
-        return
-    }
+    val clock = rememberCallClock(floating)
 
     val preview = when {
         state.partial.isNotBlank() -> state.partial
@@ -235,7 +281,7 @@ private fun VoiceCallOverlayContent(floating: VoiceChatFloatingState) {
                     .size(30.dp)
                     .clip(CircleShape)
                     .background(Color(0x1A000000))
-                    .clickable { floating.minimize(true) },
+                    .clickable(onClick = onCollapse),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(MikaIcons.Back, "收起为浮窗", tint = Color(0xFF374151), modifier = Modifier.size(15.dp))
@@ -266,7 +312,7 @@ private fun VoiceCallOverlayContent(floating: VoiceChatFloatingState) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             OverlayCallButton(
-                label = if (muted) "开麦" else "静音",
+                label = if (muted) "取消静音" else "静音",
                 background = if (muted) Color(0xFF1F2937) else Color.White,
                 tint = if (muted) Color.White else Color(0xFF374151),
                 icon = if (muted) MikaIcons.Sound else MikaIcons.Mute,
@@ -280,15 +326,25 @@ private fun VoiceCallOverlayContent(floating: VoiceChatFloatingState) {
                 size = 56.dp,
                 onClick = { floating.hangUp() },
             )
-            OverlayCallButton(
-                label = if (speaker) "听筒" else "免提",
-                background = if (speaker) Color(0xFF1F2937) else Color.White,
-                tint = if (speaker) Color.White else Color(0xFF374151),
-                icon = if (speaker) MikaIcons.Speaker else MikaIcons.Earpiece,
-                onClick = { controller.setSpeaker(!speaker) },
+            SpeakerSegment(
+                speaker = speaker,
+                onSelect = { controller.setSpeaker(it) },
             )
         }
     }
+}
+
+/** 通话计时文字 mm:ss,两个窗口共用。 */
+@Composable
+private fun rememberCallClock(floating: VoiceChatFloatingState): String {
+    var elapsedSeconds by remember { mutableLongStateOf(0L) }
+    LaunchedEffect(floating.callStartRealtime) {
+        while (floating.isActive) {
+            elapsedSeconds = (SystemClock.elapsedRealtime() - floating.callStartRealtime) / 1000
+            delay(1000)
+        }
+    }
+    return "%02d:%02d".format(elapsedSeconds / 60, elapsedSeconds % 60)
 }
 
 @Composable

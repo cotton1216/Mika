@@ -77,7 +77,7 @@ class VoiceChatController(
             return detail
         }
         session = opened
-        update { it.copy(phase = VoiceChatPhase.LISTENING, userSpeaking = _muted.value.not()) }
+        update { it.copy(phase = VoiceChatPhase.LISTENING) }
         jobs = startPumps(opened)
         return null
     }
@@ -93,12 +93,8 @@ class VoiceChatController(
                     if (read == 0) continue
                     position += read
                     if (position == frame.size) {
-                        // 静音时丢弃这一帧:既不上送服务端,也不让它攒着解除静音后一次性补发
-                        if (!_muted.value) {
-                            if (!opened.sendPcm16(frame)) break
-                        } else {
-                            java.util.Arrays.fill(frame, 0)
-                        }
+                        // 麦克风始终上送:静音静的是如意 AI 的喇叭,不是你的麦
+                        if (!opened.sendPcm16(frame)) break
                         position = 0
                     }
                 }
@@ -178,17 +174,14 @@ class VoiceChatController(
         }
     }
 
+    /**
+     * 静音如意 AI 的朗读:喇叭不出声,麦克风照常听你说话。
+     * 不是「静自己的麦」——那样对方说话你也听不见,还把你自己禁言了。
+     */
     fun setMuted(muted: Boolean) {
         _muted.value = muted
-        val opened = session
-        // 本地已经停发麦克风了;再通知服务端,让它别等这段静音超时。失败不拦用户操作,只记下来。
-        val accepted = opened?.setMuted(muted) ?: false
-        update {
-            it.copy(
-                userSpeaking = !muted,
-                errorDetail = if (opened != null && !accepted) "静音状态未同步到服务端" else it.errorDetail,
-            )
-        }
+        audio.setPlaybackMuted(muted)
+        update { it.copy(aiSpeaking = if (muted) false else it.aiSpeaking) }
     }
 
     fun setSpeaker(on: Boolean) {

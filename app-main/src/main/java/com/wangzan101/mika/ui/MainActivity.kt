@@ -760,7 +760,6 @@ private fun MikaRoot(
                                             app.teach.prefill(hint)
                                             nav.push(Route.Teach)
                                         },
-                                        onStartVoiceCall = startVoiceCall,
                                     )
                                 }
                                 var installUpdate by remember { mutableStateOf<ReleaseInfo?>(null) }
@@ -947,6 +946,7 @@ private fun MikaRoot(
         VoiceChatFloatingOverlay(
             floatingState = voiceFloatingState,
             onStartCall = startVoiceCall,
+            inForeground = appForeground,
         )
     }
 }
