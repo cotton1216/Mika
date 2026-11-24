@@ -111,7 +111,11 @@ class VoiceChatFloatingState(
     var callStartRealtime by mutableLongStateOf(0L)
         private set
 
-    /** 应用外通话浮窗此刻真的显示着;应用内不再画通话胶囊,免得两个通话控件同时出现。 */
+    /**
+     * 应用外通话浮窗此刻真的显示着;应用内不再画通话胶囊,免得两个通话控件同时出现。
+     * 只给非 Compose 逻辑用;界面里必须用 `outside.showing.collectAsState()` 订阅,
+     * 直接读这个值不会被 Compose 观察。
+     */
     val outsideShowing: Boolean get() = outside.showing.value
 
     fun startCall(
@@ -277,7 +281,10 @@ fun VoiceChatFloatingOverlay(
 
         // 同一个通话只允许一套控件:应用外已显示(即不在前台)时,应用内不再画。
         // 应用外那侧的显示条件本身就限定为「不在前台」,所以前台时这里恒为 false,不会两边都空。
-        if (floatingState.outsideShowing) return@BoxWithConstraints
+        // 必须用 collectAsState 订阅:showing 是 StateFlow,直接读 .value 不会被 Compose 观察,
+        // 切回前台拆掉应用外窗口后不会触发重组,应用内浮窗就再也回不来。
+        val outsideShowing by floatingState.outside.showing.collectAsState()
+        if (outsideShowing) return@BoxWithConstraints
 
         if (floatingState.isMinimized) {
             // ============ 1. 贴边可拖拽胶囊态 ============
