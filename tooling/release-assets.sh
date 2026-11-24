@@ -10,11 +10,11 @@
 set -eu
 
 VER="${1:?用法: release-assets.sh <版本号,如 0.1.45>}"
-SRC="$(cd "$(dirname "$0")/.." && pwd)/app/build/outputs/apk/release"
+SRC="$(cd "$(dirname "$0")/.." && pwd)/app-main/build/outputs/apk/release"
 OUT="${2:-$SRC}"
 
 for f in "如意 AI-$VER-arm64-v8a-release.apk" "如意 AI-$VER-universal-release.apk"; do
-    [ -f "$SRC/$f" ] || { echo "缺产物: $SRC/$f (先 ./gradlew :app:assembleRelease)" >&2; exit 1; }
+    [ -f "$SRC/$f" ] || { echo "缺产物: $SRC/$f (先 ./gradlew :app-main:assembleRelease)" >&2; exit 1; }
 done
 
 mkdir -p "$OUT"

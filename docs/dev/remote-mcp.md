@@ -93,8 +93,8 @@ cd tools/relay
 go test -race ./...
 go vet ./...
 cd ../..
-./gradlew :core:test :app:testDebugUnitTest :core:cliTest :core:relayTest
-./gradlew :app:assembleDebug :app:assembleDebugAndroidTest -PdevInstall
+./gradlew :lib-core:test :app-main:testDebugUnitTest :lib-core:cliTest :lib-core:relayTest
+./gradlew :app-main:assembleDebug :app-main:assembleDebugAndroidTest -PdevInstall
 ```
 
 跨语言测试启动真实 Go 网关，经生产 Kotlin 隧道和手机鉴权调用真实 Python CLI 与 MCP，验证共享任务、统一令牌轮换、USB 令牌拒绝和解除配对。普通 JVM 测试不要求 Go。界面测试为 `RelaySectionTest` 和 `ComputerAccessScreenTest`；开发包通过 `devInstall` 与正式版隔离。

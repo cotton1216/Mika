@@ -57,7 +57,7 @@ feed 字段（android 专用扁平结构）：
 | 目标库（台账） | `http://127.0.0.1:3100`（本地 hub，可被 `APPHUB_BASE_URL` 覆盖） | 三级取值：`APPHUB_PROD_BASE_URL` → `--account` 文件 → `~/.config/apphub/agents/*.env` 自动发现 |
 | feed 地址（更新源） | `http://127.0.0.1:3100/ruyi/android/latest.json`（可被 `UPDATE_FEED_URL` / `--feed-url` 覆盖） | `https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json`（同上覆盖） |
 | feed 上传 | 否，只生成本地 `.local/feed/latest.json` | 默认 scp 到 desktop web 根并原子切换；`--feed-skip-upload` 可只生成不上传 |
-| 构建任务 | `:app:assemblePerf -PsideInstall -PupdateFeedUrl=<feed>` | `:app:assembleRelease -PupdateFeedUrl=<feed>` |
+| 构建任务 | `:app-main:assemblePerf -PsideInstall -PupdateFeedUrl=<feed>` | `:app-main:assembleRelease -PupdateFeedUrl=<feed>` |
 | 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan` |
 | 签名 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
 | 产物目录 | `app/build/outputs/apk/perf/` | `app/build/outputs/apk/release/` |

@@ -24,10 +24,10 @@ jobs:
         with:
           cache-provider: basic
       - name: Test and build side-by-side debug APK
-        run: ./gradlew :app:testDebugUnitTest :app:assembleDebug -PdevInstall --stacktrace
+        run: ./gradlew :app-main:testDebugUnitTest :app-main:assembleDebug -PdevInstall --stacktrace
       - uses: actions/upload-artifact@v7
         with:
           name: Mika-Dev-debug-APK
-          path: app/build/outputs/apk/debug/*.apk
+          path: app-main/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 14

@@ -23,9 +23,9 @@ PRs welcome. Start with [`docs/dev/architecture.md`](../docs/dev/architecture.md
 Requires JDK 17 and the Android SDK (`sdk.dir` in `local.properties`, or the `ANDROID_HOME` environment variable). CLI tests also require Python 3.10+; select an interpreter with `-PmikaPython=/path/to/python3`.
 
 ```bash
-./gradlew :app:assembleDebug                  # debug build
-./gradlew :app:assemblePerf                   # build for judging smoothness: precompiled and non-debuggable like release, debug-signed, installs over the debug build
-./gradlew :core:test :core:cliTest :app:testDebugUnitTest   # unit tests
+./gradlew :app-main:assembleDebug                  # debug build
+./gradlew :app-main:assemblePerf                   # build for judging smoothness: precompiled and non-debuggable like release, debug-signed, installs over the debug build
+./gradlew :lib-core:test :lib-core:cliTest :app-main:testDebugUnitTest   # unit tests
 python3 -m unittest discover -s tools/i18n -v              # translation tool tests (no JDK/Android SDK)
 python3 tools/i18n/translations.py check                  # lightweight translation resource checks
 ./gradlew updateReadme                        # regenerate the built-in knowledge and provider lists in the READMEs
@@ -44,10 +44,10 @@ The debug build is not precompiled and its UI is several times slower; use the p
 
 Pull requests and pushes to `main` run on GitHub Actions ([`ci.yml`](workflows/ci.yml)); no secrets are required:
 
-- `core (JVM)`: `./gradlew :core:test`
-- `cli (Python)`: `./gradlew :core:cliTest`, plus `tools/i18n` unit tests and translation resource checks (Python 3.10+; CI uses 3.12)
-- `app (Android)`: `./gradlew :app:testDebugUnitTest :app:assembleDebug`
-- `relay (Go)`: `./gradlew :core:relayTest`
+- `core (JVM)`: `./gradlew :lib-core:test`
+- `cli (Python)`: `./gradlew :lib-core:cliTest`, plus `tools/i18n` unit tests and translation resource checks (Python 3.10+; CI uses 3.12)
+- `app (Android)`: `./gradlew :app-main:testDebugUnitTest :app-main:assembleDebug`
+- `relay (Go)`: `./gradlew :lib-core:relayTest`
 
 Reproduce locally with the commands above. The repository pins text files to LF in `.gitattributes`: goldens, prompts and the README are compared byte-for-byte, so line endings that vary by platform (for example an old Windows checkout with `core.autocrlf=true`) make tests and goldens disagree. If your working tree is not LF, re-checkout or convert it back to LF before running the tests or `-PupdateSnapshots`.
 
@@ -71,6 +71,6 @@ The developer docs index and reading order are in [`docs/dev/README.en.md`](../d
 ### Releases and updates (maintainers)
 
 - Releases are published on GitHub Releases with tags `vX.Y.Z`, with the APK attached to the release.
-- Releases are built from the `perf` build type, which is signed with the project's release key. Each release carries two APKs with the same version and signature: `./gradlew :app:assemblePerf` writes `app-universal-perf.apk` (all architectures) and `app-arm64-v8a-perf.apk` (arm64-v8a native libraries only, smaller) to `app/build/outputs/apk/perf/`. Upload **`app-universal-perf.apk` first**, renamed to `Mika-vX.Y.Z.apk`, then `app-arm64-v8a-perf.apk` renamed to `Mika-vX.Y.Z-arm64.apk`: older app versions take the first `.apk` asset. Current versions take `-arm64.apk` on devices that support arm64-v8a and the all-architecture APK elsewhere. Keep the all-architecture name unchanged; the install-by-computer guide and older app versions look for it.
+- Releases are built from the `perf` build type, which is signed with the project's release key. Each release carries two APKs with the same version and signature: `./gradlew :app-main:assemblePerf` writes `app-universal-perf.apk` (all architectures) and `app-arm64-v8a-perf.apk` (arm64-v8a native libraries only, smaller) to `app/build/outputs/apk/perf/`. Upload **`app-universal-perf.apk` first**, renamed to `Mika-vX.Y.Z.apk`, then `app-arm64-v8a-perf.apk` renamed to `Mika-vX.Y.Z-arm64.apk`: older app versions take the first `.apk` asset. Current versions take `-arm64.apk` on devices that support arm64-v8a and the all-architecture APK elsewhere. Keep the all-architecture name unchanged; the install-by-computer guide and older app versions look for it.
 - Update checks: each time you open the app it queries `https://api.github.com/repos/wangzan101/Mika/releases/latest` and no other address.
 - After you tap "Download update" on the About page, the system download service fetches the APK in the background; you can watch progress, delete the download or retry after a failure, and it is still there after reopening the app. When it finishes, tap "Install update", allow Mika to install unknown apps the first time, then confirm on the system installer. Before installing, Mika checks the APK size, the SHA-256 published with the release asset, the package name, the version and the signing certificate, and the system installer verifies the signature again; a build you compiled and signed yourself cannot be installed over the official one without uninstalling first. If a release has no APK, the release page is opened instead.

@@ -7,7 +7,7 @@
 在仓库根目录:
 
 ```
-./gradlew :core:chatgptSignInCheck
+./gradlew :lib-core:chatgptSignInCheck
 ```
 
 可选参数:

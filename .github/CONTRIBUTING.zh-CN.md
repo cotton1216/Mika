@@ -23,9 +23,9 @@
 需要 JDK 17 和 Android SDK（`local.properties` 里的 `sdk.dir`，或环境变量 `ANDROID_HOME`）。CLI 测试另需 Python 3.10+，可用 `-PmikaPython=/path/to/python3` 指定解释器。
 
 ```bash
-./gradlew :app:assembleDebug                  # 调试包
-./gradlew :app:assemblePerf                   # 看流畅度用的包：和发布版一样预先编译、不可调试，用调试签名，可直接覆盖调试包
-./gradlew :core:test :core:cliTest :app:testDebugUnitTest   # 单元测试
+./gradlew :app-main:assembleDebug                  # 调试包
+./gradlew :app-main:assemblePerf                   # 看流畅度用的包：和发布版一样预先编译、不可调试，用调试签名，可直接覆盖调试包
+./gradlew :lib-core:test :lib-core:cliTest :app-main:testDebugUnitTest   # 单元测试
 python3 -m unittest discover -s tools/i18n -v              # 翻译工具测试（不需要 JDK/Android SDK）
 python3 tools/i18n/translations.py check                  # 轻量翻译资源检查
 ./gradlew updateReadme                        # 重新生成 README 里的内置知识、服务商清单
@@ -44,10 +44,10 @@ python3 tools/i18n/translations.py check                  # 轻量翻译资源�
 
 PR 和合入 `main` 的提交会在 GitHub Actions 上跑（[`ci.yml`](workflows/ci.yml)），不需要配置任何密钥：
 
-- `core (JVM)`：`./gradlew :core:test`
-- `cli (Python)`：`./gradlew :core:cliTest`，另跑 `tools/i18n` 单元测试和翻译资源检查（Python 3.10+；CI 使用 3.12）
-- `app (Android)`：`./gradlew :app:testDebugUnitTest :app:assembleDebug`
-- `relay (Go)`：`./gradlew :core:relayTest`
+- `core (JVM)`：`./gradlew :lib-core:test`
+- `cli (Python)`：`./gradlew :lib-core:cliTest`，另跑 `tools/i18n` 单元测试和翻译资源检查（Python 3.10+；CI 使用 3.12）
+- `app (Android)`：`./gradlew :app-main:testDebugUnitTest :app-main:assembleDebug`
+- `relay (Go)`：`./gradlew :lib-core:relayTest`
 
 本地按上面的命令逐项复现即可。仓库用 `.gitattributes` 把文本文件固定成 LF：金样、提示词和 README 都按字节比较，换行随平台变（例如 `core.autocrlf=true` 的旧 Windows 检出）会让测试和金样对不上。工作区不是 LF 时，先重新检出或把换行改回 LF，再运行测试或 `-PupdateSnapshots`。
 
@@ -71,6 +71,6 @@ PR 和合入 `main` 的提交会在 GitHub Actions 上跑（[`ci.yml`](workflows
 ### 发布与更新（维护者）
 
 - 发布在 GitHub Releases，tag 用 `vX.Y.Z`，APK 作为附件挂在这个版本上。
-- 发布包用 `perf` 构建类型打，它用项目的正式签名。每个版本挂两个 APK，版本号和签名相同：`./gradlew :app:assemblePerf` 在 `app/build/outputs/apk/perf/` 下出 `app-universal-perf.apk`（全架构）和 `app-arm64-v8a-perf.apk`（只带 arm64-v8a 原生库，更小）。**先传 `app-universal-perf.apk`**，改名为 `Mika-vX.Y.Z.apk`；再传 `app-arm64-v8a-perf.apk`，改名为 `Mika-vX.Y.Z-arm64.apk`。旧版 App 取附件里第一个 `.apk`；新版 App 在支持 arm64-v8a 的设备上取 `-arm64.apk`，其他设备取全架构包。全架构包的名字不要改，用电脑装的说明和旧版 App 都按这个名字找。
+- 发布包用 `perf` 构建类型打，它用项目的正式签名。每个版本挂两个 APK，版本号和签名相同：`./gradlew :app-main:assemblePerf` 在 `app/build/outputs/apk/perf/` 下出 `app-universal-perf.apk`（全架构）和 `app-arm64-v8a-perf.apk`（只带 arm64-v8a 原生库，更小）。**先传 `app-universal-perf.apk`**，改名为 `Mika-vX.Y.Z.apk`；再传 `app-arm64-v8a-perf.apk`，改名为 `Mika-vX.Y.Z-arm64.apk`。旧版 App 取附件里第一个 `.apk`；新版 App 在支持 arm64-v8a 的设备上取 `-arm64.apk`，其他设备取全架构包。全架构包的名字不要改，用电脑装的说明和旧版 App 都按这个名字找。
 - 检查更新：每次打开 App 查一次 `https://api.github.com/repos/wangzan101/Mika/releases/latest`，不经别的地址。
 - 关于页点「下载更新」后由系统下载服务在后台下载 APK，可查看进度、删除下载或失败后重试，重开应用仍可继续查看。下载完成后点「安装更新」，首次按提示允许 Mika 安装未知应用，再在系统安装页确认。安装前检查 APK 大小、发布附件提供的 SHA-256、包名、版本号和签名证书，系统安装器还会再验一次签名；自行编译、签名不同的版本不能直接覆盖成官方版，要先卸载。发布未包含 APK 时仍打开发布页。

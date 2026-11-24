@@ -164,7 +164,7 @@ const PROFILES = {
     label: '开发',
     defaultBase: 'http://127.0.0.1:3100',
     defaultFeedUrl: 'http://127.0.0.1:3100/ruyi/android/latest.json',
-    buildTask: ':app:assemblePerf -PsideInstall',
+    buildTask: ':app-main:assemblePerf -PsideInstall',
     buildType: 'perf',
     requireReleaseSigning: false,
     defaultChannel: 'beta',
@@ -176,7 +176,7 @@ const PROFILES = {
     label: '生产',
     defaultBase: null,
     defaultFeedUrl: 'https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json',
-    buildTask: ':app:assembleRelease',
+    buildTask: ':app-main:assembleRelease',
     buildType: 'release',
     requireReleaseSigning: true,
     defaultChannel: 'official',
@@ -191,9 +191,9 @@ const profile = PROFILES[ENV_NAME];
 // 配置解析
 // ---------------------------------------------------------------------------
 const ROOT = resolve(String(process.env.MIKA_ROOT || process.cwd()));
-const BUILD_FILE = join(ROOT, 'app', 'build.gradle.kts');
+const BUILD_FILE = join(ROOT, 'app-main', 'build.gradle.kts');
 if (!existsSync(BUILD_FILE)) {
-  fail(`找不到 app/build.gradle.kts：${BUILD_FILE}。请在 Mika 项目根目录运行，或用 MIKA_ROOT 指定。`, 2);
+  fail(`找不到 app-main/build.gradle.kts：${BUILD_FILE}。请在 Mika 项目根目录运行，或用 MIKA_ROOT 指定。`, 2);
 }
 
 // ---------------------------------------------------------------------------
@@ -336,8 +336,8 @@ const UPDATE_FEED_URL = trimEndSlash(
   String(args['feed-url'] || process.env.UPDATE_FEED_URL || profile.defaultFeedUrl).trim()
 );
 const FEED_PUBLISHER = String(process.env.FEED_PUBLISHER || join(SKILL_DIR, 'feed-publish.mjs'));
-// 默认与 desktop manifest-switch 同一台机器（desktop web 根所在主机）。
-const FEED_SERVER = String(process.env.FEED_SERVER || 'xxt@10.10.117.5').trim();
+// 默认与 desktop manifest-switch 同一台机器（desktop web 根所在主机，遵从 ~/.ssh/config 别名）。
+const FEED_SERVER = String(process.env.FEED_SERVER || 'xxt1175').trim();
 // feed 落在 desktop 站点的 web 根（nginx 只对 /desktop/xxt/ 前缀开放对外访问；
 // 早先尝试的 /www/wwwroot/xxt-desktop/ruyi/ 公网 404，已弃用）。
 const FEED_ROOT = String(process.env.FEED_ROOT || '/www/wwwroot/xxt-desktop/desktop/xxt').trim();
@@ -478,7 +478,7 @@ const meta = readBuildMeta();
 const apkFileName = `ruyi-${meta.versionName}-${ABI}.apk`;
 const apkLocal = join(
   ROOT,
-  'app',
+  'app-main',
   'build',
   'outputs',
   'apk',

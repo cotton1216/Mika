@@ -107,8 +107,8 @@ go build -trimpath -o mika-relay .
 Go 1.23 or later builds the service; use a supported toolchain for deployment. The Docker builder and dependency checksums are pinned. From the repository root:
 
 ```sh
-./gradlew :core:test :app:testDebugUnitTest :core:cliTest :core:relayTest
-./gradlew :app:assembleDebug :app:assembleDebugAndroidTest -PdevInstall
+./gradlew :lib-core:test :app-main:testDebugUnitTest :lib-core:cliTest :lib-core:relayTest
+./gradlew :app-main:assembleDebug :app-main:assembleDebugAndroidTest -PdevInstall
 ```
 
 `relayTest` starts the real Go gateway, connects the production Kotlin tunnel and phone authentication, and exercises the real Python CLI and MCP against shared tasks, token rotation and unpairing. Its explicit HTTP mode allows only loopback URLs/listeners; Android accepts HTTPS origins only. UI tests include `RelaySectionTest` and `ComputerAccessScreenTest`. Deploy/device checks cover production certificates and standby separately.

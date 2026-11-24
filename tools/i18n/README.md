@@ -25,7 +25,7 @@ Exit codes are **0** for success, **1** for reported translation differences and
 This tool does **not** replace `app/src/test/.../StringResourcesTest.kt`. The JVM tests remain authoritative for exact placeholder sets where applicable, CLDR plural categories and app language registration. Folder discovery alone cannot prove that a language is registered by the app. Run the JVM tests after editing translations:
 
 ```sh
-./gradlew :app:testDebugUnitTest --tests 'com.wangzan101.mika.i18n.StringResourcesTest'
+./gradlew :app-main:testDebugUnitTest --tests 'com.wangzan101.mika.i18n.StringResourcesTest'
 ```
 
 `check` 以英文 `values/` 为基准，对比各语言 `strings*.xml` 中的字符串、复数和字符串数组，按资源类型报告缺失和多余 key。条目可以跨文件移动；英文里标为 `translatable="false"` 的条目不参与对比。工具还检查 XML 语法、重复资源、非法复数数量词、缺少 `other`、数组长度差异和格式参数遗漏。

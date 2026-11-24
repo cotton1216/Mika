@@ -29,8 +29,8 @@
 正常 Android 开发环境可运行：
 
 ```sh
-./gradlew :app:testDebugUnitTest --tests 'com.wangzan101.mika.voice.*'
-./gradlew :app:assembleDebug
+./gradlew :app-main:testDebugUnitTest --tests 'com.wangzan101.mika.voice.*'
+./gradlew :app-main:assembleDebug
 ```
 
 真实火山账号的权限、收费、延迟和准确率需要有账号的人验证；没有账号时只能确认设置页、保存与删除凭据和失败提示。

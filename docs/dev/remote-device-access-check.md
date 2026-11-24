@@ -16,8 +16,8 @@
 构建环境：JDK 17、Android SDK 36、仓库现有 Gradle/AGP/Kotlin 版本。
 
 ```sh
-./gradlew :core:test :app:testDebugUnitTest \
-  :app:assembleDebug :app:assembleDebugAndroidTest
+./gradlew :lib-core:test :app-main:testDebugUnitTest \
+  :app-main:assembleDebug :app-main:assembleDebugAndroidTest
 ```
 
 最终结果：core 2416 项、app JVM 977 项，无失败、无错误；core 中 2 项原有测试跳过。涵盖依赖方向、文档一致性、中英文资源、原有回归及新增功能测试。

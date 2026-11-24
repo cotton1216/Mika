@@ -33,14 +33,14 @@ jobs:
         with:
           cache-provider: basic
       - name: Unit tests and independent test APK
-        run: ./gradlew :app:testDebugUnitTest :app:assembleDebug -PdevInstall --stacktrace
+        run: ./gradlew :app-main:testDebugUnitTest :app-main:assembleDebug -PdevInstall --stacktrace
       - name: Prepare download
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist/test-apk
           task_apk_name="Mika-Dev-${GITHUB_SHA::7}.apk"
-          cp app/build/outputs/apk/debug/app-debug.apk "dist/test-apk/${task_apk_name}"
+          cp app-main/build/outputs/apk/debug/app-debug.apk "dist/test-apk/${task_apk_name}"
           (cd dist/test-apk && sha256sum *.apk > SHA256SUMS.txt)
           {
             printf '%s\n' '## Mika Dev test APK'
@@ -61,7 +61,7 @@ jobs:
         with:
           name: Mika-Dev-test-results-${{ github.sha }}
           path: |
-            app/build/test-results/testDebugUnitTest/
-            app/build/reports/tests/testDebugUnitTest/
+            app-main/build/test-results/testDebugUnitTest/
+            app-main/build/reports/tests/testDebugUnitTest/
           if-no-files-found: ignore
           retention-days: 7

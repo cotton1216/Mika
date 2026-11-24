@@ -154,7 +154,7 @@ Only `offset` and `limit` query parameters are accepted. Pages default to 20 ite
 ## Development checks
 
 ```bash
-./gradlew :core:test :core:cliTest :app:testDebugUnitTest :app:assembleDebug
+./gradlew :lib-core:test :lib-core:cliTest :app-main:testDebugUnitTest :app-main:assembleDebug
 # Python tests alone; use -PmikaPython=/path/to/python3 to select an interpreter
 python3 -m unittest discover -s tools/mika/tests -v
 ```

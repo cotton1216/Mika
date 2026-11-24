@@ -31,15 +31,15 @@ jobs:
         with:
           cache-provider: basic
       - name: Unit tests
-        run: ./gradlew :core:test --stacktrace
+        run: ./gradlew :lib-core:test --stacktrace
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: core-test-results
           path: |
-            core/build/test-results/test
-            core/build/reports/tests/test
+            lib-core/build/test-results/test
+            lib-core/build/reports/tests/test
           retention-days: 7
           if-no-files-found: ignore
 
@@ -61,7 +61,7 @@ jobs:
           cache-provider: basic
       # cliTest 先跑 cliContractTest（经真实子进程调 Python CLI），再跑 tools/mika/tests 下的 unittest。
       - name: CLI tests
-        run: ./gradlew :core:cliTest -PmikaPython=python3 --stacktrace
+        run: ./gradlew :lib-core:cliTest -PmikaPython=python3 --stacktrace
       - name: Translation tool tests
         run: python3 -m unittest discover -s tools/i18n -v
       - name: Translation resource checks
@@ -72,8 +72,8 @@ jobs:
         with:
           name: cli-test-results
           path: |
-            core/build/test-results/cliContractTest
-            core/build/reports/tests/cliContractTest
+            lib-core/build/test-results/cliContractTest
+            lib-core/build/reports/tests/cliContractTest
           retention-days: 7
           if-no-files-found: ignore
 
@@ -97,15 +97,15 @@ jobs:
       # assembleDebug 验证单测碰不到的打包路径：31MB 的 rootfs、jniLibs 旧式解压、AIDL、Compose。
       # 编译设备测试以检查设置交互等回归用例；这里没有连接设备，不执行 instrumentation。
       - name: Unit tests, debug build, and device test compilation
-        run: ./gradlew :app:testDebugUnitTest :app:assembleDebug :app:compileDebugAndroidTestKotlin --stacktrace
+        run: ./gradlew :app-main:testDebugUnitTest :app-main:assembleDebug :app-main:compileDebugAndroidTestKotlin --stacktrace
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: app-test-results
           path: |
-            app/build/test-results/testDebugUnitTest
-            app/build/reports/tests/testDebugUnitTest
+            app-main/build/test-results/testDebugUnitTest
+            app-main/build/reports/tests/testDebugUnitTest
           retention-days: 7
           if-no-files-found: ignore
 
@@ -129,14 +129,14 @@ jobs:
           cache-provider: basic
       # relayTest 会先 go build 出真实网关，再在回环上跑 Kotlin→网关→隧道全链路。
       - name: Relay integration test
-        run: ./gradlew :core:relayTest --stacktrace
+        run: ./gradlew :lib-core:relayTest --stacktrace
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: relay-test-results
           path: |
-            core/build/test-results/relayTest
-            core/build/reports/tests/relayTest
+            lib-core/build/test-results/relayTest
+            lib-core/build/reports/tests/relayTest
           retention-days: 7
           if-no-files-found: ignore

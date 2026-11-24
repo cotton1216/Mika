@@ -154,7 +154,7 @@ mika ui --device SERIAL --no-open
 ## 开发验证
 
 ```bash
-./gradlew :core:test :core:cliTest :app:testDebugUnitTest :app:assembleDebug
+./gradlew :lib-core:test :lib-core:cliTest :app-main:testDebugUnitTest :app-main:assembleDebug
 # Python 可单独运行;指定解释器可用 -PmikaPython=/path/to/python3
 python3 -m unittest discover -s tools/mika/tests -v
 ```

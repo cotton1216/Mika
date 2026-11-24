@@ -19,8 +19,8 @@
 ## 本地验证
 
 ```bash
-./gradlew :core:test :app:testDebugUnitTest :app:assembleDebug
-./gradlew :app:assembleDebugAndroidTest
+./gradlew :lib-core:test :app-main:testDebugUnitTest :app-main:assembleDebug
+./gradlew :app-main:assembleDebugAndroidTest
 python3 tools/i18n/translations.py check
 python3 -m unittest discover -s tools/i18n -v
 ```
