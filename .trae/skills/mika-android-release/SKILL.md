@@ -18,6 +18,7 @@ description: 一键发布「如意 AI(Mika)」安卓包：按环境（dev/prod�
 - 生产账号文件：`~/.config/apphub/agents/agent-01.env`（只有它拥有 `com.zl.ruyiai.yuan`）
 - JDK：`/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`；ossutil：`/Users/binny/.local/bin`
 - **双通道必须都发**：静态 feed（新客户端）+ Apphub（老客户端引导），不要用 `--skip-apphub`
+- **自用调试版**单独走 `--env beta`（见下节），只登记 as 主机的 beta 渠道，不动 feed
 
 ```bash
 cd /Users/binny/workspace-sdd/mcp-demo/dsh/mika/Mika
@@ -40,6 +41,32 @@ SCRIPT=.trae/skills/mika-android-release/scripts/release.mjs
 6. **落档**：在 `docs/tasks/` 里补记本次版本（操作人、Commit ID、版本号、APK 直链 + sha256、双通道回读结果）。
 
 退出码含义：0 成功 / 1 用法错误 / 2 配置或闸门未过 / 3 构建失败 / 4 上传失败 / 5 登记失败 / 6 feed 发布失败。中途失败时按「只成功到哪一步」如实汇报，不要声称已完整发布。
+
+## 照抄即用：自用调试版发到 as 主机（`--env beta`）
+
+正式包给线上用户；自己日常用的调试包走这条，**只登记 as 主机 apphub 的 beta 渠道，不动静态 feed**，正式用户的更新源不受影响。
+
+- 台账：`https://apps.kfxh.work`（容器 `apphub-ecs-rds-app-1`，RDS 库 `apps_hub`），账号文件同样是 `agent-01`
+- 产物：`:app-main:assembleDebug -PdevInstall` → 包名 `com.zl.ruyiai.yuan.dev`、名称「如意 AI Dev」
+- 与正式版**包名不同 → 手机上和「如意 AI」并排共存**，可 `adb install` 直接装，不用卸载正式版
+- OSS：`ai/ruyi/android/beta/ruyi-<ver>-universal.apk`
+
+```bash
+cd /Users/binny/workspace-sdd/mcp-demo/dsh/mika/Mika
+export PATH="/Users/binny/.local/bin:$PATH"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+node .trae/skills/mika-android-release/scripts/release.mjs --env beta --account agent-01 --yes --changelog "本次改动说明"
+```
+
+回读（`channel=beta`）：
+
+```bash
+curl -s --noproxy '*' 'https://apps.kfxh.work/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=beta'
+```
+
+注意：as 库的 official 渠道停在 0.1.51，那是历史遗留，**不是线上真实版本**；线上以 `ai.thchengtay.com` 为准。
+beta 版走独立版本号（与正式版同步 +1 也可），避免同 code 重复登记冲突。
+
 
 
 ## 更新事实源：静态 feed，不是 apphub（先读这段）
@@ -87,20 +114,20 @@ feed 字段（android 专用扁平结构）：
 
 ## 环境矩阵（核心，先读这张表）
 
-| 维度 | `--env dev` | `--env prod` |
-| --- | --- | --- |
-| 目标库（台账） | `http://127.0.0.1:3100`（本地 hub，可被 `APPHUB_BASE_URL` 覆盖） | 三级取值：`APPHUB_PROD_BASE_URL` → `--account` 文件 → `~/.config/apphub/agents/*.env` 自动发现 |
-| feed 地址（更新源） | `http://127.0.0.1:3100/ruyi/android/latest.json`（可被 `UPDATE_FEED_URL` / `--feed-url` 覆盖） | `https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json`（同上覆盖） |
-| feed 上传 | 否，只生成本地 `.local/feed/latest.json` | 默认 scp 到 desktop web 根并原子切换；`--feed-skip-upload` 可只生成不上传 |
-| 构建任务 | `:app-main:assemblePerf -PsideInstall -PupdateFeedUrl=<feed>` | `:app-main:assembleRelease -PupdateFeedUrl=<feed>` |
-| 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan` |
-| 签名 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
-| 产物目录 | `app-main/build/outputs/apk/perf/` | `app-main/build/outputs/apk/release/` |
-| OSS 前缀 | `ai/ruyi/android/dev` | `ai/ruyi/android` |
-| 默认渠道 / 状态 | `beta` / `draft`（入库不对外） | `official` / `published`（对外生效） |
-| 账号来源 | `APPHUB_USERNAME` / `APPHUB_PASSWORD` | `APPHUB_PROD_USERNAME` / `APPHUB_PROD_PASSWORD` → `--account` 账号文件 → `APPHUB_*` 回落 |
-| 二次确认 | 无 | **必须** `--yes`，否则拒跑 |
-| 内网直链 | 允许 | 拒绝（`127.` / `localhost` / `10.` / `192.168.` / `172.16-31.`） |
+| 维度 | `--env dev` | `--env beta`（自用调试） | `--env prod` |
+| --- | --- | --- | --- |
+| 目标库（台账） | `http://127.0.0.1:3100`（本地 hub，可被 `APPHUB_BASE_URL` 覆盖） | `https://apps.kfxh.work`（as 主机的 apphub，旧实例） | 三级取值：`APPHUB_PROD_BASE_URL` → `--account` 文件 → `~/.config/apphub/agents/*.env` 自动发现 |
+| feed 地址（更新源） | `http://127.0.0.1:3100/ruyi/android/latest.json`（可被 `UPDATE_FEED_URL` / `--feed-url` 覆盖） | 生产 feed（仅注入 APK，不发布） | `https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json`（同上覆盖） |
+| feed 上传 | 否，只生成本地 `.local/feed/latest.json` | **否**，整段跳过（不影响正式更新源） | 默认 scp 到 desktop web 根并原子切换；`--feed-skip-upload` 可只生成不上传 |
+| 构建任务 | `:app-main:assemblePerf -PsideInstall -PupdateFeedUrl=<feed>` | `:app-main:assembleDebug -PdevInstall -PupdateFeedUrl=<feed>` | `:app-main:assembleRelease -PupdateFeedUrl=<feed>` |
+| 包名 | `com.zl.ruyiai.yuan.perf`（并排安装，不动正式包与数据） | `com.zl.ruyiai.yuan.dev`（并排安装，显示「如意 AI Dev」） | `com.zl.ruyiai.yuan` |
+| 签名 | 调试签名可用 | 调试签名可用 | **必须** `CN=Yuan AI`，否则直接失败 |
+| 产物目录 | `app-main/build/outputs/apk/perf/` | `app-main/build/outputs/apk/debug/app-main-debug.apk` | `app-main/build/outputs/apk/release/` |
+| OSS 前缀 | `ai/ruyi/android/dev` | `ai/ruyi/android/beta` | `ai/ruyi/android` |
+| 默认渠道 / 状态 | `beta` / `draft`（入库不对外） | `beta` / `published` | `official` / `published`（对外生效） |
+| 账号来源 | `APPHUB_USERNAME` / `APPHUB_PASSWORD` | 同 dev，用 `--account` 账号文件 | `APPHUB_PROD_USERNAME` / `APPHUB_PROD_PASSWORD` → `--account` 账号文件 → `APPHUB_*` 回落 |
+| 二次确认 | 无 | **必须** `--yes`，否则拒跑 | **必须** `--yes`，否则拒跑 |
+| 内网直链 | 允许 | 拒绝（同 prod） | 拒绝（`127.` / `localhost` / `10.` / `192.168.` / `172.16-31.`） |
 
 两套账号之所以用不同变量名，是为了让本地库与生产库的凭证可以同时 `source`，不会互相覆盖。
 

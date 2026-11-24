@@ -79,6 +79,9 @@ const SKILL_DIR = dirname(fileURLToPath(import.meta.url));
 // ---------------------------------------------------------------------------
 // 参数解析
 // ---------------------------------------------------------------------------
+// 只按开关存在与否判断、不取值的参数。列在这里，`--yes --changelog x` 才不会被解析成 yes="--changelog"。
+const BOOLEAN_FLAGS = new Set(['yes', 'dry-run', 'skip-build', 'skip-apphub', 'feed-skip-upload', 'help']);
+
 function parseArgs(argv) {
   const out = { _: [] };
   for (let i = 0; i < argv.length; i += 1) {
@@ -89,7 +92,9 @@ function parseArgs(argv) {
     }
     const key = token.slice(2);
     const next = argv[i + 1];
-    if (next === undefined || next.startsWith('--')) {
+    // 布尔开关不接受取值：`--yes --changelog x` 里的 --changelog 不能被吞成 --yes 的值，
+    // 否则 CONFIRMED 恒为 false，脚本会在确认闸门静默退出（不构建、不发布）。
+    if (next === undefined || next.startsWith('--') || BOOLEAN_FLAGS.has(key)) {
       out[key] = true;
     } else {
       out[key] = next;
@@ -138,6 +143,9 @@ const ENV_ALIAS = {
   dev: 'dev',
   development: 'dev',
   local: 'dev',
+  beta: 'beta',
+  selfuse: 'beta',
+  self: 'beta',
   prod: 'prod',
   production: 'prod',
   online: 'prod',
@@ -171,6 +179,23 @@ const PROFILES = {
     defaultStatus: 'draft',
     defaultOssPrefix: 'ai/ruyi/android/dev',
     requireConfirm: false,
+    publishFeed: true,
+  },
+  // 真机日常自用渠道：调试包（applicationId 带 .dev 后缀）登记到 as 主机的 apphub beta 渠道。
+  // 与正式包包名不同 → 手机上与「如意 AI」并排共存，互不覆盖；不碰静态 feed（正式用户更新源）。
+  beta: {
+    label: '自用调试',
+    defaultBase: 'https://apps.kfxh.work',
+    defaultFeedUrl: 'https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json',
+    buildTask: ':app-main:assembleDebug -PdevInstall',
+    buildType: 'debug',
+    apkName: 'app-main-debug.apk',
+    requireReleaseSigning: false,
+    defaultChannel: 'beta',
+    defaultStatus: 'published',
+    defaultOssPrefix: 'ai/ruyi/android/beta',
+    requireConfirm: true,
+    publishFeed: false,
   },
   prod: {
     label: '生产',
@@ -183,6 +208,7 @@ const PROFILES = {
     defaultStatus: 'published',
     defaultOssPrefix: 'ai/ruyi/android',
     requireConfirm: true,
+    publishFeed: true,
   },
 };
 const profile = PROFILES[ENV_NAME];
@@ -482,7 +508,7 @@ const apkLocal = join(
   'outputs',
   'apk',
   profile.buildType,
-  `如意 AI-${meta.versionName}-${ABI}-${profile.buildType}.apk`
+  profile.apkName || `如意 AI-${meta.versionName}-${ABI}-${profile.buildType}.apk`
 );
 const objectKey = `${OSS_PREFIX}/${apkFileName}`;
 // --url 给了就跳过 OSS 上传，直接用给定的直链登记（本地联调 / 包已在别处托管时用）
@@ -529,12 +555,16 @@ if (DRY_RUN) {
     );
   }
   console.log(`DRY 台账：${SKIP_APPHUB ? '跳过（--skip-apphub），本次只发 feed' : `apphub app:ensure + publish（version=${meta.versionName} code=${meta.versionCode}）`}`);
+if (!profile.publishFeed) {
+  console.log(`DRY feed：跳过（${ENV_NAME} 环境不改动客户端更新源）`);
+} else {
   console.log(
     `DRY feed：将以 version=${meta.versionName} code=${meta.versionCode} changelog="${CHANGELOG}" 生成 latest.json` +
       (ENV_NAME === 'prod' && !FEED_SKIP_UPLOAD
         ? `，并 scp 到 ${FEED_SERVER}:${FEED_ROOT}/${FEED_REL} 后原子切换`
         : '（仅本地生成，不上传）')
   );
+}
   console.log('DRY 以上为将要执行的动作，未做任何实际构建 / 上传 / 登记 / feed 发布。');
   process.exit(0);
 }
@@ -567,7 +597,7 @@ if (!SKIP_BUILD) {
 if (!existsSync(apkLocal)) {
   fail(
     `未找到产物 APK：${apkLocal}。构建是否成功？或用 --abi 指定其他架构（当前 ${ABI}）。\n` +
-      `    注意产物目录按环境区分：dev 在 apk/perf/，prod 在 apk/release/。`,
+      `    注意产物目录按环境区分：dev 在 apk/perf/，beta 在 apk/debug/，prod 在 apk/release/。`,
     3
   );
 }
@@ -621,29 +651,34 @@ if (SKIP_APPHUB) {
 }
 
 // 6) 生成并发布静态 feed（新客户端的更新事实源；上一步 apphub 服务存量老客户端的引导升级，两者缺一不可）
-if (!existsSync(FEED_PUBLISHER)) {
-  fail(`找不到 feed-publish.mjs：${FEED_PUBLISHER}。请用 FEED_PUBLISHER 指定。`, 6);
-}
-log('feed', `生成 latest.json（version=${meta.versionName} code=${meta.versionCode}）`);
-// 所有值都过单引号转义：changelog 是用户自由文本，含 $ ` " ' 或换行时不能被 shell 展开/截断。
-const sq = (s) => `'${String(s).replace(/'/g, `'\\''`)}'`;
-const feedArgs = [
-  'generate',
-  '--version', sq(meta.versionName),
-  '--code', sq(meta.versionCode),
-  '--url', sq(downloadUrl),
-  '--file', sq(apkLocal),
-  '--changelog', sq(CHANGELOG),
-  '--feed-url', sq(UPDATE_FEED_URL),
-  '--out', sq(join(ROOT, '.local', 'feed', 'latest.json')),
-];
-if (FEED_SKIP_UPLOAD || ENV_NAME !== 'prod') {
-  feedArgs.push('--no-upload');
+//    beta（自用调试渠道）不碰 feed：它只登记到 as 的 apphub beta 渠道，正式用户的更新源保持不动。
+if (!profile.publishFeed) {
+  log('feed', `跳过（${ENV_NAME} 环境只登记 apphub ${CHANNEL} 渠道，不改动客户端更新源）`);
 } else {
-  if (FEED_SERVER) feedArgs.push('--server', sq(FEED_SERVER));
-  feedArgs.push('--root', sq(FEED_ROOT), '--rel', sq(FEED_REL), '--verify-url', sq(UPDATE_FEED_URL));
+  if (!existsSync(FEED_PUBLISHER)) {
+    fail(`找不到 feed-publish.mjs：${FEED_PUBLISHER}。请用 FEED_PUBLISHER 指定。`, 6);
+  }
+  log('feed', `生成 latest.json（version=${meta.versionName} code=${meta.versionCode}）`);
+  // 所有值都过单引号转义：changelog 是用户自由文本，含 $ ` " ' 或换行时不能被 shell 展开/截断。
+  const sq = (s) => `'${String(s).replace(/'/g, `'\\''`)}'`;
+  const feedArgs = [
+    'generate',
+    '--version', sq(meta.versionName),
+    '--code', sq(meta.versionCode),
+    '--url', sq(downloadUrl),
+    '--file', sq(apkLocal),
+    '--changelog', sq(CHANGELOG),
+    '--feed-url', sq(UPDATE_FEED_URL),
+    '--out', sq(join(ROOT, '.local', 'feed', 'latest.json')),
+  ];
+  if (FEED_SKIP_UPLOAD || ENV_NAME !== 'prod') {
+    feedArgs.push('--no-upload');
+  } else {
+    if (FEED_SERVER) feedArgs.push('--server', sq(FEED_SERVER));
+    feedArgs.push('--root', sq(FEED_ROOT), '--rel', sq(FEED_REL), '--verify-url', sq(UPDATE_FEED_URL));
+  }
+  sh(`node "${FEED_PUBLISHER}" ${feedArgs.join(' ')}`, { cwd: ROOT });
 }
-sh(`node "${FEED_PUBLISHER}" ${feedArgs.join(' ')}`, { cwd: ROOT });
 
 // 7) 结果汇报
 console.log('\n===== 发布完成 =====');
@@ -658,6 +693,10 @@ if (!SKIP_APPHUB) {
 if (ENV_NAME === 'dev') {
   console.log('提示：dev 包已用 .perf 包名并排安装，正式包与用户数据不受影响。');
   console.log('提示：dev 只生成本地 feed，需在 127.0.0.1:3100 起静态服务指向 .local/feed/ 才能验证更新。');
+}
+if (ENV_NAME === 'beta') {
+  console.log(`提示：beta 为调试包（applicationId 带 .dev 后缀），与正式版并排共存、互不覆盖，可 adb 直接安装。`);
+  console.log(`提示：正式用户的更新源（${UPDATE_FEED_URL}）未改动。`);
 }
 if (FEED_SKIP_UPLOAD && ENV_NAME === 'prod') {
   console.log('提示：--feed-skip-upload 已生效，prod feed 未上传，客户端仍读到旧版本。核对本地 feed 后去掉该参数重跑。');

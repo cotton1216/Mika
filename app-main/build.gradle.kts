@@ -13,8 +13,8 @@ val gitHash: String = runCatching {
 }.getOrNull()?.takeIf { it.isNotEmpty() } ?: "dev"
 
 // 版本号单一来源：defaultConfig 与发布产物文件名共用，升版只改这一处。
-val ruyiVersionName = "0.1.55"
-val ruyiVersionCode = 56
+val ruyiVersionName = "0.1.56"
+val ruyiVersionCode = 57
 
 // 更新 feed 地址由构建注入：debug 默认本地，release/perf 必须由 -PupdateFeedUrl 指定。
 // 生产地址形如 https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json，本地联调指向本地静态文件服务。
