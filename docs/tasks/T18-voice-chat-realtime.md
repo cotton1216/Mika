@@ -13,6 +13,13 @@
 - **验证**：`:app-main:compileReleaseKotlin` 通过；生产签名 CN=Yuan AI 校验通过。
 - **双通道发布**：APK `https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.1.55-universal.apk`（133,219,241 B，sha256 `6d32eedfe423…bd2`）；静态 feed 与 Apphub 均回读 0.1.55/56。
 
+## 后续版本 0.1.56 / code57（2026-11-25）
+- **Commit**：`18f33cff`、`9f16f95c`（含发版脚本修复）
+- **发版脚本修复**：`--yes` 被下一个参数吞掉导致确认闸门静默不过；dry-run 的 `process.exit(0)` 缩进错误使非 dry-run 也在打印后直接退出（曾导致把旧 APK 当成新版本发布）。
+- **渠道分工落地**：`--env beta` 新增，把调试包（`com.zl.ruyiai.yuan.dev`，与正式版并排）登记到 as 的 beta 渠道；`--env prod` 追加把同一正式 APK 登记到 as 镜像台账 official 渠道，缺凭证直接失败不静默跳过。
+- **三处发布**：APK `https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.1.56-universal.apk`（sha256 `3e146901d3fa…8e821e90`）；`apps.kfxh.work` official、`ai.thchengtay.com/apphub` official、静态 feed 均回读 0.1.56/57。
+- **历史补齐**：as 的 official 渠道由 0.1.51 补齐到 0.1.55 后随本版升至 0.1.56。
+
 ## 目标与交付范围
 1. **模块结构规范重命名**：`app/` → `app-main/`，`core/` → `lib-core/`，`ruiyi-remote/` → `app-ruyi-remote/`，`ruiyi-remote-core/` → `lib-ruyi-remote-core/`，`ruiyi-remote-ui/` → `lib-ruyi-remote-ui/`。
 2. **实时语音对话接入**：接入豆包全双工实时语音会话，支持模型统一配置、连接测试、麦克风权限守卫与动态界面。
