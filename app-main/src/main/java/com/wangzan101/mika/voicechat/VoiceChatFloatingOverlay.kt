@@ -586,7 +586,7 @@ internal fun CallGreenIndicator(aiSpeaking: Boolean) {
     }
 }
 
-/** 浮窗版多彩呼吸灯:与全屏同款,尺寸和亮度按浅色面板调低,免得在毛玻璃底上发白。 */
+/** 浮窗版呼吸灯:浮窗是浅色毛玻璃底,彩虹在浅色上会糊成一片脏色,所以只用品牌绿单色。 */
 @Composable
 private fun MiniPearlBall(speaking: Boolean, listening: Boolean) {
     val spirit = remember { Animatable(0f) }
@@ -610,19 +610,19 @@ private fun MiniPearlBall(speaking: Boolean, listening: Boolean) {
             val center = this.center
             val base = size.minDimension / 2f
 
-            // 外圈彩虹光晕;浅色底上不用叠加混合,否则会一片死白
+            // 外圈:品牌绿光晕,随呼吸胀缩
             drawCircle(
-                brush = Brush.sweepGradient(hueCycle(t, 0f), center = center),
+                color = Color(0xFF22C55E),
                 radius = base * (0.8f + 0.08f * breath),
                 center = center,
-                alpha = (0.5f + 0.3f * breath) * glow,
+                alpha = (0.30f + 0.18f * breath) * glow,
             )
-            // 内层再叠一圈错开 1/3 色相的光,交叠出流动的多彩色
+            // 内圈:深一点的绿,叠出层次而不是换色
             drawCircle(
-                brush = Brush.sweepGradient(hueCycle(t, 0.33f), center = center),
+                color = Color(0xFF10B981),
                 radius = base * (0.62f + 0.06f * breath),
                 center = center,
-                alpha = (0.42f + 0.26f * breath) * glow,
+                alpha = (0.26f + 0.16f * breath) * glow,
             )
             // 灯芯:中心散开的白光,呼吸时最亮
             drawCircle(
@@ -876,7 +876,7 @@ private fun VoiceAvatarFullscreen(
     }
 }
 
-/** 数字人占位形象:多姿多彩的呼吸灯,颜色缓慢流转,明暗随呼吸起伏。 */
+/** 数字人占位形象:品牌绿呼吸灯,明暗随呼吸起伏。 */
 @Composable
 private fun AvatarPlaceholder(speaking: Boolean, listening: Boolean) {
     val spirit = remember { Animatable(0f) }
@@ -901,27 +901,21 @@ private fun AvatarPlaceholder(speaking: Boolean, listening: Boolean) {
             val center = this.center
             val base = size.minDimension / 2f
 
-            // 1. 外圈彩色光晕:整圈彩虹随相位缓慢转色,随呼吸胀缩,叠加出通亮的灯感
+            // 1. 外圈光晕:品牌绿,随呼吸胀缩,叠加出通亮的灯感
             drawCircle(
-                brush = Brush.sweepGradient(
-                    hueCycle(t, 0f),
-                    center = center,
-                ),
+                color = Color(0xFF22C55E),
                 radius = base * (0.58f + 0.14f * breath),
                 center = center,
-                alpha = (0.5f + 0.4f * breath) * glow,
+                alpha = (0.34f + 0.26f * breath) * glow,
                 blendMode = BlendMode.Plus,
             )
 
-            // 2. 中层:换个起点再叠一层彩虹,转速稍慢,两层交叠出流动的多彩色
+            // 2. 中层:深一点的绿再叠一层,做出通透的层次
             drawCircle(
-                brush = Brush.sweepGradient(
-                    hueCycle(t, 0.33f),
-                    center = center,
-                ),
+                color = Color(0xFF10B981),
                 radius = base * (0.44f + 0.1f * breath),
                 center = center,
-                alpha = (0.42f + 0.34f * breath) * glow,
+                alpha = (0.28f + 0.22f * breath) * glow,
                 blendMode = BlendMode.Plus,
             )
 
@@ -963,23 +957,13 @@ private fun AvatarPlaceholder(speaking: Boolean, listening: Boolean) {
     }
 }
 
-/** 彩虹循环色:按相位 [t] 在整条色环上取色,首尾同色,无缝衔接。 */
-private fun hueCycle(t: Float, offset: Float): List<Color> {
-    val steps = 12
-    return (0..steps).map { i ->
-        val hue = ((t + offset + i / steps.toFloat()) % 1f) * 360f
-        Color.hsv(hue, 0.72f, 1f)
-    }
+/** 波纹统一用品牌绿:深浅交替,靠明暗区分层次,不再轮换紫/粉/青。 */
+private fun rippleColor(index: Int): Color = when (index % 2) {
+    0 -> Color(0xFF22C55E)
+    else -> Color(0xFF10B981)
 }
 
-/** 波纹轮换色:紫、粉、青,让三圈扩散互不同色。 */
-private fun rippleColor(index: Int): Color = when (index % 3) {
-    0 -> Color(0xFF9B5BFF)
-    1 -> Color(0xFFFF5B9B)
-    else -> Color(0xFF5BE3C0)
-}
-
-/** 说话时的一排声波,颜色沿横向渐变。 */
+/** 说话时的一排声波,同一条绿色渐变。 */
 @Composable
 private fun AvatarWaveform(modifier: Modifier = Modifier) {
     val transition = rememberInfiniteTransition(label = "waveform")
