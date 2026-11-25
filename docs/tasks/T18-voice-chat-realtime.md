@@ -20,6 +20,13 @@
 - **三处发布**：APK `https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.1.56-universal.apk`（sha256 `3e146901d3fa…8e821e90`）；`apps.kfxh.work` official、`ai.thchengtay.com/apphub` official、静态 feed 均回读 0.1.56/57。
 - **历史补齐**：as 的 official 渠道由 0.1.51 补齐到 0.1.55 后随本版升至 0.1.56。
 
+## 后续版本 0.1.57 / code58（2026-11-25）
+- **Commit**：`7f1ec4e9`（绿色呼吸灯改动）+ 本版升版提交
+- **内容**：浮窗、全屏数字人与声波条去掉彩虹（`sweepGradient` 色相循环与紫/粉/青轮换），统一为品牌绿 `#22C55E` + 深绿 `#10B981` 双圈，靠明暗叠层次；删除不再使用的 `hueCycle()`。
+- **三渠道 release 发布**：APK `https://oss-chuangxin.thchengtay.com/ai/ruyi/android/ruyi-0.1.57-universal.apk`（133,218,649 B，sha256 `e5262d88daac…ef9d`，签名 CN=Yuan AI）；静态 feed、`ai.thchengtay.com/apphub` official、`apps.kfxh.work` official 回读均 0.1.57/58。
+- **Dev 仅推 as**：调试包 `app-main-debug.apk`（149,584,211 B，sha256 `3c6c7e28d345…04e4`）登记到 `apps.kfxh.work` beta 渠道 id=11，未改动静态 feed 与主 apphub。
+- **过程问题**：手工 `assembleDebug` 漏 `-PdevInstall`，产出的调试签名包覆盖了手机上的正式版（`com.zl.ruyiai.yuan` 被卸载）；已重打带 `.dev` 后缀的包恢复并存。此后手工装 Dev 必须带该参数。
+
 ## 目标与交付范围
 1. **模块结构规范重命名**：`app/` → `app-main/`，`core/` → `lib-core/`，`ruiyi-remote/` → `app-ruyi-remote/`，`ruiyi-remote-core/` → `lib-ruyi-remote-core/`，`ruiyi-remote-ui/` → `lib-ruyi-remote-ui/`。
 2. **实时语音对话接入**：接入豆包全双工实时语音会话，支持模型统一配置、连接测试、麦克风权限守卫与动态界面。
