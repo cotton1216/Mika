@@ -207,4 +207,7 @@
     <string name="signin_ruyi_signed_in_note">사용량은 루이 계정에서 차감됩니다. 키는 이 휴대폰에 암호화되어 저장됩니다. 사용을 중단하려면 루이의 Keys 페이지에서 삭제하세요.</string>
     <string name="signin_ruyi_signed_out_note">이 휴대폰의 키는 삭제되었습니다. 키 자체는 루이에 남아 있으며 Keys 페이지에서 삭제할 수 있습니다. 선택한 모델 설정은 유지됩니다.</string>
     <string name="signin_ruyi_name">%1$s(로그인됨)</string>
+    <string name="voice_live_title">음성 대화(실시간)</string>
+    <string name="voice_live_line">더우바오 엔드투엔드 실시간 음성, 채팅 화면의 통화 버튼으로 바로 연결됩니다.</string>
+    <string name="voice_call_open">음성 대화</string>
 </resources>

@@ -36,7 +36,7 @@ class DocsConsistencyTest {
     }
 
     private val sourceFiles: List<File> by lazy {
-        listOf("core/src", "app/src").map { File(root, it) }.filter { it.isDirectory }
+        listOf("lib-core/src", "app-main/src").map { File(root, it) }.filter { it.isDirectory }
             .flatMap { d -> d.walkTopDown().filter { it.isFile && (it.extension == "kt" || it.extension == "java") }.toList() }
     }
     private val sourceText: String by lazy { sourceFiles.joinToString("\n") { it.readText() } }

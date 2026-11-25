@@ -18,8 +18,9 @@ object MikaLinks {
     const val RELEASES = "$REPO/releases"
 
     /**
-     * 检查更新用的静态 feed 地址(构建注入,见 build.gradle.kts 的 updateFeedUrl):
-     * 一份描述当前最新版的 JSON,托管在固定 URL 上。
+     * 检查更新用的地址(构建注入,见 build.gradle.kts 的 updateFeedUrl):
+     * 正式包是静态 feed(一份描述当前最新版的 JSON);自用调试包(Dev)是 as 台账的 beta 渠道,
+     * 条目结构与 feed 不同,由 [AppHub] 按响应形状分别解析。
      */
     val UPDATE_FEED: String get() = BuildConfig.UPDATE_FEED_URL
 

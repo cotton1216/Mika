@@ -209,4 +209,7 @@
     <string name="signin_ruyi_signed_in_note">利用量は如意アカウントから精算されます。キーはこの端末に暗号化して保存されます。不要になったら如意の Keys ページで削除できます。</string>
     <string name="signin_ruyi_signed_out_note">この端末のキーは削除されました。キー自体は如意側に残っています。Keys ページで削除できます。選択したモデルはそのまま残ります。</string>
     <string name="signin_ruyi_name">%1$s（ログイン済み）</string>
+    <string name="voice_live_title">音声通話(リアルタイム)</string>
+    <string name="voice_live_line">豆包のエンドツーエンド音声。通話ボタンから直接つながります。</string>
+    <string name="voice_call_open">音声通話</string>
 </resources>

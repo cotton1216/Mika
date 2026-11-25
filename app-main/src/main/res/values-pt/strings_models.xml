@@ -215,4 +215,7 @@
     <string name="signin_ruyi_signed_in_note">O uso é cobrado da sua conta Ruyi. A chave fica armazenada criptografada neste telefone; para parar de usá-la, exclua-a na página de Keys do Ruyi.</string>
     <string name="signin_ruyi_signed_out_note">A chave foi excluída deste telefone. Ela ainda existe no Ruyi; exclua-a na página de Keys. As escolhas de modelo são mantidas.</string>
     <string name="signin_ruyi_name">%1$s (conectado)</string>
+    <string name="voice_live_title">Chat de voz (ao vivo)</string>
+    <string name="voice_live_line">Voz em tempo real de ponta a ponta do Doubao; abre pelo botão de chamada na tela de conversa.</string>
+    <string name="voice_call_open">Chat de voz</string>
 </resources>

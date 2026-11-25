@@ -213,4 +213,7 @@
     <string name="signin_ruyi_signed_in_note">مصرف از حساب رویی شما محاسبه می‌شود. کلید به‌صورت رمزنگاری‌شده روی این گوشی ذخیره شده است؛ برای توقف استفاده، آن را در صفحه Keys رویی حذف کنید.</string>
     <string name="signin_ruyi_signed_out_note">کلید از این گوشی حذف شده است. خود کلید همچنان در رویی وجود دارد؛ می‌توانید آن را در صفحه Keys حذف کنید. انتخاب‌های مدل حفظ می‌شوند.</string>
     <string name="signin_ruyi_name">%1$s (وارد شده)</string>
+    <string name="voice_live_title">گفتگوی صوتی (زنده)</string>
+    <string name="voice_live_line">صدای زندهٔ سرتاسری Doubao، از دکمهٔ تماس در صفحهٔ گفتگو باز می‌شود.</string>
+    <string name="voice_call_open">گفتگوی صوتی</string>
 </resources>

@@ -86,7 +86,7 @@ class BundledScriptsManifestTest {
     /** 每个随包的脚本都有测试真的跑它:某个测试文件里同时出现它的目录(run_bundled_script 的 source)和脚本路径。 */
     @Test fun everyShippedScriptHasATest() {
         val catalog = GuideCatalog.loadBundled()
-        val tests = listOf("src/test", "../app/src/test", "../app/src/androidTest").map(::File)
+        val tests = listOf("src/test", "../app-main/src/test", "../app-main/src/androidTest").map(::File)
             .flatMap { d -> d.walkTopDown().filter { it.isFile && it.extension == "kt" && it.name != "BundledScriptsManifestTest.kt" }.toList() }
             .map { it.readText() }
         assertTrue("no test sources found", tests.isNotEmpty())

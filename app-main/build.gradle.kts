@@ -18,7 +18,10 @@ val ruyiVersionCode = 58
 
 // 更新 feed 地址由构建注入：debug 默认本地，release/perf 必须由 -PupdateFeedUrl 指定。
 // 生产地址形如 https://ai.thchengtay.com/desktop/xxt/ruyi/android/latest.json，本地联调指向本地静态文件服务。
+// 自用 Dev 包（-PdevInstall）只在 as 台账的 beta 渠道发布，因此默认读那一条，否则永远查不到自己的新版。
 val defaultUpdateFeedUrl = "http://127.0.0.1:3100/ruyi/android/latest.json"
+val defaultDevUpdateFeedUrl =
+    "https://apps.kfxh.work/api/v1/update/check?appKey=com.zl.ruyiai.yuan&platform=android&channel=beta"
 val updateFeedUrl: String? = providers.gradleProperty("updateFeedUrl").orNull
     ?.trim()
     ?.trimEnd('/')
@@ -186,10 +189,13 @@ tasks.withType<Test>().configureEach {
 // 调试包保持 app-debug.apk 不变，脚本与真机验收流程仍按原名引用。
 androidComponents {
     onVariants { variant ->
+        // 自用 Dev 包（debug + devInstall）没注入地址时读 as 的 beta 渠道；其余回落到本地静态 feed。
+        val devBuild = variant.buildType == "debug" && providers.gradleProperty("devInstall").isPresent
+        val feedUrl = updateFeedUrl ?: (if (devBuild) defaultDevUpdateFeedUrl else defaultUpdateFeedUrl)
         variant.buildConfigFields.put(
             "UPDATE_FEED_URL",
             com.android.build.api.variant.BuildConfigField(
-                "String", "\"${updateFeedUrl ?: defaultUpdateFeedUrl}\"", "静态更新 feed 地址",
+                "String", "\"$feedUrl\"", "检查更新地址",
             ),
         )
         if (variant.buildType == "debug") return@onVariants

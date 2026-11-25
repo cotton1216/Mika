@@ -229,4 +229,7 @@
     <string name="signin_ruyi_signed_in_note">يُحسب الاستهلاك من حسابك في روي. المفتاح محفوظ مشفّراً على هذا الهاتف؛ لإيقاف استخدامه احذفه من صفحة Keys في روي.</string>
     <string name="signin_ruyi_signed_out_note">حُذف المفتاح من هذا الهاتف. لا يزال موجوداً في روي؛ يمكنك حذفه من صفحة Keys. تبقى اختيارات النماذج كما هي.</string>
     <string name="signin_ruyi_name">%1$s (مسجّل الدخول)</string>
+    <string name="voice_live_title">محادثة صوتية (مباشرة)</string>
+    <string name="voice_live_line">صوت فوري من طرف إلى طرف عبر Doubao، يُفتح من زر المكالمة في صفحة المحادثة.</string>
+    <string name="voice_call_open">محادثة صوتية</string>
 </resources>

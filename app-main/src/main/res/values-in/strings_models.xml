@@ -207,4 +207,7 @@
     <string name="signin_ruyi_signed_in_note">Pemakaian dihitung dari akun Ruyi Anda. Kunci disimpan terenkripsi di ponsel ini; untuk berhenti memakainya, hapus di halaman Keys Ruyi.</string>
     <string name="signin_ruyi_signed_out_note">Kunci telah dihapus dari ponsel ini. Kunci masih ada di Ruyi; hapus di halaman Keys. Pilihan model tetap disimpan.</string>
     <string name="signin_ruyi_name">%1$s (sudah masuk)</string>
+    <string name="voice_live_title">Obrolan suara (langsung)</string>
+    <string name="voice_live_line">Suara real-time menyeluruh dari Doubao, dibuka dari tombol panggilan di layar obrolan.</string>
+    <string name="voice_call_open">Obrolan suara</string>
 </resources>

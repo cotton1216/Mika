@@ -9,7 +9,7 @@ import java.io.File
  * 装到手机上一加载就抛错。这里扫源码里所有写死的正则字面量,把这一类挡在电脑上。
  */
 class RegexPortabilityTest {
-    private val roots = listOf(File("src/main/kotlin"), File("../app/src/main/java"))
+    private val roots = listOf(File("src/main/kotlin"), File("../app-main/src/main/java"))
     // 只看紧跟在调用括号后的那个字面量;三引号原样,普通字符串按 Kotlin 转义还原
     private val call = Regex("""(?:Regex|Pattern\.compile)\(\s*(\"\"\"[\s\S]*?\"\"\"|"(?:[^"\\]|\\.)*")""")
     private val toRegex = Regex("""("(?:[^"\\]|\\.)*")\.toRegex\(""")

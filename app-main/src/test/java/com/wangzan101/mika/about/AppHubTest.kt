@@ -97,4 +97,42 @@ class AppHubTest {
         publishedAt?.let { append(",\"publishedAt\":\"$it\"") }
         append("}")
     }
+
+    /** Dev 包读的是 app-version-hub 的查更新响应:版本号在 latest.versionName,参数在条目根上。 */
+    @Test
+    fun readsHubResponse() {
+        val r = AppHub.parse(
+            """
+            {
+              "appKey": "com.zl.ruyiai.yuan",
+              "channel": "beta",
+              "hasUpdate": true,
+              "latest": {
+                "versionName": "0.1.57",
+                "versionCode": 58,
+                "changelog": "自用调试版",
+                "packageSize": 149584211,
+                "sha256": "$hex",
+                "publishedAt": "2026-11-25T01:30:20.000Z",
+                "forceUpdate": false,
+                "download": {"url": "$apk"}
+              }
+            }
+            """.trimIndent()
+        )!!
+        assertEquals("0.1.57", r.version)
+        assertEquals(58, r.versionCode)
+        assertEquals("自用调试版", r.notes)
+        assertEquals("2026-11-25", r.date)
+        assertEquals(apk, r.apkUrl)
+        assertEquals(149584211L, r.apkSize)
+        assertEquals("sha256:$hex", r.apkDigest)
+        assertFalse(r.force)
+    }
+
+    @Test
+    fun hubForceUpdateAndMissingVersion() {
+        assertTrue(AppHub.parse("""{"latest":{"versionName":"0.1.57","forceUpdate":true}}""")!!.force)
+        assertThrows(Exception::class.java) { AppHub.parse("""{"latest":{"versionCode":58}}""") }
+    }
 }

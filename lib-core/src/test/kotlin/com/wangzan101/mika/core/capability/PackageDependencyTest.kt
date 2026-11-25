@@ -11,7 +11,7 @@ import java.io.File
  */
 class PackageDependencyTest {
     private val core = File("src/main/kotlin/com/wangzan101/mika/core")
-    private val app = File("../app/src/main/java/com/wangzan101/mika")
+    private val app = File("../app-main/src/main/java/com/wangzan101/mika")
     private val ref = Regex("""com\.wangzan101\.mika\.(core\.)?(cap\.([a-z0-9_]+)|assembly|uistate)\b""")
 
     private class Use(val file: File, val line: Int, val text: String, val target: String)

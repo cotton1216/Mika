@@ -11,7 +11,7 @@ import java.io.File
  */
 class SingleEntryTest {
     private val action = File("src/main/kotlin/com/wangzan101/mika/core/action").canonicalPath + File.separator
-    private val roots = listOf(File("src/main/kotlin"), File("../app/src/main/java"))
+    private val roots = listOf(File("src/main/kotlin"), File("../app-main/src/main/java"))
 
     /** 源码里的代码行(整行注释不算;行内的字符串、网址照常算)。 */
     private fun codeLines(): List<Triple<File, Int, String>> = roots.filter { it.isDirectory }.flatMap { root ->

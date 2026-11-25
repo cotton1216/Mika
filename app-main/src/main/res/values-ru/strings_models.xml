@@ -221,4 +221,7 @@
     <string name="signin_ruyi_signed_in_note">Расходы идут с вашего аккаунта Ruyi. Ключ хранится на этом телефоне в зашифрованном виде; чтобы прекратить использование, удалите его на странице Keys в Ruyi.</string>
     <string name="signin_ruyi_signed_out_note">Ключ удалён с этого телефона. Он всё ещё существует в Ruyi; удалите его на странице Keys. Выбранные модели сохраняются.</string>
     <string name="signin_ruyi_name">%1$s (вход выполнен)</string>
+    <string name="voice_live_title">Голосовой чат (режим реального времени)</string>
+    <string name="voice_live_line">Сквозной голос Doubao в реальном времени, открывается кнопкой звонка в чате.</string>
+    <string name="voice_call_open">Голосовой чат</string>
 </resources>
